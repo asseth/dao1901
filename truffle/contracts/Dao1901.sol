@@ -20,7 +20,7 @@ contract Dao1901 {
     modifier isAdmin() {
         if (members[msg.sender].role != RoleList.founder ||
             members[msg.sender].role != RoleList.secretary || 
-            members[msg.sender].role != RoleList.president ||
+            members[msg.sender].role != RoleList.treasurer ||
             members[msg.sender].role != RoleList.president) throw;
     }
 
