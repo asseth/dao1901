@@ -1,29 +1,36 @@
 contract Dao1901 {
-    
-    enum RoleList { secretary, president, treasurer, member } // Role Available in the DAO
+
+    enum RoleList { founder, secretary, president, treasurer, member } // Role Available in the DAO
 
     struct Member {
         address key;
         bool active; // MONEY OR NOT !!!
         RoleList role;
     }
-    
+
     mapping(address => Member) members;
-    
+
+    bool created;
+
     modifier isRole(RoleList role) {
         if (members[msg.sender].role != role) throw;
-        _
     }
-    
 
-    function Dao1901(address _secretaire, address _president, address _tresorier){
-        setBureau(_secretaire,_president,_tresorier);
+
+    function Dao1901(){
+      members[msg.sender] = RoleList.founder;
     }
-    
+
     // TO DO : Implement a real democracy
-    function setBureau(address _secretaire, address _president, address _tresorier) isRole(RoleList.president) {
+    function setBureau(address _secretary, address _president, address _treasurer) isRole(RoleList.founder) {
+
+        if(created == true) throw;
+
         members[_president].role = RoleList.president;
-        members[_secretaire].role = RoleList.secretary;
-        members[_tresorier].role = RoleList.treasurer;
+        members[_secretary].role = RoleList.secretary;
+        members[_treasurer].role = RoleList.treasurer;
+
+        created = true;
+
     }
 }
