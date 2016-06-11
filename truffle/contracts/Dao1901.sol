@@ -9,6 +9,25 @@ contract Dao1901 {
         RoleList role;
         address public_key;
     }
+    function getMemberSince(uint id) returns(uint memberSince){
+        return members[id].memberSince;
+    }
+    function getMemberPayed(uint id) returns(bool status){
+        return members[id].payed;
+    }
+    function getMemberCanVote(uint id) returns(bool status){
+        return members[id].canVote;
+    }
+    function getMemberRole(uint id) returns(uint role){
+        return uint(members[id].role);
+    }
+    function getMemberAdresse(uint id) returns(address addr){
+        return members[id].public_key;
+    }
+    function getMemberLength() returns(uint size){
+        return members.length;
+    }
+
     
     Member[] public members;
     mapping (address => uint) public memberId;
@@ -60,15 +79,7 @@ contract Dao1901 {
             public_key: msg.sender
         });
     }
-    function getMemberLength() returns(uint size){
-        return members.length;
-    }
-    function getMemberSince(uint id) returns(uint memberSince){
-        return members[id].memberSince;
-    }
-    function getMemberCanVote(uint id) returns(bool vote){
-        return members[id].canVote;
-    }
+    
 
     
     // function createBooleanVote(string questions) isRole(RoleList.president){
