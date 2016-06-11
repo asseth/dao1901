@@ -8,14 +8,19 @@
 
 ## How to deploy (testing)
 
-You need testrpc and Truffle. Run testrpc, then:
+You need [testrpc](https://github.com/ethereumjs/testrpc) and [truffle](https://github.com/ConsenSys/truffle). 
+
+In a shell, run testrpc
+
+    testrpc
+
+In another shell, run truffle
 
     cd truffle 
     truffle serve
 
-Open your web browser, and go to http://localhost:8080
+Open your web browser, and go to [http://localhost:8080](http://localhost:8080)
 
-[some content]
 
 ## Support
 
