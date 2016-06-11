@@ -7,6 +7,7 @@ contract Dao1901 {
         bool payed;
         bool canVote;
         RoleList role;
+        address address;
     }
     
     Member[] public members;
@@ -19,20 +20,20 @@ contract Dao1901 {
         _
     }
 
-    modifier isAdmin() {
-        if (memberId[msg.sender] == 0 ||
-            members[memberId[msg.sender]].role != RoleList.founder ||
-            members[memberId[msg.sender]].role != RoleList.secretary || 
-            members[memberId[msg.sender]].role != RoleList.president ||
-            members[memberId[msg.sender]].role != RoleList.president) throw;
-         _
-    }
+    // modifier isAdmin() {
+    //     if (memberId[msg.sender] == 0 ||
+    //         members[memberId[msg.sender]].role != RoleList.founder ||
+    //         members[memberId[msg.sender]].role != RoleList.secretary || 
+    //         members[memberId[msg.sender]].role != RoleList.president ||
+    //         members[memberId[msg.sender]].role != RoleList.treasurer) throw;
+    //      _
+    // }
 
 
     function Dao1901(){
         members.length += 2;
-        members[0] = Member({canVote: false, role: RoleList.member, memberSince: now, payed: false});
-        members[1] = Member({canVote: false, role: RoleList.founder, memberSince: now, payed: false});
+        members[0] = Member({canVote: false, role: RoleList.member, memberSince: now, payed: false, address: 0}); // utilisateur bidon
+        members[1] = Member({canVote: false, role: RoleList.founder, memberSince: now, payed: false, address: msg.sender});
         memberId[msg.sender] = 1;
     }
 
@@ -51,7 +52,7 @@ contract Dao1901 {
         created = true;
     }
     
-    function createMember(address _address, bool _payed, bool _vote) isAdmin() {
+    function createMember(address _address, bool _payed, bool _vote)  {
         uint id;
         memberId[_address] = members.length;
         id = members.length++;
@@ -59,7 +60,8 @@ contract Dao1901 {
             canVote: _vote, 
             role: RoleList.member, 
             memberSince: now, 
-            payed: _payed
+            payed: _payed,
+            address: msg.sender
         });
     }
     function getMemberLength() returns(uint size){
