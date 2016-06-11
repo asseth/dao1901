@@ -7,7 +7,7 @@ contract Dao1901 {
         bool payed;
         bool canVote;
         RoleList role;
-        address address;
+        address public_key;
     }
     
     Member[] public members;
@@ -32,8 +32,8 @@ contract Dao1901 {
 
     function Dao1901(){
         members.length += 2;
-        members[0] = Member({canVote: false, role: RoleList.member, memberSince: now, payed: false, address: 0}); // utilisateur bidon
-        members[1] = Member({canVote: false, role: RoleList.founder, memberSince: now, payed: false, address: msg.sender});
+        members[0] = Member({canVote: false, role: RoleList.member, memberSince: now, payed: false, public_key: 0}); // utilisateur bidon
+        members[1] = Member({canVote: false, role: RoleList.founder, memberSince: now, payed: false, public_key: msg.sender});
         memberId[msg.sender] = 1;
     }
 
@@ -52,7 +52,7 @@ contract Dao1901 {
         created = true;
     }
     
-    function createMember(address _address, bool _payed, bool _vote)  {
+    function createMember(address _address, bool _payed, bool _vote) isRole(RoleList.founder)  {
         uint id;
         memberId[_address] = members.length;
         id = members.length++;
@@ -61,7 +61,7 @@ contract Dao1901 {
             role: RoleList.member, 
             memberSince: now, 
             payed: _payed,
-            address: msg.sender
+            public_key: msg.sender
         });
     }
     function getMemberLength() returns(uint size){
