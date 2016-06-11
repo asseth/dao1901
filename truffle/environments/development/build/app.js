@@ -5728,6 +5728,7 @@ var Pudding =
 /***/ }
 /******/ ]);
 
+<<<<<<< HEAD
 // Factory "morphs" into a Pudding class.
 // The reasoning is that calling load in each context
 // is cumbersome.
@@ -5929,6 +5930,8 @@ var Pudding =
 })();
 ;
 
+=======
+>>>>>>> acc6cf84673daa7a7c8e70a8a79e6760c10e366e
 
 
 
@@ -5996,5 +5999,9 @@ if (typeof web3 !== 'undefined') {
 
 Pudding.setWeb3(window.web3);                                 
 
+<<<<<<< HEAD
 Pudding.load([ConvertLib, Dao1901, MetaCoin], window);               
+=======
+Pudding.load([], window);               
+>>>>>>> acc6cf84673daa7a7c8e70a8a79e6760c10e366e
 

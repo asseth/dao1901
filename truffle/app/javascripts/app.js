@@ -1,5 +1,6 @@
 var accounts;
 var account;
+
 function test(message) {
   var president = document.getElementById("president").value.toString();
   var tresorier = document.getElementById("tresorier").value.toString();
@@ -12,13 +13,6 @@ function test(message) {
   }).catch(function(e) {
     console.log(e);
   });
-
-
-  // dao.members.call().then(function(message) {
-  // 	console.log(message)
-  // }).catch(function(e) {
-  //   console.log(e);
-  // });
 };
 window.onload = function() {
   web3.eth.getAccounts(function(err, accs) {
@@ -37,3 +31,15 @@ window.onload = function() {
 
   });
 }
+$(function () {
+  $('#deploy').click(function() {
+    var president = document.getElementById("president").value;
+    var tresorier = document.getElementById("tresorier").value;
+    var secretaire = document.getElementById("secretaire").value;
+    console.log(president, tresorier, secretaire);
+    // TODO : déployer le contrat avec les membres du bureau
+    // TODO : ouvrir page
+  });
+});
+
+
