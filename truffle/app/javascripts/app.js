@@ -1,5 +1,8 @@
 var accounts;
 var account;
+var president;
+var tresorier;
+var secretaire;
 
 window.onload = function() {
   web3.eth.getAccounts(function(err, accs) {
@@ -15,6 +18,9 @@ window.onload = function() {
 
     accounts = accs;
     account = accounts[0];
+    president = accounts[1];
+    tresorier = accounts[2];
+    secretaire = accounts[3];
 
   });
 }
@@ -24,21 +30,15 @@ $(function () {
     // var tresorier = document.getElementById("tresorier").value;
     // var secretaire = document.getElementById("secretaire").value;
 
-    var president = "0xccd10fb4ded1e18796fe2858c6ac9e018489857a";
-    var tresorier = "0x4838775c77306c0fce8f9d5c1ba89b421ecb5a02";
-    var secretaire = "0x25cfc88f505ed9244e949418ca5d87e8335e5ec7";
     var dao = Dao1901.deployed();
     console.log(dao)
-    //   dao.createMember.sendTransaction(president, {from: account}).then(function(message) {
-    //  console.log(message)
-    // }).catch(function(e) {
-    //   console.log(e);
-    // });
+
     dao.setBureau.sendTransaction(secretaire, president, tresorier, {from: account}).then(function(message) {
       console.log(message)
     }).catch(function(e) {
       console.log(e);
     });
+    
     dao.getMemberSince.call(1, {from: account}).then(function(message) {
       console.log(message)
     }).catch(function(e) {
