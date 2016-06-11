@@ -5728,17 +5728,253 @@ var Pudding =
 /***/ }
 /******/ ]);
 
+<<<<<<< HEAD
+// Factory "morphs" into a Pudding class.
+// The reasoning is that calling load in each context
+// is cumbersome.
+
+(function() {
+
+  var contract_data = {
+    abi: [{"constant":false,"inputs":[{"name":"amount","type":"uint256"},{"name":"conversionRate","type":"uint256"}],"name":"convert","outputs":[{"name":"convertedAmount","type":"uint256"}],"type":"function"}],
+    binary: "606060405260358060106000396000f36503050000000050606060405260e060020a600035046396e4ee3d81146024575b6007565b602435600435026060908152602090f3",
+    unlinked_binary: "606060405260358060106000396000f36503050000000050606060405260e060020a600035046396e4ee3d81146024575b6007565b602435600435026060908152602090f3",
+    address: "0xc305c901078781c232a2a521c2af7980f8385ee9",
+    generated_with: "2.0.9",
+    contract_name: "ConvertLib"
+  };
+
+  function Contract() {
+    if (Contract.Pudding == null) {
+      throw new Error("ConvertLib error: Please call load() first before creating new instance of this contract.");
+    }
+
+    Contract.Pudding.apply(this, arguments);
+  };
+
+  Contract.load = function(Pudding) {
+    Contract.Pudding = Pudding;
+
+    Pudding.whisk(contract_data, Contract);
+
+    // Return itself for backwards compatibility.
+    return Contract;
+  }
+
+  Contract.new = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("ConvertLib error: Please call load() first before calling new().");
+    }
+
+    return Contract.Pudding.new.apply(Contract, arguments);
+  };
+
+  Contract.at = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("ConvertLib error: Please call load() first before calling at().");
+    }
+
+    return Contract.Pudding.at.apply(Contract, arguments);
+  };
+
+  Contract.deployed = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("ConvertLib error: Please call load() first before calling deployed().");
+    }
+
+    return Contract.Pudding.deployed.apply(Contract, arguments);
+  };
+
+  if (typeof module != "undefined" && typeof module.exports != "undefined") {
+    module.exports = Contract;
+  } else {
+    // There will only be one version of Pudding in the browser,
+    // and we can use that.
+    window.ConvertLib = Contract;
+  }
+
+})();
+;
+
+// Factory "morphs" into a Pudding class.
+// The reasoning is that calling load in each context
+// is cumbersome.
+
+(function() {
+
+  var contract_data = {
+    abi: [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"members","outputs":[{"name":"key","type":"address"},{"name":"payed","type":"bool"},{"name":"canVote","type":"bool"},{"name":"role","type":"uint8"}],"type":"function"},{"constant":false,"inputs":[{"name":"_secretary","type":"address"},{"name":"_president","type":"address"},{"name":"_treasurer","type":"address"}],"name":"setBureau","outputs":[],"type":"function"},{"inputs":[],"type":"constructor"}],
+    binary: "6060604052600160a060020a0333166000908152602081905260409020805460b060020a60ff021916905560fd806100376000396000f3606060405260e060020a600035046308ae4b0c811460245780631b6b8656146096575b005b60db60043560006020819052908152604090205473ffffffffffffffffffffffffffffffffffffffff81169074010000000000000000000000000000000000000000810460ff908116917501000000000000000000000000000000000000000000810482169160b060020a9091041684565b602260043560243560443573ffffffffffffffffffffffffffffffffffffffff331660009081526020819052604081205460ff60b060020a90910416811460f7576002565b6060938452911515608090815290151560a05260c09190915290f35b5050505056",
+    unlinked_binary: "6060604052600160a060020a0333166000908152602081905260409020805460b060020a60ff021916905560fd806100376000396000f3606060405260e060020a600035046308ae4b0c811460245780631b6b8656146096575b005b60db60043560006020819052908152604090205473ffffffffffffffffffffffffffffffffffffffff81169074010000000000000000000000000000000000000000810460ff908116917501000000000000000000000000000000000000000000810482169160b060020a9091041684565b602260043560243560443573ffffffffffffffffffffffffffffffffffffffff331660009081526020819052604081205460ff60b060020a90910416811460f7576002565b6060938452911515608090815290151560a05260c09190915290f35b5050505056",
+    address: "0xc24772b6bfa14d456448d296b02c2c76cdb53bb5",
+    generated_with: "2.0.9",
+    contract_name: "Dao1901"
+  };
+
+  function Contract() {
+    if (Contract.Pudding == null) {
+      throw new Error("Dao1901 error: Please call load() first before creating new instance of this contract.");
+    }
+
+    Contract.Pudding.apply(this, arguments);
+  };
+
+  Contract.load = function(Pudding) {
+    Contract.Pudding = Pudding;
+
+    Pudding.whisk(contract_data, Contract);
+
+    // Return itself for backwards compatibility.
+    return Contract;
+  }
+
+  Contract.new = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("Dao1901 error: Please call load() first before calling new().");
+    }
+
+    return Contract.Pudding.new.apply(Contract, arguments);
+  };
+
+  Contract.at = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("Dao1901 error: Please call load() first before calling at().");
+    }
+
+    return Contract.Pudding.at.apply(Contract, arguments);
+  };
+
+  Contract.deployed = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("Dao1901 error: Please call load() first before calling deployed().");
+    }
+
+    return Contract.Pudding.deployed.apply(Contract, arguments);
+  };
+
+  if (typeof module != "undefined" && typeof module.exports != "undefined") {
+    module.exports = Contract;
+  } else {
+    // There will only be one version of Pudding in the browser,
+    // and we can use that.
+    window.Dao1901 = Contract;
+  }
+
+})();
+;
+
+// Factory "morphs" into a Pudding class.
+// The reasoning is that calling load in each context
+// is cumbersome.
+
+(function() {
+
+  var contract_data = {
+    abi: [{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"getBalanceInEth","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"receiver","type":"address"},{"name":"amount","type":"uint256"}],"name":"sendCoin","outputs":[{"name":"sufficient","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"getBalance","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"inputs":[],"type":"constructor"}],
+    binary: "6060604052600160a060020a033216600090815260208190526040902061271090556101548061002f6000396000f3606060405260e060020a60003504637bd703e8811461003157806390b98a111461005c578063f8b2cb4f1461008b575b005b6100b1600435600073__ConvertLib____________________________6396e4ee3d6100d784610092565b6100c360043560243533600160a060020a03166000908152602081905260408120548290101561011c5761014e565b6100b16004355b600160a060020a0381166000908152602081905260409020545b919050565b60408051918252519081900360200190f35b604080519115158252519081900360200190f35b60026040518360e060020a02815260040180838152602001828152602001925050506020604051808303818660325a03f4156100025750506040515191506100ac9050565b5033600160a060020a039081166000908152602081905260408082208054859003905591841681522080548201905560015b9291505056",
+    unlinked_binary: "6060604052600160a060020a033216600090815260208190526040902061271090556101548061002f6000396000f3606060405260e060020a60003504637bd703e8811461003157806390b98a111461005c578063f8b2cb4f1461008b575b005b6100b1600435600073__ConvertLib____________________________6396e4ee3d6100d784610092565b6100c360043560243533600160a060020a03166000908152602081905260408120548290101561011c5761014e565b6100b16004355b600160a060020a0381166000908152602081905260409020545b919050565b60408051918252519081900360200190f35b604080519115158252519081900360200190f35b60026040518360e060020a02815260040180838152602001828152602001925050506020604051808303818660325a03f4156100025750506040515191506100ac9050565b5033600160a060020a039081166000908152602081905260408082208054859003905591841681522080548201905560015b9291505056",
+    address: "0xd6f084ee15e38c4f7e091f8dd0fe6fe4a0e203ef",
+    generated_with: "2.0.9",
+    contract_name: "MetaCoin"
+  };
+
+  function Contract() {
+    if (Contract.Pudding == null) {
+      throw new Error("MetaCoin error: Please call load() first before creating new instance of this contract.");
+    }
+
+    Contract.Pudding.apply(this, arguments);
+  };
+
+  Contract.load = function(Pudding) {
+    Contract.Pudding = Pudding;
+
+    Pudding.whisk(contract_data, Contract);
+
+    // Return itself for backwards compatibility.
+    return Contract;
+  }
+
+  Contract.new = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("MetaCoin error: Please call load() first before calling new().");
+    }
+
+    return Contract.Pudding.new.apply(Contract, arguments);
+  };
+
+  Contract.at = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("MetaCoin error: Please call load() first before calling at().");
+    }
+
+    return Contract.Pudding.at.apply(Contract, arguments);
+  };
+
+  Contract.deployed = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("MetaCoin error: Please call load() first before calling deployed().");
+    }
+
+    return Contract.Pudding.deployed.apply(Contract, arguments);
+  };
+
+  if (typeof module != "undefined" && typeof module.exports != "undefined") {
+    module.exports = Contract;
+  } else {
+    // There will only be one version of Pudding in the browser,
+    // and we can use that.
+    window.MetaCoin = Contract;
+  }
+
+})();
+;
+
+=======
+>>>>>>> acc6cf84673daa7a7c8e70a8a79e6760c10e366e
 
 
 
 
+var accounts;
+var account;
 function test(message) {
-  var president = document.getElementById("president").value;
-  var tresorier = document.getElementById("tresorier").value;
-  var secretaire = document.getElementById("secretaire").value;
-  console.log(president, tresorier, secretaire);
-  status.innerHTML = message;
+  var president = document.getElementById("president").value.toString();
+  var tresorier = document.getElementById("tresorier").value.toString();
+  var secretaire = document.getElementById("secretaire").value.toString();
+  var dao = Dao1901.deployed();
+  console.log(dao)
+  console.log(president, tresorier, secretaire)
+  dao.setBureau.sendTransaction(secretaire, president, tresorier, {from: account}).then(function(message) {
+  	console.log(message)
+  }).catch(function(e) {
+    console.log(e);
+  });
+
+
+  // dao.members.call().then(function(message) {
+  // 	console.log(message)
+  // }).catch(function(e) {
+  //   console.log(e);
+  // });
 };
+window.onload = function() {
+  web3.eth.getAccounts(function(err, accs) {
+    if (err != null) {
+      alert("There was an error fetching your accounts.");
+      return;
+    }
+
+    if (accs.length == 0) {
+      alert("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
+      return;
+    }
+
+    accounts = accs;
+    account = accounts[0];
+
+  });
+}
 
 
  // Added by Truffle bootstrap.                                
@@ -5763,5 +5999,9 @@ if (typeof web3 !== 'undefined') {
 
 Pudding.setWeb3(window.web3);                                 
 
+<<<<<<< HEAD
+Pudding.load([ConvertLib, Dao1901, MetaCoin], window);               
+=======
 Pudding.load([], window);               
+>>>>>>> acc6cf84673daa7a7c8e70a8a79e6760c10e366e
 
