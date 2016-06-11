@@ -38,22 +38,30 @@ $(function () {
     }).catch(function(e) {
       console.log(e);
     });
+
+
     
-    dao.getMemberSince.call(1, {from: account}).then(function(message) {
+
+    // dao.getMemberSince.call(1, {from: account}).then(function(message) {
+    //   console.log(message)
+    // }).catch(function(e) {
+    //   console.log(e);
+    // });
+    dao.getMemberLength.call(1, {from: account}).then(function(message) {
       console.log(message)
     }).catch(function(e) {
       console.log(e);
     });
-    dao.getMemberCanVote.call(1, {from: account}).then(function(message) {
-      console.log(message)
-    }).catch(function(e) {
-      console.log(e);
-    });
-    dao.getMemberLength.call({from: account}).then(function(message) {
-      console.log(message)
-    }).catch(function(e) {
-      console.log(e);
-    });
+    // dao.getMemberCanVote.call(1, {from: account}).then(function(message) {
+    //   console.log(message)
+    // }).catch(function(e) {
+    //   console.log(e);
+    // });
+    // dao.getMemberLength.call({from: account}).then(function(message) {
+    //   console.log(message)
+    // }).catch(function(e) {
+    //   console.log(e);
+    // });
     // TODO : déployer le contrat avec les membres du bureau
     // TODO : ouvrir page
   });

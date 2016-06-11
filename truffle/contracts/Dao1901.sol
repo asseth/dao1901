@@ -16,18 +16,14 @@ contract Dao1901 {
     bool created;
 
     modifier isRole(RoleList role) {
-        if (memberId[msg.sender] == 0 || members[memberId[msg.sender]].role != role) throw;
+        if (memberId[msg.sender] == 0 || members[memberId[msg.sender]].role != role) return;
         _
     }
 
-    // modifier isAdmin() {
-    //     if (memberId[msg.sender] == 0 ||
-    //         members[memberId[msg.sender]].role != RoleList.founder ||
-    //         members[memberId[msg.sender]].role != RoleList.secretary || 
-    //         members[memberId[msg.sender]].role != RoleList.president ||
-    //         members[memberId[msg.sender]].role != RoleList.treasurer) throw;
-    //      _
-    // }
+    modifier isAdmin() {
+        if (memberId[msg.sender] == 0 || members[memberId[msg.sender]].role == RoleList.member) return;
+        _
+    }
 
 
     function Dao1901(){
@@ -40,7 +36,7 @@ contract Dao1901 {
     // TO DO : Implement a real democracy
     function setBureau(address _secretary, address _president, address _treasurer) isRole(RoleList.founder) {
 
-        if(created == true) throw;
+        if(created == true) return;
 
         createMember(_secretary, true, true);
         members[memberId[_secretary]].role = RoleList.secretary;
@@ -52,7 +48,7 @@ contract Dao1901 {
         created = true;
     }
     
-    function createMember(address _address, bool _payed, bool _vote) isRole(RoleList.founder)  {
+    function createMember(address _address, bool _payed, bool _vote) isAdmin() {
         uint id;
         memberId[_address] = members.length;
         id = members.length++;
