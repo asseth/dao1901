@@ -24,9 +24,9 @@ $(function () {
     // var tresorier = document.getElementById("tresorier").value;
     // var secretaire = document.getElementById("secretaire").value;
 
-    var president = "0x5497efa684f5de74ea2e326274d3484a039bb1db";
-    var tresorier = "0xbb2d2de3846b179359e8703a89578954b7f66769";
-    var secretaire = "0x544a56943ff9685fd3a745aa0f92db57ce2d0643";
+    var president = "0xccd10fb4ded1e18796fe2858c6ac9e018489857a";
+    var tresorier = "0x4838775c77306c0fce8f9d5c1ba89b421ecb5a02";
+    var secretaire = "0x25cfc88f505ed9244e949418ca5d87e8335e5ec7";
     var dao = Dao1901.deployed();
     console.log(dao)
     //   dao.createMember.sendTransaction(president, {from: account}).then(function(message) {
