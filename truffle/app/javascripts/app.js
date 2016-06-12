@@ -22,43 +22,93 @@ window.onload = function() {
     tresorier = accounts[2];
     secretaire = accounts[3];
 
+
   });
 }
 $(function () {
+  var dao;
+
   $('#deploy').click(function() {
     // var president = document.getElementById("president").value;
     // var tresorier = document.getElementById("tresorier").value;
     // var secretaire = document.getElementById("secretaire").value;
 
-    var dao = Dao1901.deployed();
+    dao = Dao1901.deployed();
     dao.setBureau.sendTransaction(secretaire, president, tresorier, {from: account}).then(function(message) {
       document.location.href = "/monitor.html";
     }).catch(function(e) {
       document.getElementById("error").innerHTML = "Vous n'etes pas autorisé à modifier le bureau de l'association.<br/> <a href='/monitor.html'>Voir les membres du bureau</a>";
     });
   });
+  $('#getBureau').click(function() {
+    document.getElementById("error").innerHTML = "Recuperation des membres en cours...";
+
+    var membersLength;
+    var users = {};
+    dao = Dao1901.deployed();
+    dao.getMembersLength.call({from: account}).then(function(message) {
+      membersLength = message['c'][0]
+      console.log(dao.getMemberAdresse.call(1, {from: account}))
+      for(var i=1 ; i < membersLength; i++){
+        dao.getMemberAdresse.call(i, {from: account}).then(function(address) {
+          users[address] = {}
+          dao.getMemberSince.call(address, {from: account}).then(function(since) {
+            users[address]['since'] = new Date( 1000 * since['c'][0])
+          });
+          dao.getMemberPayed.call(address, {from: account}).then(function(payed) {
+            users[address]['payed'] = payed
+          });
+          dao.getMemberCanVote.call(address, {from: account}).then(function(vote) {
+            users[address]['vote'] = vote
+          });
+          dao.getMemberRole.call(address, {from: account}).then(function(role) {
+            users[address]['role'] = role
+          });
+        }).catch(function(e) {
+          console.log(e);
+        });  
+      }
+    }).catch(function(e) {
+      console.log(e);
+    });
+    setTimeout(function(){ 
+      var tablearea = document.getElementById('tablearea');
+      var table = document.createElement('table');
+      var i = 1;
+      for (var addr in users){
+          var tr = document.createElement('tr'); 
+          var td = document.createElement('td');
+          td.appendChild(document.createTextNode(i++));
+          tr.appendChild(td);
+          for (var key in users[addr])  {
+            var td = document.createElement('td');
+            td.appendChild(document.createTextNode(users[addr][key]));
+            tr.appendChild(td);
+          }
+          table.appendChild(tr);
+      }
+      tablearea.appendChild(table);
+      document.getElementById("error").innerHTML = "";
+   }, 4000);
+
+  });
+  $('#showMembers').click(function(){
+    $("#showAddMembers").removeProp('hidden')
+  });
+  $('#addMembers').click(function(){
+    dao = Dao1901.deployed();
+    var addr = document.getElementById("address").value;
+    var vote = $('#vote').is(':checked')
+    var payed = $('#payed').is(':checked')
+    console.log(dao)
+    dao.createMember.sendTransaction(addr, payed, vote, {from: account}).then(function(message) {
+      document.getElementById("error").innerHTML = "Member ajouté avec succés !<br/>";
+    }).catch(function(e) {
+      document.getElementById("error").innerHTML = "Vous n'etes pas autorisé à rajouter un member dans l'association.<br/>";
+    });
+  });
 });
-    // var membersLength;
-    // var users
-    // dao.getMemberLength.call({from: account}).then(function(message) {
-    //   membersLength = message['c'][0]
-    //   users = new Array(membersLength)
-    //   for(var i=0 ; i < membersLength; i++){
-    //     users[i] = {}
-    //   }
-    //   for(var i=0 ; i < membersLength; i++){
-        
-    //     dao.getMemberSince.call(i, {from: account}).then(function(message) {users[i] = {since:message['c'][0]}});
-    //     // dao.getMemberPayed.call(i, {from: account}).then(function(message) {users[i].push(message['c'][0])});
-    //     // dao.getMemberCanVote.call(i, {from: account}).then(function(message) {users[i].push(message['c'][0])});
-    //     // dao.getMemberRole.call(i, {from: account}).then(function(message) {users[i].push(message['c'][0])});
-    //     // dao.getMemberAdresse.call(i, {from: account}).then(function(message) {users[i].push(message['c'][0])});
-    //   }
-    //   console.log(users)
-    // }).catch(function(e) {
-    //   console.log(e);
-    // });
-    // setTimeout(function(){console.log(users); }, 6000);
+    
     
 
 
