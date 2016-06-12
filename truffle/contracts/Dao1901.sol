@@ -100,46 +100,46 @@ contract Dao1901 {
     //     votes[id].end = "need to find a systeme"
     // }
 
-    votePreProposals[] public proposal; // have to be validated by "bureau"
-    voteProposal[] public proposal; // once validated by bureau, have to be voted by members
-    rejectedProposals[] public proposal; 
+    // votePreProposals[] public proposal; // have to be validated by "bureau"
+    // voteProposal[] public proposal; // once validated by bureau, have to be voted by members
+    // rejectedProposals[] public proposal; 
 
 
-     struct BooleanProposal {
-        string proposalContent;
-        uint openSince;
-        uint yes;
-        uint no;
-        address hasVoted[];
-        mapping(address => uint) whoHasVoted; 
-        bool validatedByBureau=false;
-    }
+    //  struct BooleanProposal {
+    //     string proposalContent;
+    //     uint openSince;
+    //     uint yes;
+    //     uint no;
+    //     address hasVoted[];
+    //     mapping(address => uint) whoHasVoted; 
+    //     bool validatedByBureau=false;
+    // }
 
 
-    function votePreProposal(uint _id) isAdmin(){
-        uint id; // id for hasVoted[]
+    // function votePreProposal(uint _id) isAdmin(){
+    //     uint id; // id for hasVoted[]
 
-        // checks if has voted or not
-        if( votePreProposals[_id].whoHasVoted[msg.sender] == 0){ // if returns 0, never voted
+    //     // checks if has voted or not
+    //     if( votePreProposals[_id].whoHasVoted[msg.sender] == 0){ // if returns 0, never voted
             
-        }
+    //     }
 
 
 
-        if (votePreProposals[_id].yes + votePreProposals[_id].no) >= 2 {
-            id=votePreProposals[_id].hasVoted.length;
-            votePreProposals[_id].hasVoted.length++;
-            votePreProposals[_id].hasVoted[id]=msg.sender;
+    //     if (votePreProposals[_id].yes + votePreProposals[_id].no) >= 2 {
+    //         id=votePreProposals[_id].hasVoted.length;
+    //         votePreProposals[_id].hasVoted.length++;
+    //         votePreProposals[_id].hasVoted[id]=msg.sender;
             
-        }
-        // TODO : check
+    //     }
+    //     // TODO : check
 
-    }
-    function sendProposal(string _proposalContent) hasRightToProposeOrVote(){
-        uint id;
-        id=voteProposals.length;
-        voteProposals.length++;
-        voteProposals[id].string=_proposalContent;
-        voteProposals[id].openSince=now;
-    }
+    // }
+    // function sendProposal(string _proposalContent) hasRightToProposeOrVote(){
+    //     uint id;
+    //     id=voteProposals.length;
+    //     voteProposals.length++;
+    //     voteProposals[id].string=_proposalContent;
+    //     voteProposals[id].openSince=now;
+    // }
 }

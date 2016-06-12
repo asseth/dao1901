@@ -41,6 +41,8 @@ $(function () {
     });
   });
   $('#getBureau').click(function() {
+    document.getElementById("error").innerHTML = "Recuperation des membres en cours...";
+
     var membersLength;
     var users = {};
     dao = Dao1901.deployed();
@@ -86,7 +88,8 @@ $(function () {
           table.appendChild(tr);
       }
       tablearea.appendChild(table);
-   }, 2000);
+      document.getElementById("error").innerHTML = "";
+   }, 4000);
 
   });
   $('#showMembers').click(function(){
@@ -95,9 +98,8 @@ $(function () {
   $('#addMembers').click(function(){
     dao = Dao1901.deployed();
     var addr = document.getElementById("address").value;
-    var vote = $('input[name=vote]').val();
-    var payed = $('input[name=payed]').val();
-    // console.log(vote.val(), payed.val())
+    var vote = $('#vote').is(':checked')
+    var payed = $('#payed').is(':checked')
     console.log(dao)
     dao.createMember.sendTransaction(addr, payed, vote, {from: account}).then(function(message) {
       document.getElementById("error").innerHTML = "Member ajouté avec succés !<br/>";
