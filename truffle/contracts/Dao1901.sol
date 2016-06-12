@@ -27,8 +27,13 @@ contract Dao1901 {
     function getMemberCanVote(address addr) returns(bool status){
         return members[memberId[addr]].canVote;
     }
-    function getMemberRole(address addr) returns(uint role){
-        return uint(members[memberId[addr]].role);
+    function getMemberRole(address addr) returns(string role){
+        if (members[memberId[addr]].role == RoleList.founder) return "Founders";
+        if (members[memberId[addr]].role == RoleList.secretary) return "Secreatary";
+        if (members[memberId[addr]].role == RoleList.president) return "President";
+        if (members[memberId[addr]].role == RoleList.treasurer) return "Treasurer";
+        if (members[memberId[addr]].role == RoleList.member) return "Members";
+        // return uint(members[memberId[addr]].role);
     }
     function getMemberAdresse(uint id) returns(address addr){
         return members[id].public_key;
@@ -95,22 +100,22 @@ contract Dao1901 {
     //     votes[id].end = "need to find a systeme"
     // }
 
-    voteProposals[] public proposal;
+    // voteProposals[] public proposal;
 
-     struct BooleanProposal {
-        string proposalContent;
-        uint openSince;
-        uint yes;
-        uint no;
-    }
+    //  struct BooleanProposal {
+    //     string proposalContent;
+    //     uint openSince;
+    //     uint yes;
+    //     uint no;
+    // }
 
 
-    function sendProposal(string _proposalContent) hasRightToProposeOrVote(){
-        uint id;
-        id=voteProposals.length;
-        voteProposals.length++;
-        voteProposals[id].string=_proposalContent;
-        voteProposals[id].openSince=now;
-    }
+    // function sendProposal(string _proposalContent) hasRightToProposeOrVote(){
+    //     uint id;
+    //     id=voteProposals.length;
+    //     voteProposals.length++;
+    //     voteProposals[id].string=_proposalContent;
+    //     voteProposals[id].openSince=now;
+    // }
 
 }
