@@ -36,12 +36,12 @@ contract Dao1901 {
     bool created;	// A dirty flag
 
     modifier isRole(RoleList role) {
-        if (memberId[msg.sender] == 0 || members[memberId[msg.sender]].role != role) return;
+        if (memberId[msg.sender] == 0 || members[memberId[msg.sender]].role != role) throw;
         _
     }
 
     modifier isAdmin() {	// Checks if sender is not a normal member and exists in database == is an admin
-        if (memberId[msg.sender] == 0 || members[memberId[msg.sender]].role == RoleList.member) return;
+        if (memberId[msg.sender] == 0 || members[memberId[msg.sender]].role == RoleList.member) throw;
         _
     }
 
@@ -56,7 +56,7 @@ contract Dao1901 {
     // Called only once by the founder
     function setBureau(address _secretary, address _president, address _treasurer) isRole(RoleList.founder) {
 
-        if(created == true) return;
+        if(created == true) throw;
 
         createMember(_secretary, true, true);
         members[memberId[_secretary]].role = RoleList.secretary;

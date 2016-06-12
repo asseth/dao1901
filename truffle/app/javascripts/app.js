@@ -31,15 +31,15 @@ $(function () {
     // var secretaire = document.getElementById("secretaire").value;
 
     var dao = Dao1901.deployed();
-    var membersLength;
-     var users
-    console.log(dao)
-
     dao.setBureau.sendTransaction(secretaire, president, tresorier, {from: account}).then(function(message) {
-      console.log(message)
+      document.location.href = "/monitor.html";
     }).catch(function(e) {
-      console.log(e);
+      document.getElementById("error").innerHTML = "Vous n'etes pas autorisé à modifier le bureau de l'association.<br/> <a href='/monitor.html'>Voir les membres du bureau</a>";
     });
+  });
+});
+    // var membersLength;
+    // var users
     // dao.getMemberLength.call({from: account}).then(function(message) {
     //   membersLength = message['c'][0]
     //   users = new Array(membersLength)
@@ -70,7 +70,6 @@ $(function () {
 
     // TODO : déployer le contrat avec les membres du bureau
     // TODO : ouvrir page
-  });
-});
+
 
 
