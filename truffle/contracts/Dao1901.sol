@@ -9,6 +9,14 @@ contract Dao1901 {
         RoleList role;		
         address public_key;	// address of the member
     }
+
+
+    
+    Member[] public members;	// Dynamic table of members (in storage)
+    mapping (address => uint) public memberId;	// A mapping to find a member by it's address
+    bool created;	// A dirty flag
+
+
     // Functions to query the database of members
     function getMemberSince(address addr) returns(uint memberSince){
         return members[memberId[addr]].memberSince;
@@ -25,15 +33,9 @@ contract Dao1901 {
     function getMemberAdresse(uint id) returns(address addr){
         return members[id].public_key;
     }
-    function getMemberLength() returns(uint size){
+    function getMembersLength() returns(uint size){
         return members.length;
     }
-
-    
-    Member[] public members;	// Dynamic table of members (in storage)
-    mapping (address => uint) public memberId;	// A mapping to find a member by it's address
-
-    bool created;	// A dirty flag
 
     modifier isRole(RoleList role) {
         if (memberId[msg.sender] == 0 || members[memberId[msg.sender]].role != role) throw;
@@ -42,6 +44,11 @@ contract Dao1901 {
 
     modifier isAdmin() {	// Checks if sender is not a normal member and exists in database == is an admin
         if (memberId[msg.sender] == 0 || members[memberId[msg.sender]].role == RoleList.member) throw;
+        _
+    }
+
+    modifier hasRightToProposeOrVote() {    // 
+        if (memberId[msg.sender] == 0 || members[memberId[msg.sender]].canVote == false) throw;
         _
     }
 
@@ -68,6 +75,8 @@ contract Dao1901 {
         created = true;
     }
     
+    // Right to create member is owned by all admins
+    // TODO : fire the founder of the admins
     function createMember(address _address, bool _payed, bool _vote) isAdmin() {
         uint id;
         memberId[_address] = id = members.length;	// Update of the mapping : new member's address to the last index of the table
@@ -85,4 +94,23 @@ contract Dao1901 {
     //     votes[id].questions = questions;
     //     votes[id].end = "need to find a systeme"
     // }
+
+    voteProposals[] public proposal;
+
+     struct BooleanProposal {
+        string proposalContent;
+        uint openSince;
+        uint yes;
+        uint no;
+    }
+
+
+    function sendProposal(string _proposalContent) hasRightToProposeOrVote(){
+        uint id;
+        id=voteProposals.length;
+        voteProposals.length++;
+        voteProposals[id].string=_proposalContent;
+        voteProposals[id].openSince=now;
+    }
+
 }
