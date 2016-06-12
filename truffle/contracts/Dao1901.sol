@@ -9,17 +9,17 @@ contract Dao1901 {
         RoleList role;
         address public_key;
     }
-    function getMemberSince(uint id) returns(uint memberSince){
-        return members[id].memberSince;
+    function getMemberSince(address addr) returns(uint memberSince){
+        return members[memberId[addr]].memberSince;
     }
-    function getMemberPayed(uint id) returns(bool status){
-        return members[id].payed;
+    function getMemberPayed(address addr) returns(bool status){
+        return members[memberId[addr]].payed;
     }
-    function getMemberCanVote(uint id) returns(bool status){
-        return members[id].canVote;
+    function getMemberCanVote(address addr) returns(bool status){
+        return members[memberId[addr]].canVote;
     }
-    function getMemberRole(uint id) returns(uint role){
-        return uint(members[id].role);
+    function getMemberRole(address addr) returns(uint role){
+        return uint(members[memberId[addr]].role);
     }
     function getMemberAdresse(uint id) returns(address addr){
         return members[id].public_key;
@@ -76,7 +76,7 @@ contract Dao1901 {
             role: RoleList.member, 
             memberSince: now, 
             payed: _payed,
-            public_key: msg.sender
+            public_key: _address
         });
     }
     
