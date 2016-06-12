@@ -49,9 +49,9 @@ $(function () {
       console.log(dao.getMemberAdresse.call(1, {from: account}))
       for(var i=1 ; i < membersLength; i++){
         dao.getMemberAdresse.call(i, {from: account}).then(function(address) {
-          users[address] = {'address': address}
+          users[address] = {}
           dao.getMemberSince.call(address, {from: account}).then(function(since) {
-            users[address]['since'] = since['c'][0]
+            users[address]['since'] = new Date( 1000 * since['c'][0])
           });
           dao.getMemberPayed.call(address, {from: account}).then(function(payed) {
             users[address]['payed'] = payed
@@ -72,32 +72,14 @@ $(function () {
     setTimeout(function(){ 
       console.log(users);
       var tablearea = document.getElementById('tablearea');
-
-//       var tr = [];
-
-//       var td1 = document.createElement('td');
-//       var td2 = document.createElement('td');
-
-//       var text1 = document.createTextNode('Text1');
-//       var text2 = document.createTextNode('Text2');
-
-//       for (var i = 1; i < 4; i++){
-//           tr[i] = document.createElement('tr');   
-//           for (var j = 1; j < 4; j++){
-//               td1.appendChild(text1);
-//               td2.appendChild(text2);
-//               tr[i].appendChild(td1);
-//               tr[i].appendChild(td2);
-//           }           
-//           table.appendChild(tr[i]);
-
-// }      
       var table = document.createElement('table');
+      var i = 1;
       for (var addr in users){
-
           var tr = document.createElement('tr'); 
+          var td = document.createElement('td');
+          td.appendChild(document.createTextNode(i++));
+          tr.appendChild(td);
           for (var key in users[addr])  {
-            console.log(users[addr][key])
             var td = document.createElement('td');
             td.appendChild(document.createTextNode(users[addr][key]));
             tr.appendChild(td);
@@ -105,7 +87,7 @@ $(function () {
           table.appendChild(tr);
       }
       tablearea.appendChild(table);
-   }, 3000);
+   }, 1000);
 
   });
 });
