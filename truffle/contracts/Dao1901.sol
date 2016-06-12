@@ -12,12 +12,9 @@
         address public_key; // address of the member
     }
 
-
-    
     Member[] public members;    // Dynamic table of members (in storage)
     mapping (address => uint) public memberId;  // A mapping to find a member by it's address
     bool created;   // A dirty flag
-
 
     // Functions to query the database of members
     function getMemberSince(address addr) returns(uint memberSince){
@@ -29,8 +26,13 @@
     function getMemberCanVote(address addr) returns(bool status){
         return members[memberId[addr]].canVote;
     }
-    function getMemberRole(address addr) returns(uint role){
-        return uint(members[memberId[addr]].role);
+    function getMemberRole(address addr) returns(string role){
+        if (members[memberId[addr]].role == RoleList.founder) return "Founders";
+        if (members[memberId[addr]].role == RoleList.secretary) return "Secreatary";
+        if (members[memberId[addr]].role == RoleList.president) return "President";
+        if (members[memberId[addr]].role == RoleList.treasurer) return "Treasurer";
+        if (members[memberId[addr]].role == RoleList.member) return "Members";
+        // return uint(members[memberId[addr]].role);
     }
     function getMemberAdresse(uint id) returns(address addr){
         return members[id].public_key;
@@ -53,7 +55,6 @@
         if (memberId[msg.sender] == 0 || members[memberId[msg.sender]].canVote == false) throw;
         _
     }
-
 
     function Dao1901(){
         members.length += 2;    // Adding two members to the table
@@ -91,15 +92,8 @@
             public_key: _address
         });
     }
-    
-    // function createBooleanVote(string questions) isRole(RoleList.president){
-    //     votes[id].questions = questions;
-    //     votes[id].end = "need to find a systeme"
-    // }
 
     BooleanProposal[] public voteProposals; // once validated by bureau, have to be voted by members
-    //BooleanProposal[] public rejectedProposals; 
-
 
     struct BooleanProposal {
         string proposalContent;
@@ -111,7 +105,6 @@
         bool validatedByBureau=false;
         VoteState state;
     }
-
 
     function votePreProposal(uint _id), bool vote) isAdmin(){
         uint id; // id for hasVoted[]
@@ -133,15 +126,14 @@
             if( voteProposals[_id].yes >= voteProposals[_id].no ){
                 voteProposals[_id].state=validated;
             } else {
-                
+    
             }
             // Reset the votes (because state is chosen as accepted or rejected, then members can vote)
             voteProposals[_id].yes=0;
             voteProposals[_id].no=0;
         }
-
-
     }
+    
     function sendProposal(string _proposalContent) hasRightToProposeOrVote(){
         uint id;
         id=voteProposals.length;
@@ -150,7 +142,5 @@
         voteProposals[id].openSince=now;
         voteProposals[id].state=proposed;
         voteProposals[id].hasVoted.length++; // hasVoted[0] will never contain an address (so the tests on mapping will work)
-
     }
-
 }

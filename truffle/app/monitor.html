@@ -3,7 +3,7 @@
 <head>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-  <link href="./app.css" rel='stylesheet' type='text/css'>
+  <!-- <link href="./app.css" rel='stylesheet' type='text/css'> -->
   <script src="./app.js"></script>
   <meta http-equiv="Content-Type" content = "text/html; charset=UTF-8" />
 </head>
@@ -16,13 +16,22 @@
 	<center><img src="images/banniereAssoLoi1901.png" style="width: 400px;"/><center>
   <br>
   
-  <button id="getBureau" type="button">Voir les membres</button> 
-  <div id="error"></div>
-  <div id="tablearea"></div>
-  <br>
-  <br>
-  <br>
-  <br>
-	<center><img src="images/logoEthereum.png" style="width: 400px;"/><center>
+  <button id="getBureau" type="button" style="font-size: 25px;">Voir les membres</button> 
+  <button id="showMembers" type="button" style="font-size: 25px;">Ajouter un membre</button> 
+  <div id="showAddMembers" hidden style="font-size: 25px;">
+  	<label for="address">Adresse:</label>
+  	<input type="text" id="address" placeholder="0x................................."></input>
+	<br>
+	<label for="tresorier">A payé:</label>
+	<input type="checkbox" id="payed" value="1" checked/>
+	<br>
+	<label for="secretaire">Peut voter:</label>
+	<input type="checkbox" id="vote" value="1" checked/>
+	<br>
+	<button id="addMembers" type="button"><img src = "images/boutonGo.png" style="width: 200px;"></button> 
+	</div>
+	<div id="error" style="font-size: 25px;"></div>
+	<div id="tablearea" style="font-size: 25px;"></div>
+
 </body>
 </html>
