@@ -1,13 +1,9 @@
 ## WORK IN PROGRESS ! 
 If you want to help, pull request
 
-# Introduction
-
-[some content]
-
 ## Description
 
-[some content]
+DAO 1901 is a non-profit oriented DAO framework. It is based on the [1901 Associations Law](https://en.wikipedia.org/wiki/Nonprofit_organization#France). 
 
 ## How to deploy (testing)
 
@@ -23,8 +19,3 @@ In another shell, run truffle
     truffle serve
 
 Open your web browser, and go to [http://localhost:8080](http://localhost:8080)
-
-
-## Support
-
-[some content]
