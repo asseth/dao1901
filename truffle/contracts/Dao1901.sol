@@ -1,4 +1,4 @@
-*contract Dao1901 {
+contract Dao1901 {
 
     enum RoleList { founder, secretary, president, treasurer, member } // Role Available in the DAO
 
