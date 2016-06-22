@@ -41,3 +41,13 @@ And then :
     "0xd9b..."
     > ethlove.areLinked.call(eth.accounts[1], eth.accounts[2])
     true
+
+
+Run tests
+=========
+
+Make sure you have a `geth --dev` running.
+
+Run `make TestDao1901`
+
+Once in the geth console, wait for the contract transaction to be mined and execute run `runTests()`
