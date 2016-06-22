@@ -1,16 +1,14 @@
 // Template to deploy contract compiled with solc --combined-json abi,bin
 // in geth console
 //
-// Used by compile.py
-//
-// Contracts are deployed using the coinbase address
+// Contract are deployed using the coinbase address
 
 var {name}AbiBin = {abi_bin};
 
 var {name}Contract = web3.eth.contract(JSON.parse({name}AbiBin.abi));
 
-var deploy{name} = function() {{
-    console.log('Deploying {name} contract...')
+function deploy{name}() {{
+    console.log('deploying {name} contract...')
     return {name}Contract.new(
         null,
         {{from:eth.coinbase,
@@ -20,15 +18,12 @@ var deploy{name} = function() {{
                 console.error(error);
                 return;
             }}
-
             if(!contract.address) {{
                 console.log(
-                    "Contract {name}: transaction sent: TransactionHash: " +
-                        contract.transactionHash + " waiting to be mined..."
-                );
+                    "contract {name} creation transaction: " +
+                        contract.transactionHash);
             }} else {{
-                console.log("Contract {name} mined! Address: " + contract.address);
-                console.log(contract);
+                console.log("contract {name} mined! Address: " + contract.address);
             }}
         }})
 }}

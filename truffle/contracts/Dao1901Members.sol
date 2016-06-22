@@ -1,6 +1,6 @@
 contract Dao1901Members {
 
-  /* The owner of the contract can add members and transfer membership.
+  /* The owner of the contract can add members and transfer ownership.
      initial value is the contract creator */
   address public owner = msg.sender;
 

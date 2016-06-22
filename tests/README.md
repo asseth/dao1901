@@ -4,6 +4,10 @@ Attach a console in dev mode
     geth --dev
     geth attach ipc:/tmp/ethereum_dev_mode/geth.ipc
 
+With an exec :
+
+    geth --exec "loadScript('TestDao1901Members.js')" attach ipc:/tmp/ethereum_dev_mode/geth.ipc
+
 
 Compile and deploy a contract
 =============================
