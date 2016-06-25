@@ -70,11 +70,9 @@ contract Dao1901Votes is owned {
   */
   Dao1901Members public membersContract;
 
-  function Dao1901(address _membersContract) {
+  function Dao1901Votes(address _membersContract) {
     membersContract = Dao1901Members(_membersContract);
   }
-
-  uint public nVotes;           /* Number of votes created */
 
   struct Vote {
     string choice;
@@ -83,14 +81,23 @@ contract Dao1901Votes is owned {
 
   /* Proposal entry */
   struct Proposal {
-    /* human-readable description of the proposal */
-    string description;
+    string description;              /* human-readable description of the proposal */
     uint deadline;                   /* time at which  the votes ends */
-    mapping (address => Vote) votes;      /* actual members votes storage */
     address head;                    /* linked list of voters */
+    mapping (address => Vote) votes; /* actual members votes storage */
   }
 
+  uint public nVotes;           /* Number of votes created */
   mapping (uint => Proposal) public proposals;
+
+  function createProposal(string _description, uint _daysUntilDeadline)
+    ownerOnly returns (uint)
+  {
+    nVotes = nVotes + 1; // we don't want to use index 0
+    proposals[nVotes].description = _description;
+    proposals[nVotes].deadline = now + _daysUntilDeadline * 1 days;
+    return nVotes;
+  }
 
   function vote(uint _voteId, string _choice) {
     /* XXX check gas value */
@@ -114,13 +121,9 @@ contract Dao1901Votes is owned {
     prop.votes[msg.sender].choice = _choice;
   }
 
-  function createProposal(string _description, uint _daysUntilDeadline)
-    ownerOnly returns (uint)
-  {
-    nVotes = nVotes + 1;
-    proposals[nVotes].description = _description;
-    proposals[nVotes].deadline = now + _daysUntilDeadline * 1 days;
-    return nVotes;
+  function getVote(uint _voteId, address _voter) returns (string, address) {
+    var vote = proposals[_voteId].votes[_voter];
+    return (vote.choice, vote.next);
   }
 
 }

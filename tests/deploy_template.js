@@ -7,10 +7,10 @@ var {name}AbiBin = {abi_bin};
 
 var {name}Contract = web3.eth.contract(JSON.parse({name}AbiBin.abi));
 
-function deploy{name}() {{
+function deploy{name}(arg) {{
     console.log('deploying {name} contract...')
     return {name}Contract.new(
-        null,
+        arg,
         {{from:eth.coinbase,
           data: {name}AbiBin.bin, gas: 1000000}},
         function(error, contract){{
