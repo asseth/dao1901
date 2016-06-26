@@ -15,9 +15,8 @@ function memberList(daoMembers) {
 function voteList(daoVote, voteId) {
     var votes = [];
     var addr = daoVote.proposals(voteId)[2]; // vote list head
-    console.log(addr)
     while (addr != 0) {
-        v = daoVote.call.getVote(voteId, addr);
+        v = daoVote.getVote(voteId, addr);
         votes.push(v[0]);
         addr = v[1];
     }
@@ -124,6 +123,7 @@ function runMemberTests() {
 
 function runVoteTests(daoVotes) {
 
+    console.log('voting dao initialization...');
     assert(daoVotes.owner() == alice, 'invalid vote contract owner');
     assert(daoVotes.membersContract() != 0,
            'Vote contract is lacking a members contract');
@@ -137,6 +137,7 @@ function runVoteTests(daoVotes) {
     admin.sleepBlocks(3);
 
     // non-owner tries to create a proposal
+    console.log('non-owner tries to create a proposal...');
     assert(daoVotes.nVotes() == 0, 'vote contract initilized with non zero votes');
     daoVotes.createProposal.sendTransaction('Merguez or Chipo ?', 7, {from:carol});
     admin.sleepBlocks(3);
@@ -151,14 +152,52 @@ function runVoteTests(daoVotes) {
            'proposal description incorrect');
 
     // carol tries to vote
-    console.log('voting...')
+    console.log('simple vote...');
     daoVotes.vote.sendTransaction(1, 'Chipo', {from:alice});
     daoVotes.vote.sendTransaction(1, 'Merguez', {from:bob});
-    daoVotes.vote.sendTransaction(1, 'Chipo', {from:carol});
+    daoVotes.vote.sendTransaction(1, 'Brochette', {from:carol});
     admin.sleepBlocks(3);
-    console.log(voteList())
+    var votes = voteList(daoVotes, 1);
+    assert(votes.length == 2, "Vote 1 should have 2 votes")
+    assert(votes.indexOf('Merguez') != -1, "Merguez vote not recorded")
+    assert(votes.indexOf('Chipo') != -1, "Chipo vote not recorded")
 
+    // voting twice updates the previous vote
+    console.log('update vote...');
+    daoVotes.createProposal.sendTransaction('Fork or Fork ?', 7, {from:alice});
+    admin.sleepBlocks(3);
+    daoVotes.vote.sendTransaction(2, 'Fork', {from:alice});
+    daoVotes.vote.sendTransaction(2, 'Fork', {from:bob});
+    admin.sleepBlocks(3);
+    daoVotes.vote.sendTransaction(2, 'No Fork', {from:alice});
+    admin.sleepBlocks(3);
 
+    votes = voteList(daoVotes, 2);
+    assert(votes.indexOf('No Fork') != -1, "alice vote was not updated");
+
+    // expired vote
+    console.log('expired vote...');
+    daoVotes.createProposal.sendTransaction(
+        'gege, pense aux cles du camion', 0, {from:alice});
+    admin.sleepBlocks(3);
+    daoVotes.vote.sendTransaction(3, 'foo', {from:alice});
+    daoVotes.vote.sendTransaction(3, 'bar', {from:bob});
+    admin.sleepBlocks(3);
+    votes = voteList(daoVotes, 3);
+    assert(votes.length == 0, "vote was not expired");
+
+    // empty choice is invalid
+    console.log('empty choice...');
+    daoVotes.createProposal.sendTransaction('eggs, bacon or spam ?', 7, {from:alice});
+    admin.sleepBlocks(3);
+    daoVotes.vote.sendTransaction(4, '', {from:alice});
+    assert(votes.length == 0, "empty choice was accepted");
+
+    // list proposals
+    console.log('listing proposals...');
+    for (i = 1; i <= daoVotes.nVotes(); i++) {
+        assert(daoVotes.proposals(i)[1] != 0, 'invalid proposal')
+    }
 
     return 'DAO 1901 - Votes - OK';
 }
