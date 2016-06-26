@@ -121,7 +121,9 @@ contract Dao1901Votes is owned {
     prop.votes[msg.sender].choice = _choice;
   }
 
-  function getVote(uint _voteId, address _voter) returns (string, address) {
+  function getVote(uint _voteId, address _voter)
+    constant returns (string, address)
+  {
     var vote = proposals[_voteId].votes[_voter];
     return (vote.choice, vote.next);
   }
