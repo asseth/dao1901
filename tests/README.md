@@ -1,7 +1,7 @@
 Attach a console in dev mode
 ============================
 
-    geth --dev
+    geth --dev --datadir//tmp/ethereum_dev_mode
     geth attach ipc:/tmp/ethereum_dev_mode/geth.ipc
 
 With an exec :
@@ -21,6 +21,7 @@ Example with ethlove (it creates EthLove.js) :
 In geth console :
 
     loadScript("<PATH>/EthLove.js")
+    personal.newAccount("dao1901")
     miner.start(1)
     personal.unlockAccount(eth.coinbase)
     var ethlove = deployEthLove()
