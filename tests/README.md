@@ -1,7 +1,7 @@
 Attach a console in dev mode
 ============================
 
-    geth --dev --datadir//tmp/ethereum_dev_mode
+    geth --dev --datadir /tmp/ethereum_dev_mode
     geth attach ipc:/tmp/ethereum_dev_mode/geth.ipc
 
 With an exec :
