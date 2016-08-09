@@ -1,21 +1,54 @@
-## WORK IN PROGRESS ! 
-If you want to help, pull request
+Attach a console in dev mode
+============================
 
-## Description
+    geth --dev --datadir /tmp/ethereum_dev_mode
+    geth attach ipc:/tmp/ethereum_dev_mode/geth.ipc
 
-DAO 1901 is a non-profit oriented DAO framework. It is based on the [1901 Associations Law](https://en.wikipedia.org/wiki/Nonprofit_organization#France). 
+With an exec :
 
-## How to deploy (testing)
+    geth --exec "loadScript('TestDao1901Members.js')" attach ipc:/tmp/ethereum_dev_mode/geth.ipc
 
-You need [testrpc](https://github.com/ethereumjs/testrpc) and [truffle](https://github.com/ConsenSys/truffle). 
 
-In a shell, run testrpc
+Compile and deploy a contract
+=============================
 
-    testrpc
+Requires: python3.5, solc, geth
 
-In another shell, run truffle
+Example with ethlove (it creates EthLove.js) :
 
-    cd truffle 
-    truffle serve
+    python3.5 compile.py ethlove.sol
 
-Open your web browser, and go to [http://localhost:8080](http://localhost:8080)
+In geth console :
+
+    loadScript("<PATH>/EthLove.js")
+    personal.newAccount("dao1901")
+    miner.start(1)
+    personal.unlockAccount(eth.coinbase)
+    var ethlove = deployEthLove()
+
+And then :
+
+    > eth.sendTransaction({from: eth.coinbase, to: eth.accounts[1], value: web3.toWei(1, "ether")})
+    "0x8ef..."
+    > eth.sendTransaction({from: eth.coinbase, to: eth.accounts[2], value: web3.toWei(1, "ether")})
+    "0x6b4..."
+    > ethlove.areLinked.call(eth.accounts[1], eth.accounts[2])
+    false
+    > ethlove.link.sendTransaction(eth.accounts[1], {from: eth.accounts[2]})
+    "0xca2..."
+    > ethlove.areLinked.call(eth.accounts[1], eth.accounts[2])
+    false
+    > ethlove.link.sendTransaction(eth.accounts[2], {from: eth.accounts[1]})
+    "0xd9b..."
+    > ethlove.areLinked.call(eth.accounts[1], eth.accounts[2])
+    true
+
+
+Run tests
+=========
+
+Make sure you have a `geth --dev` running.
+
+Run `make TestDao1901`
+
+Once in the geth console, wait for the contract transaction to be mined and execute run `runTests()`
