@@ -27,6 +27,12 @@ function assert(condition, message) {
     if (!condition) throw message;
 }
 
+// We want 3 accounts for our tests
+while (eth.accounts.length < 3) {
+    console.log("Creating test account...");
+    personal.newAccount(""); // Empty passphrase
+}
+
 miner.setEtherbase(eth.accounts[0]);
 miner.start(3);
 
@@ -120,8 +126,9 @@ function runMemberTests() {
     return 'DAO 1901 - Members - OK';
 };
 
+var daoVotes = deployDao1901Votes();
 
-function runVoteTests(daoVotes) {
+function runVoteTests() {
 
     console.log('voting dao initialization...');
     assert(daoVotes.owner() == alice, 'invalid vote contract owner');
