@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Form, FormControl, FormGroup } from 'react-bootstrap';
-import { Dao1901Members, web3 } from '../../../contracts/Dao1901Members.sol';
+import {Button, Form, FormControl, FormGroup} from 'react-bootstrap';
+import {Dao1901Members, web3} from '../../../contracts/Dao1901Members.sol';
 
 export default class Votes extends React.Component {
   constructor(props) {
@@ -10,7 +10,10 @@ export default class Votes extends React.Component {
       memberAddress: '',
       validationMemberAddress: null,
       validationYearsDuration: null,
-      yearsDuration: ''
+      yearsDuration: '',
+      dao1901Members_head: '',
+      dao1901Members_isMember: '',
+      dao1901Members_subscription1: ''
     };
 
     this.handleMemberAddressChange = this.handleMemberAddressChange.bind(this);
@@ -19,17 +22,37 @@ export default class Votes extends React.Component {
     this.subscribe = this.subscribe.bind(this);
   }
 
+  componentWillMount() {
+    Dao1901Members.head((e, r) => this.setState({dao1901Members_head: r}, () => {
+      if (this.state.dao1901Members_head != 0) {
+        Dao1901Members.isMember(this.state.dao1901Members_head, (e, r) => {
+          console.log('isMember: ', e, r);
+        })
+      }
+    }));
+
+    Dao1901Members.subscriptions('0xd8049babea3112caacfa9dfe40619c0aba0b7d91', (e, r) => {
+      //console.log(e, r);
+      this.setState({dao1901Members_subscription1: r[1]})
+    });
+  }
 
   memberList() {
-    var members = [];
-    var addr = Dao1901Members.head();
-    while (addr != 0) {
-      if (Dao1901Members.isMember.call(addr)) {
-        members.push(addr)
+    let members = [];
+    let addr = '';
+
+    Dao1901Members.head((e, r) => {
+      addr = r;
+      console.log('addr', addr);
+      while (!addr) {
+        console.log('WHILE addr', addr);
+        if (Dao1901Members.isMember.call(addr)) {
+          members.push(addr)
+        }
+        addr = Dao1901Members.subscriptions(addr)[1]; // Access with .next ?
       }
-      addr = Dao1901Members.subscriptions(addr)[1]; // Access with .next ?
-    }
-    return members;
+      return members;
+    });
   }
 
   handleMemberAddressChange(e) {
@@ -104,19 +127,21 @@ export default class Votes extends React.Component {
           </Button>
         </Form>
 
-
         <dl>
           <dt>Address</dt>
           <dd>Dao1901Members.address: {Dao1901Members.address}</dd>
 
           <dt>Head</dt>
-          <dd>Dao1901Members.head(): {Dao1901Members.head()}</dd>
+          <dd>Dao1901Members.head(): {this.state.dao1901Members_head}</dd>
 
           <dt>isMember</dt>
           <dd>
-            Dao1901Members.subscriptions(addr)[1]: {Dao1901Members.subscriptions('0xd8049babea3112caacfa9dfe40619c0aba0b7d91')[1]}</dd>
+            Dao1901Members.subscriptions(addr)[1]: {this.state.dao1901Members_subscription1}
+          </dd>
+
           <dd>
-            Dao1901Members.isMember.call(Dao1901Members.head()).toString(): {Dao1901Members.isMember.call(Dao1901Members.head()).toString()}</dd>
+            Dao1901Members.isMember.call(Dao1901Members.head()).toString(): {this.state.dao1901Members_isMember}
+          </dd>
         </dl>
       </div>
     );
