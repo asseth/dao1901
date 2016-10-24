@@ -28,7 +28,7 @@
     "solc-loader": "1.x",
     "source-map-support": "^0.4.1",
     "style-loader": "^0.13.1",
-    "web3": "^0.15.3",
+    "web3": "^0.16.0",
     "web3-loader": "1.x",
     "webpack": "^1.13.0",
     "webpack-node-externals": "^1.2.0"
