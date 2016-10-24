@@ -1,3 +1,5 @@
+pragma solidity ^0.4.2;
+
 contract Owned {
   /* The owner of the contract can add members and transfer ownership.
      initial value is the contract creator */
@@ -5,7 +7,7 @@ contract Owned {
 
   modifier ownerOnly() {
     if (msg.sender != owner) throw;
-    _
+    _;
   }
 
   /* transfer DAO1901 ownership */
