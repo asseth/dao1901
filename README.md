@@ -14,6 +14,22 @@ Go to http://localhost:8080/
 Enjoy!
 
 
+Run the app the javascript way
+==============================
+
+**Install all dependencies**
+`npm i`
+
+**Launch testrpc**
+`node_modules/.bin/testrpc`
+    
+**Serve the app**
+`npm start`
+    
+Go to http://localhost:8080/
+Enjoy!
+
+
 Attach a console in dev mode
 ============================
 
