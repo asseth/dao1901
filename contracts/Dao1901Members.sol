@@ -1,3 +1,5 @@
+pragma solidity ^0.4.2;
+
 import "Owned.sol";
 
 contract Dao1901Members is Owned {
@@ -33,7 +35,7 @@ contract Dao1901Members is Owned {
 
   modifier ownerOnly() {
     if (msg.sender != owner) throw;
-    _
+    _;
   }
 
   /* add / update (i.e. renew )the subscription of a member for a given
