@@ -126,9 +126,7 @@ function runMemberTests() {
     return 'DAO 1901 - Members - OK';
 };
 
-var daoVotes = deployDao1901Votes();
-
-function runVoteTests() {
+function runVoteTests(daoVotes) {
 
     console.log('voting dao initialization...');
     assert(daoVotes.owner() == alice, 'invalid vote contract owner');

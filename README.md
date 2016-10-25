@@ -18,11 +18,14 @@ It will open geth interactive javascript console
 Run tests in this geth javascript console
 =========================================
 
-    runMemberTests()
+After Dao1901Members contract is mined (save the returned address), 
+you can run the Members tests:
+    `runMemberTests()`
 
-then 
-
-    runVoteTests()
+and/or the Votes tests:
+    `var daoVotes = deployDao1901Votes(Dao1901Members_Contract_Address);`
+Wait Dao1901Votes to be mined, then:
+     `runVoteTests(daoVotes)`
 
 
 
