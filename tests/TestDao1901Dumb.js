@@ -162,7 +162,6 @@ function runVoteTests(daoVotes) {
     daoVotes.vote.sendTransaction(1, 'Brochette', {from:carol});
     admin.sleepBlocks(3);
     var votes = voteList(daoVotes, 1);
-    console.log('votes', votes);
     assert(votes.length == 2, "Vote 1 should have 2 votes")
     assert(votes.indexOf('Merguez') != -1, "Merguez vote not recorded")
     assert(votes.indexOf('Chipo') != -1, "Chipo vote not recorded")
