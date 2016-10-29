@@ -1,3 +1,6 @@
 tests/Dao1901Members.js
 tests/Dao1901Votes.js
 tests/owned.js
+.idea/
+build/
+node_modules/
