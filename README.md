@@ -10,9 +10,13 @@ Compile and deploy Dao1901 in dev mode in another shell
 =======================================================
  
     cd tests
-    make
+    python3.5 compile.py ../contracts/Dao1901.sol
 
-It will open geth interactive javascript console
+Three files are created (one per contracts)
+
+    geth --preload TestDao1901Dumb.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
+
+It will open geth interactive javascript console after having load TestDao1901Dumb.js
 
 
 Run tests in this geth javascript console
