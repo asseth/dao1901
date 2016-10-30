@@ -32,7 +32,7 @@ Wait Dao1901Members to be mined, then:
 
 Run the Votes tests:
 
-    var daoVotes = deployDao1901Votes(daoMembers.address);`
+    var daoVotes = deployDao1901Votes(daoMembers.address);
 
 Wait Dao1901Votes to be mined, then:
 
