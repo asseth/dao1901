@@ -128,8 +128,21 @@ function runMemberTests() {
     console.log('New owner adds a member...')
     assert(!daoMembers.isMember.call(carol), "Carol should not be a member");
     daoMembers.subscribe.sendTransaction(carol, 1, {from:bob});
+    daoMembers.subscribe.sendTransaction(alice, 1, {from:bob});
     admin.sleepBlocks(3);
     assert(daoMembers.isMember.call(carol), "Carol was not added by new owner");
+    assert(daoMembers.isMember.call(alice), "Alice was not added by new owner");
+
+    // Give back ownership of the contract to alice 
+    console.log('Owner transfer ownership...')
+    daoMembers.changeOwner.sendTransaction(alice, {from:bob});
+    admin.sleepBlocks(3);
+    assert(daoMembers.owner() == alice, "ownership was not transfered to Bob");
+
+
+    // At the end of this test: 
+    // - alice is the owner of the contract 
+    // - 3 members : bob, carol and alice
 
     return 'DAO 1901 - Members - OK';
 };
