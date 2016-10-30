@@ -23,6 +23,13 @@ function voteList(daoVote, voteId) {
     return votes;
 }
 
+// Security best practices ftw
+function unlockAllAccounts(){
+    for (i = 0; i < eth.accounts.length; i++) {
+        personal.unlockAccount(eth.accounts[i], "", 3600);
+    }
+}
+
 function assert(condition, message) {
     if (!condition) throw message;
 }
@@ -37,9 +44,7 @@ miner.setEtherbase(eth.accounts[0]);
 miner.start(3);
 
 // Security best practices ftw
-for (i = 0; i < eth.accounts.length; i++) {
-    personal.unlockAccount(eth.accounts[i], "", 3600);
-}
+unlockAllAccounts()
 
 var alice = eth.accounts[0];
 var bob = eth.accounts[1];
