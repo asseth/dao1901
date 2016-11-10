@@ -25,6 +25,7 @@
     "json-loader": "^0.5.4",
     "mocha": "^2.5.3",
     "mocha-webpack": "^0.4.0",
+    "solc": "^0.4.4",
     "solc-loader": "1.x",
     "source-map-support": "^0.4.1",
     "style-loader": "^0.13.1",
