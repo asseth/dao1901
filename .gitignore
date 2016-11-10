@@ -5,3 +5,4 @@ tests/owned.js
 build/
 node_modules/
 .tmp/
+npm-debug.log
