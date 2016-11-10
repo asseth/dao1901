@@ -4,3 +4,4 @@ tests/owned.js
 .idea/
 build/
 node_modules/
+.tmp/

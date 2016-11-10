@@ -53,4 +53,21 @@ module.exports = {
       }
     ],
   },
+  web3Loader: {
+    // Web3
+    provider: 'http://localhost:8545',
+
+    // Specify contract constructor parameters, if any.
+    // constructorParams: {
+    //   ContractOne: [ 'param1_value', 'param2_value' ]
+    // }
+    constructorParams: {},
+
+    // To use deployed contracts instead of redeploying, include contract addresses in config
+    // deployedContracts: {
+    //   ContractOne: '0x...........',
+    //   ContractTwo: '0x...........',
+    // }
+    deployedContracts: {}
+  }
 };

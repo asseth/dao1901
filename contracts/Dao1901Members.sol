@@ -12,24 +12,10 @@ contract Dao1901Members is Owned {
     address next;
   }
 
-  /* subscription storage.
-
-     The list of the DAO1901 members can be constructed like this :
-
-     addr = head
-     members = []
-     while True:
-         if isMember(addr):
-             members.append(addr)
-         addr = subscriptions[addr].next
-         if addr == 0x00:
-           break
-
-   */
   mapping (address => Sub) public subscriptions;
 
   /* Check that a given address is subscribed to the DAO1901 */
-  function isMember(address _member) returns (bool) {
+  function isMember(address _member) constant returns (bool) {
     return subscriptions[_member].end >= now;
   }
 

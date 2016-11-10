@@ -37,7 +37,7 @@ miner.setEtherbase(eth.accounts[0]);
 miner.start(3);
 
 // Security best practices ftw
-for (i = 0; i < eth.accounts.length; i++) {
+for (var i = 0; i < eth.accounts.length; i++) {
     personal.unlockAccount(eth.accounts[i], "", 3600);
 }
 
