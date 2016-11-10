@@ -6,13 +6,13 @@ import {Dao1901Votes} from "../../../../contracts/Dao1901Votes.sol";
 export default class DisplayVotes extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       proposalId: '',
       validationProposalId: null,
       votes: []
     };
-    
+
     this.getVotes = this.getVotes.bind(this);
     this.handleChangeProposalId = this.handleChangeProposalId.bind(this);
   }
