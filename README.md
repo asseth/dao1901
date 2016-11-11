@@ -17,23 +17,6 @@ Enjoy!
 
 Run the app with geth
 =====================
-
-Run the app the javascript way
-==============================
-
-**Install all dependencies**
-`npm i`
-
-**Launch testrpc**
-`node_modules/.bin/testrpc`
-    
-**Serve the app**
-`npm start`
-    
-Go to http://localhost:8080/
-Enjoy!
-
-
 Attach a console in dev mode
 ============================
 
@@ -44,7 +27,9 @@ Compile and deploy Dao1901 in dev mode in another shell
 =======================================================
 
     cd tests
-    python3.5 compile.py ../contracts/Dao1901.sol
+    python3.5 compile.py ../contracts/Owned.sol
+    python3.5 compile.py ../contracts/Dao1901Members.sol
+    python3.5 compile.py ../contracts/Dao1901Votes.sol
 
 Three files are created (one per contracts)
 
