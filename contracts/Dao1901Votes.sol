@@ -1,7 +1,7 @@
 pragma solidity ^0.4.4;
 
-import "Owned.sol";
-import "Dao1901Members.sol";
+import "./Owned.sol";
+import "./Dao1901Members.sol";
 
 contract Dao1901Votes is Owned {
 
