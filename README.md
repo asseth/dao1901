@@ -13,6 +13,8 @@ Run the app with testrpc, webpack & its loaders
 Go to http://localhost:8080/
 Enjoy!
 
+**Run Mocha tests**
+`npm run test`
 
 
 Run the app with geth
