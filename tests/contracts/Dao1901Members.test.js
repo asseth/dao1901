@@ -1,4 +1,5 @@
 import { Dao1901Members, web3 } from '../../contracts/Dao1901Members.sol';
+import { Dao1901Votes } from '../../contracts/Dao1901Votes.sol';
 
 const assert = require('chai').assert;
 
