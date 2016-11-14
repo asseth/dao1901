@@ -1,29 +1,55 @@
-Run the app with testrpc, webpack & its loaders
-===============================================
+Run the app with Testrpc
+========================
 
-**Install all dependencies**
-`npm i`
+Install all dependencies
 
-**Launch testrpc**
-`node_modules/.bin/testrpc`
+    npm i
+
+Launch testrpc
     
-**Serve the app**
-`npm start`
+    node_modules/.bin/testrpc
+    
+Serve the app
+
+    npm start
     
 Go to http://localhost:8080/
 Enjoy!
 
-**Run Mocha tests**
-`npm run test`
+Run Mocha tests
+
+    npm run test
 
 
-Run the app with geth
+Run the app with Geth
 =====================
-Attach a console in dev mode
-============================
 
-    geth --dev --datadir /tmp/ethereum_dev_mode
+Launch the node
 
+    geth --dev --rpc --rpccorsdomain="http://localhost:8080" --datadir /tmp/ethereum_dev_mode
+
+In an other shell, run the following to have a console
+    
+    geth --dev attach /tmp/ethereum_dev_mode/geth.ipc
+    
+Then you need a default account
+In the console, run 
+
+    // check if accounts exists
+    personal.listAccounts 
+    // create account if no one exists
+    // it will set eth.coinbase automatically
+    personal.newAccount("");
+    // check eth.coinbase
+    eth.coinbase
+    // unlock your account
+    personal.unlockAccount(eth.accounts[0], "", 3600);
+    
+    // run the miner 
+    miner.start(1)
+    
+Type `exit` to quit the console 
+    
 
 Compile and deploy Dao1901 in dev mode in another shell
 =======================================================
