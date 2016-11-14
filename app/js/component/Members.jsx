@@ -2,12 +2,15 @@ import React from 'react';
 import {Button, Form, FormControl, FormGroup} from 'react-bootstrap';
 import {Dao1901Members, web3} from '../../../contracts/Dao1901Members.sol';
 
+let members = [];
+
 export default class Votes extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
+      isMember: null,
       memberAddress: '',
+      memberAddressToCheck: '',
       validationMemberAddress: null,
       validationYearsDuration: null,
       yearsDuration: '',
@@ -15,44 +18,42 @@ export default class Votes extends React.Component {
       dao1901Members_isMember: '',
       dao1901Members_subscription1: ''
     };
-
+    this.checkMembership = this.checkMembership.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleMemberAddressChange = this.handleMemberAddressChange.bind(this);
     this.handleYearsDurationChange = this.handleYearsDurationChange.bind(this);
     this.memberList = this.memberList.bind(this);
     this.subscribe = this.subscribe.bind(this);
   }
 
-  componentWillMount() {
-    Dao1901Members.head((e, r) => this.setState({dao1901Members_head: r}, () => {
-      if (this.state.dao1901Members_head != 0) {
-        Dao1901Members.isMember(this.state.dao1901Members_head, (e, r) => {
-          console.log('isMember: ', e, r);
-        })
-      }
-    }));
-
-    Dao1901Members.subscriptions('0xd8049babea3112caacfa9dfe40619c0aba0b7d91', (e, r) => {
-      //console.log(e, r);
-      this.setState({dao1901Members_subscription1: r[1]})
+  componentDidMount() {
+    this.memberList((mElements) => {
+      members = mElements.map((m, i) => <p key={`member_${i}`}>member {i}: {m}</p>);
+      this.forceUpdate();
     });
+
+    Dao1901Members.head((e, r) => this.setState({dao1901Members_head: r}));
   }
 
-  memberList() {
+  memberList(cb) {
     let members = [];
     let addr = '';
-
     Dao1901Members.head((e, r) => {
       addr = r;
-      console.log('addr', addr);
-      while (!addr) {
-        console.log('WHILE addr', addr);
-        if (Dao1901Members.isMember.call(addr)) {
+      while (addr != 0) {
+        if (Dao1901Members.isMember(addr)) {
           members.push(addr)
         }
         addr = Dao1901Members.subscriptions(addr)[1]; // Access with .next ?
       }
-      return members;
+      cb(members);
     });
+  }
+
+  checkMembership(e) {
+    e.preventDefault();
+    let res = Dao1901Members.isMember(this.state.memberAddressToCheck).toString();
+    this.setState({isMember: res});
   }
 
   handleMemberAddressChange(e) {
@@ -77,15 +78,16 @@ export default class Votes extends React.Component {
     });
   }
 
-  subscribe(e) {
-    e.preventDefault();
-    console.log('this.state.memberAddress, this.state.yearsDuration', this.state.memberAddress, this.state.yearsDuration);
-    Dao1901Members.subscribe(this.state.memberAddress, this.state.yearsDuration);
+  handleChange(e) {
+    this.setState({[e.target.name]: e.target.value})
   }
 
+  subscribe(e) {
+    e.preventDefault();
+    Dao1901Members.subscribe.sendTransaction(this.state.memberAddress, this.state.yearsDuration, {from: web3.eth.accounts[0]});
+  }
 
   render() {
-    console.log('memberList', this.memberList());
     return (
       <div className="Dao1901Members">
         <h2>Dao1901Members</h2>
@@ -127,12 +129,35 @@ export default class Votes extends React.Component {
           </Button>
         </Form>
 
+        <Form inline>
+          <FormControl
+            name="memberAddressToCheck"
+            onChange={this.handleChange}
+            placeholder="Enter an address"
+            type="text"
+            value={this.state.memberAddressToCheck}
+          />
+          <Button
+            bsStyle="primary"
+            name="checkMembership"
+            onClick={this.checkMembership}
+            type="submit"
+          >
+            Check Membership
+          </Button>
+          <p>{this.state.isMember}</p>
+        </Form>
+
+        <div>
+          {members}
+        </div>
+
         <dl>
           <dt>Address</dt>
-          <dd>Dao1901Members.address: {Dao1901Members.address}</dd>
+          <dd>Dao1901Members.address (the contract address): {Dao1901Members.address}</dd>
 
           <dt>Head</dt>
-          <dd>Dao1901Members.head(): {this.state.dao1901Members_head}</dd>
+          <dd>Dao1901Members.head() (the last member): {this.state.dao1901Members_head}</dd>
 
           <dt>isMember</dt>
           <dd>
@@ -140,7 +165,7 @@ export default class Votes extends React.Component {
           </dd>
 
           <dd>
-            Dao1901Members.isMember.call(Dao1901Members.head()).toString(): {this.state.dao1901Members_isMember}
+            Dao1901Members.isMember(Dao1901Members.head()).toString(): {Dao1901Members.isMember(Dao1901Members.head())}
           </dd>
         </dl>
       </div>
