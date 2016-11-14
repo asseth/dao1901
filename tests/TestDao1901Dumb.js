@@ -16,7 +16,7 @@ function voteList(daoVote, voteId) {
     var votes = [];
     var addr = daoVote.proposals(voteId)[2]; // vote list head
     while (addr != 0) {
-        v = daoVote.getVote(voteId, addr);
+        var v = daoVote.getVote(voteId, addr);
         votes.push(v[0]);
         addr = v[1];
     }
@@ -25,7 +25,7 @@ function voteList(daoVote, voteId) {
 
 // Security best practices ftw
 function unlockAllAccounts(){
-    for (i = 0; i < eth.accounts.length; i++) {
+    for (var i = 0; i < eth.accounts.length; i++) {
         personal.unlockAccount(eth.accounts[i], "", 3600);
     }
 }
@@ -40,20 +40,20 @@ while (eth.accounts.length < 3) {
     personal.newAccount(""); // Empty passphrase
 }
 
-// Set account to receive ether (mining earns) 
+// Set account to receive ether (mining earns)
 miner.setEtherbase(eth.accounts[0]);
 
 // Start the miner to validate all the transactions below
 miner.start(3);
 
 // Security best practices ftw
-unlockAllAccounts()
+unlockAllAccounts();
 
 var alice = eth.accounts[0];
 var bob = eth.accounts[1];
 var carol = eth.accounts[2];
 
-admin.sleepBlocks(1); // block reward for alice 
+admin.sleepBlocks(1); // block reward for alice
 
 // Alice sends some ether to bob and carol, so everybody will have ether and the possibility to send transactions
 eth.sendTransaction({from:alice, to:bob, value: web3.toWei(1, "ether")})
@@ -133,15 +133,15 @@ function runMemberTests() {
     assert(daoMembers.isMember.call(carol), "Carol was not added by new owner");
     assert(daoMembers.isMember.call(alice), "Alice was not added by new owner");
 
-    // Give back ownership of the contract to alice 
+    // Give back ownership of the contract to alice
     console.log('Owner transfer ownership...')
     daoMembers.changeOwner.sendTransaction(alice, {from:bob});
     admin.sleepBlocks(3);
     assert(daoMembers.owner() == alice, "ownership was not transfered to Bob");
 
 
-    // At the end of this test: 
-    // - alice is the owner of the contract 
+    // At the end of this test:
+    // - alice is the owner of the contract
     // - 3 members : bob, carol and alice
 
     return 'DAO 1901 - Members - OK';
@@ -221,7 +221,7 @@ function runVoteTests(daoVotes) {
 
     // list proposals
     console.log('listing proposals...');
-    for (i = 1; i <= daoVotes.nVotes(); i++) {
+    for (var i = 1; i <= daoVotes.nVotes(); i++) {
         assert(daoVotes.proposals(i)[1] != 0, 'invalid proposal')
     }
 
