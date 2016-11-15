@@ -158,15 +158,6 @@ export default class Votes extends React.Component {
 
           <dt>Head</dt>
           <dd>Dao1901Members.head() (the last member): {this.state.dao1901Members_head}</dd>
-
-          <dt>isMember</dt>
-          <dd>
-            Dao1901Members.subscriptions(addr)[1]: {this.state.dao1901Members_subscription1}
-          </dd>
-
-          <dd>
-            Dao1901Members.isMember(Dao1901Members.head()).toString(): {Dao1901Members.isMember(Dao1901Members.head())}
-          </dd>
         </dl>
       </div>
     );
