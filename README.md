@@ -1,6 +1,6 @@
 Trello: https://trello.com/b/bVfPFfjM/tasks
 
-Requires: python3.5, solc, geth (can be executed in assethbox)
+Requires: python3.5, solc 0.4.2, geth (can be executed in assethbox)
 
 Attach a console in dev mode
 ============================
