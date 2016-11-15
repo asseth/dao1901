@@ -31,7 +31,7 @@ Run the app with Geth
 
 Launch the Geth node
 
-    geth --dev --rpc --rpccorsdomain="http://localhost:8080" --datadir /tmp/ethereum_dev_mode
+    geth --dev --rpc --rpcapi 'web3,eth,debug' --rpccorsdomain="*" --datadir /tmp/ethereum_dev_mode
 
 In an other shell, run the following to attach a console
 and preloading the test functions
@@ -73,6 +73,10 @@ then deploy contracts
     var Dao1901Members = deployDao1901Members();
     // when Dao1901Members is mined
     var Dao1901Votes = deployDao1901Votes(Dao1901Members.address);
+    
+then serve the app
+    
+    npm run start
 
 
 or DIY

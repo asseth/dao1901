@@ -1,9 +1,7 @@
 import React from 'react';
 import {Button, Form, FormControl, FormGroup} from 'react-bootstrap';
 import {Dao1901Members, web3} from '../../../contracts/Dao1901Members.sol';
-
 let members = [];
-
 export default class Votes extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +11,7 @@ export default class Votes extends React.Component {
       memberAddressToCheck: '',
       validationMemberAddress: null,
       validationYearsDuration: null,
+      subscribeSuccess: null,
       yearsDuration: '',
       dao1901Members_head: '',
       dao1901Members_isMember: '',
@@ -31,9 +30,37 @@ export default class Votes extends React.Component {
       members = mElements.map((m, i) => <p key={`member_${i}`}>member {i}: {m}</p>);
       this.forceUpdate();
     });
-
     Dao1901Members.head((e, r) => this.setState({dao1901Members_head: r}));
   }
+
+  /*
+  memberList(cb) {
+    let members = [];
+    let addr = '';
+    Dao1901Members.head((e, r) => {
+      addr = r;
+      while (addr != 0) {
+        Dao1901Members.isMember(addr, (errIsMember, isMember) => {
+          if (errIsMember) {
+            console.log('fails to retrieve isMember:', errIsMember);
+            return;
+          }
+          if (isMember) members.push(addr);
+
+          Dao1901Members.subscriptions(addr, (errSubscriptions, subscription) => {
+            if (errSubscriptions) {
+              console.log('fails to retrieve subscriptions.next:', errSubscriptions);
+              return;
+            }
+            addr = subscription[1];
+            console.log('addr------', addr);
+          });
+        });
+      }
+      cb(members);
+    });
+  }
+  */
 
   memberList(cb) {
     let members = [];
@@ -44,7 +71,7 @@ export default class Votes extends React.Component {
         if (Dao1901Members.isMember(addr)) {
           members.push(addr)
         }
-        addr = Dao1901Members.subscriptions(addr)[1]; // Access with .next ?
+        addr = Dao1901Members.subscriptions(addr)[1];
       }
       cb(members);
     });
@@ -84,14 +111,37 @@ export default class Votes extends React.Component {
 
   subscribe(e) {
     e.preventDefault();
-    Dao1901Members.subscribe.sendTransaction(this.state.memberAddress, this.state.yearsDuration, {from: web3.eth.accounts[0]});
+    console.log(' web3.eth.defaultAccount',  web3.eth.defaultAccount);
+    console.log('this.state.memberAddress', this.state.memberAddress);
+    //let tx = Dao1901Members.subscribe.sendTransaction(this.state.memberAddress, this.state.yearsDuration, {from: web3.eth.defaultAccount});
+    Dao1901Members.subscribe
+      .sendTransaction(this.state.memberAddress, this.state.yearsDuration,
+        (err, tx) => {
+          if (err) {
+            console.log('subscribe fails: ', err);
+            this.setState({subscribeSuccess: false});
+          }
+          else {
+            console.log(`${web3.eth.defaultAccount} add ${this.state.memberAddress}`);
+            console.log('subscribe TX: ', tx);
+            this.setState({subscribeSuccess: true});
+          }
+        });
   }
 
   render() {
+    let subscribeSuccess = '';
+    if (this.state.subscribeSuccess !== null) {
+      if (this.state.subscribeSuccess) {
+        subscribeSuccess = 'Send successfully';
+      } else {
+        subscribeSuccess = 'Failure. Check your permission';
+      }
+    }
     return (
       <div className="Dao1901Members">
         <h2>Dao1901Members</h2>
-        <h3>Add a member</h3>
+        <h3>Add/revoke a member</h3>
         <Form>
           <FormGroup
             controlId="memberAddress"
@@ -125,9 +175,14 @@ export default class Votes extends React.Component {
             onClick={this.subscribe}
             type="submit"
           >
-            Add Member
+            Submit
           </Button>
+          <div>
+            {subscribeSuccess}
+          </div>
         </Form>
+
+        <hr/>
 
         <Form inline>
           <FormControl
@@ -148,10 +203,12 @@ export default class Votes extends React.Component {
           <p>{this.state.isMember}</p>
         </Form>
 
+        <h3>Member list</h3>
         <div>
           {members}
         </div>
 
+        <hr/>
         <dl>
           <dt>Address</dt>
           <dd>Dao1901Members.address (the contract address): {Dao1901Members.address}</dd>

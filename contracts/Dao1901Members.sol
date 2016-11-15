@@ -19,10 +19,12 @@ contract Dao1901Members is Owned {
     return subscriptions[_member].end >= now;
   }
 
+  /*
   modifier ownerOnly() {
     if (msg.sender != owner) throw;
     _;
   }
+  */
 
   /* add / update (i.e. renew )the subscription of a member for a given
      number of years */

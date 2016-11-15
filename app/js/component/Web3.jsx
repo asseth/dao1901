@@ -1,11 +1,15 @@
 import React from 'react';
+import {SplitButton, MenuItem} from 'react-bootstrap';
 import {web3} from '../../../contracts/Dao1901Members.sol';
+
+let selectAccountsOptions = [];
 
 export default class Web3 extends React.Component {
   constructor() {
     super();
     this.state = {
       currentProvider_host: '',
+      defaultAccount: '',
       net_isListening: '',
       net_peerCount: '',
       eth_blockNumber: '',
@@ -14,7 +18,8 @@ export default class Web3 extends React.Component {
       version_getNetwork: '',
       version_getNode: '',
       version_getWhisper: ''
-    }
+    };
+    this.handleChangeDefaultAccount = this.handleChangeDefaultAccount.bind(this);
   }
 
   componentWillMount() {
@@ -56,6 +61,23 @@ export default class Web3 extends React.Component {
     });
   }
 
+  componentDidMount() {
+    web3.eth.getAccounts((err, accounts) => {
+      // set defaultAccount on the browser side
+      web3.eth.defaultAccount = accounts[0];
+      this.setState({defaultAccount: web3.eth.defaultAccount});
+      // set selectAccountsOptions
+      selectAccountsOptions = accounts.map((account, i) => <MenuItem eventKey={i} key={`selectAccounts_${i}`}>{account}</MenuItem>);
+      this.forceUpdate();
+    });
+  }
+
+  handleChangeDefaultAccount(accountIndex) {
+    web3.eth.defaultAccount = web3.eth.accounts[accountIndex];
+    this.setState({defaultAccount: web3.eth.defaultAccount});
+    console.log('Set web3.eth.defaultAccount to: ', web3.eth.defaultAccount);
+  }
+
   render() {
     return (
       <div className="Web3">
@@ -76,12 +98,16 @@ export default class Web3 extends React.Component {
 
         <h3>Eth</h3>
         <p>web3.eth.getBlockNumber: {this.state.eth_blockNumber}</p>
-        <h3>Accounts - web3.eth.accounts</h3>
-        <div>
-          {web3.eth.accounts.map(
-            (account, i) => <div key={account}>{i}: {account}</div>
-          )}
-        </div>
+
+        <h3>Select a new default account</h3>
+        <SplitButton
+          id={'selectAccounts'}
+          key={'selectAccounts'}
+          onSelect={this.handleChangeDefaultAccount}
+          title={this.state.defaultAccount}
+        >
+          {selectAccountsOptions}
+        </SplitButton>
       </div>
     );
   }

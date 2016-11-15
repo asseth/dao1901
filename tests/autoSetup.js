@@ -15,6 +15,10 @@ while (eth.accounts.length < 3) {
   personal.newAccount(""); // Empty passphrase
 }
 
+// set defaultAccount
+// transactional methods are based on defaultAccount
+web3.eth.defaultAccount = eth.accounts[0];
+
 // Set account to receive ether (mining earns)
 miner.setEtherbase(eth.accounts[0]);
 
