@@ -55,12 +55,13 @@ Auto Setup
 In the geth console, 
 load script "tests/autosetup.js"
 It will:
-* create 3 accounts if not already 3 (alias name alice, bob, carol)
-* run the miner (2 CPU) 
-* contracts ready to deploy
+ - create 3 accounts if not already 3 (alias name alice, bob, carol)
+ - run the miner (2 CPU) 
+ - contracts ready to deploy
 
-    
+```
     loadScript("tests/autosetup.js");
+```
    
 then deploy contracts
 
