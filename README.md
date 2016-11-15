@@ -1,3 +1,8 @@
+Requirements: 
+- python 3.5
+- solc 0.4.2
+
+
 Run the app with Testrpc
 ========================
 
