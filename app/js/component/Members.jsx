@@ -33,47 +33,37 @@ export default class Votes extends React.Component {
     Dao1901Members.head((e, r) => this.setState({dao1901Members_head: r}));
   }
 
-  /*
   memberList(cb) {
     let members = [];
     let addr = '';
     Dao1901Members.head((e, r) => {
       addr = r;
-      while (addr != 0) {
-        Dao1901Members.isMember(addr, (errIsMember, isMember) => {
-          if (errIsMember) {
-            console.log('fails to retrieve isMember:', errIsMember);
-            return;
-          }
-          if (isMember) members.push(addr);
-
-          Dao1901Members.subscriptions(addr, (errSubscriptions, subscription) => {
-            if (errSubscriptions) {
-              console.log('fails to retrieve subscriptions.next:', errSubscriptions);
+      let iterateOnSubscriptions = () => {
+        // First head is '0x' on metamask testnet
+        // '0x0000000000000000000000000000000000000000' on metamask local geth
+        // '0x0000000000000000000000000000000000000000' == 0
+        // '0x' != 0
+        if (addr != 0 && addr != '0x') {
+          Dao1901Members.isMember(addr, (errIsMember, isMember) => {
+            if (errIsMember) {
+              console.log('fails to retrieve isMember:', errIsMember);
               return;
             }
-            addr = subscription[1];
-            console.log('addr------', addr);
+            if (isMember) members.push(addr);
+            Dao1901Members.subscriptions(addr, (errSubscriptions, subscription) => {
+              if (errSubscriptions) {
+                console.log('fails to retrieve subscriptions.next:', errSubscriptions);
+                return;
+              }
+              addr = subscription[1]; // the next element
+              iterateOnSubscriptions();
+            });
           });
-        });
-      }
-      cb(members);
-    });
-  }
-  */
-
-  memberList(cb) {
-    let members = [];
-    let addr = '';
-    Dao1901Members.head((e, r) => {
-      addr = r;
-      while (addr != 0) {
-        if (Dao1901Members.isMember(addr)) {
-          members.push(addr)
+        } else {
+          cb(members);
         }
-        addr = Dao1901Members.subscriptions(addr)[1];
-      }
-      cb(members);
+      };
+      iterateOnSubscriptions();
     });
   }
 
@@ -111,11 +101,11 @@ export default class Votes extends React.Component {
 
   subscribe(e) {
     e.preventDefault();
-    console.log(' web3.eth.defaultAccount',  web3.eth.defaultAccount);
+    console.log(' web3.eth.defaultAccount', web3.eth.defaultAccount);
     console.log('this.state.memberAddress', this.state.memberAddress);
     //let tx = Dao1901Members.subscribe.sendTransaction(this.state.memberAddress, this.state.yearsDuration, {from: web3.eth.defaultAccount});
     Dao1901Members.subscribe
-      .sendTransaction(this.state.memberAddress, this.state.yearsDuration,
+      .sendTransaction(this.state.memberAddress, this.state.yearsDuration, {gas: 70000}, // gasUsed: 68642
         (err, tx) => {
           if (err) {
             console.log('subscribe fails: ', err);
