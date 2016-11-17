@@ -10,6 +10,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
   },
+  devtool: "sourcemap",
   output: {
     path: path.resolve(__dirname, 'build/js'),
     publicPath: '/js/',
