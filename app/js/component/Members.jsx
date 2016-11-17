@@ -1,7 +1,9 @@
 import React from 'react';
 import {Button, Form, FormControl, FormGroup} from 'react-bootstrap';
 import {Dao1901Members, web3} from '../../../contracts/Dao1901Members.sol';
+
 let members = [];
+
 export default class Votes extends React.Component {
   constructor(props) {
     super(props);
@@ -69,8 +71,9 @@ export default class Votes extends React.Component {
 
   checkMembership(e) {
     e.preventDefault();
-    let res = Dao1901Members.isMember(this.state.memberAddressToCheck).toString();
-    this.setState({isMember: res});
+    Dao1901Members.isMember(this.state.memberAddressToCheck, (e, r) => {
+      this.setState({isMember: r.toString()});
+    });
   }
 
   handleMemberAddressChange(e) {
@@ -131,6 +134,10 @@ export default class Votes extends React.Component {
     return (
       <div className="Dao1901Members">
         <h2>Dao1901Members</h2>
+        <h3>Infos</h3>
+        <p>Dao1901Members Contract Address: {Dao1901Members.address}</p>
+        <p>Dao1901Members.head() (the last member): {this.state.dao1901Members_head}</p>
+
         <h3>Add/revoke a member</h3>
         <Form>
           <FormGroup
@@ -195,17 +202,8 @@ export default class Votes extends React.Component {
 
         <h3>Member list</h3>
         <div>
-          {members}
+          {members.length !== 0 ? members : 'No Members'}
         </div>
-
-        <hr/>
-        <dl>
-          <dt>Address</dt>
-          <dd>Dao1901Members.address (the contract address): {Dao1901Members.address}</dd>
-
-          <dt>Head</dt>
-          <dd>Dao1901Members.head() (the last member): {this.state.dao1901Members_head}</dd>
-        </dl>
       </div>
     );
   }
