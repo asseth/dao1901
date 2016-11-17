@@ -27,7 +27,6 @@ function voteList(Dao1901Votes, voteId) {
 function runMemberTests() {
     assert(Dao1901Members.address, "contract is not deployed");
     assert(Dao1901Members.owner() == alice, "first owner is not contract creator");
-    console.log('Dao1901Members', JSON.stringify(Dao1901Members));
     assert(Dao1901Members.head() == 0x00, "members list head is not correctly initialized");
 
     assert(!Dao1901Members.isMember(bob), "Bob is a DAO member before subscribing");
@@ -123,16 +122,16 @@ function runVoteTests(Dao1901Votes) {
 
     // non-owner tries to create a proposal
     console.log('non-owner tries to create a proposal...');
-    assert(Dao1901Votes.nVotes() == 0, 'vote contract initilized with non zero votes');
+    assert(Dao1901Votes.nProposals() == 0, 'vote contract initilized with non zero votes');
     Dao1901Votes.createProposal.sendTransaction('Merguez or Chipo ?', 7, {from:carol});
     admin.sleepBlocks(3);
-    assert(Dao1901Votes.nVotes() == 0, 'non owner could create a vote');
+    assert(Dao1901Votes.nProposals() == 0, 'non owner could create a vote');
 
     // owner creates a proposal
     console.log('creating a proposal...');
     Dao1901Votes.createProposal.sendTransaction('Merguez or Chipo ?', 7, {from:alice});
     admin.sleepBlocks(3);
-    assert(Dao1901Votes.nVotes() == 1, 'proposal creation failed');
+    assert(Dao1901Votes.nProposals() == 1, 'proposal creation failed');
     assert(Dao1901Votes.proposals(1)[0] == 'Merguez or Chipo ?',
            'proposal description incorrect');
 
@@ -180,7 +179,7 @@ function runVoteTests(Dao1901Votes) {
 
     // list proposals
     console.log('listing proposals...');
-    for (var i = 1; i <= Dao1901Votes.nVotes(); i++) {
+    for (var i = 1; i <= Dao1901Votes.nProposals(); i++) {
         assert(Dao1901Votes.proposals(i)[1] != 0, 'invalid proposal')
     }
 

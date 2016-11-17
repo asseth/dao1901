@@ -5,9 +5,6 @@ import "./Dao1901Members.sol";
 
 contract Dao1901Votes is Owned {
 
-  /* Address of the contract that implements :
-         function isMember(address addr) returns (bool)
-  */
   Dao1901Members public membersContract;
 
   function Dao1901Votes(address _membersContract) {
@@ -27,26 +24,26 @@ contract Dao1901Votes is Owned {
     mapping (address => Vote) votes; /* actual members votes storage */
   }
 
-  uint public nVotes;           /* Number of votes created */
+  uint public nProposals;            /* Number of proposals created */
   mapping (uint => Proposal) public proposals;
 
   function createProposal(string _description, uint _daysUntilDeadline)
     ownerOnly returns (uint)
   {
-    nVotes = nVotes + 1; // we don't want to use index 0
-    proposals[nVotes].description = _description;
-    proposals[nVotes].deadline = now + _daysUntilDeadline * 1 days;
-    return nVotes;
+    nProposals = nProposals + 1; // incr. index, we don't want to use index 0
+    proposals[nProposals].description = _description;
+    proposals[nProposals].deadline = now + _daysUntilDeadline * 1 days;
+    return nProposals;
   }
 
-  function vote(uint _voteId, string _choice) {
+  function vote(uint _propId, string _choice) {
     /* XXX check gas value */
     if(!membersContract.isMember.gas(1000)(msg.sender)) throw;
 
     /* Invalid proposal id */
-    if (_voteId == 0 || _voteId > nVotes) throw;
+    if (_propId == 0 || _propId > nProposals) throw;
 
-    var prop = proposals[_voteId];
+    var prop = proposals[_propId];
 
     /* Voting has ended */
     if(prop.deadline < now) throw;
@@ -61,11 +58,10 @@ contract Dao1901Votes is Owned {
     prop.votes[msg.sender].choice = _choice;
   }
 
-  function getVote(uint _voteId, address _voter)
+  function getVote(uint _propId, address _voter)
     constant returns (string, address)
   {
-    var vote = proposals[_voteId].votes[_voter];
+    var vote = proposals[_propId].votes[_voter];
     return (vote.choice, vote.next);
   }
-
 }
