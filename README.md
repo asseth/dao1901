@@ -65,7 +65,7 @@ load script "tests/autosetup.js"
 It will:
  - create 3 accounts if not already 3 (alias name alice, bob, carol)
  - run the miner (2 CPU) 
- - contracts ready to deploy
+ - load contract deployment functions
 
 ```
     loadScript("tests/autosetup.js");
@@ -82,8 +82,8 @@ then serve the app
     npm run start
 
 
-or DIY
-======
+or Do It Yourself
+=================
 
     // loadScript("TestDao1901.js")    // equiv to --preload
     // check if accounts exists
@@ -100,8 +100,8 @@ run the miner
 
     miner.start(2)
     
-Deploy the contracts
-====================
+**Deploy the contracts**
+
 load the Dao1901Members deploy function
 and run it.
 you also initiate daoMembers variable with the returned js object,
