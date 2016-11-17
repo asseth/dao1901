@@ -1,25 +1,18 @@
 import React from "react";
 import {Button, FormControl, FormGroup, HelpBlock} from "react-bootstrap";
-
 import {Dao1901Votes, web3} from "../../../../contracts/Dao1901Votes.sol";
 
 export default class Votes extends React.Component {
   constructor(props) {
     super(props);
-
     this.defaultVoteFormState = {
       proposalId: '',
-      validationVoteAddressFrom: null,
       validationProposalId: null,
       validationVoteValue: null,
-      voteAddressFrom: '',
       voteValue: ''
     };
     this.state = this.defaultVoteFormState;
-    this.voteFormError = '';
-
     this.handleChangeProposalId = this.handleChangeProposalId.bind(this);
-    this.handleChangeVoteAddressFrom = this.handleChangeVoteAddressFrom.bind(this);
     this.handleChangeVoteValue = this.handleChangeVoteValue.bind(this);
     this.onVoteSubmit = this.onVoteSubmit.bind(this);
   }
@@ -31,17 +24,6 @@ export default class Votes extends React.Component {
         this.setState({validationProposalId: Number.isInteger(Number(this.state.proposalId)) ? 'success' : 'error'})
       } else {
         this.setState({validationProposalId: null})
-      }
-    });
-  }
-
-  handleChangeVoteAddressFrom(e) {
-    this.setState({[e.target.name]: e.target.value}, () => {
-      // Validation
-      if (this.state.voteAddressFrom) {
-        this.setState({validationVoteAddressFrom: web3.isAddress(this.state.voteAddressFrom) ? 'success' : 'error'})
-      } else {
-        this.setState({validationVoteAddressFrom: null})
       }
     });
   }
@@ -59,11 +41,10 @@ export default class Votes extends React.Component {
 
   onVoteSubmit(e) {
     e.preventDefault();
-    try {
-      Dao1901Votes.vote.sendTransaction(this.state.proposalId, this.state.voteValue, {from: this.state.voteAddressFrom});
-    } catch(error) {
-      this.voteFormError = error;
-    }
+    Dao1901Votes.vote.sendTransaction(this.state.proposalId, this.state.voteValue,
+      {from: web3.eth.defaultAccount}, (err) => {
+        if (err) throw new Error(err.message);
+      });
     // Clear form fields
     this.setState(this.defaultVoteFormState);
   }
@@ -74,21 +55,6 @@ export default class Votes extends React.Component {
         <h2>Vote for a Proposal</h2>
         <form>
           <FormGroup
-            controlId="validationVoteAddressFrom"
-            validationState={this.state.validationVoteAddressFrom}
-          >
-            <FormControl
-              label="voteAddressFrom"
-              name="voteAddressFrom"
-              onChange={this.handleChangeVoteAddressFrom}
-              placeholder="Enter a valid ethereum address"
-              value={this.state.voteAddressFrom}
-            />
-            <FormControl.Feedback />
-            <HelpBlock>Enter a valid ethereum address</HelpBlock>
-          </FormGroup>
-
-          <FormGroup
             controlId="validationProposalId"
             validationState={this.state.validationProposalId}
           >
@@ -96,11 +62,11 @@ export default class Votes extends React.Component {
               label="proposalId"
               name="proposalId"
               onChange={this.handleChangeProposalId}
-              placeholder="Enter a number"
+              placeholder="Enter the proposal ID"
               value={this.state.proposalId}
             />
             <FormControl.Feedback />
-            <HelpBlock>Enter a number</HelpBlock>
+            <HelpBlock>Enter the proposal ID as an integer</HelpBlock>
           </FormGroup>
 
           <FormGroup
@@ -122,7 +88,6 @@ export default class Votes extends React.Component {
             className="m-top-15"
             bsStyle="primary"
             disabled={
-              this.state.validationVoteAddressFrom !== 'success' ||
               this.state.validationProposalId !== 'success' ||
               this.state.validationVoteValue !== 'success'
             }
@@ -132,9 +97,6 @@ export default class Votes extends React.Component {
             Submit
           </Button>
         </form>
-
-        {/*For debugging purposes*/}
-        {this.voteFormError.message}
       </div>
     );
   }

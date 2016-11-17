@@ -7,7 +7,6 @@ export default class Votes extends React.Component {
   constructor(props) {
     super(props);
     this.defaultProposalFormState = {
-      proposalAddressFrom: '',
       proposalDesc: '',
       proposalDeadline: '',
       validationProposalAddressFrom: null,
@@ -17,7 +16,6 @@ export default class Votes extends React.Component {
     this.state = this.defaultProposalFormState;
 
     // Proposal
-    this.handleChangeProposalAddressFrom = this.handleChangeProposalAddressFrom.bind(this);
     this.handleChangeProposalDeadline = this.handleChangeProposalDeadline.bind(this);
     this.handleChangeProposalDesc = this.handleChangeProposalDesc.bind(this);
     this.onProposalSubmit = this.onProposalSubmit.bind(this);
@@ -46,27 +44,24 @@ export default class Votes extends React.Component {
     });
   }
 
-  handleChangeProposalAddressFrom(e) {
-    this.setState({[e.target.name]: e.target.value}, () => {
-      // Validation
-      if (this.state.proposalAddressFrom) {
-        this.setState({validationProposalAddressFrom: web3.isAddress(this.state.proposalAddressFrom) ? 'success' : 'error'})
-      } else {
-        this.setState({validationProposalAddressFrom: null})
-      }
-    });
-  }
-
   onProposalSubmit(e) {
     e.preventDefault();
     Dao1901Votes.createProposal.sendTransaction(
       this.state.proposalDesc,
       this.state.proposalDeadline,
-      {from: this.state.proposalAddressFrom}
+      {from: web3.eth.defaultAccount}, (err, tx) => {
+        if (err) {
+          throw new Error(err.message);
+        }
+        console.log('TX createProposal successful. Tx Hash: ', tx);
+        // Clear form fields
+        this.setState(this.defaultProposalFormState);
+
+        // Check if Tx is mined
+        // eth.getTransactionReceipt(transactionHash)
+        // then call this.props.getAllProposals();
+      }
     );
-    this.props.addProposalToList();
-    // Clear form fields
-    this.setState(this.defaultProposalFormState);
   }
 
 
@@ -75,21 +70,6 @@ export default class Votes extends React.Component {
       <div id="proposalForm">
         <h2>Proposal Submission</h2>
         <form>
-          <FormGroup
-            controlId="validationProposalAddressFrom"
-            validationState={this.state.validationProposalAddressFrom}
-          >
-            <FormControl
-              label="proposalAddressFrom"
-              name="proposalAddressFrom"
-              onChange={this.handleChangeProposalAddressFrom}
-              placeholder="Enter a valid ethereum address"
-              value={this.state.proposalAddressFrom}
-            />
-            <FormControl.Feedback />
-            <HelpBlock>Enter a valid ethereum address</HelpBlock>
-          </FormGroup>
-
           <FormGroup
             controlId="validationProposalDesc"
             validationState={this.state.validationProposalDesc}
@@ -128,7 +108,6 @@ export default class Votes extends React.Component {
             className="m-top-15"
             bsStyle="primary"
             disabled={!(
-              this.state.validationProposalAddressFrom === 'success' &&
               this.state.validationProposalDesc === 'success' &&
               this.state.validationProposalDeadline === 'success'
             )}

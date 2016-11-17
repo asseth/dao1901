@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Image, Row } from 'react-bootstrap';
 import Owned from './Owned';
 import Members from './Members';
-import Votes from './Dao1901Votes/Votes';
+import Votes from './Dao1901Votes/VotesContainer';
 import Web3 from './Web3';
 
 export default function App() {

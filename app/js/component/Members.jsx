@@ -179,8 +179,7 @@ export default class Votes extends React.Component {
           </div>
         </Form>
 
-        <hr/>
-
+        <h3>Check Membership</h3>
         <Form inline>
           <FormControl
             name="memberAddressToCheck"
@@ -195,7 +194,7 @@ export default class Votes extends React.Component {
             onClick={this.checkMembership}
             type="submit"
           >
-            Check Membership
+            Submit
           </Button>
           <p>{this.state.isMember}</p>
         </Form>
