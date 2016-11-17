@@ -1,6 +1,8 @@
 tests/Dao1901Members.js
 tests/Dao1901Votes.js
-tests/owned.js
+tests/Owned.js
 .idea/
 build/
 node_modules/
+.tmp/
+npm-debug.log
