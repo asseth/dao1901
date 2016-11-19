@@ -101,7 +101,6 @@ export default class Votes extends React.Component {
               value={this.state.proposalDeadline}
             />
             <FormControl.Feedback />
-            <HelpBlock>Days should be expressed as a number</HelpBlock>
           </FormGroup>
 
           <Button

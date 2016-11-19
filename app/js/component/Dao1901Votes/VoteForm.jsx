@@ -66,7 +66,6 @@ export default class Votes extends React.Component {
               value={this.state.proposalId}
             />
             <FormControl.Feedback />
-            <HelpBlock>Enter the proposal ID as an integer</HelpBlock>
           </FormGroup>
 
           <FormGroup
@@ -81,7 +80,6 @@ export default class Votes extends React.Component {
               value={this.state.voteValue}
             />
             <FormControl.Feedback />
-            <HelpBlock>Enter your vote</HelpBlock>
           </FormGroup>
 
           <Button

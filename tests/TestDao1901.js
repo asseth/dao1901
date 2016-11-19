@@ -180,8 +180,12 @@ function runVoteTests(Dao1901Votes) {
     // list proposals
     console.log('listing proposals...');
     for (var i = 1; i <= Dao1901Votes.nProposals(); i++) {
-        assert(Dao1901Votes.proposals(i)[1] != 0, 'invalid proposal')
+      assert(Dao1901Votes.proposals(i)[0] != 0, 'invalid description in proposal');
+      assert(Dao1901Votes.proposals(i)[1] != 0, 'invalid deadline in proposal');
+      assert(Dao1901Votes.proposals(i)[2] != 0, 'invalid head in proposal');
     }
+
+    // TODO list votes
 
     return 'DAO 1901 - Votes - OK';
 }

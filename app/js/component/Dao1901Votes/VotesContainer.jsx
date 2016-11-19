@@ -1,9 +1,10 @@
 import {Dao1901Votes} from "../../../../contracts/Dao1901Votes.sol";
 import React from "react";
-import DisplayVotes from './DisplayVotes';
+import VotesByProposalForm from './VotesByProposalForm';
 import ProposalForm from './ProposalForm';
 import List from './List';
 import ProposalsListItem from './ProposalsListItem';
+import VotesListItem from './VotesListItem';
 import VoteForm from './VoteForm';
 
 export default class Votes extends React.Component {
@@ -11,12 +12,13 @@ export default class Votes extends React.Component {
     super(props);
     this.state = {
       proposalListItems: [],
-      totalProposals: null
+      totalProposals: null,
+      votesListItems: []
     };
     this.getAllProposals = this.getAllProposals.bind(this);
+    this.getAllVotesByProposal = this.getAllVotesByProposal.bind(this);
     this.getProposalByIndex = this.getProposalByIndex.bind(this);
     this.getTotalProposals = this.getTotalProposals.bind(this);
-    this.voteList = this.voteList.bind(this);
   }
 
   componentWillMount() {
@@ -30,7 +32,11 @@ export default class Votes extends React.Component {
    * @param cb
    */
   getProposalByIndex(proposalIndex, cb) {
-    Dao1901Votes.proposals(proposalIndex, (e, proposal) => {
+    Dao1901Votes.proposals(proposalIndex, (err, proposal) => {
+      if (err) {
+        throw new Error(err.message);
+      }
+      console.log('proposal', proposal);
       cb(proposal[0], proposal[1].toNumber())
     });
   }
@@ -57,6 +63,32 @@ export default class Votes extends React.Component {
     });
   }
 
+  /**
+   * Get All Votes By Proposal
+   * @param proposalId
+   * @returns {Array}
+   */
+  getAllVotesByProposal(proposalId) {
+    console.log('proposalId', proposalId);
+    let votesListItems = [];
+    let addr = 0;
+    this.getProposalByIndex(proposalId, (proposalDesc, proposalDeadline, voterHead) => {
+      addr = voterHead;
+      console.log('addr getAllVotesByProposal', addr);
+      if (addr != 0) {
+        Dao1901Votes.getVote(proposalId, addr, (v) => {
+          votesListItems.push(v[0]);
+          addr = v[1];
+        });
+      }
+    });
+    return votesListItems;
+  }
+
+  /**
+   * Get Total Proposals
+   * @param cb
+   */
   getTotalProposals(cb) {
     Dao1901Votes.nProposals((err, total) => {
       if (err) {
@@ -64,18 +96,6 @@ export default class Votes extends React.Component {
       }
       this.setState({totalProposals: total.toNumber()}, cb(total.toNumber()));
     });
-  }
-
-  // Retrieve the votes
-  voteList(voteId) {
-    var votes = [];
-    var addr = Dao1901Votes.proposals(voteId)[2]; // vote list head
-    while (addr != 0) {
-      let v = Dao1901Votes.getVote(voteId, addr);
-      votes.push(v[0]);
-      addr = v[1];
-    }
-    return votes;
   }
 
   render() {
@@ -89,7 +109,6 @@ export default class Votes extends React.Component {
         <p>{`There are ${this.state.totalProposals} proposals`}</p>
         <List
           component={ProposalsListItem}
-          getAllProposals={this.getAllProposals}
           items={this.state.proposalListItems}
         />
 
@@ -97,7 +116,14 @@ export default class Votes extends React.Component {
 
         <VoteForm/>
 
-        <DisplayVotes />
+        <VotesByProposalForm
+          getAllVotesByProposal={this.getAllVotesByProposal}
+        />
+
+        <List
+          component={VotesListItem}
+          items={this.state.votesListItems}
+        />
       </div>
     );
   }
