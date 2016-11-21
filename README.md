@@ -1,4 +1,4 @@
-Requirements: 
+Requirements:
 - python 3.5
 - solc 0.4.4
 
@@ -11,16 +11,16 @@ Run the app with Testrpc
 
 Install all dependencies
 
-    npm i
+    npm install
 
 Launch testrpc
-    
+
     node_modules/.bin/testrpc
-    
+
 Serve the app
 
     npm start
-    
+
 Go to http://localhost:8080/
 Enjoy!
 
@@ -38,16 +38,16 @@ Launch the Geth node
 
 In an other shell, run the following to attach a console
 and preloading the test functions
-    
+
     geth --dev --preload tests/TestDao1901.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
-    
+
 
 Make contracts ready to be deployed
 ===================================
 run
 
     npm run compile
-     
+
 or if you like typing
 
     cd tests
@@ -57,28 +57,28 @@ or if you like typing
 
 Three files are created (one per contracts)
 
-    
+
 Auto Setup
 ==========
-In the geth console, 
+In the geth console,
 load script "tests/autosetup.js"
 It will:
  - create 3 accounts if not already 3 (alias name alice, bob, carol)
- - run the miner (2 CPU) 
+ - run the miner (2 CPU)
  - load contract deployment functions
 
 ```
     loadScript("tests/autosetup.js");
 ```
-   
+
 then deploy contracts
 
     var Dao1901Members = deployDao1901Members();
     // when Dao1901Members is mined
     var Dao1901Votes = deployDao1901Votes(Dao1901Members.address);
-    
+
 then serve the app
-    
+
     npm run start
 
 
@@ -87,7 +87,7 @@ or Do It Yourself
 
     // loadScript("TestDao1901.js")    // equiv to --preload
     // check if accounts exists
-    personal.listAccounts 
+    personal.listAccounts
     // create account if no one exists
     // it will set eth.coinbase automatically
     personal.newAccount("");
@@ -95,11 +95,11 @@ or Do It Yourself
     eth.coinbase
     // unlock your account
     personal.unlockAccount(eth.accounts[0], "", 3600);
-    
-run the miner 
+
+run the miner
 
     miner.start(2)
-    
+
 **Deploy the contracts**
 
 load the Dao1901Members deploy function
@@ -115,7 +115,7 @@ same for Dao1901Votes
 
     loadScript("Dao1901Votes.js");
     var Dao1901Votes = deployDao1901Votes(Dao1901Members.address);
-    
+
 Wait Dao1901Votes to be mined
 
 
@@ -124,4 +124,4 @@ Run the tests
     runMemberTests();
     runVoteTests(Dao1901Votes);
 
-Type `exit` to quit the console 
+Type `exit` to quit the console
