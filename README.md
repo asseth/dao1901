@@ -68,7 +68,7 @@ It will:
  - load contract deployment functions
 
 ```
-    loadScript("tests/autosetup.js");
+    loadScript("tests/autoSetup.js");
 ```
 
 then deploy contracts
