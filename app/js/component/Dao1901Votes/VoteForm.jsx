@@ -41,9 +41,11 @@ export default class Votes extends React.Component {
 
   onVoteSubmit(e) {
     e.preventDefault();
+    console.log('vote submit : ', this.state.proposalId, this.state.voteValue, web3.eth.defaultAccount);
     Dao1901Votes.vote.sendTransaction(this.state.proposalId, this.state.voteValue,
-      {from: web3.eth.defaultAccount, gas: 1000}, (err) => {
+      {from: web3.eth.defaultAccount}, (err, tx) => {
         if (err) throw new Error(err.message);
+        console.log(`Vote tx hash: ${tx}`);
       });
     // Clear form fields
     this.setState(this.defaultVoteFormState);
