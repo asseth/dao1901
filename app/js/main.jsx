@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 
+import './exposeContracts';
 import '../static/stylesheet.css';
 
 import React from 'react';

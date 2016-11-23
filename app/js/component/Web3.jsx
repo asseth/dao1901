@@ -23,7 +23,6 @@ export default class Web3 extends React.Component {
   }
 
   componentWillMount() {
-    console.log(web3);
     if (web3.currentProvider.host) {
       this.setState({currentProvider_host: web3.currentProvider.host})
     }
