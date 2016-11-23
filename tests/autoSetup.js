@@ -1,7 +1,7 @@
 // Security best practices ftw
 function unlockAllAccounts(){
   for (var i = 0; i < eth.accounts.length; i++) {
-    personal.unlockAccount(eth.accounts[i], "", 3600);
+    personal.unlockAccount(eth.accounts[i], "", 36000);
   }
 }
 
