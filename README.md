@@ -50,6 +50,10 @@ and preloading the test functions
 
     geth --dev --preload tests/TestDao1901.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
 
+To load the auto setup directly
+
+    geth --dev --preload tests/autoSetup.js,tests/TestDao1901.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
+    
 
 Make contracts ready to be deployed
 ===================================
@@ -70,7 +74,7 @@ Three files are created (one per contracts)
 Auto Setup
 ==========
 In the geth console,
-load script "tests/autosetup.js"
+load script "tests/autoSetup.js"
 It will:
  - create 3 accounts if not already 3 (alias name alice, bob, carol)
  - run the miner (2 CPU)
@@ -96,7 +100,7 @@ or Do It Yourself
 
     // loadScript("TestDao1901.js")    // equiv to --preload
     // check if accounts exists
-    personal.listAccounts
+    personal.listAccounts 
     // create account if no one exists
     // it will set eth.coinbase automatically
     personal.newAccount("");
@@ -104,11 +108,11 @@ or Do It Yourself
     eth.coinbase
     // unlock your account
     personal.unlockAccount(eth.accounts[0], "", 3600);
-
-run the miner
+    
+run the miner 
 
     miner.start(2)
-
+    
 **Deploy the contracts**
 
 load the Dao1901Members deploy function
@@ -124,7 +128,7 @@ same for Dao1901Votes
 
     loadScript("Dao1901Votes.js");
     var Dao1901Votes = deployDao1901Votes(Dao1901Members.address);
-
+    
 Wait Dao1901Votes to be mined
 
 
@@ -133,4 +137,4 @@ Run the tests
     runMemberTests();
     runVoteTests(Dao1901Votes);
 
-Type `exit` to quit the console
+Type `exit` to quit the console 
