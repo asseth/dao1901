@@ -1,4 +1,5 @@
 Requirements:
+- node 6.9.1
 - python 3.5
 - solc 0.4.4
 
@@ -16,6 +17,14 @@ Install all dependencies
 Launch testrpc
 
     node_modules/.bin/testrpc
+    
+Attach a console
+
+    geth attach http://localhost:8545
+    
+Set a default account
+    
+    web3.eth.defaultAccount = web3.eth.accounts[0]
 
 Serve the app
 
