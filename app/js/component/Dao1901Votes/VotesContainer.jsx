@@ -7,6 +7,18 @@ import ProposalsListItem from './ProposalsListItem';
 import VotesListItem from './VotesListItem';
 import VoteForm from './VoteForm';
 
+// Log Events
+window.Dao1901VotesEvents = Dao1901Votes.allEvents(null,
+  function (error, log) {
+    if (error) {
+      console.log('Event error: ', error)
+    }
+    else {
+      console.log('Event: ', log)
+    }
+  }
+);
+
 export default class Votes extends React.Component {
   constructor(props) {
     super(props);
@@ -37,7 +49,7 @@ export default class Votes extends React.Component {
         throw new Error(err.message);
       }
       console.log('proposal', proposal);
-      cb(proposal[0], proposal[1].toNumber())
+      cb(proposal[0], proposal[1].toNumber(), proposal[2]);
     });
   }
 
@@ -103,7 +115,7 @@ export default class Votes extends React.Component {
       <div className="Dao1901Votes">
         <h2>Dao1901Votes</h2>
         <p>Dao1901Votes Contract Address: {Dao1901Votes.address}</p>
-        <p>Dao1901Members Contract Address in Dao1901Votes: {Dao1901Votes.membersContract((e, r) => r)}</p>
+        {/*<p>Dao1901Members Contract Address in Dao1901Votes: {Dao1901Votes.membersContract((e, r) => r)}</p>*/}
 
         <h3>Proposals</h3>
         <p>{`There are ${this.state.totalProposals} proposals`}</p>

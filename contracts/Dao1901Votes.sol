@@ -4,12 +4,16 @@ import "./Owned.sol";
 import "./Dao1901Members.sol";
 
 contract Dao1901Votes is Owned {
-
   Dao1901Members public membersContract;
 
   function Dao1901Votes(address _membersContract) {
     membersContract = Dao1901Members(_membersContract);
   }
+
+  event LogString(string str);
+  event LogAddress(address addr);
+  event LogBool(bool boo);
+  event LogBytes(bytes b);
 
   struct Vote {
     string choice;
@@ -30,6 +34,9 @@ contract Dao1901Votes is Owned {
   function createProposal(string _description, uint _daysUntilDeadline)
     ownerOnly returns (uint)
   {
+    //LogString(_description);
+    //LogAddress(membersContract);
+
     nProposals = nProposals + 1; // incr. index, we don't want to use index 0
     proposals[nProposals].description = _description;
     proposals[nProposals].deadline = now + _daysUntilDeadline * 1 days;
@@ -37,8 +44,15 @@ contract Dao1901Votes is Owned {
   }
 
   function vote(uint _propId, string _choice) {
+    //LogString(_choice);
+    LogAddress(membersContract);
+    //LogAddress(msg.sender);
+    //address mem = 0x12178ab75558035c40a1d82802c936727644119f;
+    //LogBool(!mem.call("isMember", msg.sender));
+    LogBool(!membersContract.isMember(msg.sender));
+
     /* XXX check gas value */
-    if(!membersContract.isMember.gas(1000)(msg.sender)) throw;
+    //if(!membersContract.isMember.gas(1000)(msg.sender)) throw;
 
     /* Invalid proposal id */
     if (_propId == 0 || _propId > nProposals) throw;
@@ -46,7 +60,7 @@ contract Dao1901Votes is Owned {
     var prop = proposals[_propId];
 
     /* Voting has ended */
-    if(prop.deadline < now) throw;
+    //if(prop.deadline < now) throw;
 
     /* Empty choice is invalid, we use it to identify new votes */
     if (bytes(_choice).length == 0) throw;
