@@ -52,7 +52,7 @@ and preloading the test functions
 
 To load the auto setup directly
 
-    geth --dev --preload tests/autoSetup.js,tests/TestDao1901.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
+    geth --dev --preload autoSetup.js,tests/TestDao1901.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
     
 
 Make contracts ready to be deployed
@@ -74,14 +74,14 @@ Three files are created (one per contracts)
 Auto Setup
 ==========
 In the geth console,
-load script "tests/autoSetup.js"
+load script "autoSetup.js"
 It will:
  - create 3 accounts if not already 3 (alias name alice, bob, carol)
  - run the miner (2 CPU)
  - load contract deployment functions
 
 ```
-    loadScript("tests/autoSetup.js");
+    loadScript("autoSetup.js");
 ```
 
 then deploy contracts

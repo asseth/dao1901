@@ -4,7 +4,7 @@
   "description": "dao1901 is a dapp to simulate a french organization ruled by law 1901",
   "scripts": {
     "start": "webpack-dev-server --progress --inline --content-base build/",
-    "build": "npm run compile && webpack --progress",
+    "build": "npm run compile && webpack --progress --display-error-details",
     "compile": "cd tests && python3.5 compile.py ../contracts/Owned.sol && python3.5 compile.py ../contracts/Dao1901Members.sol && python3.5 compile.py ../contracts/Dao1901Votes.sol",
     "test": "mocha-webpack"
   },
