@@ -73,10 +73,9 @@ export default class Web3 extends React.Component {
 
   handleChangeDefaultAccount(accountIndex) {
     web3.eth.getAccounts((err, accounts) => {
-      if (err, tx) {
+      if (err) {
         throw new Error(err.message);
       }
-      console.log(`getAccounts Tx Hash: ${tx}`);
       web3.eth.defaultAccount = accounts[accountIndex];
       this.setState({defaultAccount: web3.eth.defaultAccount});
       console.log(`Set the default account to: ${web3.eth.defaultAccount}`);

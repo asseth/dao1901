@@ -1,13 +1,14 @@
 import React from 'react';
+import styles from './styles.css';
 
 function ProposalsListItem(props) {
   return (
     <li className={props.className || styles.item}>
       <div className={styles.itemContent}>
-        <p>Vote ID: {props.index}</p>
-        <p>Voter's Address: {props.item}</p>
-        <p>Proposal ID he voted for: {props.item}</p>
-        <p>The Voter's vote: {}</p>
+        <p>Vote n°: {props.index + 1}</p>
+        <p>Voter's Address: {props.item.voterAddr}</p>
+        <p>Proposal ID he voted for: {props.item.proposalId}</p>
+        <p>The Voter's vote: {props.item.voteValue}</p>
       </div>
     </li>
   );

@@ -1,5 +1,6 @@
 import {Dao1901Votes} from "../../../../contracts/Dao1901Votes.sol";
 import React from "react";
+
 import VotesByProposalForm from './VotesByProposalForm';
 import ProposalForm from './ProposalForm';
 import List from './List';
@@ -48,7 +49,6 @@ export default class Votes extends React.Component {
       if (err) {
         throw new Error(err.message);
       }
-      console.log('proposal', proposal);
       cb(proposal[0], proposal[1].toNumber(), proposal[2]);
     });
   }
@@ -76,28 +76,6 @@ export default class Votes extends React.Component {
   }
 
   /**
-   * Get All Votes By Proposal
-   * @param proposalId
-   * @returns {Array}
-   */
-  getAllVotesByProposal(proposalId) {
-    console.log('proposalId', proposalId);
-    let votesListItems = [];
-    let addr = 0;
-    this.getProposalByIndex(proposalId, (proposalDesc, proposalDeadline, voterHead) => {
-      addr = voterHead;
-      console.log('addr getAllVotesByProposal', addr);
-      if (addr != 0) {
-        Dao1901Votes.getVote(proposalId, addr, (v) => {
-          votesListItems.push(v[0]);
-          addr = v[1];
-        });
-      }
-    });
-    return votesListItems;
-  }
-
-  /**
    * Get Total Proposals
    * @param cb
    */
@@ -107,6 +85,33 @@ export default class Votes extends React.Component {
         throw new Error(err.message);
       }
       this.setState({totalProposals: total.toNumber()}, cb(total.toNumber()));
+    });
+  }
+  
+  /**
+   * Get All Votes By Proposal
+   * @param proposalId
+   * @returns {Array}
+   */
+  getAllVotesByProposal(proposalId) {
+    let votesListItems = [];
+    let addr = 0;
+    let generateVoteList = (proposalId, addr) => {
+      if (addr != 0) {
+        Dao1901Votes.getVote(proposalId, addr, (err, vote) => {
+          if (err) throw new Error(err);
+          votesListItems.push({voterAddr: addr, proposalId: proposalId, voteValue: vote[0]});
+          addr = vote[1];
+          generateVoteList(proposalId, addr);
+        });
+      } else {
+        this.setState({votesListItems: votesListItems});
+      }
+    };
+
+    this.getProposalByIndex(proposalId, (proposalDesc, proposalDeadline, voterHead) => {
+      addr = voterHead;
+      generateVoteList(proposalId, addr);
     });
   }
 
