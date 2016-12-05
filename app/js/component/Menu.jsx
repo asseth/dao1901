@@ -1,9 +1,10 @@
 import React from 'react';
 
+import {Image} from 'react-bootstrap';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import Dehaze from 'material-ui/svg-icons/image/dehaze';
 import FlatButton from 'material-ui/FlatButton';
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
 
@@ -17,10 +18,10 @@ export default function Menu(props) {
   return (
     <div style={styles.container}>
       <AppBar
-        title="Title"
+        title={<Image src="./DAO1901Last.png" alt="logo"/>}
         iconElementLeft={
           <IconButton onTouchTap={props.handleToggleSidebar}>
-            <NavigationClose />
+            <Dehaze />
           </IconButton>}
         iconElementRight={
           <FlatButton
