@@ -1,4 +1,0 @@
-{
-  "presets": ["latest", "react"],
-  "plugins": ["transform-function-bind"]
-}
