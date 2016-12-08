@@ -5,6 +5,26 @@ Requirements:
 
 Trello: https://trello.com/b/bVfPFfjM/tasks
 
+Truffle
+=======
+First run a node.
+
+Create compilation artifacts placed in the ./build/contracts directory 
+
+    truffle compile --compile-all
+
+
+Deploy the contracts
+
+    truffle migrate
+
+
+Serve the app
+ 
+    cd ui
+    npm run start
+    
+    
 
 
 Run the app with Testrpc
@@ -52,7 +72,7 @@ and preloading the test functions
 
 To load the auto setup directly
 
-    geth --dev --preload autoSetupForGeth.js,tests/TestDao1901.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
+    geth --dev --preload autoSetupForGeth.js,test/TestDao1901.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
     
 
 Make contracts ready to be deployed

@@ -58,16 +58,16 @@ module.exports = {
       network_id: "default"
     }
   },
-  /*build: {
-    "index.html": "index.html",
+  build: {
+    "index.html": "../ui/build/index.html",
     "app.js": [
-      "javascripts/app.js"
+      "../ui/build/js/bundle.js"
     ],
     "app.css": [
-      "stylesheets/app.css"
+      "../ui/build/stylesheets.css"
     ],
-    "images/": "images/"
-  },*/
+    "images/": "../ui/build/images/"
+  },
   migrations: './migrations',
   // Default configuration
   rpc: {

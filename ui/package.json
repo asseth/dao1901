@@ -15,7 +15,6 @@
   "author": "Stéphane Roche <rochestephane@yahoo.fr>",
   "license": "GNU",
   "devDependencies": {
-    "autobind-decorator": "^1.3.4",
     "babel-core": "^6.7.7",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-decorators": "^6.13.0",
@@ -34,17 +33,14 @@
     "mocha": "^2.5.3",
     "mocha-webpack": "^0.4.0",
     "solc": "^0.4.4",
-    "solc-loader": "1.x",
     "source-map-support": "^0.4.1",
     "style-loader": "^0.13.1",
     "web3": "^0.16.0",
-    "web3-loader": "1.x",
     "webpack": "^1.13.0",
     "webpack-node-externals": "^1.2.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.7.4",
-    "ethereumjs-testrpc": "^3.0.0",
     "lodash.debounce": "^4.0.8",
     "react": "^15.0.1",
     "react-bootstrap": "^0.30.2",

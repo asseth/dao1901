@@ -1,3 +1,4 @@
+console.log('Auto setup for geth...');
 // Security best practices ftw
 function unlockAllAccounts(){
   for (var i = 0; i < eth.accounts.length; i++) {
@@ -40,5 +41,6 @@ eth.sendTransaction({from:alice, to:carol, value: web3.toWei(1, "ether")});
 admin.sleepBlocks(3);
 
 // Make contracts ready to deployment
-loadScript("tests/Dao1901Members.js");
-loadScript("tests/Dao1901Votes.js");
+// loadScript("customDeploy/Dao1901Members.js");
+// loadScript("customDeploy/Dao1901Votes.js");
+console.log('Auto setup for geth finish.');

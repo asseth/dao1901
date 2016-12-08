@@ -1,11 +1,8 @@
 import React from 'react';
 import {Button, Form, FormControl, FormGroup} from 'react-bootstrap';
 //import {Dao1901Members, web3} from '../../../contracts/Dao1901Members.sol';
-
 console.log('web3 in members.jsx', web3);
-
 let members = [];
-
 export default class Members extends React.Component {
   constructor(props) {
     super(props);
@@ -21,12 +18,12 @@ export default class Members extends React.Component {
       dao1901Members_isMember: '',
       dao1901Members_subscription1: ''
     };
-    this.checkMembership = this.checkMembership.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleMemberAddressChange = this.handleMemberAddressChange.bind(this);
-    this.handleYearsDurationChange = this.handleYearsDurationChange.bind(this);
-    this.memberList = this.memberList.bind(this);
-    this.subscribe = this.subscribe.bind(this);
+    this.checkMembership = ::this.checkMembership;
+    this.handleChange = ::this.handleChange;
+    this.handleMemberAddressChange = ::this.handleMemberAddressChange;
+    this.handleYearsDurationChange = ::this.handleYearsDurationChange;
+    this.memberList = ::this.memberList;
+    this.subscribe = ::this.subscribe;
   }
 
   componentDidMount() {
@@ -34,50 +31,75 @@ export default class Members extends React.Component {
       members = mElements.map((m, i) => <p key={`member_${i}`}>member {i}: {m}</p>);
       this.forceUpdate();
     });
-    Dao1901Members.head((e, r) => this.setState({dao1901Members_head: r}));
+    Dao1901Members.head().then((e, r) => this.setState({dao1901Members_head: r}));
   }
 
+  /**
+   * Create Member List
+   * Browse the chained list
+   * @param cb
+   */
   memberList(cb) {
     let members = [];
     let addr = '';
-    Dao1901Members.head((e, r) => {
-      addr = r;
-      let iterateOnSubscriptions = () => {
-        // First head is '0x' on metamask testnet
-        // '0x0000000000000000000000000000000000000000' on metamask local geth
-        // '0x0000000000000000000000000000000000000000' == 0
-        // '0x' != 0
-        if (addr != 0 && addr != '0x') {
-          Dao1901Members.isMember(addr, (errIsMember, isMember) => {
-            if (errIsMember) {
-              console.log('fails to retrieve isMember:', errIsMember);
-              return;
-            }
-            if (isMember) members.push(addr);
-            Dao1901Members.subscriptions(addr, (errSubscriptions, subscription) => {
-              if (errSubscriptions) {
-                console.log('fails to retrieve subscriptions.next:', errSubscriptions);
-                return;
-              }
-              addr = subscription[1]; // the next element
-              iterateOnSubscriptions();
-            });
-          });
-        } else {
-          cb(members);
-        }
-      };
-      iterateOnSubscriptions();
-    });
+    Dao1901Members.head()
+      .then((r) => {
+        addr = r;
+        let iterateOnSubscriptions = () => {
+          // First head is '0x' on metamask testnet
+          // '0x0000000000000000000000000000000000000000' on metamask local geth
+          // '0x0000000000000000000000000000000000000000' == 0
+          // '0x' != 0
+          if (addr != 0 && addr != '0x') {
+            Dao1901Members.isMember(addr)
+              .then((isMember) => {
+                if (isMember) members.push(addr);
+                Dao1901Members.subscriptions(addr)
+                  .then((subscription) => {
+                    addr = subscription[1]; // the next element
+                    iterateOnSubscriptions();
+                  })
+                  .catch((errSubscriptions) => {
+                    throw new Error('fails to retrieve subscriptions.next:', errSubscriptions);
+                  })
+              })
+              .catch((errIsMember) => {
+                if (errIsMember) {
+                  console.log('fails to retrieve isMember:', errIsMember);
+                  return;
+                }
+              })
+          } else {
+            cb(members);
+          }
+        };
+        iterateOnSubscriptions();
+      });
   }
 
+  /**
+   * CheckMembership
+   * Call fn that returns a boolean
+   * @param e Event Object
+   */
   checkMembership(e) {
     e.preventDefault();
-    Dao1901Members.isMember(this.state.memberAddressToCheck, (e, r) => {
-      this.setState({isMember: r.toString()});
-    });
+    console.log('Check member address: ', this.state.memberAddressToCheck);
+    Dao1901Members.isMember(this.state.memberAddressToCheck)
+      .then((res) => {
+        (res ?
+          console.log(`${this.state.memberAddressToCheck} is a member.`)
+          : console.log(`${this.state.memberAddressToCheck} is not a member.`));
+        this.setState({isMember: res.toString()});
+      })
+      .catch((err) => {throw new Error(err)});
   }
 
+  /**
+   * handleMemberAddressChange
+   * handle input "member address change"
+   * @param e Event Object
+   */
   handleMemberAddressChange(e) {
     this.setState({[e.target.name]: e.target.value}, () => {
       // Validation
@@ -89,6 +111,10 @@ export default class Members extends React.Component {
     });
   }
 
+  /**
+   * handleYearsDurationChange
+   * @param e Event Object
+   */
   handleYearsDurationChange(e) {
     this.setState({[e.target.name]: e.target.value}, () => {
       // Validation
@@ -100,30 +126,40 @@ export default class Members extends React.Component {
     });
   }
 
+  /**
+   * handleChange
+   * Simple handle of onChange
+   * @param e
+   */
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value})
   }
 
+  /**
+   * subscribe
+   * Add/revoke a member
+   * @param e
+   */
   subscribe(e) {
     e.preventDefault();
-    console.log(' web3.eth.defaultAccount', web3.eth.defaultAccount);
-    console.log('this.state.memberAddress', this.state.memberAddress);
-    //let tx = Dao1901Members.subscribe.sendTransaction(this.state.memberAddress, this.state.yearsDuration, {from: web3.eth.defaultAccount});
     Dao1901Members.subscribe
-      .sendTransaction(this.state.memberAddress, this.state.yearsDuration, {gas: 70000}, // gasUsed: 68642
-        (err, tx) => {
-          if (err) {
-            console.log('subscribe fails: ', err);
-            this.setState({subscribeSuccess: false});
-          }
-          else {
-            console.log(`${web3.eth.defaultAccount} add ${this.state.memberAddress}`);
-            console.log('subscribe TX: ', tx);
-            this.setState({subscribeSuccess: true});
-          }
-        });
+      .sendTransaction(this.state.memberAddress, this.state.yearsDuration, {gas: 70000})
+      .then((tx) => {
+        console.log(`Hey! ${web3.eth.defaultAccount}   JUST ADDED    ${this.state.memberAddress}`);
+        console.log('Subscribe TX: ', tx);
+        this.setState({subscribeSuccess: true});
+      })
+      .catch((err) => {
+        console.log(`Hey! ${web3.eth.defaultAccount}   TRIES TO ADD   ${this.state.memberAddress}`);
+        console.log('Subscription fails: ', err);
+        this.setState({subscribeSuccess: false});
+      });
   }
 
+  /**
+   * React.js Render method
+   * @returns {XML}
+   */
   render() {
     let subscribeSuccess = '';
     if (this.state.subscribeSuccess !== null) {

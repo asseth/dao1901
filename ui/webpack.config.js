@@ -8,6 +8,8 @@ module.exports = {
     outputPath: path.join(__dirname, 'build'),
   },
   resolve: {
+    // Webpack tip: use resolve.fallback so npm-linked packages can locate missing dependencies in your app's node_modules.
+    fallback: path.join(__dirname, 'node_modules'),
     extensions: ['', '.js', '.jsx'],
   },
   devtool: "sourcemap",
@@ -35,6 +37,7 @@ module.exports = {
       {
         test: /\.json$/,
         loaders: ['json'],
+        //include: "node_modules/dao1901-truffle-library"
       },
       {
         test: /\.jsx?$/,

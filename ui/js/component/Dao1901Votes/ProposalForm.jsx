@@ -15,13 +15,15 @@ export default class Votes extends React.Component {
     };
     this.state = this.defaultProposalFormState;
 
-    // Proposal
-    this.handleChangeProposalDeadline = this.handleChangeProposalDeadline.bind(this);
-    this.handleChangeProposalDesc = this.handleChangeProposalDesc.bind(this);
-    this.onProposalSubmit = this.onProposalSubmit.bind(this);
+    this.handleChangeProposalDeadline = ::this.handleChangeProposalDeadline;
+    this.handleChangeProposalDesc = ::this.handleChangeProposalDesc;
+    this.onProposalSubmit = ::this.onProposalSubmit;
   }
 
-
+  /**
+   * handleChangeProposalDeadline
+   * @param e Event
+   */
   handleChangeProposalDeadline(e) {
     this.setState({[e.target.name]: e.target.value}, () => {
       // Validation
@@ -33,6 +35,10 @@ export default class Votes extends React.Component {
     });
   }
 
+  /**
+   * handleChangeProposalDesc
+   * @param e Event
+   */
   handleChangeProposalDesc(e) {
     this.setState({[e.target.name]: e.target.value}, () => {
       // Validation
@@ -44,24 +50,33 @@ export default class Votes extends React.Component {
     });
   }
 
+  /**
+   * onProposalSubmit
+   * @param e Event
+   */
   onProposalSubmit(e) {
     e.preventDefault();
     Dao1901Votes.createProposal.sendTransaction(
       this.state.proposalDesc,
       this.state.proposalDeadline,
-      {from: web3.eth.defaultAccount}, (err, tx) => {
-        if (err) {
-          throw new Error(err.message);
-        }
+      {from: web3.eth.defaultAccount})
+      .then((tx) => {
         console.log('TX createProposal successful. Tx Hash: ', tx);
         // Clear form fields
         this.setState(this.defaultProposalFormState);
+        console.log('tx', tx);
 
         // Check if Tx is mined
-        // eth.getTransactionReceipt(transactionHash)
-        // then call this.props.getAllProposals();
-      }
-    );
+        var setIntervalId = setInterval(() =>  web3.eth.getTransactionReceipt(tx, (err, receipt) => {
+          if (err) throw new Error(err.message);
+          if (receipt) {
+            console.log('Receipt Tx Dao1901Votes.createProposal: ', receipt);
+            window.clearInterval(setIntervalId);
+            this.props.getAllProposals();
+          }
+        }), 2000);
+      })
+      .catch((err) => {throw new Error(err.message)})
   }
 
 
