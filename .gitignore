@@ -1,7 +1,6 @@
-#protocol
-protocol/tests/Dao1901Members.js
-protocol/tests/Dao1901Votes.js
-protocol/tests/Owned.js
+### protocol
+protocol/build/
+protocol/node_modules/
 
 ### ui
 ui/build/

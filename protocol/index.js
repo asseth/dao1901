@@ -7,18 +7,9 @@ var Dao1901Votes = require("./build/contracts/Dao1901Votes.sol.js");
 var Owned = require("./build/contracts/Owned.sol.js");
 
 // var web3 = web3.setProvider(new Web3.providers.HttpProvider("https://morden.infura.io:8545/"));
-var web3 = new Web3(new Web3.providers.HttpProvider("https://localhost:8545/"));
+// web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
 
 // var provider = new Web3.providers.HttpProvider("https://morden.infura.io:8545/");
-/*
- if(typeof web3 !== 'undefined') {
- web3 = new Web3(web3.currentProvider);
- console.log('web3.currentProvider', web3.currentProvider);
- console.log('web3', web3);
- } else {
- web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
- }
- */
 
 //Dao1901Members.setNetwork(2); // Enforce morden
 

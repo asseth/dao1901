@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import Menu from './Menu';
 import {Col} from 'react-bootstrap';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+// import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import MenuItem from 'material-ui/MenuItem';
 import {deepOrange500} from 'material-ui/styles/colors';
 import Drawer from 'material-ui/Drawer';

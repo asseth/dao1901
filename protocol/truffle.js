@@ -4,6 +4,7 @@
 // This allows Truffle deployment to work with infura. Note we do
 // this specifically when deploying to the morden network.
 
+/*
 var hdkey = require('ethereumjs-wallet/hdkey');
 var bip39 = require("bip39");
 var ProviderEngine = require("web3-provider-engine");
@@ -25,12 +26,13 @@ var wallet = account.getWallet();
 var address = "0x" + wallet.getAddress().toString("hex");
 
 //var providerUrl = "https://morden.infura.io:8545";
-var providerUrl = "https://localhost:8545";
+var providerUrl = "http://localhost:8545";
 
 var engine = new ProviderEngine();
 engine.addProvider(new WalletSubprovider(wallet, {}));
 engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(providerUrl)));
 engine.start(engine);
+*/
 
 module.exports = {
   networks: {

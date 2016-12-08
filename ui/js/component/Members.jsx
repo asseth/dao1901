@@ -2,9 +2,11 @@ import React from 'react';
 import {Button, Form, FormControl, FormGroup} from 'react-bootstrap';
 //import {Dao1901Members, web3} from '../../../contracts/Dao1901Members.sol';
 
+console.log('web3 in members.jsx', web3);
+
 let members = [];
 
-export default class Votes extends React.Component {
+export default class Members extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
