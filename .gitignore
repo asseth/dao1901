@@ -1,11 +1,16 @@
-tests/Dao1901Members.js
-tests/Dao1901Votes.js
-tests/Owned.js
-.idea/
-build/
-node_modules/
+#protocol
+protocol/tests/Dao1901Members.js
+protocol/tests/Dao1901Votes.js
+protocol/tests/Owned.js
+
+### ui
+ui/build/
+ui/node_modules/
 .tmp/
 npm-debug.log
+
+### Webstorm
+.idea/
 
 ### macOS template
 *.DS_Store
