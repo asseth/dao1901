@@ -26,11 +26,13 @@ At the root level, install all dependencies
 
 In a separate tab, run testrpc
 
-    node_modules/.bin/testrpc
+    testrpc [-s toto]
+    or node_modules/.bin/testrpc
     
 In a separate tab, compile and migrate the contracts
 
     cd protocol
+    npm install
     [truffle compile --compile-all]
     truffle migrate
 

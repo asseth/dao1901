@@ -63,6 +63,7 @@
   "dependencies": {
     "availity-reactstrap-validation": "^1.4.1",
     "dao1901-contracts": "./protocol",
+    "ethereumjs-testrpc": "^3.0.3",
     "prop-types": "^15.5.8",
     "react-addons-css-transition-group": "^15.5.2",
     "react-addons-transition-group": "^15.5.2",
