@@ -1,9 +1,12 @@
+node_modules
+yarn-error.log
+
 ### protocol
 protocol/build/
 protocol/node_modules/
 
 ### ui
-ui/build/
+ui/public/
 ui/node_modules/
 .tmp/
 npm-debug.log
@@ -38,4 +41,3 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
