@@ -5,14 +5,12 @@ Requirements:
 
 Trello: https://trello.com/b/bVfPFfjM/tasks
 
+Install all dependencies first
 
+    npm install
 
 Run the app with Testrpc
 ========================
-
-Install all dependencies
-
-    npm install
 
 Launch testrpc
 
@@ -41,23 +39,23 @@ Run Mocha tests
 Run the app with Geth
 =====================
 
-Launch the Geth node
+Launch the Geth node in a second shell
 
     geth --dev --rpc --rpcapi 'web3,eth,debug' --rpccorsdomain="*" --datadir /tmp/ethereum_dev_mode
 
-In an other shell, run the following to attach a console
-and preloading the test functions
+In a third shell, run the following to attach a console
+and preload the test functions
 
     geth --dev --preload tests/TestDao1901.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
 
-To load the auto setup directly
+you can also load the auto setup directly in the same command
 
     geth --dev --preload tests/autoSetup.js,tests/TestDao1901.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
     
 
 Make contracts ready to be deployed
 ===================================
-run
+run (in the first shell where npm install was launched)
 
     npm run compile
 
@@ -68,11 +66,11 @@ or if you like typing
     python3.5 compile.py ../contracts/Dao1901Members.sol
     python3.5 compile.py ../contracts/Dao1901Votes.sol
 
-Three files are created (one per contracts)
+Three files are created in the tests folder (one per contract)
 
 
-Auto Setup
-==========
+Auto Setup (if not loaded with the test suite)
+==============================================
 In the geth console,
 load script "tests/autoSetup.js"
 It will:
@@ -86,8 +84,10 @@ It will:
 
 then deploy contracts
 
+    loadScript("tests/Dao1901Members.js");
     var Dao1901Members = deployDao1901Members();
     // when Dao1901Members is mined
+    loadScript("tests/Dao1901Votes.js");
     var Dao1901Votes = deployDao1901Votes(Dao1901Members.address);
 
 then serve the app
@@ -98,7 +98,7 @@ then serve the app
 or Do It Yourself
 =================
 
-    // loadScript("TestDao1901.js")    // equiv to --preload
+    // loadScript("tests/TestDao1901.js")    // equiv to --preload
     // check if accounts exists
     personal.listAccounts 
     // create account if no one exists
@@ -120,13 +120,13 @@ and run it.
 you also initiate daoMembers variable with the returned js object,
 used in runMemberTests()
 
-    loadScript("Dao1901Members.js");
+    loadScript("tests/Dao1901Members.js");
     var Dao1901Members = deployDao1901Members();
 
 Wait Dao1901Members to be mined, then:
 same for Dao1901Votes
 
-    loadScript("Dao1901Votes.js");
+    loadScript("tests/Dao1901Votes.js");
     var Dao1901Votes = deployDao1901Votes(Dao1901Members.address);
     
 Wait Dao1901Votes to be mined
