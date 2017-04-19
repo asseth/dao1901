@@ -82,7 +82,7 @@ export default class Votes extends React.Component {
           })
         } else {
           console.log('proposalListItems', proposalListItems);
-          this.setState({proposalListItems: proposalListItems});
+          this.setState({proposalListItems});
         }
       };
       getAllProposalListItems(proposalIndex);

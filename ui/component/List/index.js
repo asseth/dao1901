@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
-function List(props) {
+export default function List(props) {
   const ListItem = props.component;
   let content = (<div></div>);
 
   // If we have items, render them
-  if (props.items.length !== 0) {
+  if (props.items && props.items.length !== 0) {
     content = props.items.map((item, index) => (
       <ListItem key={`item-${index}`} item={item} index={index} />
     ));
@@ -29,5 +29,3 @@ List.propTypes = {
   component: PropTypes.func.isRequired,
   items: PropTypes.array
 };
-
-export default List;

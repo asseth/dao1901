@@ -24,8 +24,13 @@ export default class Home extends React.Component {
 
   async componentWillMount() {
     // Get Owned instance
-    Owned = await contracts.Owned.deployed();
-    this.setState({owner: await Owned.owner()});
+    try {
+      Owned = await contracts.Owned.deployed();
+      this.setState({owner: await Owned.owner()});
+    }
+    catch (err) {
+      throw new Error(err.message);
+    }
 
     // Set currentProvider_host
     if (web3.currentProvider.host) {

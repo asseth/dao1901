@@ -54,10 +54,7 @@ Run Mocha tests
     
 If you work on the protocol, you may want to use npm link to avoid reinstalling the lib at each change.
     
-    cd protocol
-    npm link
-    cd ..
-    npm link dao1901-contracts
+    npm run linkprotocol
     
     
 

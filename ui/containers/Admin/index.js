@@ -3,6 +3,8 @@ import './styles.scss';
 import 'babel-polyfill';
 import {ToastContainer, ToastMessage} from 'react-toastr';
 let ToastMessageFactory = React.createFactory(ToastMessage.animation);
+import List from '../../component/List';
+import MembersListItem from '../../component/MembershipManagement/MembersListItem';
 import MemberAdditionForm from '../../component/MembershipManagement/MemberAdditionForm';
 import MemberRevokationForm from '../../component/MembershipManagement/MemberRevokationForm';
 import TransferOwnershipForm from '../../component/OrganizationManagement/TransferOwnershipForm';
@@ -24,7 +26,7 @@ export default class Admin extends React.Component {
     this.state = {
       changeOwnerInput: '',
       eth_blockNumber: '',
-      members: [],
+      membersListItem: [],
       owner: ''
     };
     this.changeOwner = ::this.changeOwner;
@@ -35,10 +37,14 @@ export default class Admin extends React.Component {
   }
 
   async componentDidMount() {
-    // Get Owned instance
-    Owned = await contracts.Owned.deployed();
-    // Get Dao1901Members instance
-    Dao1901Members = await contracts.Dao1901Members.deployed();
+    try {
+      // Get Owned instance
+      Owned = await contracts.Owned.deployed();
+      // Get Dao1901Members instance
+      Dao1901Members = await contracts.Dao1901Members.deployed();
+    } catch (err) {
+      throw new Error(err.message);
+    }
     // Set Owner
     this.setState({owner: await Owned.owner()});
     this.generateMemberListUI();
@@ -137,12 +143,19 @@ export default class Admin extends React.Component {
 
   /**
    * Generate member list for UI
-   * set array of li in the state
+   * set array of membersListItem in the state
    */
   generateMemberListUI() {
-    this.generateMemberListAddrs((membersAddrs) => {
-      let membersEl = membersAddrs.map((m, i) => <li key={`member_${i}`}>member {i}: {m}</li>);
-      this.setState({members: membersEl});
+    this.generateMemberListAddrs((membersAddresses) => {
+      let promises = membersAddresses.map((memberAddress) => {
+        return Dao1901Members.subscriptions(memberAddress)
+          .then((sub) => {
+            let endSubscriptionDate = sub[0].toString();
+            return {memberAddress, endSubscriptionDate};
+          })
+      });
+      return Promise.all(promises)
+        .then((membersListItem) => this.setState({membersListItem}));
     });
   }
 
@@ -164,10 +177,8 @@ export default class Admin extends React.Component {
           // '0x0000000000000000000000000000000000000000' == 0
           // '0x' != 0
           if (addr != 0 && addr != '0x') {
-            console.log('addr', addr);
             Dao1901Members.isMember(addr)
               .then((isMember) => {
-                console.log('isMember', isMember);
                 if (isMember) {
                   membersAddrs = [addr, ...membersAddrs];
                 }
@@ -265,9 +276,10 @@ export default class Admin extends React.Component {
         <div className="row mt-5">
           <div className="col">
             <h3>List of all members in *organization name*</h3>
-            <div>
-              {this.state.members.length !== 0 ? <ul>{this.state.members}</ul> : 'No Members'}
-            </div>
+            <List
+              component={MembersListItem}
+              items={this.state.membersListItem}
+            />
           </div>
         </div>
 

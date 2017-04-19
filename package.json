@@ -2,10 +2,12 @@
   "name": "dao1901",
   "version": "0.2.2",
   "description": "Dao1901 is a dapp to simulate a french organization ruled by law 1901",
+  "repository" : { "type" : "git", "url" : "https://github.com/asseth/dao1901"},
   "scripts": {
     "build": "webpack",
     "compilebuild": "npm run compile && webpack --progress --display-error-details",
     "compile": "cd tests && python3.5 compile.py ../contracts/Owned.sol && python3.5 compile.py ../contracts/Dao1901Members.sol && python3.5 compile.py ../contracts/Dao1901Votes.sol",
+    "linkprotocol": "npm un dao1901-contracts; pwd; cd protocol; npm link; cd ..; npm link dao1901-contracts",
     "dev": "webpack-dev-server",
     "lint": "eslint ./",
     "test": "mocha-webpack"
