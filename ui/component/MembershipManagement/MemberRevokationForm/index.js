@@ -4,7 +4,7 @@ import {AvField, AvForm} from 'availity-reactstrap-validation';
 import {Button} from 'reactstrap';
 
 /**
- * Member Addition - Stateless functional component
+ * Member revokation - Stateless functional component
  * @param props
  * @returns {XML}
  * @constructor

@@ -7,7 +7,7 @@ import List from '../../component/List';
 import MembersListItem from '../../component/MembershipManagement/MembersListItem';
 import MemberAdditionForm from '../../component/MembershipManagement/MemberAdditionForm';
 import MemberRevokationForm from '../../component/MembershipManagement/MemberRevokationForm';
-import TransferOwnershipForm from '../../component/OrganizationManagement/TransferOwnershipForm';
+import TransferOwnershipForm from '../../component/DAOManagement/TransferOwnershipForm';
 import contracts from 'dao1901-contracts';
 let Owned, Dao1901Members;
 

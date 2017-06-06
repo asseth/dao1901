@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './styles.scss';
 import {Card} from 'reactstrap';
 import contracts from 'dao1901-contracts';
+import Info from '../../component/Info'
 let Owned;
 
 /**
@@ -60,19 +62,16 @@ export default class Home extends React.Component {
           </div>
         </div>
 
-        <div className="row">
-          <div className="col">
-            <Card className="home-info mx-auto">
-              <p>{'Hello '}<span className="ethereum-address">{web3.eth.defaultAccount}</span>{' !'}</p>
-              <p>{`You have ${this.state.defaultAccountBalance} ethers, nice job mate ;-)`}</p>
-              <p>{this.state.owner === this.state.defaultAccount ? 'You are the owner, you are the boss.'
-                : `You are not the owner. It is ${this.state.owner}`}</p>
-              <h4>Ethereum Blockchain Info</h4>
-              <p>{`Current web3 provider host is: ${web3.currentProvider.host}`}</p>
-              <p>{`We are on block number ${this.state.eth_blockNumber}`}</p>
-            </Card>
-          </div>
-        </div>
+        <Info
+          blockNumber={this.getBlockNumber}
+          contractAddressMembers={this.getContractAddressMembers}
+          contractAddressOwner={this.getContractAddressOwner}
+          contractAddressVotes={this.getContractAddressVote}
+          currentProvider={web3.currentProvider.host ? web3.currentProvider.host : web3.currentProvider.constructor.name}
+          /*defaultAccount={userAddress}*/
+          defaultAccountbalance={this.getDefaultAccountBalance}
+          ownerAddress={this.getOwner}
+        />
 
         <div className="row">
           <div className="col">

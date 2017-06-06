@@ -18,18 +18,16 @@ export default function Info (props) {
           <h4>User Info</h4>
           <p>{'Account: '}<span className="ethereum-address">{props.defaultAccount}</span></p>
           <p>{`Balance: ${props.defaultAccountBalance} ETH`}</p>
-          <p>{props.ownerAddress === props.defaultAccount ? 'You are the owner, you are the boss.'
-            : `You are not the owner. Owner is: ${props.ownerAddress}`}</p>
+          <p>{props.ownerAddress === props.defaultAccount ? 'You are the owner'
+            : `You are not the owner. Owner: ${props.ownerAddress}`}</p>
           <h4>Ethereum Blockchain Info</h4>
-          <p>{`Current web3 provider host is: ${props.currentProvider}`}</p>
-          <p>{`We are on block number ${props.blockNumber}`}</p>
+          <p>{`Current web3 provider host: ${props.currentProvider}`}</p>
+          <p>{`Block number: ${props.blockNumber}`}</p>
           <p>
-            <span className="text-primary">{'Owned'}</span>
-            {`Ethereum smart-contract Owner address: ${props.ownerAddress}`}
+            {`Owner contract address: ${props.ownerAddress}`}
           </p>
           <p>
-            <span className="text-primary">{'Dao1901Members'}</span>
-            {`Ethereum smart-contract Members address: ${props.contractAddressMembers}`}
+            {`Members contract address: ${props.contractAddressMembers}`}
           </p>
         </Card>
       </div>

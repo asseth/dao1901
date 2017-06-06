@@ -22,7 +22,7 @@ module.exports = {
     // Copy our app's index.html to the public folder.
     new CopyWebpackPlugin([
       {from: './ui/index.html', to: "index.html"},
-      {from: './ui/images', to: "images"}
+      {from: './ui/assets/images', to: "images"}
     ]),
     new webpack.ProvidePlugin({
       $: "jquery",

@@ -6,7 +6,7 @@ import ProposalsListItem from '../../component/VotesManagement/ProposalsListItem
 import VotesListItem from '../../component/VotesManagement/VotesListItem';
 import VoteForm from '../../component/VotesManagement/VoteForm';
 import Dao1901Contracts from 'dao1901-contracts';
-
+console.log('Dao1901Contracts', Dao1901Contracts)
 let Dao1901Votes = null;
 
 // Log Events
@@ -39,12 +39,14 @@ export default class Votes extends React.Component {
   }
 
   componentWillMount() {
-    Dao1901Contracts().then((contracts) => {
+    /*Dao1901Contracts().then((contracts) => {
       console.log('contracts.Dao1901Votes', contracts.Dao1901Votes);
       Dao1901Votes = contracts.Dao1901Votes;
-    });
+    });*/
+    Dao1901Votes = Dao1901Contracts.Dao1901Votes;
     // Generate proposals list
-    Dao1901Votes.membersContract()
+    Dao1901Votes.deployed()
+      .then((membersContract) => membersContract())
       .then((addr) => {
         this.setState({membersContractAddress: addr});
         console.log('membersContractAddress: ', addr);
@@ -94,7 +96,8 @@ export default class Votes extends React.Component {
    * @param cb
    */
   getTotalProposals(cb) {
-    Dao1901Votes.nProposals()
+    Dao1901Votes.deployed()
+      .then((nProposals) => nProposals())
       .then((total) => {
         this.setState({totalProposals: total.toNumber()}, cb(total.toNumber()));
       })

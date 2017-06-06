@@ -9,7 +9,7 @@ import convertTimestampToDate from '../../../helpers/convertTimestampToDate';
  * @returns {XML}
  * @constructor
  */
-export default function MembersListItem(props) {
+export default function MembersListItem (props) {
   return (
     <li>
       <div>

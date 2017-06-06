@@ -6,11 +6,12 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import Menu from '../../component/Menu';
 // Pages
-import AdminPage from '../Admin';
-import HomePage from '../Home';
-import NotFoundPage from '../NotFound';
-import ProposalSubmissionPage from '../ProposalSubmission';
-import VotePage from '../Vote';
+import AdminPage from '../AdminContainer';
+import HomePage from '../HomeContainer';
+import NotFoundPage from '../NotFoundContainer';
+import ProposalSubmissionPage from '../ProposalSubmissionContainer';
+import VotePage from '../VotesManagementContainer';
+
 class App extends Component {
   constructor(props, context) {
     super(props, context);

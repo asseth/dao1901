@@ -1,8 +1,10 @@
 import React from 'react';
+// Todo Change to Reactstrap
 import {Button, Form, FormControl, FormGroup} from 'react-bootstrap';
 //import {Dao1901Members, web3} from '../../../contracts/Dao1901Members.sol';
 console.log('web3 in members.jsx', web3);
 let members = [];
+
 export default class Members extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +18,7 @@ export default class Members extends React.Component {
       yearsDuration: '',
       dao1901Members_head: '',
       dao1901Members_isMember: '',
-      dao1901Members_subscription1: ''
+      dao1901Members_subscription: ''
     };
     this.checkMembership = ::this.checkMembership;
     this.handleChange = ::this.handleChange;
@@ -31,6 +33,7 @@ export default class Members extends React.Component {
       members = mElements.map((m, i) => <p key={`member_${i}`}>member {i}: {m}</p>);
       this.forceUpdate();
     });
+    console.log('Members componentDidMount Dao1901Members', Dao1901Members)
     Dao1901Members.head().then((e, r) => this.setState({dao1901Members_head: r}));
   }
 
@@ -46,11 +49,9 @@ export default class Members extends React.Component {
       .then((r) => {
         addr = r;
         let iterateOnSubscriptions = () => {
-          // First head is '0x' on metamask testnet
-          // '0x0000000000000000000000000000000000000000' on metamask local geth
-          // '0x0000000000000000000000000000000000000000' == 0
-          // '0x' != 0
-          if (addr != 0 && addr != '0x') {
+          // On metamask testnet: first head is '0x'
+          // On on metamask with local Geth: '0x0000000000000000000000000000000000000000'
+          if (addr != 0 && addr != '0x' && addr != '0x0') {
             Dao1901Members.isMember(addr)
               .then((isMember) => {
                 if (isMember) members.push(addr);
@@ -145,12 +146,12 @@ export default class Members extends React.Component {
     Dao1901Members.subscribe
       .sendTransaction(this.state.memberAddress, this.state.yearsDuration, {gas: 70000})
       .then((tx) => {
-        console.log(`Hey! ${web3.eth.defaultAccount}   JUST ADDED    ${this.state.memberAddress}`);
+        console.log(`${web3.eth.defaultAccount} JUST ADDED ${this.state.memberAddress}`);
         console.log('Subscribe TX: ', tx);
         this.setState({subscribeSuccess: true});
       })
       .catch((err) => {
-        console.log(`Hey! ${web3.eth.defaultAccount}   TRIES TO ADD   ${this.state.memberAddress}`);
+        console.log(`${web3.eth.defaultAccount} TRIED TO ADD ${this.state.memberAddress}`);
         console.log('Subscription fails: ', err);
         this.setState({subscribeSuccess: false});
       });
@@ -173,8 +174,9 @@ export default class Members extends React.Component {
       <div className="Dao1901Members">
         <h2>Dao1901Members</h2>
         <h3>Infos</h3>
-        <p>Dao1901Members Contract Address: {Dao1901Members.address}</p>
-        <p>Dao1901Members.head() (the last member): {this.state.dao1901Members_head}</p>
+        <p>Contract Address: {Dao1901Members.address}</p>Dao1901Members
+        <p>Contract Name: {`Dao1901Members`}</p>
+        <p>Last member (Dao1901Members.head): {this.state.dao1901Members_head}</p>
 
         <h3>Add/revoke a member</h3>
         <Form>
@@ -185,7 +187,7 @@ export default class Members extends React.Component {
             <FormControl
               name="memberAddress"
               onChange={this.handleMemberAddressChange}
-              placeholder="Enter the member Ethereum address"
+              placeholder="Enter the member ETH address"
               type="text"
               value={this.state.memberAddress}
             />

@@ -1,6 +1,6 @@
 {
   "name": "dao1901",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Dao1901 is a dapp to simulate a french organization ruled by law 1901",
   "repository" : { "type" : "git", "url" : "https://github.com/asseth/dao1901"},
   "scripts": {
