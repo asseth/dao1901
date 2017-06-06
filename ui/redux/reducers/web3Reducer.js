@@ -12,7 +12,7 @@ export const WEB3_DISCONNECTED = 'WEB3_DISCONNECTED';
 // ------------------------------------
 export const web3Connect = () => {
   return (dispatch, getState) => {
-    let web3Location = `http://${truffleConfig.rpc.host}:${truffleConfig.rpc.port}`;
+    let web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`;
 
     let output = (typeof web3 !== 'undefined') // web3 given by metamask
       ? { type: WEB3_CONNECTED, payload: { web3: new Web3(web3.currentProvider), isConnected: true } }
