@@ -2,7 +2,10 @@
   "name": "dao1901",
   "version": "0.2.3",
   "description": "Dao1901 is a dapp to simulate a french organization ruled by law 1901",
-  "repository" : { "type" : "git", "url" : "https://github.com/asseth/dao1901"},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asseth/dao1901"
+  },
   "scripts": {
     "build": "webpack",
     "compilebuild": "npm run compile && webpack --progress --display-error-details",
@@ -69,8 +72,12 @@
     "prop-types": "^15.5.8",
     "react-addons-css-transition-group": "^15.5.2",
     "react-addons-transition-group": "^15.5.2",
+    "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
+    "react-router-redux": "^5.0.0-alpha.4",
     "react-toastr": "^2.8.2",
-    "reactstrap": "^4.5.0"
+    "reactstrap": "^4.5.0",
+    "redux": "^3.6.0",
+    "redux-saga": "^0.15.3"
   }
 }

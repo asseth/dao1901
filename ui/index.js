@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 //import dao1901 from 'dao1901-truffle-library';
-
-import App from './containers/AppContainer/index';
-import 'babel-polyfill';
+import AppContainer from './containers/AppContainer'
+import createStore from './redux/store/createStore';
 
 // Global styles
 import './assets/theme/app.scss';
-import './assets/theme/customizations.scss';
 
-
+// ========================================================
+// Expose contracts globally
+// ========================================================
 // Expose Dao1901Members globally
 //window.Dao1901Members = dao1901.Dao1901Members;
 // Expose Dao1901Votes globally
@@ -17,16 +17,24 @@ import './assets/theme/customizations.scss';
 // Expose Owned globally
 //window.Owned = dao1901.Owned;
 
-// Set default account
-web3.eth.getAccounts((err, accounts) => {
-  if (err) {
-    throw new Error(err.message);
-  }
-  web3.eth.defaultAccount = accounts[0];
-  console.log(`Set the default account to: ${web3.eth.defaultAccount}`);
-});
+// ========================================================
+// Store Instantiation
+// ========================================================
+const initialState = window.___INITIAL_STATE__
+const store = createStore(initialState)
 
-ReactDOM.render(
-  <App/>,
-  document.getElementById('root')
-);
+// ========================================================
+// Render Setup
+// ========================================================
+const MOUNT_NODE = document.getElementById('root')
+let render = () => {
+  ReactDOM.render(
+    <AppContainer store={store}/>,
+    MOUNT_NODE
+  )
+}
+
+// ========================================================
+// Go!
+// ========================================================
+render()

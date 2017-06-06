@@ -13,7 +13,7 @@ let Owned;
  * 	- Ethereum Blockchain Info
  * 	- Project description
  */
-export default class Home extends React.Component {
+class HomeContainer extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -132,3 +132,15 @@ export default class Home extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state, props) => {
+  console.log('state', state); // state
+  console.log('props',props); // ownProps
+  return state;
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {actions: bindActionCreators(attendanceRecordActions, dispatch)}
+}
+
+export default connect()(HomeContainer);

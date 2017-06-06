@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
 import './styles.scss';
 
-export default class Menu extends React.Component {
+export default class TopBar extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.handleClick = ::this.handleClick;
@@ -54,7 +54,7 @@ export default class Menu extends React.Component {
   }
 }
 /*
- Menu.contextTypes = {
+ TopBar.contextTypes = {
  router: PropTypes.object.isRequired
  };
  */

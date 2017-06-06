@@ -1,42 +1,47 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import './styles.scss';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-// import createBrowserHistory from 'history/createBrowserHistory'
-// const customHistory = createBrowserHistory();
+import {Route} from 'react-router-dom';
 // import PropTypes from 'prop-types';
-import Menu from '../../component/Menu';
+import TopBar from '../../component/TopBar'
+
+// Redux
+import {Provider} from 'react-redux';
+import {ConnectedRouter} from 'react-router-redux';
+import {history} from '../../redux/store/createStore';
+
 // Pages
 import AdminPage from '../AdminContainer';
 import HomePage from '../HomeContainer';
-import NotFoundPage from '../NotFoundContainer';
+//import NotFoundPage from '../NotFoundContainer';
 import ProposalSubmissionPage from '../ProposalSubmissionContainer';
 import VotePage from '../VotesManagementContainer';
 
-class App extends Component {
+class AppContainer extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {};
   }
 
   render() {
     return (
       <div>
-        <Menu />
+        <TopBar />
 
         <div className="m-top-30">
           <div className="row content">
             <div className="col"></div>
-              <div className="col-8">
-                <Router>
+            <div className="col-8">
+             <Provider store={this.props.store}>
+               <ConnectedRouter history={history}>
                   <div>
                     <Route exact path="/" component={HomePage}/>
                     <Route path="/admin" component={AdminPage}/>
                     <Route path="/vote" component={VotePage}/>
                     <Route path="/proposal_submission" component={ProposalSubmissionPage}/>
-                    {/*<Route path="*" component={NotFoundPage} />*/}
                   </div>
-                </Router>
-              </div>
+                </ConnectedRouter>
+              </Provider>
+            </div>
             <div className="col"></div>
           </div>
         </div>
@@ -44,9 +49,18 @@ class App extends Component {
     );
   }
 }
+
+const mapStateToProps = (state, props) => {
+  console.log('state', state); // state
+  console.log('props',props); // ownProps
+  return props;
+}
+
 /*
- App.contextTypes = {
- router: PropTypes.func.isRequired
- };
- */
-export default App
+const mapDispatchToProps = (dispatch) => {
+  return {actions: bindActionCreators(attendanceRecordActions, dispatch)}
+}
+*/
+
+//export default AppContainer;
+export default connect()(AppContainer);

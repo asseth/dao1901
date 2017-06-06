@@ -240,22 +240,6 @@ export default class Admin extends React.Component {
 
         <div className="row mt-5">
           <div className="col">
-            <h2>Useful Info</h2>
-            <p>{`Account: ${web3.eth.defaultAccount}`}</p>
-            <p>{`Owner: ${this.state.owner}`}</p>
-            <p>
-              <span className="text-primary">{'Owned'}</span>
-              {` Ethereum smart-contract address: ${Owned && Owned.address}`}
-            </p>
-            <p>
-              <span className="text-primary">{'Dao1901Members'}</span>
-              {` Ethereum smart-contract address: ${Dao1901Members && Dao1901Members.address}`}
-            </p>
-          </div>
-        </div>
-
-        <div className="row mt-5">
-          <div className="col">
             <h2>{'Membership management'}</h2>
             <h3>{'Add a member'}</h3>
             <MemberAdditionForm
