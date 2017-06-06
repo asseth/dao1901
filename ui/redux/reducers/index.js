@@ -1,23 +1,45 @@
 import { combineReducers } from 'redux'
-//import * as ActionTypes from '../actions'
+import web3Reducer from './web3Reducer'
+import {userAddress} from './userReducer'
 
-/*
-let initialState = {
-  userAddress: web3.eth.defaultAccount
-}
+/***************************** App State **************************************
+- ethereum // from web3
+ - currentBlockNumber
+ - currentProvider
+ - numberOfPeers
+- dao // from blockchain - Useful info for dao admin
+ - ownerAddress
+ - contract
+   - owned
+    - address
+   - members
+    - address
+   - votes
+    - address
+- user // from web3
+  - address
+  - balance
+- members // from blockchain
+  - address
+  - endSubscriptionDate
+- votes // from blockchain
+  - proposals
+    - isPassed
+    - description
 */
 
-function userAddress(state = {}, action) {
-  switch (action.type) {
-    case 'USER_ADDRESS_SUCCESS':
-      return action.userAddress
-    default:
-      return state
-  }
+export const makeRootReducer = (asyncReducers) => {
+  return combineReducers({
+    userAddress,
+    web3Wrap: web3Reducer,
+    ...asyncReducers
+  })
 }
 
-const rootReducer = combineReducers({
-  userAddress
-})
+export const injectReducer = (store, { key, reducer }) => {
+  if (Object.hasOwnProperty.call(store.asyncReducers, key)) return
+  store.asyncReducers[key] = reducer
+  store.replaceReducer(makeRootReducer(store.asyncReducers))
+}
 
-export default rootReducer
+export default makeRootReducer

@@ -13,12 +13,13 @@ import createHistory from 'history/createBrowserHistory'
 export const history = createHistory()
 
 const reduxRouterMiddleware = routerMiddleware(history)
-import rootReducer from '../reducers'
+import makeRootReducer from '../reducers'
 //import { updateLocation } from './locationReducer'
 import rootSaga from '../sagas/userSaga'
 
 
 export default (initialState = {}) => {
+  let rootReducer = makeRootReducer()
   const reducers = combineReducers({
     rootReducer,
     routing: routerReducer
