@@ -5,6 +5,7 @@ import {Card} from 'reactstrap';
 
 /**
  * Display basic info about user, blockchain status, ...
+ *
  * @param props
  * @returns {XML}
  * @constructor
