@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 import {applyMiddleware, compose, createStore, combineReducers} from 'redux'
+import thunkMiddleware from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga'
 const sagaMiddleware = createSagaMiddleware()
 import {routerReducer, routerMiddleware} from 'react-router-redux'
@@ -27,8 +28,7 @@ export default (initialState = {}) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [reduxRouterMiddleware, sagaMiddleware
-  ]
+  const middleware = [reduxRouterMiddleware, sagaMiddleware, thunkMiddleware]
   // ======================================================
   // Store Enhancers
   // ======================================================

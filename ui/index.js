@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 //import dao1901 from 'dao1901-truffle-library';
-import AppContainer from './containers/AppContainer'
+import AppContainer from './containers/AppContainer/index'
 import createStore from './redux/store/createStore';
 
 // Global styles

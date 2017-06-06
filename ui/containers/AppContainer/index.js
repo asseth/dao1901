@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import { web3Connect } from '../../redux/reducers/web3Reducer'
+
 import './styles.scss';
 import {Route} from 'react-router-dom';
 // import PropTypes from 'prop-types';
+//import CoreLayout from '../../component/Layouts/CoreLayout'
 import TopBar from '../../component/TopBar'
 
 // Redux
@@ -20,6 +23,10 @@ import VotePage from '../VotesManagementContainer';
 class AppContainer extends Component {
   constructor(props, context) {
     super(props, context);
+  }
+
+  componentWillMount () {
+    this.props.web3Connect() // check if web3 exists. metamask compatibility
   }
 
   render() {
@@ -51,16 +58,15 @@ class AppContainer extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  console.log('state', state); // state
-  console.log('props',props); // ownProps
-  return props;
+  console.log('state- - -', state); // state
+  console.log('props- - -',props); // ownProps
+  return state;
 }
 
-/*
-const mapDispatchToProps = (dispatch) => {
-  return {actions: bindActionCreators(attendanceRecordActions, dispatch)}
+const mapDispatchToProps = {
+  web3Connect
 }
-*/
 
 //export default AppContainer;
-export default connect()(AppContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+//export default connect(mapStateToProps, mapDispatchToProps)(CoreLayout)
