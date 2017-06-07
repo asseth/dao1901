@@ -1,11 +1,34 @@
+/*
+- user // from web3
+  - address
+  - balance
+*/
+
+// ------------------------------------
+// Action Handlers
+// ------------------------------------
+const ACTION_HANDLERS = {
+  ['USER_ADDRESS_SUCCESS']: (state, action) => {
+    return  {userAddress: action.userAddress}
+  }
+};
+
+// ------------------------------------
+// Reducer
+// ------------------------------------
+
+export default function userReducer (state = {}, action) {
+  const handler = ACTION_HANDLERS[action.type];
+  return handler ? handler(state, action) : state
+}
+
 /**
- * userAddress
+ * user
  * @param state
  * @param action
  * @returns {*}
  */
-
-export default function userAddress(state = {a: 2}, action) {
+export function user (state, action) {
   switch (action.type) {
     case 'USER_ADDRESS_SUCCESS':
       return action.userAddress

@@ -1,30 +1,42 @@
+/*
+- dao // from blockchain - Useful info for dao admin
+ - ownerAddress
+ - contract
+   - owned
+    - address
+   - members
+    - address
+   - votes
+    - address
+*/
+
 import {createRequestTypes} from '../actions'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-const DAO_OWNER_ADDRESS = createRequestTypes('DAO_OWNER_ADDRESS')
-
-const DAO_CONTRACT_ADDRESS_OWNED = createRequestTypes('DAO_CONTRACT_ADDRESS_OWNED')
-const DAO_CONTRACT_ADDRESS_MEMBERS = createRequestTypes('DAO_CONTRACT_ADDRESS_MEMBERS')
-const DAO_CONTRACT_ADDRESS_VOTES = createRequestTypes('DAO_CONTRACT_ADDRESS_VOTES')
-
-export const dao = {
-  request: ownerAddress => action(DAO.REQUESTED, {ownerAddress}),
-  success: (ownerAddress, response) => action(DAO.SUCCEED, {ownerAddress, response}),
-  failure: (ownerAddress, error) => action(DAO.FAILED, {ownerAddress, error}),
+export const daoOwnerAddress = {
+  request: ownerAddress => action('DAO_OWNER_ADDRESS', {ownerAddress}),
+  success: (ownerAddress, response) => action('DAO_OWNER_SUCCEED', {ownerAddress, response}),
+  failure: (ownerAddress, error) => action('DAO_OWNER_FAILED', {ownerAddress, error}),
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  ['BLOCK_NUMBER_SUCCEED']: (state, action) => {
-    return  {blockNumber: action.currentBlockNumber}
+  ['DAO_OWNER_ADDRESS']: (state, action) => {
+    return  {ownerAddress: action.currentBlockNumber}
   },
-  ['BLOCK_NUMBER_FAILED']: (state, action) => {
-    return  {errorMessage: action.errorMessage}
-  }
+  ['DAO_CONTRACT_ADDRESS_OWNED']: (state, action) => {
+    return  {contract: {owned: action.ownedContractAddress}}
+  },
+  ['DAO_CONTRACT_ADDRESS_MEMBERS']: (state, action) => {
+    return  {contract: {owned: action.membersContractAddress}}
+  },
+  ['DAO_CONTRACT_ADDRESS_VOTES']: (state, action) => {
+    return  {contract: {votes: action.votesContractAddress}}
+  },
 };
 
 // ------------------------------------
