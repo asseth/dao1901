@@ -31,14 +31,8 @@ const DAO_CONTRACT_ADDRESS_VOTES = createRequestTypes('DAO_CONTRACT_ADDRESS_VOTE
 
 
 
-function action(type, payload = {}) {
+export default function action(type, payload = {}) {
   return {type, ...payload}
-}
-
-export const ethereumCurrentBlockNumber = {
-  request: currentBlockNumber => action('BLOCK_NUMBER_REQUESTED', {currentBlockNumber}),
-  success: (currentBlockNumber, response) => action('BLOCK_NUMBER_SUCCEED', {currentBlockNumber, response}),
-  failure: (currentBlockNumber, error) => action('BLOCK_NUMBER_FAILED', {currentBlockNumber, error}),
 }
 
 export const members = {

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import {routerReducer} from 'react-router-redux'
 import web3Reducer from '../web3'
 import userAddress from './userReducer'
+import ethereumReducer from '../ethereum/ethereumReducer'
 
 /***************************** App State **************************************
 - ethereum // from web3
@@ -31,6 +32,7 @@ import userAddress from './userReducer'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
+    ethereum: ethereumReducer,
     routing: routerReducer,
     userAddress,
     web3Wrap: web3Reducer,

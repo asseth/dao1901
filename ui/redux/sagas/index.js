@@ -13,7 +13,7 @@ import * as actions from '../actions'
 //const { connexion, members, organization, userAddress } = actions
 const { USER_ADDRESS } = actions
 
-import watchGetEthereumCurrentBlockNumber from './ethereumSaga'
+import watchGetEthereumCurrentBlockNumber from '../ethereum/ethereumSaga'
 
 import contracts from 'dao1901-contracts';
 //import {CONNEXION} from '../actions'
