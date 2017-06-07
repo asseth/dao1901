@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import {routerReducer} from 'react-router-redux'
 import web3Reducer from './web3'
-import daoReducer from './dao/daoReducer'
+import daoReducer from './dao/index'
 import ethereumReducer from './ethereum/ethereumReducer'
 import userReducer from './user/userReducer'
 

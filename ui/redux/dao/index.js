@@ -1,3 +1,20 @@
+import {createRequestTypes} from '../actions'
+
+// ------------------------------------
+// Actions
+// ------------------------------------
+const DAO_OWNER_ADDRESS = createRequestTypes('DAO_OWNER_ADDRESS')
+
+const DAO_CONTRACT_ADDRESS_OWNED = createRequestTypes('DAO_CONTRACT_ADDRESS_OWNED')
+const DAO_CONTRACT_ADDRESS_MEMBERS = createRequestTypes('DAO_CONTRACT_ADDRESS_MEMBERS')
+const DAO_CONTRACT_ADDRESS_VOTES = createRequestTypes('DAO_CONTRACT_ADDRESS_VOTES')
+
+export const dao = {
+  request: ownerAddress => action(DAO.REQUESTED, {ownerAddress}),
+  success: (ownerAddress, response) => action(DAO.SUCCEED, {ownerAddress, response}),
+  failure: (ownerAddress, error) => action(DAO.FAILED, {ownerAddress, error}),
+}
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -13,7 +30,6 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-
 export default function daoReducer (state = {}, action) {
   const handler = ACTION_HANDLERS[action.type];
   return handler ? handler(state, action) : state
