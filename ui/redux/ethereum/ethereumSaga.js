@@ -2,7 +2,7 @@
 /**************************** ETHEREUM ***************************************/
 /******************************************************************************/
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
-import {ethereumCurrentBlockNumber} from '../actions'
+import {ethereumCurrentBlockNumber} from '../ethereum/ethereumAction'
 
 /******************************************************************************/
 /******************************* WORKERS SAGAS - Subroutines ******************/
@@ -20,14 +20,9 @@ let getEthereumCurrentBlockNumber = () => {
 
 function* getEthereumCurrentBlockNumberWorker() {
   try {
-    let web3Wrap = yield select(state => state.web3Wrap);
-    console.log('web3Wrap', web3Wrap)
     const blockNumber = yield call(getEthereumCurrentBlockNumber)
-    console.log('blockNumber: ', blockNumber)
-    console.log('ethereumCurrentBlockNumber.success(blockNumber)', ethereumCurrentBlockNumber.success(blockNumber))
     yield put(ethereumCurrentBlockNumber.success(blockNumber))
   } catch (e) {
-    console.log('ethereumCurrentBlockNumber.failure(e.message)', ethereumCurrentBlockNumber.failure(e.message))
     yield put(ethereumCurrentBlockNumber.failure(e.message));
   }
 }

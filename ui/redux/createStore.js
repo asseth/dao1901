@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import {applyMiddleware, compose, createStore} from 'redux'
-import DevTools from '../../containers/DevTools';
+import DevTools from '../containers/DevTools';
 // ======================================================
 // History
 // ======================================================
@@ -18,7 +18,7 @@ import logger from 'redux-logger'
 // ======================================================
 // Reducers
 // ======================================================
-import makeRootReducer, {injectReducer} from '../reducers/index'
+import makeRootReducer, {injectReducer} from './reducersIndex'
 
 
 export default () => {

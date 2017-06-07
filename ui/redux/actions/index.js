@@ -10,51 +10,13 @@ const REQUESTED = 'REQUESTED'
 const SUCCEED = 'SUCCEED'
 const FAILED = 'FAILED'
 
-function createRequestTypes(base) {
+export function createRequestTypes (base) {
   return [REQUESTED, SUCCEED, FAILED].reduce((acc, type) => {
 		acc[type] = `${base}_${type}`
 		return acc
 	}, {})
 }
 
-const MEMBERS = createRequestTypes('MEMBERS')
-
-const USER = createRequestTypes('USER')
-const USER_ADDRESS = createRequestTypes('USER_ADDRESS')
-const USER_BALANCE = createRequestTypes('USER_BALANCE')
-
-const DAO_OWNER_ADDRESS = createRequestTypes('DAO_OWNER_ADDRESS')
-
-const DAO_CONTRACT_ADDRESS_OWNED = createRequestTypes('DAO_CONTRACT_ADDRESS_OWNED')
-const DAO_CONTRACT_ADDRESS_MEMBERS = createRequestTypes('DAO_CONTRACT_ADDRESS_MEMBERS')
-const DAO_CONTRACT_ADDRESS_VOTES = createRequestTypes('DAO_CONTRACT_ADDRESS_VOTES')
-
-
-
-function action(type, payload = {}) {
+export default function action (type, payload = {}) {
   return {type, ...payload}
-}
-
-export const ethereumCurrentBlockNumber = {
-  request: currentBlockNumber => action('BLOCK_NUMBER_REQUESTED', {currentBlockNumber}),
-  success: (currentBlockNumber, response) => action('BLOCK_NUMBER_SUCCEED', {currentBlockNumber, response}),
-  failure: (currentBlockNumber, error) => action('BLOCK_NUMBER_FAILED', {currentBlockNumber, error}),
-}
-
-export const members = {
-  request: address => action(MEMBERS.REQUESTED, {address}),
-  success: (address, response) => action(MEMBERS.SUCCEED, {address, response}),
-  failure: (address, error) => action(MEMBERS.FAILED, {address, error}),
-}
-
-export const dao = {
-  request: ownerAddress => action(ORGANIZATION.REQUESTED, {ownerAddress}),
-  success: (ownerAddress, response) => action(ORGANIZATION.SUCCEED, {ownerAddress, response}),
-  failure: (ownerAddress, error) => action(ORGANIZATION.FAILED, {ownerAddress, error}),
-}
-
-export const userAddress = {
-  request: () => action(USER_ADDRESS.REQUESTED),
-  success: (address, response) => action(USER_ADDRESS.SUCCEED, {address, response}),
-  failure: (address, error) => action(USER_ADDRESS.FAILED, {address, error}),
 }
