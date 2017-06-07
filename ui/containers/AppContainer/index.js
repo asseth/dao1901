@@ -12,7 +12,7 @@ import DevTools from '../../containers/DevTools'
 // Redux
 import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'react-router-redux';
-import {history} from '../../redux/store/createStore';
+import {history, sagaMiddleware} from '../../redux/createStore';
 
 // Pages
 import TestPage from '../TestContainer';
@@ -21,8 +21,7 @@ import HomePage from '../HomeContainer';
 import ProposalSubmissionPage from '../ProposalSubmissionContainer';
 import VotePage from '../VotesManagementContainer';
 //import NotFoundPage from '../NotFoundContainer';
-import {sagaMiddleware} from '../../redux/store/createStore'
-import rootSaga from '../../redux/sagas/index'
+import rootSaga from '../../redux/sagasIndex'
 
 class AppContainer extends Component {
   constructor(props, context) {

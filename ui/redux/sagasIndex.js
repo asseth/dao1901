@@ -9,14 +9,13 @@
 // takeEvery:
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
 //import { api, history } from '../services'
-import * as actions from '../actions'
+import * as actions from './actions'
 //const { connexion, members, organization, userAddress } = actions
 const { USER_ADDRESS } = actions
 
-import watchGetEthereumCurrentBlockNumber from '../ethereum/ethereumSaga'
+import watchGetEthereumCurrentBlockNumber from './ethereum/ethereumSaga'
 
 import contracts from 'dao1901-contracts';
-//import {CONNEXION} from '../actions'
 
 /***************************** App State **************************************
 - ethereum // from web3

@@ -14,7 +14,20 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 
-export default function ethereumReducer (state = {}, action) {
+export default function daoReducer (state = {}, action) {
   const handler = ACTION_HANDLERS[action.type];
   return handler ? handler(state, action) : state
 }
+
+// Get Owned instance
+/*
+ try {
+ console.log('contracts', contracts)
+ contracts.Owned.setProvider(this.props.web3.currentProvider);
+ Owned = await contracts.Owned.deployed();
+ this.setState({owner: await Owned.owner()});
+ }
+ catch (err) {
+ throw new Error(err.message);
+ }
+ */
