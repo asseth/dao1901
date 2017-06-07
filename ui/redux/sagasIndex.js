@@ -6,9 +6,10 @@
 // put: dispatch action to the store
 // select: get state from redux store
 // take: intercepts action dispatched to the store
-// takeEvery:
+// takeEvery: listen for dispatched actions and run them through the worker sagas
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
-import watchGetEthereumCurrentBlockNumber from './ethereum/ethereumSaga'
+import {watchGetBlockNumber} from './ethereum/ethereumSaga'
+import userSagas from './user/userSaga'
 import contracts from 'dao1901-contracts';
 
 /***************************** App State **************************************
@@ -66,42 +67,24 @@ async getContractAddressVote() {
 }
 */
 
-// Our worker Saga: will perform the async increment task
 function* getContractAddressOwner() {
   yield contracts.Owned.deployed()
   yield put({ type: 'CONTRACT_ADDRESS_OWNER_SUCCEEDED' })
-  // CONTRACT_ADDRESS_OWNER_FAILED
 }
 
 function* getUserAddress() {
   yield web3.eth.defaultAccount
   yield put({ type: 'USER_ADDRESS_SUCCEEDED' })
-  // USER_ADDRESS_FAILED
 }
 
-/******************************************************************************/
-/**************************** WATCHERS SAGAS **********************************/
-/******************************************************************************/
-/******************************* USER  ****************************************/
-/******************************************************************************/
-// Our watcher Saga: spawn a new incrementAsync task on each INCREMENT_ASYNC
 export function* watchUserAddress() {
-  // takeEvery: Listen for dispatched actions and run them through the worker sagas
   yield takeEvery({USER_ADDRESS_SUCCEEDED}, getUserAddress)
 }
 
-/******************************************************************************/
-/**************************** MEMBERS *****************************************/
-/******************************************************************************/
 
-/******************************************************************************/
-/**************************** DAO *********************************************/
-/******************************************************************************/
 
 export function* watchContractAddressOwner() {
-  // takeEvery: Listen for dispatched actions and run them through the worker sagas
   yield takeEvery('DAO_OWNER_ADDRESS_SUCCEEDED', getContractAddressOwner)
-  // DAO_OWNER_ADDRESS_FAILED
 }
 
 function* bootstrap() {
@@ -117,7 +100,7 @@ function* bootstrap() {
 export default function* rootSaga() {
   yield [
     fork(watchContractAddressOwner),
-    fork(watchGetEthereumCurrentBlockNumber),
+    fork(watchGetBlockNumber),
     fork(bootstrap)
   ]
 }
