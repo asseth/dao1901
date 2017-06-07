@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 import {applyMiddleware, compose, createStore} from 'redux'
+import DevTools from '../../containers/DevTools';
 // ======================================================
 // History
 // ======================================================
@@ -10,14 +11,13 @@ export const history = createHistory()
 // ======================================================
 import thunkMiddleware from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga'
-const sagaMiddleware = createSagaMiddleware()
+export const sagaMiddleware = createSagaMiddleware()
 import {routerMiddleware} from 'react-router-redux'
 const reduxRouterMiddleware = routerMiddleware(history)
 // ======================================================
 // Reducers
 // ======================================================
 import makeRootReducer, {injectReducer} from '../reducers/index'
-import rootSaga from '../sagas/userSaga'
 
 
 export default () => {
@@ -30,6 +30,7 @@ export default () => {
   // Store Enhancers
   // ======================================================
   // Get compose function from redux-devtools-extension if available
+  // Todo Not used because of weird bug - it triggers eth_protocolVersion ethereum json-rpc on open
   const composeEnhancers =
           typeof window === 'object' &&
           window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
@@ -37,9 +38,9 @@ export default () => {
               // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
             }) : compose
 
-  const enhancers = composeEnhancers(
+  const enhancers = compose(
     applyMiddleware(...middlewares),
-    // other store enhancers if any
+    DevTools.instrument()
   )
 
   // ======================================================
@@ -49,18 +50,17 @@ export default () => {
     makeRootReducer(),
     enhancers
   )
-  console.log('STORE INSTANCIATED')
-  sagaMiddleware.run(rootSaga);
 
   // ======================================================
   // HMR Setup
   // ======================================================
-  store.asyncReducers = {}
+  //store.asyncReducers = {}
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
   //store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
-  if (module.hot) {
+  /*if (module.hot) {
+    console.log('HMR activated')
     module.hot.accept('../reducers', injectReducer(store.asyncReducers))
-  }
+  }*/
 
   // ======================================================
   // Return the store

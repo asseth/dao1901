@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import {routerReducer} from 'react-router-redux'
-import web3Reducer from './web3Reducer'
+import web3Reducer from '../web3'
 import userAddress from './userReducer'
 
 /***************************** App State **************************************

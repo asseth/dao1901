@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './styles.scss';
 import contracts from 'dao1901-contracts';
-import Info from '../../component/Info'
-let Owned;
+import Info from '../../component/Info';
 
 /**
  * Home Page
@@ -13,29 +12,8 @@ let Owned;
  * 	- Project description
  */
 class HomeContainer extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      defaultAccountBalance: '',
-      eth_blockNumber: '',
-      owner: ''
-    };
-  }
-
-  async componentWillMount() {
-     // Get Owned instance
-    try {
-      contracts.Owned.setProvider(this.props.web3.currentProvider);
-      Owned = await contracts.Owned.deployed();
-      this.setState({owner: await Owned.owner()});
-    }
-    catch (err) {
-      throw new Error(err.message);
-    }
-  }
-
   render() {
-    const {dao, ethereum, web3} = this.props
+    const {dao, ethereum, user, web3} = this.props
 
     return (
       <div className="container">
@@ -46,14 +24,15 @@ class HomeContainer extends React.Component {
         </div>
 
         <Info
-          blockNumber={ethereum.blockNumber}
-          contractAddressMembers={ethereum.contractAddressMembers}
-          contractAddressOwner={ethereum.contractAddressOwner}
-          contractAddressVotes={ethereum.contractAddressVote}
-          currentProvider={web3.currentProvider.host ? web3.currentProvider.host : web3.currentProvider.constructor.name}
-          defaultAccount={user.address}
-          defaultAccountbalance={user.defaultAccountBalance}
-          ownerAddress={dao.owner}
+          blockNumber={ethereum && ethereum.blockNumber}
+          contractAddressMembers={ethereum && ethereum.contractAddressMembers}
+          contractAddressOwner={ethereum && ethereum.contractAddressOwner}
+          contractAddressVotes={ethereum && ethereum.contractAddressVote}
+          currentProvider={web3 && web3.currentProvider && web3.currentProvider.host}
+          //currentProvider={web3 && web3.currentProvider.host ? web3.currentProvider.host : web3.currentProvider.constructor.name} // fix metamask testnet
+          defaultAccount={user && user.address}
+          defaultAccountbalance={user && user.defaultAccountBalance}
+          ownerAddress={dao && dao.owner}
         />
 
         <div className="row">
@@ -122,10 +101,6 @@ const mapStateToProps = (state) => {
     isConnected: state.web3Wrap.isConnected,
     web3: state.web3Wrap.web3
   }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {actions: bindActionCreators(Actions, dispatch)}
 }
 
 export default connect(mapStateToProps)(HomeContainer);
