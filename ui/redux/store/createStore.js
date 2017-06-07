@@ -1,32 +1,26 @@
 import 'babel-polyfill';
-import {applyMiddleware, compose, createStore, combineReducers} from 'redux'
+import {applyMiddleware, compose, createStore} from 'redux'
 // ======================================================
 // History
 // ======================================================
 import createHistory from 'history/createBrowserHistory'
 export const history = createHistory()
-
+// ======================================================
+// Middlewares
+// ======================================================
 import thunkMiddleware from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga'
 const sagaMiddleware = createSagaMiddleware()
-import {routerReducer, routerMiddleware} from 'react-router-redux'
+import {routerMiddleware} from 'react-router-redux'
 const reduxRouterMiddleware = routerMiddleware(history)
-
-import makeRootReducer from '../reducers'
-//import { updateLocation } from './locationReducer'
+// ======================================================
+// Reducers
+// ======================================================
+import makeRootReducer, {injectReducer} from '../reducers/index'
 import rootSaga from '../sagas/userSaga'
 
 
 export default () => {
-  // ======================================================
-  // Prepare reducers
-  // ======================================================
-  let rootReducer = makeRootReducer()
-  const reducers = combineReducers({
-    rootReducer,
-    routing: routerReducer
-  })
-
   // ======================================================
   // Middleware Configuration
   // ======================================================
@@ -49,26 +43,24 @@ export default () => {
   )
 
   // ======================================================
-  // Store Instantiation and HMR Setup
+  // Store Instantiation
   // ======================================================
   const store = createStore(
-    reducers,
+    makeRootReducer(),
     enhancers
   )
   console.log('STORE INSTANCIATED')
   sagaMiddleware.run(rootSaga);
 
-  /*
+  // ======================================================
+  // HMR Setup
+  // ======================================================
   store.asyncReducers = {}
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
   //store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
   if (module.hot) {
-    module.hot.accept('./reducers', () => {
-      const reducers = require('./reducers').default
-      store.replaceReducer(reducers(store.asyncReducers))
-    })
+    module.hot.accept('../reducers', injectReducer(store.asyncReducers))
   }
-  */
 
   // ======================================================
   // Return the store
