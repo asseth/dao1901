@@ -14,11 +14,13 @@ import {ConnectedRouter} from 'react-router-redux';
 import {history} from '../../redux/store/createStore';
 
 // Pages
+import TestPage from '../TestContainer';
 import AdminPage from '../AdminContainer';
 import HomePage from '../HomeContainer';
 import ProposalSubmissionPage from '../ProposalSubmissionContainer';
 import VotePage from '../VotesManagementContainer';
 //import NotFoundPage from '../NotFoundContainer';
+
 
 class AppContainer extends Component {
   constructor(props, context) {
@@ -41,6 +43,7 @@ class AppContainer extends Component {
              <Provider store={this.props.store}>
                <ConnectedRouter history={history}>
                   <div>
+                    {/*<Route exact path="/" component={TestPage}/>*/}
                     <Route exact path="/" component={HomePage}/>
                     <Route path="/admin" component={AdminPage}/>
                     <Route path="/vote" component={VotePage}/>
