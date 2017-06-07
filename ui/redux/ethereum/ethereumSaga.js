@@ -21,7 +21,7 @@ let getEthereumCurrentBlockNumber = () => {
 function* getEthereumCurrentBlockNumberWorker() {
   try {
     const blockNumber = yield call(getEthereumCurrentBlockNumber)
-    yield put(ethereumCurrentBlockNumber.success(blockNumber))
+    yield put({type: 'BLOCK_NUMBER_SUCCEED', blockNumber})
   } catch (e) {
     yield put(ethereumCurrentBlockNumber.failure(e.message));
   }

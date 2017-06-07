@@ -3,7 +3,7 @@
 // ------------------------------------
 const ACTION_HANDLERS = {
   ['BLOCK_NUMBER_SUCCEED']: (state, action) => {
-    return  {blockNumber: action.currentBlockNumber}
+    return  {blockNumber: action.blockNumber}
   },
   ['BLOCK_NUMBER_FAILED']: (state, action) => {
     return  {errorMessage: action.errorMessage}

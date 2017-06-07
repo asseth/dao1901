@@ -13,7 +13,7 @@ import contracts from 'dao1901-contracts';
 
 /***************************** App State **************************************
 - ethereum // from web3
- - currentBlockNumber
+ - blockNumber
  - numberOfPeers
 - dao // from blockchain - Useful info for dao admin
  - ownerAddress

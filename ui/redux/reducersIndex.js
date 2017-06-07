@@ -7,7 +7,7 @@ import userReducer from './user/userReducer'
 
 /***************************** App State **************************************
 - ethereum // from web3
- - currentBlockNumber
+ - blockNumber
  - currentProvider
  - numberOfPeers
 - dao // from blockchain - Useful info for dao admin

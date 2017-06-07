@@ -10,8 +10,6 @@
     - address
 */
 
-import {createRequestTypes} from '../actions'
-
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -26,7 +24,7 @@ export const daoOwnerAddress = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   ['DAO_OWNER_ADDRESS']: (state, action) => {
-    return  {ownerAddress: action.currentBlockNumber}
+    return  {ownerAddress: action.blockNumber}
   },
   ['DAO_CONTRACT_ADDRESS_OWNED']: (state, action) => {
     return  {contract: {owned: action.ownedContractAddress}}
