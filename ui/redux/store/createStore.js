@@ -1,40 +1,37 @@
 import 'babel-polyfill';
-import {applyMiddleware, compose, createStore, combineReducers} from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import createSagaMiddleware from 'redux-saga'
-const sagaMiddleware = createSagaMiddleware()
-import {routerReducer, routerMiddleware} from 'react-router-redux'
-
+import {applyMiddleware, compose, createStore} from 'redux'
+import DevTools from '../../containers/DevTools';
 // ======================================================
 // History
 // ======================================================
 import createHistory from 'history/createBrowserHistory'
-// We're using a browser history
 export const history = createHistory()
-
+// ======================================================
+// Middlewares
+// ======================================================
+import thunkMiddleware from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
+export const sagaMiddleware = createSagaMiddleware()
+import {routerMiddleware} from 'react-router-redux'
 const reduxRouterMiddleware = routerMiddleware(history)
-import makeRootReducer from '../reducers'
-//import { updateLocation } from './locationReducer'
-import rootSaga from '../sagas/userSaga'
+import logger from 'redux-logger'
+// ======================================================
+// Reducers
+// ======================================================
+import makeRootReducer, {injectReducer} from '../reducers/index'
 
 
-export default (initialState = {}) => {
-  let rootReducer = makeRootReducer()
-  const reducers = combineReducers({
-    rootReducer,
-    routing: routerReducer
-  })
-
-
+export default () => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [reduxRouterMiddleware, sagaMiddleware, thunkMiddleware]
+  const middlewares = [reduxRouterMiddleware, sagaMiddleware, thunkMiddleware, logger]
+
   // ======================================================
   // Store Enhancers
   // ======================================================
-  const enhancers = []
   // Get compose function from redux-devtools-extension if available
+  // Todo Not used because of weird bug - it triggers eth_protocolVersion ethereum json-rpc on open
   const composeEnhancers =
           typeof window === 'object' &&
           window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
@@ -42,31 +39,32 @@ export default (initialState = {}) => {
               // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
             }) : compose
 
+  const enhancers = compose(
+    applyMiddleware(...middlewares),
+    DevTools.instrument()
+  )
+
   // ======================================================
-  // Store Instantiation and HMR Setup
+  // Store Instantiation
   // ======================================================
   const store = createStore(
-    reducers,
-    //[...initialState, {routing: routerReducer}],
-    ...initialState,
-    composeEnhancers(
-      applyMiddleware(...middleware),
-      ...enhancers
-    )
+    makeRootReducer(),
+    enhancers
   )
-  console.log('STORE INSTANCIATED')
-  sagaMiddleware.run(rootSaga);
 
-  /*
-  store.asyncReducers = {}
+  // ======================================================
+  // HMR Setup
+  // ======================================================
+  //store.asyncReducers = {}
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
   //store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
-  if (module.hot) {
-    module.hot.accept('./reducers', () => {
-      const reducers = require('./reducers').default
-      store.replaceReducer(reducers(store.asyncReducers))
-    })
-  }
-  */
+  /*if (module.hot) {
+    console.log('HMR activated')
+    module.hot.accept('../reducers', injectReducer(store.asyncReducers))
+  }*/
+
+  // ======================================================
+  // Return the store
+  // ======================================================
   return store
 }

@@ -20,8 +20,7 @@ import './assets/theme/app.scss';
 // ========================================================
 // Store Instantiation
 // ========================================================
-const initialState = window.___INITIAL_STATE__
-const store = createStore(initialState)
+const store = createStore()
 
 // ========================================================
 // Render Setup

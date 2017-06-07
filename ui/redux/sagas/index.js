@@ -13,16 +13,14 @@ import * as actions from '../actions'
 //const { connexion, members, organization, userAddress } = actions
 const { USER_ADDRESS } = actions
 
+import watchGetEthereumCurrentBlockNumber from './ethereumSaga'
+
 import contracts from 'dao1901-contracts';
 //import {CONNEXION} from '../actions'
-
-//import { getUser, getRepo, getStarredByUser, getStargazersByRepo } from '../reducers/selectors'
-
 
 /***************************** App State **************************************
 - ethereum // from web3
  - currentBlockNumber
- - currentProvider
  - numberOfPeers
 - dao // from blockchain - Useful info for dao admin
  - ownerAddress
@@ -100,10 +98,6 @@ export function* watchUserAddress() {
 }
 
 /******************************************************************************/
-/**************************** CONNEXION ***************************************/
-/******************************************************************************/
-
-/******************************************************************************/
 /**************************** MEMBERS *****************************************/
 /******************************************************************************/
 
@@ -117,24 +111,11 @@ export function* watchContractAddressOwner() {
   // DAO_OWNER_ADDRESS_FAILED
 }
 
-
-
-// trigger router navigation via history
-function* watchNavigate() {
-  while(true) {
-    const {pathname} = yield take(actions.NAVIGATE)
-    yield history.push(pathname)
-  }
-}
-
-// Fetches data for a User : user data + starred repos
-function* watchLoadUserPage() {
-  while(true) {
-    const {login, requiredFields = []} = yield take(actions.LOAD_USER_PAGE)
-
-    yield fork(loadUser, login, requiredFields)
-    yield fork(loadStarred, login)
-  }
+function* bootstrap() {
+  console.log('bootstrap ')
+  yield put({type: 'SET_DEFAULT_ACCOUNT_REQUEST'});
+  yield put({type: 'USER_ADDRESS_REQUEST'});
+  yield put({type: 'BLOCK_NUMBER_REQUESTED'});
 }
 
 /******************************************************************************/
@@ -142,6 +123,8 @@ function* watchLoadUserPage() {
 /******************************************************************************/
 export default function* rootSaga() {
   yield [
-    fork(watchContractAddressOwner)
+    fork(watchContractAddressOwner),
+    fork(watchGetEthereumCurrentBlockNumber),
+    fork(bootstrap)
   ]
 }

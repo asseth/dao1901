@@ -32,7 +32,8 @@
     "transform-es2015-sticky-regex",
     "transform-es2015-unicode-regex",
     "check-es2015-constants",
-    "transform-es2015-spread",
+    "transform-es2015-spread", // for Arrays
+    "transform-object-rest-spread", // for Objects
     "transform-es2015-parameters",
     "transform-es2015-destructuring",
     "transform-es2015-block-scoping",

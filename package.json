@@ -24,6 +24,7 @@
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-decorators": "^6.24.1",
     "babel-plugin-transform-function-bind": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-es2015": "^6.24.1",
@@ -55,13 +56,15 @@
     "postcss-loader": "^1.3.3",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "redux-devtools": "^3.4.0",
+    "redux-devtools-dock-monitor": "^1.1.2",
+    "redux-devtools-log-monitor": "^1.3.0",
     "resolve-url-loader": "^2.0.2",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
     "tether": "^1.4.0",
     "truffle-artifactor": "^2.1.4",
     "url-loader": "^0.5.8",
-    "web3": "^0.18.4",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.2"
   },
@@ -72,13 +75,16 @@
     "prop-types": "^15.5.8",
     "react-addons-css-transition-group": "^15.5.2",
     "react-addons-transition-group": "^15.5.2",
+    "react-hot-loader": "^1.3.1",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.4",
     "react-toastr": "^2.8.2",
     "reactstrap": "^4.5.0",
     "redux": "^3.6.0",
+    "redux-logger": "^3.0.6",
     "redux-saga": "^0.15.3",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "web3": "^0.18.0"
   }
 }

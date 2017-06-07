@@ -65,10 +65,6 @@ function* watchFetchUserAddress() {
   yield takeEvery('USER_ADDRESS_REQUEST', fetchUserAddress);
 }
 
-function* bootstrap() {
-  yield put({type: 'SET_DEFAULT_ACCOUNT_REQUEST'});
-  yield put({type: 'USER_ADDRESS_REQUEST'});
-}
 
 /******************************************************************************/
 /******************************* ROOT SAGA ************************************/
@@ -77,6 +73,5 @@ export default function* rootSaga() {
   yield [
     fork(watchFetchUserAddress),
     fork(watchDefaultAccount),
-    fork(bootstrap)
   ]
 }

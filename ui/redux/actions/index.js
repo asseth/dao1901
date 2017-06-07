@@ -6,18 +6,17 @@
  * Constants
  * @type {string}
  */
-const REQUEST = 'REQUEST'
-const SUCCESS = 'SUCCESS'
-const FAILURE = 'FAILURE'
+const REQUESTED = 'REQUESTED'
+const SUCCEED = 'SUCCEED'
+const FAILED = 'FAILED'
 
 function createRequestTypes(base) {
-  return [REQUEST, SUCCESS, FAILURE].reduce((acc, type) => {
+  return [REQUESTED, SUCCEED, FAILED].reduce((acc, type) => {
 		acc[type] = `${base}_${type}`
 		return acc
 	}, {})
 }
 
-const CONNEXION = createRequestTypes('CONNEXION')
 const MEMBERS = createRequestTypes('MEMBERS')
 
 const USER = createRequestTypes('USER')
@@ -36,26 +35,26 @@ function action(type, payload = {}) {
   return {type, ...payload}
 }
 
-export const connexion = {
-  request: currentBlockNumber => action(CONNEXION.REQUEST, {currentBlockNumber}),
-  success: (currentBlockNumber, response) => action(CONNEXION.SUCCESS, {currentBlockNumber, response}),
-  failure: (currentBlockNumber, error) => action(CONNEXION.FAILURE, {currentBlockNumber, error}),
+export const ethereumCurrentBlockNumber = {
+  request: currentBlockNumber => action('BLOCK_NUMBER_REQUESTED', {currentBlockNumber}),
+  success: (currentBlockNumber, response) => action('BLOCK_NUMBER_SUCCEED', {currentBlockNumber, response}),
+  failure: (currentBlockNumber, error) => action('BLOCK_NUMBER_FAILED', {currentBlockNumber, error}),
 }
 
 export const members = {
-  request: address => action(MEMBERS.REQUEST, {address}),
-  success: (address, response) => action(MEMBERS.SUCCESS, {address, response}),
-  failure: (address, error) => action(MEMBERS.FAILURE, {address, error}),
+  request: address => action(MEMBERS.REQUESTED, {address}),
+  success: (address, response) => action(MEMBERS.SUCCEED, {address, response}),
+  failure: (address, error) => action(MEMBERS.FAILED, {address, error}),
 }
 
-export const organization = {
-  request: ownerAddress => action(ORGANIZATION.REQUEST, {ownerAddress}),
-  success: (ownerAddress, response) => action(ORGANIZATION.SUCCESS, {ownerAddress, response}),
-  failure: (ownerAddress, error) => action(ORGANIZATION.FAILURE, {ownerAddress, error}),
+export const dao = {
+  request: ownerAddress => action(ORGANIZATION.REQUESTED, {ownerAddress}),
+  success: (ownerAddress, response) => action(ORGANIZATION.SUCCEED, {ownerAddress, response}),
+  failure: (ownerAddress, error) => action(ORGANIZATION.FAILED, {ownerAddress, error}),
 }
 
 export const userAddress = {
-  request: () => action(USER_ADDRESS.REQUEST),
-  success: (address, response) => action(USER_ADDRESS.SUCCESS, {address, response}),
-  failure: (address, error) => action(USER_ADDRESS.FAILURE, {address, error}),
+  request: () => action(USER_ADDRESS.REQUESTED),
+  success: (address, response) => action(USER_ADDRESS.SUCCEED, {address, response}),
+  failure: (address, error) => action(USER_ADDRESS.FAILED, {address, error}),
 }
