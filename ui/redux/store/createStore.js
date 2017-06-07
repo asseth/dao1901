@@ -14,6 +14,7 @@ import createSagaMiddleware from 'redux-saga'
 export const sagaMiddleware = createSagaMiddleware()
 import {routerMiddleware} from 'react-router-redux'
 const reduxRouterMiddleware = routerMiddleware(history)
+import logger from 'redux-logger'
 // ======================================================
 // Reducers
 // ======================================================
@@ -24,7 +25,7 @@ export default () => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middlewares = [reduxRouterMiddleware, sagaMiddleware, thunkMiddleware]
+  const middlewares = [reduxRouterMiddleware, sagaMiddleware, thunkMiddleware, logger]
 
   // ======================================================
   // Store Enhancers
