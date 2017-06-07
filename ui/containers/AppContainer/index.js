@@ -16,9 +16,9 @@ import {history} from '../../redux/store/createStore';
 // Pages
 import AdminPage from '../AdminContainer';
 import HomePage from '../HomeContainer';
-//import NotFoundPage from '../NotFoundContainer';
 import ProposalSubmissionPage from '../ProposalSubmissionContainer';
 import VotePage from '../VotesManagementContainer';
+//import NotFoundPage from '../NotFoundContainer';
 
 class AppContainer extends Component {
   constructor(props, context) {
@@ -57,9 +57,8 @@ class AppContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => {
-  console.log('state- - -', state); // state
-  console.log('props- - -',props); // ownProps
+const mapStateToProps = (state) => {
+  console.log('state- - -', state);
   return state;
 }
 
@@ -69,4 +68,3 @@ const mapDispatchToProps = {
 
 //export default AppContainer;
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
-//export default connect(mapStateToProps, mapDispatchToProps)(CoreLayout)

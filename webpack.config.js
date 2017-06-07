@@ -17,7 +17,8 @@ module.exports = {
     filename: '[name].bundle.js',
     publicPath: '/'
   },
-  devtool: 'cheap-module-eval-source-map',
+  //devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   plugins: [
     // Copy our app's index.html to the public folder.
     new CopyWebpackPlugin([

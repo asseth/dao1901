@@ -2,6 +2,9 @@ import { default as contract } from 'truffle-contract';
 import Web3 from 'web3';
 import 'babel-polyfill';
 
+// ========================================================
+// Setup web3
+// ========================================================
 if (typeof web3 !== 'undefined') {
   window.web3 = new Web3(web3.currentProvider);
   console.log('web3.currentProvider', web3.currentProvider);

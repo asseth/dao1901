@@ -25,7 +25,7 @@ class HomeContainer extends React.Component {
   }
 
   async componentWillMount() {
-    // Get Owned instance
+     // Get Owned instance
     try {
       Owned = await contracts.Owned.deployed();
       this.setState({owner: await Owned.owner()});
@@ -33,7 +33,6 @@ class HomeContainer extends React.Component {
     catch (err) {
       throw new Error(err.message);
     }
-
     // Set currentProvider_host
     if (web3.currentProvider.host) {
       this.setState({currentProvider_host: web3.currentProvider.host})
@@ -42,7 +41,6 @@ class HomeContainer extends React.Component {
     else {
       this.setState({currentProvider_host: web3.currentProvider.constructor.name});
     }
-
     // Set block number
     web3.eth.getBlockNumber((e, r) => this.setState({eth_blockNumber: !e ? r : e.message}));
 
@@ -140,7 +138,7 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {actions: bindActionCreators(attendanceRecordActions, dispatch)}
+  return {actions: bindActionCreators(Actions, dispatch)}
 }
 
 export default connect()(HomeContainer);

@@ -1,39 +1,40 @@
 import 'babel-polyfill';
 import {applyMiddleware, compose, createStore, combineReducers} from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import createSagaMiddleware from 'redux-saga'
-const sagaMiddleware = createSagaMiddleware()
-import {routerReducer, routerMiddleware} from 'react-router-redux'
-
 // ======================================================
 // History
 // ======================================================
 import createHistory from 'history/createBrowserHistory'
-// We're using a browser history
 export const history = createHistory()
 
+import thunkMiddleware from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
+const sagaMiddleware = createSagaMiddleware()
+import {routerReducer, routerMiddleware} from 'react-router-redux'
 const reduxRouterMiddleware = routerMiddleware(history)
+
 import makeRootReducer from '../reducers'
 //import { updateLocation } from './locationReducer'
 import rootSaga from '../sagas/userSaga'
 
 
-export default (initialState = {}) => {
+export default () => {
+  // ======================================================
+  // Prepare reducers
+  // ======================================================
   let rootReducer = makeRootReducer()
   const reducers = combineReducers({
     rootReducer,
     routing: routerReducer
   })
 
-
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [reduxRouterMiddleware, sagaMiddleware, thunkMiddleware]
+  const middlewares = [reduxRouterMiddleware, sagaMiddleware, thunkMiddleware]
+
   // ======================================================
   // Store Enhancers
   // ======================================================
-  const enhancers = []
   // Get compose function from redux-devtools-extension if available
   const composeEnhancers =
           typeof window === 'object' &&
@@ -42,17 +43,17 @@ export default (initialState = {}) => {
               // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
             }) : compose
 
+  const enhancers = composeEnhancers(
+    applyMiddleware(...middlewares),
+    // other store enhancers if any
+  )
+
   // ======================================================
   // Store Instantiation and HMR Setup
   // ======================================================
   const store = createStore(
     reducers,
-    //[...initialState, {routing: routerReducer}],
-    ...initialState,
-    composeEnhancers(
-      applyMiddleware(...middleware),
-      ...enhancers
-    )
+    enhancers
   )
   console.log('STORE INSTANCIATED')
   sagaMiddleware.run(rootSaga);
@@ -68,5 +69,9 @@ export default (initialState = {}) => {
     })
   }
   */
+
+  // ======================================================
+  // Return the store
+  // ======================================================
   return store
 }
