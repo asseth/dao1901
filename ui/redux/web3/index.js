@@ -10,15 +10,22 @@ export const WEB3_DISCONNECTED = 'WEB3_DISCONNECTED';
 // ------------------------------------
 // Actions
 // ------------------------------------
+// Called in AppContainer
 export const web3Connect = () => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     let web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`;
+    //let actionNoWeb3 = { type: WEB3_DISCONNECTED, payload: { web3: null, isConnected: false } }
 
-    let output = (typeof web3 !== 'undefined')
-      ? { type: WEB3_CONNECTED, payload: { web3: new Web3(web3.currentProvider), isConnected: true } }
-      // : { type: WEB3_DISCONNECTED, payload: { web3: null, isConnected: false } }  // comment out for optional section
-      : { type: WEB3_CONNECTED, payload: { web3: new Web3(new Web3.providers.HttpProvider(web3Location)), isConnected: true } }  // comment in for optional section
-    dispatch(output)
+    if (typeof window.web3 !== 'undefined') {
+      console.log('actionIsWeb3')
+      dispatch({ type: WEB3_CONNECTED, payload: { web3: new Web3(window.web3.currentProvider), isConnected: true } })
+    }
+    else {
+      console.log('actionIsNotWeb3')
+      window.web3 = new Web3(new Web3.providers.HttpProvider(web3Location))
+      console.log('web3 added to window')
+      dispatch({ type: WEB3_CONNECTED, payload: { web3: window.web3, isConnected: true } })
+    }
   }
 };
 
