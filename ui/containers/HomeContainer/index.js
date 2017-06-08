@@ -31,7 +31,7 @@ class HomeContainer extends React.Component {
           currentProvider={web3 && web3.currentProvider && web3.currentProvider.host}
           //currentProvider={web3 && web3.currentProvider.host ? web3.currentProvider.host : web3.currentProvider.constructor.name} // fix metamask testnet
           defaultAccount={user && user.defaultAccount}
-          defaultAccountbalance={user && user.defaultAccountBalance}
+          balance={user && user.balance}
           ownerAddress={dao && dao.owner}
         />
 
