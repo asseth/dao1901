@@ -9,9 +9,8 @@
 // takeEvery: listen for dispatched actions and run them through the worker sagas
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
 import {watchGetBlockNumber} from './ethereum/ethereumSaga'
-//import userSagas, { watchFetchUserAddress, watchDefaultAccount} from './user/userSaga'
 import {user} from './user/userSaga'
-import contracts from 'dao1901-contracts';
+import Dao1901Contracts from 'dao1901-contracts';
 
 /***************************** App State **************************************
 - ethereum // from web3
@@ -43,46 +42,33 @@ import contracts from 'dao1901-contracts';
 /******************************************************************************/
 /******************************* WORKERS SAGAS - Subroutines ******************/
 /******************************************************************************/
-/*async getContractAddressOwner() {
+let getDeployedContract = (contract) => {
+  // Todo: warning web3 from window
+  contract.setProvider(window.web3.currentProvider);
+  return contract.deployed();
+}
+
+function* getDeployedContractsWorker() {
   try {
-    return await contracts.Owned.deployed();
-  } catch (err) {
-    throw new Error(err.message);
+    const {Dao1901Members, Dao1901Votes, Owned} = Dao1901Contracts;
+    const contracts = yield call(() => Promise.all([Dao1901Members, Dao1901Votes, Owned].map(getDeployedContract)));
+    yield put({type: 'CONTRACTS_SUCCEED', contracts});
+  } catch (e) {
+    yield put({type: 'CONTRACTS_FAILED', message: e.message});
   }
 }
 
-async getContractAddressMembers() {
-  try {
-    return await contracts.Dao1901Members.deployed();
-  } catch (err) {
-    throw new Error(err.message);
-  }
-}
-
-async getContractAddressVote() {
-  try {
-    return await contracts.Dao1901Votes.deployed();
-  } catch (err) {
-    throw new Error(err.message);
-  }
-}
-*/
-
-function* getContractAddressOwner() {
-  yield contracts.Owned.deployed()
-  yield put({ type: 'CONTRACT_ADDRESS_OWNER_SUCCEEDED' })
-}
 
 
-
-export function* watchContractAddressOwner() {
-  yield takeEvery('DAO_OWNER_ADDRESS_SUCCEED', getContractAddressOwner)
+export function* watchContracts() {
+  yield takeEvery('CONTRACTS_REQUESTED', getDeployedContractsWorker)
 }
 
 function* bootstrap() {
   console.log('bootstrap ')
   yield put({type: 'USER_ACCOUNTS_REQUESTED'});
   yield put({type: 'BLOCK_NUMBER_REQUESTED'});
+  yield put({type: 'CONTRACTS_REQUESTED'});
 }
 
 /******************************************************************************/
@@ -90,8 +76,8 @@ function* bootstrap() {
 /******************************************************************************/
 export default function* rootSaga() {
   yield [
-    fork(watchContractAddressOwner),
     fork(watchGetBlockNumber),
+    fork(watchContracts),
     fork(user),
     fork(bootstrap)
   ]

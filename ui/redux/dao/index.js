@@ -9,32 +9,41 @@
    - votes
     - address
 */
-
 // ------------------------------------
-// Actions
+// Sagas
 // ------------------------------------
-export const daoOwnerAddress = {
-  request: ownerAddress => action('DAO_OWNER_ADDRESS', {ownerAddress}),
-  success: (ownerAddress, response) => action('DAO_OWNER_SUCCEED', {ownerAddress, response}),
-  failure: (ownerAddress, error) => action('DAO_OWNER_FAILED', {ownerAddress, error}),
+let fetchOwnerAddress = async () => {
+  let Owned = await contracts.Owned.deployed();
+  console.log('Owned', Owned)
 }
+
+
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  ['DAO_OWNER_ADDRESS']: (state, action) => {
-    return  {ownerAddress: action.blockNumber}
+  ['DAO_OWNER_ADDRESS_SUCCEED']: (state, action) => {
+    return  {ownerAddress: action.ownerAddress}
   },
-  ['DAO_CONTRACT_ADDRESS_OWNED']: (state, action) => {
+  ['CONTRACTS_SUCCEED']: (state, action) => {
+    let formSubState = (contract, i) => {
+      let name = action.contracts[i].constructor.contract_name;
+      // Put all in the store, todo ?
+      return {[name]: contract}
+    }
+    let subStates = action.contracts.map(formSubState);
+    return {contract: Object.assign(...subStates)};
+  },
+  ['DAO_CONTRACT_ADDRESS_OWNED_SUCCEED']: (state, action) => {
     return  {contract: {owned: action.ownedContractAddress}}
   },
-  ['DAO_CONTRACT_ADDRESS_MEMBERS']: (state, action) => {
+  ['DAO_CONTRACT_ADDRESS_MEMBERS_SUCCEED']: (state, action) => {
     return  {contract: {owned: action.membersContractAddress}}
   },
-  ['DAO_CONTRACT_ADDRESS_VOTES']: (state, action) => {
+  ['DAO_CONTRACT_ADDRESS_VOTES_SUCCEED']: (state, action) => {
     return  {contract: {votes: action.votesContractAddress}}
-  },
+  }
 };
 
 // ------------------------------------
@@ -44,16 +53,3 @@ export default function daoReducer (state = {}, action) {
   const handler = ACTION_HANDLERS[action.type];
   return handler ? handler(state, action) : state
 }
-
-// Get Owned instance
-/*
- try {
- console.log('contracts', contracts)
- contracts.Owned.setProvider(this.props.web3.currentProvider);
- Owned = await contracts.Owned.deployed();
- this.setState({owner: await Owned.owner()});
- }
- catch (err) {
- throw new Error(err.message);
- }
- */
