@@ -9,7 +9,8 @@
 // takeEvery: listen for dispatched actions and run them through the worker sagas
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
 import {watchGetBlockNumber} from './ethereum/ethereumSaga'
-import userSagas from './user/userSaga'
+//import userSagas, { watchFetchUserAddress, watchDefaultAccount} from './user/userSaga'
+import {user} from './user/userSaga'
 import contracts from 'dao1901-contracts';
 
 /***************************** App State **************************************
@@ -72,25 +73,15 @@ function* getContractAddressOwner() {
   yield put({ type: 'CONTRACT_ADDRESS_OWNER_SUCCEEDED' })
 }
 
-function* getUserAddress() {
-  yield web3.eth.defaultAccount
-  yield put({ type: 'USER_ADDRESS_SUCCEEDED' })
-}
-
-export function* watchUserAddress() {
-  yield takeEvery({USER_ADDRESS_SUCCEEDED}, getUserAddress)
-}
-
 
 
 export function* watchContractAddressOwner() {
-  yield takeEvery('DAO_OWNER_ADDRESS_SUCCEEDED', getContractAddressOwner)
+  yield takeEvery('DAO_OWNER_ADDRESS_SUCCEED', getContractAddressOwner)
 }
 
 function* bootstrap() {
   console.log('bootstrap ')
-  yield put({type: 'SET_DEFAULT_ACCOUNT_REQUEST'});
-  yield put({type: 'USER_ADDRESS_REQUEST'});
+  yield put({type: 'USER_ACCOUNTS_REQUESTED'});
   yield put({type: 'BLOCK_NUMBER_REQUESTED'});
 }
 
@@ -101,6 +92,7 @@ export default function* rootSaga() {
   yield [
     fork(watchContractAddressOwner),
     fork(watchGetBlockNumber),
+    fork(user),
     fork(bootstrap)
   ]
 }

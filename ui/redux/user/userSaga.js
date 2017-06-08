@@ -26,7 +26,7 @@ function* getUserBalanceWorker() {
     const balance = yield call(getUserBalance)
     console.log('balance', balance)
     console.log(web3.fromWei(balance, "ether").toString())
-    yield put({type: 'USER_BALANCE_SUCCESS', balance})
+    yield put({type: 'USER_BALANCE_SUCCEED', balance})
   } catch (e) {
     yield put({type: 'USER_BALANCE__FAILED', message: e.message});
   }
@@ -56,8 +56,8 @@ function* setDefaultAccountWorker() {
   }
 }
 
-function* watchDefaultAccount() {
-  yield takeEvery('SET_DEFAULT_ACCOUNT_REQUEST', setDefaultAccountWorker);
+export function* watchDefaultAccount() {
+  yield takeEvery('SET_DEFAULT_ACCOUNT_REQUESTED', setDefaultAccountWorker);
 }
 
 // ========================================================
@@ -72,22 +72,33 @@ let getAccounts = () => {
   })
 }
 
-function* fetchUserAddressWorker() {
+// let setUserDefaultAddress = (accounts) =>
+
+function* getUserAddress() {
+  yield web3.eth.defaultAccount
+  yield put({ type: 'USER_ACCOUNTS_SUCCEED' })
+}
+
+
+function* setUserDefaultAccountWorker() {
+  let accounts = yield select(state => state.user.accounts);
+  let defaultAccount = accounts[0];
+  window.web3.eth.defaultAccount = defaultAccount;
+  console.log(`Set the default account to: ${defaultAccount}`);
+  yield put({type: 'SET_USER_DEFAULT_ACCOUNT_SUCCEED', defaultAccount})
+}
+
+function* fetchUserAccountsWorker() {
   try {
     const accounts = yield call(getAccounts);
-    const userAddress = accounts[0];
-    yield put({type: 'USER_ADDRESS_SUCCESS', userAddress});
+    yield put({type: 'USER_ACCOUNTS_SUCCEED', accounts});
+    yield put({type: 'SET_USER_DEFAULT_ACCOUNT_REQUESTED'});
   } catch (e) {
     yield put({type: 'USER_ADDRESS_FAILED', message: e.message});
   }
 }
 
-// Starts fetchUserAddressWorker on each dispatched `USER_ADDRESS_REQUEST` action
-function* watchFetchUserAddress() {
-  yield takeEvery('USER_ADDRESS_REQUEST', fetchUserAddressWorker);
-}
-
-export default {
-  watchFetchUserAddress,
-  watchDefaultAccount
+export function* user() {
+  yield takeEvery('USER_ACCOUNTS_REQUESTED', fetchUserAccountsWorker);
+  yield takeEvery('SET_USER_DEFAULT_ACCOUNT_REQUESTED', setUserDefaultAccountWorker);
 }

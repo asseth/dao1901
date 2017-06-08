@@ -30,7 +30,7 @@ class HomeContainer extends React.Component {
           contractAddressVotes={ethereum && ethereum.contractAddressVote}
           currentProvider={web3 && web3.currentProvider && web3.currentProvider.host}
           //currentProvider={web3 && web3.currentProvider.host ? web3.currentProvider.host : web3.currentProvider.constructor.name} // fix metamask testnet
-          defaultAccount={user && user.address}
+          defaultAccount={user && user.defaultAccount}
           defaultAccountbalance={user && user.defaultAccountBalance}
           ownerAddress={dao && dao.owner}
         />
@@ -99,6 +99,7 @@ const mapStateToProps = (state) => {
   return {
     ethereum: state.ethereum,
     isConnected: state.web3Wrap.isConnected,
+    user: state.user,
     web3: state.web3Wrap.web3
   }
 }

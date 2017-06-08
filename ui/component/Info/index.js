@@ -16,7 +16,7 @@ export default function Info (props) {
       <div className="col">
         <Card className="home-info mx-auto">
           <h4>User Info</h4>
-          <p>{'Account: '}<span className="ethereum-address">{props.defaultAccount}</span></p>
+          <p>{'User account: '}<span className="ethereum-address">{props.defaultAccount}</span></p>
           <p>{`Balance: ${props.defaultAccountBalance} ETH`}</p>
           <p>{props.ownerAddress === props.defaultAccount ? 'You are the owner'
             : `You are not the owner. Owner: ${props.ownerAddress}`}</p>

@@ -67,10 +67,7 @@ class AppContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log('state- - -', state);
-  return state;
-}
+const mapStateToProps = (state) => state
 
 const mapDispatchToProps = {
   web3Connect

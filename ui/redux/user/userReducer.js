@@ -8,11 +8,14 @@
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  ['USER_ADDRESS_SUCCESS']: (state, action) => {
-    return  {userAddress: action.userAddress}
+  ['USER_ACCOUNTS_SUCCEED']: (state, action) => {
+    return  {accounts: action.accounts}
   },
   ['USER_BALANCE_SUCCESS']: (state, action) => {
     return  {userBalance: action.userBalance}
+  },
+  ['SET_USER_DEFAULT_ACCOUNT_SUCCEED']: (state, action) => {
+    return {...state, defaultAccount: action.defaultAccount}
   }
 };
 
