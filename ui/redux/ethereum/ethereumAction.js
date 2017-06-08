@@ -1,7 +1,8 @@
-import action from '../actions'
-
-export const ethereumCurrentBlockNumber = {
-  request: currentBlockNumber => action('BLOCK_NUMBER_REQUESTED', {currentBlockNumber}),
-  success: (currentBlockNumber, response) => action('BLOCK_NUMBER_SUCCEED', {currentBlockNumber, response}),
-  failure: (currentBlockNumber, error) => action('BLOCK_NUMBER_FAILED', {currentBlockNumber, error}),
+// ------------------------------------
+// Actions
+// ------------------------------------
+export const blockNumberActions = {
+  request: () => {'BLOCK_NUMBER_REQUESTED'},
+  success: (blockNumber) => {'BLOCK_NUMBER_SUCCEED', blockNumber},
+  failure: (error) => {'BLOCK_NUMBER_FAILED', error}
 }

@@ -1,77 +1,69 @@
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
-import * as actions from '../actions'
-const { USER_ADDRESS } = actions
-
-/******************************************************************************/
-/******************************* WORKERS SAGAS - Subroutines ******************/
-/******************************************************************************/
-// worker Saga: will be fired on REQUEST actions
 
 // ========================================================
-// Set default account
+// Set user balance
 // ========================================================
-let setDefaultAccount = () => {
+let setUserBalance = (state) => {
+  const {user, web3Wrap} = state;
   return new Promise((resolve, reject) => {
-    web3.eth.getAccounts((err, accounts) => {
+    web3Wrap.web3.eth.getBalance(user.defaultAccount, (err, balance) => {
       if (err) reject(err.message);
-      web3.eth.defaultAccount = accounts[0];
-      console.log(`Set the default account to: ${web3.eth.defaultAccount}`);
-      resolve(web3.eth.defaultAccount);
+      resolve(web3Wrap.web3.fromWei(balance, "ether").toString());
     });
   })
 }
 
-function* setDefaultAccountWorker() {
+function* setUserBalanceWorker() {
   try {
-    const defaultAccount = yield call(setDefaultAccount)
-    console.log('defaultAccount', defaultAccount)
-    yield put({type: 'SET_DEFAULT_ACCOUNT_SUCCESS', defaultAccount})
+    // Todo select only account & web3.eth.getBalance
+    let state = yield select();
+    const balance = yield call(setUserBalance, state)
+    console.log('balance', balance)
+    yield put({type: 'USER_BALANCE_SUCCEED', balance})
   } catch (e) {
-    yield put({type: 'SET_DEFAULT_ACCOUNT_FAILED', message: e.message});
+    yield put({type: 'USER_BALANCE__FAILED', message: e.message});
   }
 }
 
-function* watchDefaultAccount() {
-  yield takeEvery('SET_DEFAULT_ACCOUNT_REQUEST', setDefaultAccountWorker);
-}
-
-
-let fetchAddr = () => {
+// ========================================================
+// Get accounts
+// ========================================================
+let fetchAccounts = () => {
   return new Promise((resolve, reject) => {
     web3.eth.getAccounts((err, accounts) => {
       if (err) reject(err.message);
-      resolve(accounts[1]);
+      resolve(accounts);
     });
   })
 }
 
-function* fetchUserAddress(action) {
+function* fetchUserAccountsWorker() {
   try {
-    const userAddress = yield call(fetchAddr);
-    yield put({type: 'USER_ADDRESS_SUCCESS', userAddress});
+    const accounts = yield call(fetchAccounts);
+    yield put({type: 'USER_ACCOUNTS_SUCCEED', accounts});
+
+    // Misc actions
+    yield put({type: 'USER_DEFAULT_ACCOUNT_REQUESTED'});
+    yield put({type: 'USER_BALANCE_REQUESTED'});
+
   } catch (e) {
     yield put({type: 'USER_ADDRESS_FAILED', message: e.message});
   }
 }
 
-/******************************************************************************/
-/**************************** WATCHERS SAGAS **********************************/
-/******************************************************************************/
-
-/*
- Starts fetchUser on each dispatched `USER_ADDRESS_REQUEST` action.
- */
-function* watchFetchUserAddress() {
-  yield takeEvery('USER_ADDRESS_REQUEST', fetchUserAddress);
+// ========================================================
+// Set user default account
+// ========================================================
+function* setUserDefaultAccountWorker() {
+  let accounts = yield select(state => state.user.accounts);
+  let defaultAccount = accounts[0];
+  window.web3.eth.defaultAccount = defaultAccount;
+  console.log(`Set the default account to: ${defaultAccount}`);
+  yield put({type: 'USER_DEFAULT_ACCOUNT_SUCCEED', defaultAccount});
 }
 
-
-/******************************************************************************/
-/******************************* ROOT SAGA ************************************/
-/******************************************************************************/
-export default function* rootSaga() {
-  yield [
-    fork(watchFetchUserAddress),
-    fork(watchDefaultAccount),
-  ]
+export function* user() {
+  yield takeEvery('USER_ACCOUNTS_REQUESTED', fetchUserAccountsWorker);
+  yield takeEvery('USER_DEFAULT_ACCOUNT_REQUESTED', setUserDefaultAccountWorker);
+  yield takeEvery('USER_BALANCE_REQUESTED', setUserBalanceWorker);
 }

@@ -13,7 +13,15 @@ import Info from '../../component/Info';
  */
 class HomeContainer extends React.Component {
   render() {
-    const {dao, ethereum, user, web3} = this.props
+    const {
+      contractAddressMembers,
+      contractAddressVotes,
+      contractAddressOwned,
+      dao,
+      ethereum,
+      user,
+      web3
+    } = this.props
 
     return (
       <div className="container">
@@ -24,14 +32,14 @@ class HomeContainer extends React.Component {
         </div>
 
         <Info
+          defaultAccount={user && user.defaultAccount}
+          balance={user && user.balance}
           blockNumber={ethereum && ethereum.blockNumber}
-          contractAddressMembers={ethereum && ethereum.contractAddressMembers}
-          contractAddressOwner={ethereum && ethereum.contractAddressOwner}
-          contractAddressVotes={ethereum && ethereum.contractAddressVote}
           currentProvider={web3 && web3.currentProvider && web3.currentProvider.host}
           //currentProvider={web3 && web3.currentProvider.host ? web3.currentProvider.host : web3.currentProvider.constructor.name} // fix metamask testnet
-          defaultAccount={user && user.address}
-          defaultAccountbalance={user && user.defaultAccountBalance}
+          contractAddressMembers={contractAddressMembers}
+          contractAddressOwned={contractAddressOwned}
+          contractAddressVotes={contractAddressVotes}
           ownerAddress={dao && dao.owner}
         />
 
@@ -97,8 +105,13 @@ class HomeContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    contractAddressMembers: state.dao && state.dao.contract && state.dao.contract.Dao1901Members.address,
+    contractAddressVotes: state.dao && state.dao.contract && state.dao.contract.Dao1901Votes.address,
+    contractAddressOwned: state.dao && state.dao.contract && state.dao.contract.Owned.address,
+    dao: state.dao,
     ethereum: state.ethereum,
     isConnected: state.web3Wrap.isConnected,
+    user: state.user,
     web3: state.web3Wrap.web3
   }
 }

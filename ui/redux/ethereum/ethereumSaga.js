@@ -2,7 +2,7 @@
 /**************************** ETHEREUM ***************************************/
 /******************************************************************************/
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
-import {ethereumCurrentBlockNumber} from '../ethereum/ethereumAction'
+//import {blockNumberActions} from '../ethereum/ethereumAction'
 
 /******************************************************************************/
 /******************************* WORKERS SAGAS - Subroutines ******************/
@@ -12,25 +12,25 @@ import {ethereumCurrentBlockNumber} from '../ethereum/ethereumAction'
 // ========================================================
 // Get ethereum Current block number
 // ========================================================
-let getEthereumCurrentBlockNumber = () => {
+let getBlockNumber = () => {
   return new Promise((resolve, reject) => {
     web3.eth.getBlockNumber((e, r) => !e ? resolve(r) : reject(e.message))
   })
 }
 
-function* getEthereumCurrentBlockNumberWorker() {
+function* getBlockNumberWorker() {
   try {
-    const blockNumber = yield call(getEthereumCurrentBlockNumber)
-    yield put(ethereumCurrentBlockNumber.success(blockNumber))
+    const blockNumber = yield call(getBlockNumber)
+    yield put({type: 'BLOCK_NUMBER_SUCCEED', blockNumber})
   } catch (e) {
-    yield put(ethereumCurrentBlockNumber.failure(e.message));
+    yield put({type: 'BLOCK_NUMBER_FAILED', ...e.message})
   }
 }
 
 /******************************************************************************/
 /**************************** WATCHERS SAGAS **********************************/
 /******************************************************************************/
-export default function* watchGetEthereumCurrentBlockNumber() {
-  yield takeEvery('BLOCK_NUMBER_REQUESTED', getEthereumCurrentBlockNumberWorker);
+export function* watchGetBlockNumber() {
+  yield takeEvery('BLOCK_NUMBER_REQUESTED', getBlockNumberWorker);
 }
 
