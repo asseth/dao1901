@@ -40,7 +40,7 @@ class HomeContainer extends React.Component {
           contractAddressMembers={contractAddressMembers}
           contractAddressOwned={contractAddressOwned}
           contractAddressVotes={contractAddressVotes}
-          ownerAddress={dao && dao.owner}
+          ownerAddress={dao && dao.ownerAddress}
         />
 
         <div className="row">
