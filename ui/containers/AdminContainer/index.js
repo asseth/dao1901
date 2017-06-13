@@ -3,11 +3,11 @@ import './styles.scss';
 import 'babel-polyfill';
 import {ToastContainer, ToastMessage} from 'react-toastr';
 let ToastMessageFactory = React.createFactory(ToastMessage.animation);
-import List from '../../component/List';
-import MembersListItem from '../../component/MembershipManagement/MembersListItem';
-import MemberAdditionForm from '../../component/MembershipManagement/MemberAdditionForm';
-import MemberRevokationForm from '../../component/MembershipManagement/MemberRevokationForm';
-import TransferOwnershipForm from '../../component/DAOManagement/TransferOwnershipForm';
+import List from '../../components/common/List';
+import MembersListItem from '../../components/MembershipManagement/MembersListItem';
+import MemberAdditionForm from '../../components/MembershipManagement/MemberAdditionForm';
+import MemberRevokationForm from '../../components/MembershipManagement/MemberRevokationForm';
+import TransferOwnershipForm from '../../components/DAOManagement/TransferOwnershipForm';
 import contracts from 'dao1901-contracts';
 let Owned, Dao1901Members;
 
@@ -257,6 +257,13 @@ export default class Admin extends React.Component {
             />
           </div>
         </div>
+        <div className="row mt-5">
+          <div className="col">
+            <h3>{'Check membership'}</h3>
+            {'CheckMembershipForm'}
+          </div>
+        </div>
+
         <div className="row mt-5">
           <div className="col">
             <h3>List of all members in *organization name*</h3>

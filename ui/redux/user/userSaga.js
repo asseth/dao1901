@@ -8,7 +8,7 @@ let setUserBalance = (state) => {
   return new Promise((resolve, reject) => {
     web3Wrap.web3.eth.getBalance(user.defaultAccount, (err, balance) => {
       if (err) reject(err.message);
-      resolve(web3Wrap.web3.fromWei(balance, "ether").toString());
+      resolve(web3Wrap.web3.fromWei(balance, "ether").valueOf());
     });
   })
 }
@@ -18,7 +18,6 @@ function* setUserBalanceWorker() {
     // Todo select only account & web3.eth.getBalance
     let state = yield select();
     const balance = yield call(setUserBalance, state)
-    console.log('balance', balance)
     yield put({type: 'USER_BALANCE_SUCCEED', balance})
   } catch (e) {
     yield put({type: 'USER_BALANCE__FAILED', message: e.message});
@@ -62,7 +61,7 @@ function* setUserDefaultAccountWorker() {
   yield put({type: 'USER_DEFAULT_ACCOUNT_SUCCEED', defaultAccount});
 }
 
-export function* user() {
+export default function* user() {
   yield takeEvery('USER_ACCOUNTS_REQUESTED', fetchUserAccountsWorker);
   yield takeEvery('USER_DEFAULT_ACCOUNT_REQUESTED', setUserDefaultAccountWorker);
   yield takeEvery('USER_BALANCE_REQUESTED', setUserBalanceWorker);

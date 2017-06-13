@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import {applyMiddleware, compose, createStore} from 'redux'
-import DevTools from '../containers/DevTools';
+import DevTools from '../components/common/DevTools';
 // ======================================================
 // History
 // ======================================================

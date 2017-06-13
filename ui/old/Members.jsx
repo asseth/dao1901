@@ -79,24 +79,6 @@ export default class Members extends React.Component {
   }
 
   /**
-   * CheckMembership
-   * Call fn that returns a boolean
-   * @param e Event Object
-   */
-  checkMembership(e) {
-    e.preventDefault();
-    console.log('Check member address: ', this.state.memberAddressToCheck);
-    Dao1901Members.isMember(this.state.memberAddressToCheck)
-      .then((res) => {
-        (res ?
-          console.log(`${this.state.memberAddressToCheck} is a member.`)
-          : console.log(`${this.state.memberAddressToCheck} is not a member.`));
-        this.setState({isMember: res.toString()});
-      })
-      .catch((err) => {throw new Error(err)});
-  }
-
-  /**
    * handleMemberAddressChange
    * handle input "member address change"
    * @param e Event Object
@@ -172,13 +154,7 @@ export default class Members extends React.Component {
     }
     return (
       <div className="Dao1901Members">
-        <h2>Dao1901Members</h2>
-        <h3>Infos</h3>
-        <p>Contract Address: {Dao1901Members.address}</p>Dao1901Members
-        <p>Contract Name: {`Dao1901Members`}</p>
-        <p>Last member (Dao1901Members.head): {this.state.dao1901Members_head}</p>
-
-        <h3>Add/revoke a member</h3>
+        <h2>Add/revoke a member</h2>
         <Form>
           <FormGroup
             controlId="memberAddress"
@@ -219,25 +195,7 @@ export default class Members extends React.Component {
           </div>
         </Form>
 
-        <h3>Check Membership</h3>
-        <Form inline>
-          <FormControl
-            name="memberAddressToCheck"
-            onChange={this.handleChange}
-            placeholder="Enter an address"
-            type="text"
-            value={this.state.memberAddressToCheck}
-          />
-          <Button
-            bsStyle="primary"
-            name="checkMembership"
-            onClick={this.checkMembership}
-            type="submit"
-          >
-            Submit
-          </Button>
-          <p>{this.state.isMember}</p>
-        </Form>
+
 
         <h3>Member list</h3>
         <div>
