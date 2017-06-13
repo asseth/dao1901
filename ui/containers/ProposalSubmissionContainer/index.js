@@ -1,5 +1,5 @@
 import React from 'react'
-import ProposalSubmissionForm from '../../components/VotesManagement/ProposalSubmissionForm/index'
+import ProposalSubmissionPage from '../../components/VotesManagement/ProposalSubmissionPage'
 import {connect} from 'react-redux'
 import {actions} from '../../redux/votes/votesSagas'
 
@@ -14,4 +14,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProposalSubmissionForm)
+export default connect(mapStateToProps, mapDispatchToProps)(ProposalSubmissionPage)
