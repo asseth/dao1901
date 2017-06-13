@@ -10,13 +10,15 @@
 import {call, fork, put, race, select, take, takeEvery} from 'redux-saga/effects'
 import {watchContracts, watchFetchOwnerAddress} from './dao'
 import {watchGetBlockNumber} from './ethereum/ethereumSaga'
-import {user} from './user/userSaga'
+import vote from './votes/votesSagas'
+import user from './user/userSaga'
 
 /***************************** App State **************************************
-- ethereum // from web3
+- ethereum
  - blockNumber
  - numberOfPeers
-- dao // from blockchain - Useful info for dao admin
+
+- dao - Useful info for dao admin
  - ownerAddress
  - contract
    - owned
@@ -25,16 +27,21 @@ import {user} from './user/userSaga'
     - address
    - votes
     - address
-- user // from web3
+ - members[]
+  - member
+    - address
+    - endSubscriptionDate
+
+- user
   - address
   - balance
-- members // from blockchain
-  - address
-  - endSubscriptionDate
-- votes // from blockchain
-  - proposals
-    - isPassed
-    - description
+ 
+- votes
+  - proposals[]
+    - proposal
+      - id
+      - isPassed
+      - description
 */
 
 function* bootstrap() {
@@ -58,6 +65,7 @@ export default function* rootSaga() {
     fork(watchGetBlockNumber),
     fork(watchFetchOwnerAddress),
     fork(watchContracts),
+    fork(vote),
     fork(user),
     fork(bootstrap)
   ]

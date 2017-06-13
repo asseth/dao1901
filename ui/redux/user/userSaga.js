@@ -61,7 +61,7 @@ function* setUserDefaultAccountWorker() {
   yield put({type: 'USER_DEFAULT_ACCOUNT_SUCCEED', defaultAccount});
 }
 
-export function* user() {
+export default function* user() {
   yield takeEvery('USER_ACCOUNTS_REQUESTED', fetchUserAccountsWorker);
   yield takeEvery('USER_DEFAULT_ACCOUNT_REQUESTED', setUserDefaultAccountWorker);
   yield takeEvery('USER_BALANCE_REQUESTED', setUserBalanceWorker);

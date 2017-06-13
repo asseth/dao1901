@@ -1,10 +1,10 @@
 import React from "react";
-import VotesByProposalForm from '../../component/VotesManagement/VotesByProposalForm';
-import ProposalForm from '../../component/VotesManagement/ProposalForm';
-import List from '../../component/List';
-import ProposalsListItem from '../../component/VotesManagement/ProposalsListItem';
-import VotesListItem from '../../component/VotesManagement/VotesListItem';
-import VoteForm from '../../component/VotesManagement/VoteForm';
+import VotesByProposalForm from '../../components/VotesManagement/VotesByProposalForm';
+import ProposalForm from '../../components/VotesManagement/ProposalSubmissionForm/index';
+import List from '../../components/common/List';
+import ProposalsListItem from '../../components/VotesManagement/ProposalsListItem';
+import VotesListItem from '../../components/VotesManagement/VotesListItem';
+import VoteForm from '../../components/VotesManagement/VoteForm';
 import Dao1901Contracts from 'dao1901-contracts';
 console.log('Dao1901Contracts', Dao1901Contracts)
 let Dao1901Votes = null;

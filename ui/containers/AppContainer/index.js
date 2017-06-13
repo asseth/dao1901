@@ -5,9 +5,8 @@ import { web3Connect } from '../../redux/web3'
 import './styles.scss';
 import {Route} from 'react-router-dom';
 // import PropTypes from 'prop-types';
-//import CoreLayout from '../../component/Layouts/CoreLayout'
-import TopBar from '../../component/TopBar'
-import DevTools from '../../containers/DevTools'
+import TopBar from '../../components/common/TopBar'
+import DevTools from '../../components/common/DevTools'
 
 // Redux
 import {Provider} from 'react-redux';
@@ -15,7 +14,7 @@ import {ConnectedRouter} from 'react-router-redux';
 import {history, sagaMiddleware} from '../../redux/createStore';
 
 // Pages
-import TestPage from '../TestContainer';
+// import TestPage from '../TestContainer';
 import AdminPage from '../AdminContainer';
 import HomePage from '../HomeContainer';
 import ProposalSubmissionPage from '../ProposalSubmissionContainer';
