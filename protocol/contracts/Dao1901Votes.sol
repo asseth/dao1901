@@ -60,7 +60,7 @@ contract Dao1901Votes is Owned {
     /* Empty choice is invalid, we use it to identify new votes */
     if (bytes(_choice).length == 0) throw;
 
-    // If the person never vote for this proposal
+    // If the person has never voted for this proposal
     if (bytes(prop.votes[msg.sender].choice).length == 0) {
       prop.votes[msg.sender].next = prop.head;
       prop.head = msg.sender;

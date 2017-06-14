@@ -37,47 +37,85 @@ function* onVoteSubmitWorker(action) {
  * @param proposalIndex
  * @param cb
  */
-let getProposalByIndex = (Dao1901Votes, proposalIndex, cb) => {
+let fetchProposalByIndex = (Dao1901Votes, proposalIndex, cb) => {
   Dao1901Votes.proposals(proposalIndex)
     .then((proposal) => {
       cb(proposal[0], proposal[1].toNumber(), proposal[2])
     })
     .catch((err) => {throw new Error(err.message)})
 }
+
 /**
  * getTotalProposals
  * @param Dao1901Votes
  * @param cb
  */
-let getTotalProposals = (Dao1901Votes, cb) => {
-  Dao1901Votes.nProposals().then(n => cb(n.valueOf()))
-}
+let getTotalProposals = (Dao1901Votes) => Dao1901Votes.nProposals().then(n => n.valueOf())
+
 /**
- * Get All Votes By Proposal
+ * Get All Votes For a Proposal
  * @param proposalId
  * @returns {Array}
  */
-let getAllVotesByProposal = (Dao1901Votes, proposalId) => {
-  let votesListItems = []
-  let addr = 0
-  let generateVoteList = (proposalId, addr) => {
-    if (addr != 0) {
-      Dao1901Votes.getVote(proposalId, addr)
-        .then((vote) => {
-          votesListItems.push({voterAddr: addr, proposalId: proposalId, voteValue: vote[0]})
-          addr = vote[1]
-          generateVoteList(proposalId, addr)
-        })
-        .catch((err) => {throw new Error(err)})
-    } else {
-      this.setState({votesListItems: votesListItems})
+let fetchAllVotesForAProposal = (Dao1901Votes, proposalId) => {
+  return new Promise((resolve, reject) => {
+    let votes = []
+    let addr = 0
+    let generateVoteList = (proposalId, addr) => {
+      if (addr != 0) {
+        Dao1901Votes.getVote(proposalId, addr)
+          .then((vote) => {
+            votes.push({voterAddr: addr, proposalId: proposalId, voteValue: vote[0]})
+            addr = vote[1]
+            generateVoteList(proposalId, addr)
+          })
+          .catch((e) => reject(e))
+      } else {
+        resolve(votes)
+      }
     }
-  }
-  this.getProposalByIndex(proposalId, (proposalDesc, proposalDeadline, voterHead) => {
-    addr = voterHead
-    generateVoteList(proposalId, addr)
+    fetchProposalByIndex(Dao1901Votes, proposalId, (proposalDesc, proposalDeadline, voterHead) => {
+      addr = voterHead
+      generateVoteList(proposalId, addr)
+    })
   })
 }
+
+/**
+ * fetchAllVotesForAllProposals
+ * @param Dao1901Votes
+ * @returns {Promise}
+ */
+let fetchAllVotesForAllProposals = (Dao1901Votes) => {
+  return new Promise((resolve, reject) => {
+    let allVotes = {}
+    Dao1901Votes.nProposals()
+      .then(totalProposals => {
+        let i = 1
+        while (totalProposals >= i) {
+          fetchAllVotesForAProposal(Dao1901Votes, i)
+            .then((votesForOneProposal) => {
+              if (votesForOneProposal.length !== 0) {
+                allVotes[votesForOneProposal[0].proposalId] = votesForOneProposal
+              }
+            })
+          i++
+        }
+        resolve(allVotes)
+      })
+      .catch((e) => reject(e))
+  })
+}
+function* fetchAllVotesForAllProposalsWorker() {
+  try {
+    let Dao1901Votes = yield select(s => s.dao.contract.Dao1901Votes)
+    const votes = yield call(fetchAllVotesForAllProposals, Dao1901Votes)
+    yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED', votes: votes})
+  } catch (e) {
+    yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSAL_FAILED', error: e})
+  }
+}
+
 /**
  * Get All Proposal
  * @param Dao1901Votes
@@ -85,21 +123,23 @@ let getAllVotesByProposal = (Dao1901Votes, proposalId) => {
 let getAllProposals = (Dao1901Votes) => {
   return new Promise((resolve, reject) => {
     let proposalListItems = []
-    getTotalProposals(Dao1901Votes, (totalProposals) => {
-      let proposalIndex = 1 // there is no proposal index 0
-      let getAllProposalListItems = (proposalIndex) => {
-        if (proposalIndex <= totalProposals) {
-          getProposalByIndex(Dao1901Votes, proposalIndex, (proposalDesc, proposalDeadline) => {
-            proposalListItems.push({proposalDesc, proposalDeadline})
-            proposalIndex += 1
-            getAllProposalListItems(proposalIndex)
-          })
-        } else {
-          resolve(proposalListItems)
+    Dao1901Votes.nProposals()
+      .then(n => {
+        let totalProposals = n.valueOf()
+        let proposalIndex = 1 // there is no proposal index 0
+        let getAllProposalListItems = (proposalIndex) => {
+          if (proposalIndex <= totalProposals) {
+            fetchProposalByIndex(Dao1901Votes, proposalIndex, (proposalDesc, proposalDeadline) => {
+              proposalListItems.push({proposalDesc, proposalDeadline})
+              proposalIndex += 1
+              getAllProposalListItems(proposalIndex)
+            })
+          } else {
+            resolve(proposalListItems)
+          }
         }
-      }
-      getAllProposalListItems(proposalIndex)
-    })
+        getAllProposalListItems(proposalIndex)
+      })
   })
 }
 function* getAllProposalsWorker() {
@@ -111,6 +151,7 @@ function* getAllProposalsWorker() {
     yield put({type: 'FETCH_ALL_PROPOSALS_FAILED', error: e})
   }
 }
+
 /**
  * Create Proposal
  * @param Dao1901Votes
@@ -152,6 +193,7 @@ export default function* vote() {
   yield takeEvery('CREATE_PROPOSAL_REQUESTED', createProposalWorker)
   yield takeEvery('VOTE_SUBMISSION_REQUESTED', onVoteSubmitWorker)
   yield takeEvery('FETCH_ALL_PROPOSALS_REQUESTED', getAllProposalsWorker)
+  yield takeEvery('FETCH_ALL_VOTES_REQUESTED', fetchAllVotesForAllProposalsWorker)
 }
 
 

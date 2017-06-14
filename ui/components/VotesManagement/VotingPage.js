@@ -4,7 +4,7 @@ import VoteForm from './VotingForm'
 import VotesListItem from './VotesListItem'
 
 function VotingPage (props) {
-  const {onVoteSubmit, votesListItems} = props
+  const {onVoteSubmit, votes} = props
   return (
     <div id="VotingPageContainer">
       <VoteForm
@@ -13,7 +13,7 @@ function VotingPage (props) {
 
       <List
         component={VotesListItem}
-        items={votesListItems}
+        items={votes}
       />
     </div>
   )

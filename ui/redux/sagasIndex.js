@@ -56,10 +56,15 @@ function* bootstrap() {
   if (error) throw new Error(error)
   yield put({type: 'DAO_OWNER_ADDRESS_REQUESTED'})
   yield bootstrapProposalSubmissionPage()
+  yield bootstrapVotingPage()
 }
 
 function* bootstrapProposalSubmissionPage() {
   yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})
+}
+
+function* bootstrapVotingPage() {
+  yield put({type: 'FETCH_ALL_VOTES_REQUESTED'})
 }
 
 /******************************************************************************/
