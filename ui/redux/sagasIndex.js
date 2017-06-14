@@ -59,7 +59,7 @@ function* bootstrap() {
 }
 
 function* bootstrapProposalSubmissionPage() {
-  yield put({type: 'GET_ALL_PROPOSALS_REQUESTED'})
+  yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})
 }
 
 /******************************************************************************/

@@ -4,6 +4,35 @@
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
 
 /**
+ * onVoteSubmit
+ */
+let onVoteSubmit = (Dao1901Votes, defaultAccount, proposalId, voteValue) => {
+  return new Promise((resolve, reject) => {
+    Dao1901Votes.vote.sendTransaction(proposalId, voteValue, {from: defaultAccount})
+      .then(tx => {
+        console.log(`Vote tx hash: ${tx}`)
+        resolve(tx)
+      })
+      .catch(e => reject(e))
+  })
+}
+function* onVoteSubmitWorker(action) {
+  const {proposalId, voteValue} = action.values
+  try {
+    let o = yield select(s => {
+      return {
+        Dao1901Votes: s.dao.contract.Dao1901Votes,
+        defaultAccount: s.user.defaultAccount
+      }
+    })
+    const tx = yield call(onVoteSubmit, o.Dao1901Votes, o.defaultAccount, proposalId, voteValue)
+    yield put({type: 'VOTE_SUBMISSION_SUCCEED', tx})
+  } catch (e) {
+    yield put({type: 'VOTE_SUBMISSION_SUCCEED', error: e})
+  }
+}
+
+/**
  * Get proposal by index
  * @param proposalIndex
  * @param cb
@@ -11,11 +40,10 @@ import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
 let getProposalByIndex = (Dao1901Votes, proposalIndex, cb) => {
   Dao1901Votes.proposals(proposalIndex)
     .then((proposal) => {
-      cb(proposal[0], proposal[1].toNumber(), proposal[2]);
+      cb(proposal[0], proposal[1].toNumber(), proposal[2])
     })
     .catch((err) => {throw new Error(err.message)})
 }
-
 /**
  * getTotalProposals
  * @param Dao1901Votes
@@ -24,69 +52,65 @@ let getProposalByIndex = (Dao1901Votes, proposalIndex, cb) => {
 let getTotalProposals = (Dao1901Votes, cb) => {
   Dao1901Votes.nProposals().then(n => cb(n.valueOf()))
 }
-
 /**
  * Get All Votes By Proposal
  * @param proposalId
  * @returns {Array}
  */
 let getAllVotesByProposal = (Dao1901Votes, proposalId) => {
-  let votesListItems = [];
-  let addr = 0;
+  let votesListItems = []
+  let addr = 0
   let generateVoteList = (proposalId, addr) => {
     if (addr != 0) {
       Dao1901Votes.getVote(proposalId, addr)
         .then((vote) => {
-          votesListItems.push({voterAddr: addr, proposalId: proposalId, voteValue: vote[0]});
-          addr = vote[1];
-          generateVoteList(proposalId, addr);
+          votesListItems.push({voterAddr: addr, proposalId: proposalId, voteValue: vote[0]})
+          addr = vote[1]
+          generateVoteList(proposalId, addr)
         })
-        .catch((err) => {throw new Error(err)});
+        .catch((err) => {throw new Error(err)})
     } else {
-      this.setState({votesListItems: votesListItems});
+      this.setState({votesListItems: votesListItems})
     }
-  };
+  }
   this.getProposalByIndex(proposalId, (proposalDesc, proposalDeadline, voterHead) => {
-    addr = voterHead;
-    generateVoteList(proposalId, addr);
-  });
+    addr = voterHead
+    generateVoteList(proposalId, addr)
+  })
 }
-
 /**
  * Get All Proposal
  * @param Dao1901Votes
  */
 let getAllProposals = (Dao1901Votes) => {
   return new Promise((resolve, reject) => {
-    let proposalListItems = [];
+    let proposalListItems = []
     getTotalProposals(Dao1901Votes, (totalProposals) => {
-      let proposalIndex = 1; // there is no proposal index 0
+      let proposalIndex = 1 // there is no proposal index 0
       let getAllProposalListItems = (proposalIndex) => {
         if (proposalIndex <= totalProposals) {
           getProposalByIndex(Dao1901Votes, proposalIndex, (proposalDesc, proposalDeadline) => {
-            proposalListItems.push({proposalDesc, proposalDeadline});
-            proposalIndex += 1;
-            getAllProposalListItems(proposalIndex);
+            proposalListItems.push({proposalDesc, proposalDeadline})
+            proposalIndex += 1
+            getAllProposalListItems(proposalIndex)
           })
         } else {
-          resolve(proposalListItems);
+          resolve(proposalListItems)
         }
-      };
-      getAllProposalListItems(proposalIndex);
+      }
+      getAllProposalListItems(proposalIndex)
     })
   })
 }
-
 function* getAllProposalsWorker() {
   try {
     let Dao1901Votes = yield select(s => s.dao.contract.Dao1901Votes)
     const proposals = yield call(getAllProposals, Dao1901Votes)
-    yield put({type: 'GET_ALL_PROPOSALS_SUCCEED', proposals})
+    yield put({type: 'FETCH_ALL_PROPOSALS_SUCCEED', proposals})
   } catch (e) {
-    yield put({type: 'GET_ALL_PROPOSALS_FAILED', error: e})
+    yield put({type: 'FETCH_ALL_PROPOSALS_FAILED', error: e})
   }
 }
-
 /**
  * Create Proposal
  * @param Dao1901Votes
@@ -98,28 +122,27 @@ let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
   return new Promise((resolve, reject) => {
     Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline)
       .then((tx) => {
-        resolve(tx);
-        console.log('TX createProposal successful. Tx Hash: ', tx);
+        resolve(tx)
+        console.log('TX createProposal successful. Tx Hash: ', tx)
         // Check if Tx is mined
         var setIntervalId = setInterval(() => web3.eth.getTransactionReceipt(tx, (err, receipt) => {
-          if (err) reject(err.message);
+          if (err) reject(err.message)
           if (receipt) {
-            console.log('Receipt Tx Dao1901Votes.createProposal: ', receipt);
-            window.clearInterval(setIntervalId);
+            console.log('Receipt Tx Dao1901Votes.createProposal: ', receipt)
+            window.clearInterval(setIntervalId)
           }
-        }), 2000);
+        }), 2000)
       })
       .catch((err) => reject(err.message))
   })
 }
-
 function* createProposalWorker({values}) {
   try {
     const {proposalDescription, proposalDeadline} = values
     let Dao1901Votes = yield select(s => s.dao.contract.Dao1901Votes)
     yield call(createProposal, Dao1901Votes, proposalDescription, proposalDeadline)
     yield put({type: 'CREATE_PROPOSAL_SUCCEED'})
-    yield put({type: 'GET_ALL_PROPOSALS_REQUESTED'})
+    yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
     yield put({type: 'CREATE_PROPOSAL_FAILED', e})
   }
@@ -127,7 +150,8 @@ function* createProposalWorker({values}) {
 
 export default function* vote() {
   yield takeEvery('CREATE_PROPOSAL_REQUESTED', createProposalWorker)
-  yield takeEvery('GET_ALL_PROPOSALS_REQUESTED', getAllProposalsWorker)
+  yield takeEvery('VOTE_SUBMISSION_REQUESTED', onVoteSubmitWorker)
+  yield takeEvery('FETCH_ALL_PROPOSALS_REQUESTED', getAllProposalsWorker)
 }
 
 

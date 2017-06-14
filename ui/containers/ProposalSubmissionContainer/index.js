@@ -12,7 +12,7 @@ const mapStateToProps = s => {
 const mapDispatchToProps = dispatch => {
   return ({
     createProposal: (values) => dispatch({type: 'CREATE_PROPOSAL_REQUESTED', values}),
-    //getAllProposals: () => dispatch({type: 'GET_ALL_PROPOSALS_REQUESTED'})  Triggered in saga bootstrap for now
+    //getAllProposals: () => dispatch({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})  Triggered in saga bootstrap for now
   })
 }
 

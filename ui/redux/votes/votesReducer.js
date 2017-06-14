@@ -19,10 +19,17 @@ const ACTION_HANDLERS = {
   ['CREATE_PROPOSAL_FAILED']: (state, action) => {
     return  {...state, errorMessage: action.errorMessage}
   },
-  ['GET_ALL_PROPOSALS_SUCCEED']: (state, action) => {
+  ['FETCH_ALL_PROPOSALS_SUCCEED']: (state, action) => {
     return {...state, proposals: action.proposals}
   },
-  ['GET_ALL_PROPOSALS_FAILED']: (state, action) => {
+  ['FETCH_ALL_PROPOSALS_FAILED']: (state, action) => {
+    return {...state, error: action.error}
+  },
+  ['VOTE_SUBMISSION_SUCCEED']: (state, action) => {
+    return {...state, votes: action.vote}
+    //return {...state, votes: {...state.votes, ...action.vote}}
+  },
+  ['VOTE_SUBMISSION_FAILED']: (state, action) => {
     return {...state, error: action.error}
   },
 };

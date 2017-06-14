@@ -6,7 +6,7 @@ import ProposalsListItem from './ProposalsListItem'
 function ProposalSubmissionPage(props) {
   const {createProposal, proposals} = props
   return (
-    <div id="ProposalSubmissionContainer">
+    <div id="ProposalSubmissionPageContainer">
       <ProposalSubmissionForm
         createProposal={createProposal}
       />
