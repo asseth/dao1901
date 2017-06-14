@@ -57,22 +57,34 @@ let getAllVotesByProposal = (Dao1901Votes, proposalId) => {
  * @param Dao1901Votes
  */
 let getAllProposals = (Dao1901Votes) => {
-  let proposalListItems = [];
-  getTotalProposals(Dao1901Votes, (totalProposals) => {
-    let proposalIndex = 1; // there is no proposal index 0
-    let getAllProposalListItems = (proposalIndex) => {
-      if (proposalIndex <= totalProposals) {
-        getProposalByIndex(Dao1901Votes, proposalIndex, (proposalDesc, proposalDeadline) => {
-          proposalListItems.push({proposalDesc, proposalDeadline});
-          proposalIndex += 1;
-          getAllProposalListItems(proposalIndex);
-        })
-      } else {
-        console.log('proposalListItems', proposalListItems);
-      }
-    };
-    getAllProposalListItems(proposalIndex);
+  return new Promise((resolve, reject) => {
+    let proposalListItems = [];
+    getTotalProposals(Dao1901Votes, (totalProposals) => {
+      let proposalIndex = 1; // there is no proposal index 0
+      let getAllProposalListItems = (proposalIndex) => {
+        if (proposalIndex <= totalProposals) {
+          getProposalByIndex(Dao1901Votes, proposalIndex, (proposalDesc, proposalDeadline) => {
+            proposalListItems.push({proposalDesc, proposalDeadline});
+            proposalIndex += 1;
+            getAllProposalListItems(proposalIndex);
+          })
+        } else {
+          resolve(proposalListItems);
+        }
+      };
+      getAllProposalListItems(proposalIndex);
+    })
   })
+}
+
+function* getAllProposalsWorker() {
+  try {
+    let Dao1901Votes = yield select(s => s.dao.contract.Dao1901Votes)
+    const proposals = yield call(getAllProposals, Dao1901Votes)
+    yield put({type: 'GET_ALL_PROPOSALS_SUCCEED', proposals})
+  } catch (e) {
+    yield put({type: 'GET_ALL_PROPOSALS_FAILED', error: e})
+  }
 }
 
 /**
@@ -86,6 +98,7 @@ let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
   return new Promise((resolve, reject) => {
     Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline)
       .then((tx) => {
+        resolve(tx);
         console.log('TX createProposal successful. Tx Hash: ', tx);
         // Check if Tx is mined
         var setIntervalId = setInterval(() => web3.eth.getTransactionReceipt(tx, (err, receipt) => {
@@ -93,7 +106,6 @@ let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
           if (receipt) {
             console.log('Receipt Tx Dao1901Votes.createProposal: ', receipt);
             window.clearInterval(setIntervalId);
-            getAllProposals(Dao1901Votes);
           }
         }), 2000);
       })
@@ -107,13 +119,15 @@ function* createProposalWorker({values}) {
     let Dao1901Votes = yield select(s => s.dao.contract.Dao1901Votes)
     yield call(createProposal, Dao1901Votes, proposalDescription, proposalDeadline)
     yield put({type: 'CREATE_PROPOSAL_SUCCEED'})
+    yield put({type: 'GET_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
     yield put({type: 'CREATE_PROPOSAL_FAILED', e})
   }
 }
 
 export default function* vote() {
-  yield takeEvery('CREATE_PROPOSAL_REQUESTED', createProposalWorker);
+  yield takeEvery('CREATE_PROPOSAL_REQUESTED', createProposalWorker)
+  yield takeEvery('GET_ALL_PROPOSALS_REQUESTED', getAllProposalsWorker)
 }
 
 

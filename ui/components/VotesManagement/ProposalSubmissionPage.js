@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 import List from '../common/List'
 import ProposalSubmissionForm from './ProposalSubmissionForm'
 import ProposalsListItem from './ProposalsListItem'
 
 function ProposalSubmissionPage(props) {
-  const {createProposal, proposalListItems, totalProposals} = props
+  const {createProposal, proposals} = props
   return (
     <div id="ProposalSubmissionContainer">
       <ProposalSubmissionForm
@@ -12,13 +12,13 @@ function ProposalSubmissionPage(props) {
       />
 
       <h3>Proposals</h3>
-      <p>{`There are ${totalProposals} proposals`}</p>
+      <p>{`There are ${proposals && proposals.length} proposals`}</p>
       <List
         component={ProposalsListItem}
-        items={proposalListItems}
+        items={proposals}
       />
     </div>
-  );
+  )
 }
 
-export default ProposalSubmissionPage;
+export default ProposalSubmissionPage

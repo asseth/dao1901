@@ -93,7 +93,6 @@ const proposalDeadlineInput = ({input, className, id, label, type, placeholder})
 )
 let ProposalSubmissionForm = props => {
   const {createProposal, handleSubmit, submitSucceeded, clearSubmit, proposalDeadline, validationProposalDesc, validationProposalDeadline} = props
-  console.log('propspropsprops', props)
   return (
     <div id="proposalSubmissionForm">
       <h2>Proposal Submission Form</h2>

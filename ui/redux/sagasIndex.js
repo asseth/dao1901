@@ -46,15 +46,20 @@ import user from './user/userSaga'
 
 function* bootstrap() {
   console.log('bootstrap ')
-  yield put({type: 'USER_ACCOUNTS_REQUESTED'});
-  yield put({type: 'BLOCK_NUMBER_REQUESTED'});
-  yield put({type: 'CONTRACTS_REQUESTED'});
+  yield put({type: 'USER_ACCOUNTS_REQUESTED'})
+  yield put({type: 'BLOCK_NUMBER_REQUESTED'})
+  yield put({type: 'CONTRACTS_REQUESTED'})
   const { error } = yield race({
     success: take('CONTRACTS_SUCCEED'),
     error: take('CONTRACTS_FAILED'),
   })
   if (error) throw new Error(error)
-  yield put({type: 'DAO_OWNER_ADDRESS_REQUESTED'});
+  yield put({type: 'DAO_OWNER_ADDRESS_REQUESTED'})
+  yield bootstrapProposalSubmissionPage()
+}
+
+function* bootstrapProposalSubmissionPage() {
+  yield put({type: 'GET_ALL_PROPOSALS_REQUESTED'})
 }
 
 /******************************************************************************/
@@ -67,6 +72,6 @@ export default function* rootSaga() {
     fork(watchContracts),
     fork(vote),
     fork(user),
-    fork(bootstrap)
+    fork(bootstrap),
   ]
 }
