@@ -31,9 +31,8 @@ const ACTION_HANDLERS = {
   ['FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_FAILED']: (state, action) => {
     return {...state, error: action.error}
   },
-  ['VOTE_SUBMISSION_SUCCEED']: (state, action) => {
-    return {...state, votes: action.vote}
-    //return {...state, votes: {...state.votes, ...action.vote}}
+  ['VOTE_SUBMISSION_SUCCEED']: (state) => {
+    return {...state}
   },
   ['VOTE_SUBMISSION_FAILED']: (state, action) => {
     return {...state, error: action.error}
