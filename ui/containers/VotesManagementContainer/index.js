@@ -17,8 +17,9 @@ window.Dao1901VotesEvents = Dao1901Votes.allEvents(null,
 */
 
 const mapStateToProps = (state) => {
-  console.log('statestate', state)
-  return state
+  return {
+    votes: state.vote.votes
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
