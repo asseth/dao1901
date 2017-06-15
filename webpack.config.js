@@ -52,12 +52,32 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+        use: [
+          'style-loader',
+          'css-loader?module&importLoaders=1&localIdentName=[local]_[hash:base64:5]',
+          'postcss-loader',
+          'sass-loader?sourceMap'
+        ]
       },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        use: 'babel-loader'
+        loader: 'babel-loader',
+        query: {
+          plugins: [
+            //'transform-react-jsx',
+            [
+              'react-css-modules',
+              {
+                "generateScopedName": "[local]_[hash:base64:5]",
+                "filetypes": {
+                  ".scss": "postcss-scss"
+                },
+                "webpackHotModuleReloading": true
+              }
+            ]
+          ]
+        },
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -85,7 +105,7 @@ module.exports = {
     compress: true,
     //open: true,
     port: 8080,
-    //hot: true,
+    hot: true,
     historyApiFallback: true
     //publicPath: path.join(__dirname, "ui", "public")
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './styles.scss';
+import './styles.scss';
 
 export default function List(props) {
   const ListItem = props.component;
@@ -17,8 +17,8 @@ export default function List(props) {
   }
 
   return (
-    <div className={styles.listWrapper}>
-      <ul className={styles.list}>
+    <div styleName="listWrapper">
+      <ul styleName="list">
         {content}
       </ul>
     </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
+console.log('styles.itemContent', styles.itemContent)
 
 function VotesListItem(props) {
   return (

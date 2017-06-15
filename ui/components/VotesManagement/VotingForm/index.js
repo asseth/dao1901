@@ -19,7 +19,6 @@ const warn = values => {
   const warnings = {}
   return warnings
 }
-
 const proposalIDInput = ({input, label, type, placeholder, id}) => (
   <div>
     <Input
@@ -32,11 +31,11 @@ const proposalIDInput = ({input, label, type, placeholder, id}) => (
     />
   </div>
 )
-
-const voteValueInput = ({input, label, type, placeholder, id}) => (
+const voteValueInput = ({className, input, label, type, placeholder, id}) => (
   <div>
     <Input
       {...input}
+      className={className}
       id={id}
       label={label}
       placeholder={placeholder}
@@ -45,32 +44,42 @@ const voteValueInput = ({input, label, type, placeholder, id}) => (
     />
   </div>
 )
-
 let VotingForm = (props) => {
-  const { handleSubmit, onVoteSubmit } = props
+  const {handleSubmit, onVoteSubmit} = props
   return (
     <div id="voteForm">
-      <h2>Vote for a Proposal</h2>
       <Form onSubmit={ handleSubmit(onVoteSubmit) }>
-        <Field
-          component={proposalIDInput}
-          label="proposalId"
-          name="proposalId"
-          placeholder="Enter the proposal ID"
-          type="text"
-        />
+        <div className="row">
+          <div className="col-12">
+            <Field
+              component={proposalIDInput}
+              label="proposalId"
+              name="proposalId"
+              placeholder="Enter the proposal ID"
+              type="text"
+            />
+          </div>
+        </div>
 
-        <Field
-          component={voteValueInput}
-          label="voteValue"
-          name="voteValue"
-          placeholder="Enter your vote"
-          type="text"
-        />
+        <div className="row">
+          <div className="col-12">
+            <Field
+              className="m-top-15"
+              component={voteValueInput}
+              label="voteValue"
+              name="voteValue"
+              placeholder="Enter your vote"
+              type="text"
+            />
+          </div>
+        </div>
 
         <Button
-          className="m-top-15"
-          disabled={false}
+          block
+          className="m-top-20"
+          color="primary"
+          outline
+          size="lg"
           type="submit"
         >
           Submit

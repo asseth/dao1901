@@ -31,9 +31,13 @@ export default class TopBar extends React.Component {
         <Navbar color="faded" light toggleable>
           <NavbarToggler right onClick={this.toggle}/>
           <NavbarBrand
-            href="/"><img src="images/DAO1901Last.png" alt="logo" className="" /></NavbarBrand> {/*<img src="images/DAO1901Last.png" alt="logo" className="" />*/}
+            href="/"
+            styleName="navbar-brand"
+          >
+            <img src="images/DAO1901Last.png" alt="logo" />
+          </NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="" navbar>
+            <Nav styleName="navbar-nav" navbar>
               <NavItem>
                 <NavLink href="/">Home</NavLink>
               </NavItem>

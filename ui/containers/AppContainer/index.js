@@ -49,7 +49,7 @@ class AppContainer extends Component {
 
         <TopBar />
 
-        <div className="m-top-30">
+        <div className="m-top-50">
           <div className="row content">
             <div className="col"></div>
             <div className="col-8">
