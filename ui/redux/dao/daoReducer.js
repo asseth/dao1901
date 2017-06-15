@@ -29,6 +29,9 @@ const ACTION_HANDLERS = {
   ['FETCH_ALL_MEMBERS_SUCCEED']: (state, action) => {
     return {...state, members: action.members}
   },
+  ['TRANSFER_OWNERSHIP_SUCCEED']: (state, action) => {
+    return {...state, ownerAddress: action.ownerAddress}
+  },
 };
 
 // ------------------------------------

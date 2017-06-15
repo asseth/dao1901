@@ -20,8 +20,9 @@ import TransferOwnershipForm from '../../components/DAOManagement/TransferOwners
  *  - Revoke a member
  */
 let AdminPage = (props) => {
-  const {addMember, checkMembership, members, changeOwner, membersListItem, revokeMember, web3Wrap} = props
+  const {addMember, checkMembership, dao, transferOwnership, revokeMember, web3Wrap} = props
   //const {web3} = web3Wrap
+  const {members} = dao
 
   return (
     <div className="container">
@@ -72,35 +73,36 @@ let AdminPage = (props) => {
         </div>
       </div>
 
-      {/*<div className="row mt-5 mb-5">
+      <div className="row mt-5 mb-5">
         <div className="col">
           <h2>Organization management</h2>
           <h3>Transfer organization ownership</h3>
           <p>
-            Organization ownership gives the right to... Transfering it will result in... Make sure you understand all
+            Organization ownership gives the right to control de DAO. Are you sure you want to transfer ownership? Make sure you understand all
             the implications.
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam, assumenda beatae culpa ea
             eveniet facilis fugit illo laborum molestias officiis praesentium provident quia quidem quod sunt
           </p>
+          <p>{`The current owner is: ${dao.ownerAddress}`}</p>
           <TransferOwnershipForm
-            changeOwner={changeOwner}
-            validateAddress={window.web3 && web3.isAddress}
+            transferOwnership={transferOwnership}
           />
         </div>
-      </div>*/}
+      </div>
     </div>
   )
 }
 
 const mapStateToProps = s => {
   return {
-    members: s.dao.members
+    dao: s.dao
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     addMember: (values) => dispatch({type: 'ADD_MEMBER_REQUESTED', values}),
+    transferOwnership: (values) => dispatch({type: 'TRANSFER_OWNERSHIP_REQUESTED', values}),
     checkMembership: (values) => dispatch({type: 'CHECK_MEMBERSHIP_REQUESTED', values}),
     revokeMember: (values) => dispatch({type: 'REVOKE_MEMBER_REQUESTED', values}),
   }

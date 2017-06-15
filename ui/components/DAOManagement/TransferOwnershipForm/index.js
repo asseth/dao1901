@@ -1,7 +1,30 @@
 import React from 'react';
 //import './styles.scss';
-import {AvField, AvForm} from 'availity-reactstrap-validation';
-import {Button} from 'reactstrap';
+import {Button, Form, FormControl, Input} from 'reactstrap'
+import {Field, reduxForm} from 'redux-form'
+
+const validate = values => {
+  const errors = {}
+  if (!values.newOwnerAddress) {
+    errors.newOwnerAddress = 'Required'
+  } else if (!web3.isAddress(values.newOwnerAddress)) {
+    errors.newOwnerAddress = 'Address is not valid'
+  }
+  return errors
+}
+
+const ChangeOwnerInput = ({input, label, type, placeholder, id}) => (
+  <div>
+    <Input
+      {...input}
+      id={id}
+      label={label}
+      placeholder={placeholder}
+      required
+      type={type}
+    />
+  </div>
+)
 
 /**
  * Transfer ownership form - Stateless functional component
@@ -9,20 +32,21 @@ import {Button} from 'reactstrap';
  * @returns {XML}
  * @constructor
  */
-export default function TransferOwnershipForm(props) {
+function TransferOwnershipForm(props) {
+  const {transferOwnership, handleSubmit, submitSucceeded, clearSubmit} = props
+
   return (
-    <AvForm
-      onValidSubmit={(event, values) => props.changeOwner(values)}
+    <Form
+      onSubmit={handleSubmit(transferOwnership)}
     >
-      <AvField
+      <Field
+        component={ChangeOwnerInput}
         id="changeOwnerInput"
         label="changeOwnerLabel"
-        labelHidden
-        name="changeOwnerInput"
+        name="newOwnerAddress"
         placeholder="New owner address"
         required
         type="text"
-        validate={{async: props.validateAddress}}
       />
       <Button
         block
@@ -32,6 +56,12 @@ export default function TransferOwnershipForm(props) {
       >
         {'Change Owner'}
       </Button>
-    </AvForm>
+    </Form>
   )
 }
+
+export default TransferOwnershipForm = reduxForm({
+  form: 'TransferOwnershipForm',
+  validate,
+  //warn
+})(TransferOwnershipForm)
