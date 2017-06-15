@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './styles.scss'
+import VoteListItem from '../../VotesManagement/VotesListItem'
 
-export default function MultipleLists (props) {
-  const ListItem = props.component
+export default function NestedLists (props) {
+  const {items} = props
   let list = []
   let lists = []
+
+  console.log('styles-----------------------------', styles)
 
   let renderList = (proposalID) => {
     return (
@@ -18,11 +21,11 @@ export default function MultipleLists (props) {
     )
   }
 
-  if (props.items && Object.keys(props.items).length !== 0) {
-    for (var proposalID in props.items) {
-      if (props.items.hasOwnProperty(proposalID)) {
-        list = props.items[proposalID].map((item, index) => (
-          <ListItem key={`item-${index}`} item={item} />
+  if (items && Object.keys(items).length !== 0) {
+    for (var proposalID in items) {
+      if (items.hasOwnProperty(proposalID)) {
+        list = items[proposalID].map((item, index) => (
+          <VoteListItem key={`item-${index}`} item={item} />
         ))
         lists.push(renderList(proposalID))
       }
@@ -38,7 +41,6 @@ export default function MultipleLists (props) {
   )
 }
 
-MultipleLists.propTypes = {
-  component: PropTypes.func.isRequired,
+NestedLists.propTypes = {
   items: PropTypes.object,
 }
