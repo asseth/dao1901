@@ -1,7 +1,7 @@
-import React from 'react';
-//import PropTypes from 'prop-types';
-//import styles from './styles.scss';
-import {Card} from 'reactstrap';
+import React from 'react'
+//import PropTypes from 'prop-types'
+import './styles.scss'
+import {Card} from 'reactstrap'
 
 /**
  * Display basic info about user, blockchain status, ...
@@ -14,7 +14,7 @@ export default function Info (props) {
   return (
     <div className="row">
       <div className="col">
-        <Card className="home-info mx-auto">
+        <Card className="mx-auto" styleName="info">
           <h4>User Info</h4>
           <p>{'User account: '}<span className="ethereum-address">{props.defaultAccount}</span></p>
           <p>{`Balance: ${props.balance} ETH`}</p>
