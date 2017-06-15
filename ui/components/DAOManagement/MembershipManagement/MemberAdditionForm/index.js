@@ -1,5 +1,5 @@
 import React from 'react';
-//import './styles.scss';
+import './styles.scss';
 import {Button, Form, FormControl, Input} from 'reactstrap'
 import {Field, reduxForm} from 'redux-form'
 
@@ -30,7 +30,6 @@ const memberAddressInput = ({input, label, type, placeholder, id}) => (
       label={label}
       placeholder={placeholder}
       required
-      rows={5}
       type={type}
     />
   </div>
@@ -63,8 +62,8 @@ function MemberAdditionForm(props) {
     >
       <Field
         component={memberAddressInput}
-        id="memberAddress"
-        label="memberAddressLabel"
+        id="AddMemberAddress"
+        label="AddMemberAddressLabel"
         name="memberAddress"
         placeholder="Enter the Ethereum address of the member"
         required
@@ -93,6 +92,6 @@ function MemberAdditionForm(props) {
 
 export default MemberAdditionForm = reduxForm({
   form: 'MemberAdditionForm',
-  //validate,
+  validate,
   //warn
 })(MemberAdditionForm)

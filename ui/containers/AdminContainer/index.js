@@ -7,6 +7,7 @@ import List from '../../components/common/List';
 import MembersListItem from '../../components/DAOManagement/MembershipManagement/MembersListItem';
 import MemberAdditionForm from '../../components/DAOManagement/MembershipManagement/MemberAdditionForm';
 import MemberRevokationForm from '../../components/DAOManagement/MembershipManagement/MemberRevokationForm';
+import CheckMembershipForm from '../../components/DAOManagement/MembershipManagement/CheckMembershipForm';
 import TransferOwnershipForm from '../../components/DAOManagement/TransferOwnershipForm';
 
 
@@ -19,9 +20,8 @@ import TransferOwnershipForm from '../../components/DAOManagement/TransferOwners
  *  - Revoke a member
  */
 let AdminPage = (props) => {
-  const {addMember, members, changeOwner, membersListItem, revokeMember, web3Wrap} = props
+  const {addMember, checkMembership, members, changeOwner, membersListItem, revokeMember, web3Wrap} = props
   //const {web3} = web3Wrap
-  console.log('membersmembersmembersmembers', members)
 
   return (
     <div className="container">
@@ -41,7 +41,6 @@ let AdminPage = (props) => {
           <h3>{'Add a member'}</h3>
           <MemberAdditionForm
             addMember={addMember}
-            validateAddress={window.web3 && web3.isAddress}
           />
         </div>
       </div>
@@ -51,14 +50,15 @@ let AdminPage = (props) => {
           <h3>{'Revoke a member'}</h3>
           <MemberRevokationForm
             revokeMember={revokeMember}
-            validateAddress={window.web3 && web3.isAddress}
           />
         </div>
       </div>
       <div className="row mt-5">
         <div className="col">
           <h3>{'Check membership'}</h3>
-          {'CheckMembershipForm'}
+          <CheckMembershipForm
+            checkMembership={checkMembership}
+          />
         </div>
       </div>
 
@@ -100,7 +100,9 @@ const mapStateToProps = s => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addMember: (values) => dispatch({type: 'ADD_MEMBER_REQUESTED', values})
+    addMember: (values) => dispatch({type: 'ADD_MEMBER_REQUESTED', values}),
+    checkMembership: (values) => dispatch({type: 'CHECK_MEMBERSHIP_REQUESTED', values}),
+    revokeMember: (values) => dispatch({type: 'REVOKE_MEMBER_REQUESTED', values}),
   }
 }
 

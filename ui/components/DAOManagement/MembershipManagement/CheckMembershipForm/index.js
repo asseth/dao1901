@@ -1,53 +1,60 @@
-import React from 'react';
-import {Button, Form} from 'reactstrap';
-
-/**
- * CheckMembership
- * Call fn that returns a boolean
- * @param e Event Object
- */
-/*
-checkMembership(e) {
-  e.preventDefault();
-  console.log('Check member address: ', this.state.memberAddressToCheck);
-  Dao1901Members.isMember(this.state.memberAddressToCheck)
-    .then((res) => {
-      (res ?
-        console.log(`${this.state.memberAddressToCheck} is a member.`)
-        : console.log(`${this.state.memberAddressToCheck} is not a member.`));
-      this.setState({isMember: res.toString()});
-    })
-    .catch((err) => {throw new Error(err)});
-}
-*/
+import React, {Component} from 'react'
+import {Button, Form, FormControl, Input} from 'reactstrap'
+import {checkMembershipWorker} from '../../../../redux/dao/daoSaga'
 
 /**
  * Check membership
  * @returns {XML}
  * @constructor
  */
-export default function CheckMembershipForm(props) {
-  return (
-    <div>
-      <h2>Check Membership</h2>
-      <Form inline>
-        <FormControl
-          name="memberAddressToCheck"
-          onChange={this.handleChange}
-          placeholder="Enter an address"
-          type="text"
-          value={this.props.memberAddressToCheck}
-        />
-        <Button
-          bsStyle="primary"
-          name="checkMembership"
-          onClick={this.props.checkMembership}
-          type="submit"
-        >
-          Submit
-        </Button>
-        <p>{isMember}</p>
-      </Form>
-    </div>
-  )
+export default class CheckMembershipForm extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isMember: "",
+      memberAddressToCheck: ""
+    }
+    this.checkMembership = ::this.checkMembership
+    this.handleChange = ::this.handleChange
+  }
+
+  checkMembership(e) {
+    e.preventDefault()
+    console.log('isMember', this.state.isMember, this.state.memberAddressToCheck)
+    let isMember = checkMembershipWorker(this.state.memberAddressToCheck)
+    console.log('isMember',isMember(), this.state.isMember)
+  }
+
+  handleChange(event) {
+    this.setState({memberAddressToCheck: event.target.value});
+  }
+
+  render() {
+    return (
+      <div>
+        <Form>
+          <Input
+            id="memberAddressToCheck"
+            name="memberAddressToCheck"
+            onChange={this.handleChange}
+            placeholder="Enter an address"
+            type="text"
+            value={this.state.memberAddressToCheck}
+          />
+          <Button
+            block
+            color="primary"
+            name="checkMembership"
+            onClick={this.checkMembership}
+            outline
+            size="lg"
+            type="submit"
+          >
+            {'Check Membership'}
+          </Button>
+          <p>{`isMember: ${this.state.isMember}`}</p>
+        </Form>
+      </div>
+    )
+  }
 }
