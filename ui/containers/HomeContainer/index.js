@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './styles.scss';
 import contracts from 'dao1901-contracts';
-import Info from '../../components/Info';
+import Info from '../../components/common/Info';
 
 /**
  * Home Page

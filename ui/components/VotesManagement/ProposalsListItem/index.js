@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.scss';
+import convertTimestampToDate from '../../../helpers/convertTimestampToDate'
 
 function ProposalsListItem(props) {
   return (
@@ -8,7 +9,7 @@ function ProposalsListItem(props) {
       <div className={styles.itemContent}>
         <p>Proposal ID: {props.index + 1}</p>
         <p>Description: {props.item.proposalDesc}</p>
-        <p>Days until deadline: {calculateDeadline(props.item.proposalDeadline)}</p>
+        <p>Expiration date: {convertTimestampToDate(props.item.proposalDeadline)}</p>
       </div>
     </li>
   );

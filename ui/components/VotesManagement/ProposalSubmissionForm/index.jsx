@@ -72,7 +72,7 @@ const proposalDescriptionInput = ({input, label, type, placeholder, id}) => (
       {...input}
       id={id}
       label={label}
-      placeholder="Enter description of the proposal"
+      placeholder={placeholder}
       required
       rows={5}
       type={type}
@@ -92,18 +92,17 @@ const proposalDeadlineInput = ({input, className, id, label, type, placeholder})
   </div>
 )
 let ProposalSubmissionForm = props => {
-  const {createProposal, handleSubmit, submitSucceeded, clearSubmit, proposalDeadline, validationProposalDesc, validationProposalDeadline} = props
-  console.log('propspropsprops', props)
+  const {createProposal, handleSubmit, submitSucceeded, clearSubmit} = props
   return (
     <div id="proposalSubmissionForm">
       <h2>Proposal Submission Form</h2>
       <Form onSubmit={ handleSubmit(createProposal) }>
         <div className="row">
-          <div className="col"></div>
-          <div className="col-8">
+          <div className="col-12">
             <Field
               component={proposalDescriptionInput}
               id="proposalDescriptionInput"
+              placeholder="Enter description of the proposal"
               type="textarea"
               label="Proposal Description"
               name="proposalDescription"
@@ -111,12 +110,10 @@ let ProposalSubmissionForm = props => {
               rows={5}
             />
           </div>
-          <div className="col"></div>
         </div>
 
         <div className="row">
-          <div className="col"></div>
-          <div className="col-8">
+          <div className="col-12">
             <Field
               component={proposalDeadlineInput}
               className="m-top-15"
@@ -127,28 +124,18 @@ let ProposalSubmissionForm = props => {
               placeholder="Enter the number of days until the deadline"
             />
           </div>
-          <div className="col"></div>
         </div>
 
         <Button
-          className="m-top-15"
+          block
+          color="primary"
+          outline
+          size="lg"
+          className="m-top-20"
           type="submit"
         >
           {'Submit'}
         </Button>
-
-        {/*<Button
-         className="m-top-15"
-         bsStyle="primary"
-         disabled={!(
-         validationProposalDesc === 'success' &&
-         validationProposalDeadline === 'success'
-         )}
-         onClick={onProposalSubmit}
-         type="submit"
-         >
-         Submit
-         </Button>*/}
       </Form>
     </div>
   )

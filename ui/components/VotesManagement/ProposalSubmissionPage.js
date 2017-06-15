@@ -1,24 +1,26 @@
-import React from 'react';
+import React from 'react'
 import List from '../common/List'
 import ProposalSubmissionForm from './ProposalSubmissionForm'
 import ProposalsListItem from './ProposalsListItem'
 
 function ProposalSubmissionPage(props) {
-  const {createProposal, proposalListItems, totalProposals} = props
+  const {createProposal, proposals} = props
   return (
-    <div id="ProposalSubmissionContainer">
+    <div id="ProposalSubmissionPageContainer">
       <ProposalSubmissionForm
         createProposal={createProposal}
       />
 
-      <h3>Proposals</h3>
-      <p>{`There are ${totalProposals} proposals`}</p>
-      <List
-        component={ProposalsListItem}
-        items={proposalListItems}
-      />
+      <div className="m-top-50">
+        <h3>Proposals</h3>
+        <p>{`There are ${proposals && proposals.length} proposals`}</p>
+        <List
+          component={ProposalsListItem}
+          items={proposals}
+        />
+      </div>
     </div>
-  );
+  )
 }
 
-export default ProposalSubmissionPage;
+export default ProposalSubmissionPage

@@ -1,10 +1,6 @@
 import React from "react";
-import VotesByProposalForm from '../../components/VotesManagement/VotesByProposalForm';
-import List from '../../components/common/List';
-import VotesListItem from '../../components/VotesManagement/VotesListItem';
-import VoteForm from '../../components/VotesManagement/VoteForm';
-//import Dao1901Contracts from 'dao1901-contracts';
-//let Dao1901Votes = null;
+import VotingPage from '../../components/VotesManagement/VotingPage'
+import {connect} from 'react-redux'
 
 // Log Events
 /*
@@ -20,21 +16,16 @@ window.Dao1901VotesEvents = Dao1901Votes.allEvents(null,
 );
 */
 
-export default class Votes extends React.Component {
-  render() {
-    return (
-      <div className="Dao1901Votes">
-        <VoteForm/>
-
-        <VotesByProposalForm
-          getAllVotesByProposal={this.getAllVotesByProposal}
-        />
-
-        <List
-          component={VotesListItem}
-          items={this.state.votesListItems}
-        />
-      </div>
-    );
+const mapStateToProps = (state) => {
+  return {
+    votes: state.vote.votes
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onVoteSubmit: (values) => dispatch({type: 'VOTE_SUBMISSION_REQUESTED', values})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VotingPage)
