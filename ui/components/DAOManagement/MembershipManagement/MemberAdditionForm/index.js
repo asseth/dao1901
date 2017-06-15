@@ -1,7 +1,52 @@
 import React from 'react';
 //import './styles.scss';
-import {AvField, AvForm} from 'availity-reactstrap-validation';
-import {Button} from 'reactstrap';
+import {Button, Form, FormControl, Input} from 'reactstrap'
+import {Field, reduxForm} from 'redux-form'
+
+const validate = values => {
+  const errors = {}
+  if (!values.memberAddressInput) {
+    errors.memberAddressInput = 'Required'
+  } else if (!web3.eth.isAddress(values.memberAddressInput)) {
+    errors.username = 'Address is not valid'
+  }
+  if (!values.yearsDurationInput) {
+    errors.yearsDurationInput = 'Required'
+  } else if (!(Number.isInteger(Number(values.yearsDurationInput)) && Number(values.yearsDurationInput) > 0)) {
+    errors.yearsDurationInput = 'Must be a number'
+  }
+  return errors
+}
+const warn = values => {
+  const warnings = {}
+  return warnings
+}
+
+const memberAddressInput = ({input, label, type, placeholder, id}) => (
+  <div>
+    <Input
+      {...input}
+      id={id}
+      label={label}
+      placeholder={placeholder}
+      required
+      rows={5}
+      type={type}
+    />
+  </div>
+)
+const yearsDurationInput = ({input, className, id, label, type, placeholder}) => (
+  <div>
+    <Input
+      {...input}
+      className={className}
+      id={id}
+      label={label}
+      type={type}
+      placeholder={placeholder}
+    />
+  </div>
+)
 
 /**
  * Member Addition - Stateless functional component
@@ -9,27 +54,27 @@ import {Button} from 'reactstrap';
  * @returns {XML}
  * @constructor
  */
-export default function MemberAdditionForm(props) {
+function MemberAdditionForm(props) {
+  const {addMember, handleSubmit, submitSucceeded, clearSubmit} = props
+
   return (
-    <AvForm
-      onValidSubmit={(event, values) => props.addMember(values)}
+    <Form
+      onSubmit={handleSubmit(addMember)}
     >
-      <AvField
-        id="memberAddressInput"
+      <Field
+        component={memberAddressInput}
+        id="memberAddress"
         label="memberAddressLabel"
-        labelHidden
-        name="memberAddressInput"
+        name="memberAddress"
         placeholder="Enter the Ethereum address of the member"
         required
         type="text"
-        validate={{async: props.validateAddress}}
       />
-      <AvField
-        id="yearsDurationInput"
+      <Field
+        component={yearsDurationInput}
+        id="yearsDuration"
         label="yearsDurationLabel"
-        labelHidden
-        min="1"
-        name="yearsDurationInput"
+        name="yearsDuration"
         placeholder="Enter the number of years the subscription will last"
         required
         type="number"
@@ -42,6 +87,12 @@ export default function MemberAdditionForm(props) {
       >
         {'Add Member'}
       </Button>
-    </AvForm>
+    </Form>
   )
 }
+
+export default MemberAdditionForm = reduxForm({
+  form: 'MemberAdditionForm',
+  //validate,
+  //warn
+})(MemberAdditionForm)

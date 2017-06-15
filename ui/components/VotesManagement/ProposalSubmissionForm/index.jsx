@@ -72,7 +72,7 @@ const proposalDescriptionInput = ({input, label, type, placeholder, id}) => (
       {...input}
       id={id}
       label={label}
-      placeholder="Enter description of the proposal"
+      placeholder={placeholder}
       required
       rows={5}
       type={type}
@@ -103,6 +103,7 @@ let ProposalSubmissionForm = props => {
             <Field
               component={proposalDescriptionInput}
               id="proposalDescriptionInput"
+              placeholder="Enter description of the proposal"
               type="textarea"
               label="Proposal Description"
               name="proposalDescription"

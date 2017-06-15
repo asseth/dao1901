@@ -8,7 +8,7 @@
 // take: intercepts action dispatched to the store
 // takeEvery: listen for dispatched actions and run them through the worker sagas
 import {call, fork, put, race, select, take, takeEvery} from 'redux-saga/effects'
-import {watchContracts, watchFetchOwnerAddress} from './dao/daoSaga'
+import dao from './dao/daoSaga'
 import {watchGetBlockNumber} from './ethereum/ethereumSaga'
 import vote from './votes/votesSaga'
 import user from './user/userSaga'
@@ -57,6 +57,7 @@ function* bootstrap() {
   yield put({type: 'DAO_OWNER_ADDRESS_REQUESTED'})
   yield bootstrapProposalSubmissionPage()
   yield bootstrapVotingPage()
+  yield bootstrapAdminPage()
 }
 
 function* bootstrapProposalSubmissionPage() {
@@ -67,14 +68,17 @@ function* bootstrapVotingPage() {
   yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED'})
 }
 
+function* bootstrapAdminPage() {
+  yield put({type: 'FETCH_ALL_MEMBERS_REQUESTED'})
+}
+
 /******************************************************************************/
 /******************************* ROOT SAGA ************************************/
 /******************************************************************************/
 export default function* rootSaga() {
   yield [
     fork(watchGetBlockNumber),
-    fork(watchFetchOwnerAddress),
-    fork(watchContracts),
+    fork(dao),
     fork(vote),
     fork(user),
     fork(bootstrap),
