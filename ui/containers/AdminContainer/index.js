@@ -4,59 +4,22 @@ import 'babel-polyfill';
 import {ToastContainer, ToastMessage} from 'react-toastr';
 let ToastMessageFactory = React.createFactory(ToastMessage.animation);
 import List from '../../components/common/List';
-import MembersListItem from '../../components/MembershipManagement/MembersListItem';
-import MemberAdditionForm from '../../components/MembershipManagement/MemberAdditionForm';
-import MemberRevokationForm from '../../components/MembershipManagement/MemberRevokationForm';
+import MembersListItem from '../../components/DAOManagement/MembershipManagement/MembersListItem';
+import MemberAdditionForm from '../../components/DAOManagement/MembershipManagement/MemberAdditionForm';
+import MemberRevokationForm from '../../components/DAOManagement/MembershipManagement/MemberRevokationForm';
 import TransferOwnershipForm from '../../components/DAOManagement/TransferOwnershipForm';
-import contracts from 'dao1901-contracts';
-let Owned, Dao1901Members;
+//import contracts from 'dao1901-contracts';
+//let Owned, Dao1901Members;
 
 /**
  * Admin Page
  *
  *  - Change owner
  *  - List All Members
- *  - List All Votes for a Proposal
  *  - Add a member
  *  - Revoke a member
  */
 export default class Admin extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      changeOwnerInput: '',
-      eth_blockNumber: '',
-      membersListItem: [],
-      owner: ''
-    };
-    this.changeOwner = ::this.changeOwner;
-    this.generateMemberListUI = ::this.generateMemberListUI;
-    this.generateMemberListAddrs = ::this.generateMemberListAddrs;
-    this.revokeMember = ::this.revokeMember;
-    this.validateAddress = ::this.validateAddress;
-  }
-
-  async componentDidMount() {
-    try {
-      // Get Owned instance
-      Owned = await contracts.Owned.deployed();
-      // Get Dao1901Members instance
-      Dao1901Members = await contracts.Dao1901Members.deployed();
-    } catch (err) {
-      throw new Error(err.message);
-    }
-    // Set Owner
-    this.setState({owner: await Owned.owner()});
-    this.generateMemberListUI();
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    //console.log('componentWillUpdate', nextProps, nextState);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    //console.log('componentDidUpdate', prevProps, prevState);
-  }
 
   /**
    * Add a member to the organization

@@ -33,29 +33,33 @@ function* onVoteSubmitWorker(action) {
 }
 
 /**
- * Get proposal by index
- * @param proposalIndex
- * @param cb
+ * fetchProposalByIndex
+ * @param Dao1901Votes
+ * @param proposalId
+ * @returns {*|Promise.<T>}
  */
-let fetchProposalByIndex = (Dao1901Votes, proposalIndex, cb) => {
-  Dao1901Votes.proposals(proposalIndex)
+let fetchProposalByIndex = (Dao1901Votes, proposalId) => {
+  return Dao1901Votes.proposals(proposalId)
     .then((proposal) => {
-      cb(proposal[0], proposal[1].toNumber(), proposal[2])
-    })
+      return {
+        proposalDesc: proposal[0],
+        proposalDeadline: proposal[1].toNumber(),
+        voterHead: proposal[2]
+      }})
     .catch((err) => {throw new Error(err.message)})
 }
 
 /**
  * getTotalProposals
  * @param Dao1901Votes
- * @param cb
  */
 let getTotalProposals = (Dao1901Votes) => Dao1901Votes.nProposals().then(n => n.valueOf())
 
 /**
- * Get All Votes For a Proposal
+ * fetchAllVotesForAProposal
+ * @param Dao1901Votes
  * @param proposalId
- * @returns {Array}
+ * @returns {Promise}
  */
 let fetchAllVotesForAProposal = (Dao1901Votes, proposalId) => {
   return new Promise((resolve, reject) => {
@@ -74,9 +78,10 @@ let fetchAllVotesForAProposal = (Dao1901Votes, proposalId) => {
         resolve(votes)
       }
     }
-    fetchProposalByIndex(Dao1901Votes, proposalId, (proposalDesc, proposalDeadline, voterHead) => {
-      addr = voterHead
-      generateVoteList(proposalId, addr)
+    fetchProposalByIndex(Dao1901Votes, proposalId)
+      .then(({voterHead}) => {
+        addr = voterHead
+        generateVoteList(proposalId, addr)
     })
   })
 }
@@ -117,35 +122,37 @@ function* fetchAllVotesForAllProposalsWorker() {
 }
 
 /**
- * Get All Proposal
+ * fetchAllProposals
  * @param Dao1901Votes
+ * @returns {Promise}
  */
-let getAllProposals = (Dao1901Votes) => {
+let fetchAllProposals = (Dao1901Votes) => {
   return new Promise((resolve, reject) => {
     let proposalListItems = []
     Dao1901Votes.nProposals()
       .then(n => {
         let totalProposals = n.valueOf()
-        let proposalIndex = 1 // there is no proposal index 0
-        let getAllProposalListItems = (proposalIndex) => {
-          if (proposalIndex <= totalProposals) {
-            fetchProposalByIndex(Dao1901Votes, proposalIndex, (proposalDesc, proposalDeadline) => {
-              proposalListItems.push({proposalDesc, proposalDeadline})
-              proposalIndex += 1
-              getAllProposalListItems(proposalIndex)
-            })
+        let proposalId = 1 // there is no proposal index 0
+        let getAllProposalListItems = (proposalId) => {
+          if (proposalId <= totalProposals) {
+            fetchProposalByIndex(Dao1901Votes, proposalId)
+              .then(({proposalDesc, proposalDeadline}) => {
+                proposalListItems.push({proposalDesc, proposalDeadline})
+                proposalId += 1
+                getAllProposalListItems(proposalId)
+              })
           } else {
             resolve(proposalListItems)
           }
         }
-        getAllProposalListItems(proposalIndex)
+        getAllProposalListItems(proposalId)
       })
   })
 }
-function* getAllProposalsWorker() {
+function* fetchAllProposalsWorker() {
   try {
     let Dao1901Votes = yield select(s => s.dao.contract.Dao1901Votes)
-    const proposals = yield call(getAllProposals, Dao1901Votes)
+    const proposals = yield call(fetchAllProposals, Dao1901Votes)
     yield put({type: 'FETCH_ALL_PROPOSALS_SUCCEED', proposals})
   } catch (e) {
     yield put({type: 'FETCH_ALL_PROPOSALS_FAILED', error: e})
@@ -192,8 +199,8 @@ function* createProposalWorker({values}) {
 export default function* vote() {
   yield takeEvery('CREATE_PROPOSAL_REQUESTED', createProposalWorker)
   yield takeEvery('VOTE_SUBMISSION_REQUESTED', onVoteSubmitWorker)
-  yield takeEvery('FETCH_ALL_PROPOSALS_REQUESTED', getAllProposalsWorker)
-  yield takeEvery('FETCH_ALL_VOTES_REQUESTED', fetchAllVotesForAllProposalsWorker)
+  yield takeEvery('FETCH_ALL_PROPOSALS_REQUESTED', fetchAllProposalsWorker)
+  yield takeEvery('FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED', fetchAllVotesForAllProposalsWorker)
 }
 
 

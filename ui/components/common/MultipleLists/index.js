@@ -18,11 +18,11 @@ export default function MultipleLists (props) {
     )
   }
 
-  if (props.items && props.items.length !== 0) {
+  if (props.items && Object.keys(props.items).length !== 0) {
     for (var proposalID in props.items) {
       if (props.items.hasOwnProperty(proposalID)) {
         list = props.items[proposalID].map((item, index) => (
-          <ListItem key={`item-${index}`} item={item} index={index} />
+          <ListItem key={`item-${index}`} item={item} />
         ))
         lists.push(renderList(proposalID))
       }
