@@ -11,12 +11,14 @@ function ProposalSubmissionPage(props) {
         createProposal={createProposal}
       />
 
-      <h3>Proposals</h3>
-      <p>{`There are ${proposals && proposals.length} proposals`}</p>
-      <List
-        component={ProposalsListItem}
-        items={proposals}
-      />
+      <div className="m-top-50">
+        <h3>Proposals</h3>
+        <p>{`There are ${proposals && proposals.length} proposals`}</p>
+        <List
+          component={ProposalsListItem}
+          items={proposals}
+        />
+      </div>
     </div>
   )
 }
