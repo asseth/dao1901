@@ -238,6 +238,6 @@ export default function* dao() {
   yield takeEvery('DAO_OWNER_ADDRESS_REQUESTED', fetchOwnerAddressWorker)
   yield takeEvery('ADD_MEMBER_REQUESTED', addMemberWorker)
   yield takeEvery('REVOKE_MEMBER_REQUESTED', revokeMemberWorker)
-  yield takeEvery('CHECK_MEMBERSHIP_REQUESTED', checkMembershipWorker)
+  //yield takeEvery('CHECK_MEMBERSHIP_REQUESTED', checkMembershipWorker)
   yield takeEvery('FETCH_ALL_MEMBERS_REQUESTED', generateMemberListWorker)
 }
