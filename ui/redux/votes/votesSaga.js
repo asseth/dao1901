@@ -3,6 +3,7 @@
 /******************************************************************************/
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
 import {toastr} from 'react-redux-toastr'
+import waitForMined from '../../helpers/waitForMined'
 
 /**
  * onVoteSubmit
@@ -177,18 +178,10 @@ function* fetchAllProposalsWorker() {
  */
 let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
   return new Promise((resolve, reject) => {
-    Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline)
+    Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: web3.eth.defaultAccount}) // from is necessary for Metamask!
       .then((tx) => {
-        resolve(tx)
         console.log('TX createProposal successful. Tx Hash: ', tx)
-        // Check if Tx is mined
-        var setIntervalId = setInterval(() => web3.eth.getTransactionReceipt(tx, (err, receipt) => {
-          if (err) reject(err.message)
-          if (receipt) {
-            console.log('Receipt Tx Dao1901Votes.createProposal: ', receipt)
-            window.clearInterval(setIntervalId)
-          }
-        }), 2000)
+        resolve(tx)
       })
       .catch((e) => {
         if (e.message === 'invalid address') {
@@ -200,11 +193,14 @@ let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
       })
   })
 }
+
 function* createProposalWorker({values}) {
   try {
     const {proposalDescription, proposalDeadline} = values
     let Dao1901Votes = yield select(s => s.dao.contract.Dao1901Votes)
-    yield call(createProposal, Dao1901Votes, proposalDescription, proposalDeadline)
+    const tx = yield call(createProposal, Dao1901Votes, proposalDescription, proposalDeadline)
+    console.log('create proposal done')
+    yield call(waitForMined, tx, 'create proposal') // setInterval until mined
     yield put({type: 'CREATE_PROPOSAL_SUCCEED'})
     yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
