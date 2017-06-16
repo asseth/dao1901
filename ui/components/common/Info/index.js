@@ -18,7 +18,11 @@ export default function Info (props) {
         <Card className="mx-auto" styleName="info">
           <h4>User Info</h4>
           <p>{'User account: '}<span className="ethereum-address">{props.defaultAccount}</span></p>
-          <p>{`Balance: ${props.balance} ETH`}</p>
+          <p>
+            Balance: {props.balance
+              ? `${props.balance} ETH`
+              : 'Unknown'}
+            </p>
           <h4>Ethereum Blockchain Info</h4>
           <p>{`Web3 status: ${props.isWeb3Connected ? "connected" : "not connected"}`}</p>
           <p>{`Current web3 provider host: ${props.currentProvider}`}</p>
