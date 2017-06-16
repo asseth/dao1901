@@ -26,33 +26,11 @@ function VotingPage(props) {
           />
         </div>
       </div>
-
-      <div className="m-top-50 row">
-        <div className="col-12">
-          <h2>Running Proposals</h2>
-          <p>Proposal _name_ _number_: will be settle on the 25 of June 2017</p>
-          <p>Proposal _name_ _number_: will be settle on the 04 of August 2017</p>
-          <p>Proposal _name_ _number_: will be settle on the 18 of October 2017</p>
-          <p>Proposal _name_ _number_: will be settle on the 26 of October 2017</p>
-        </div>
-      </div>
     </div>
   )
 }
 
-// Log Events
-/*
-window.Dao1901VotesEvents = Dao1901Votes.allEvents(null,
-  function (error, log) {
-    if (error) {
-      console.log('Event error: ', error)
-    }
-    else {
-      console.log('Event: ', log)
-    }
-  }
-);
-*/
+
 
 const mapStateToProps = (state) => {
   return {

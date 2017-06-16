@@ -21,6 +21,8 @@ let HomePage = (props) => {
           web3
         } = props
 
+  const {currentProvider: {host = null, constructor: {name = null} = {}} = {}} = web3;
+
   return (
     <div id="home-page">
       <div className="row">
@@ -33,8 +35,7 @@ let HomePage = (props) => {
         defaultAccount={user && user.defaultAccount}
         balance={user && user.balance}
         blockNumber={ethereum && ethereum.blockNumber}
-        currentProvider={web3 && web3.currentProvider && web3.currentProvider.host}
-        //currentProvider={web3 && web3.currentProvider.host ? web3.currentProvider.host : web3.currentProvider.constructor.name} // fix metamask testnet
+        currentProvider={host || name} // do this check in case of Metamask
         contractAddressMembers={contractAddressMembers}
         contractAddressOwned={contractAddressOwned}
         contractAddressVotes={contractAddressVotes}

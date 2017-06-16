@@ -2,6 +2,7 @@
 /**************************** ETHEREUM ***************************************/
 /******************************************************************************/
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
+import {toastr} from 'react-redux-toastr'
 
 /**
  * onVoteSubmit
@@ -11,9 +12,14 @@ let onVoteSubmit = (Dao1901Votes, defaultAccount, proposalId, voteValue) => {
     Dao1901Votes.vote.sendTransaction(proposalId, voteValue, {from: defaultAccount})
       .then(tx => {
         console.log(`Vote tx hash: ${tx}`)
+        toastr.success('Voting', `Your vote has been successfully submitted. Transaction ID: ${tx}`)
         resolve(tx)
       })
-      .catch(e => reject(e))
+      .catch(e => {
+        toastr.error('Error', `An error occurred. Please try later or contact the support. ` +
+        `Hint: Check that the proposal id is valid`)
+        reject(e)
+      })
   })
 }
 function* onVoteSubmitWorker(action) {
@@ -46,7 +52,10 @@ let fetchProposalByIndex = (Dao1901Votes, proposalId) => {
         proposalDeadline: proposal[1].toNumber(),
         voterHead: proposal[2]
       }})
-    .catch((err) => {throw new Error(err.message)})
+    .catch((err) => {
+      toastr.error('Error', `An error occurred. Please try later or contact the support`)
+      throw new Error(err.message)
+    })
 }
 
 /**
@@ -181,7 +190,14 @@ let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
           }
         }), 2000)
       })
-      .catch((err) => reject(err.message))
+      .catch((e) => {
+        if (e.message === 'invalid address') {
+          toastr.error('Error', `Invalid address. Check your permissions`)
+        } else {
+          toastr.error('Error', `An error occurred. Please try later or contact the support`)
+        }
+        reject(e.message)
+      })
   })
 }
 function* createProposalWorker({values}) {

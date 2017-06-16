@@ -2,6 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
 
+/**
+ * List
+ * Can take different ListItem component
+ * @param props
+ * @returns {XML}
+ * @constructor
+ */
 export default function List(props) {
   const ListItem = props.component;
   let content = (<div></div>);
