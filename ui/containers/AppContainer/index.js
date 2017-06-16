@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { web3Connect } from '../../redux/web3'
-import {ToastContainer, ToastMessage} from 'react-toastr';
-let ToastMessageFactory = React.createFactory(ToastMessage.animation);
+import ReduxToastr from 'react-redux-toastr'
 
 import './styles.scss';
 import {Route} from 'react-router-dom';
@@ -41,12 +40,6 @@ class AppContainer extends Component {
   render() {
     return (
       <div>
-        <ToastContainer
-          ref="toastContainer"
-          toastMessageFactory={ToastMessageFactory}
-          className="toast-top-right"
-        />
-
         <TopBar />
 
         <div className="m-top-50">
@@ -62,6 +55,14 @@ class AppContainer extends Component {
                     <Route path="/vote" component={VotePage}/>
                     <Route path="/proposal_submission" component={ProposalSubmissionPage}/>
                     <DevTools />
+                    <ReduxToastr
+                      timeOut={4000}
+                      newestOnTop={false}
+                      preventDuplicates
+                      position="top-left"
+                      transitionIn="fadeIn"
+                      transitionOut="fadeOut"
+                      progressBar/>
                   </div>
                 </ConnectedRouter>
              </Provider>

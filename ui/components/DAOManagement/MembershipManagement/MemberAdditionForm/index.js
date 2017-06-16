@@ -2,6 +2,7 @@ import React from 'react';
 import './styles.scss';
 import {Button, Form, FormControl, Input} from 'reactstrap'
 import {Field, reduxForm} from 'redux-form'
+import {toastr} from 'react-redux-toastr'
 
 const validate = values => {
   const errors = {}
@@ -81,6 +82,7 @@ function MemberAdditionForm(props) {
       <Button
         block
         color="primary"
+        //onClick={() => toastr.success('The title', 'The message')}
         outline
         size="lg"
       >
