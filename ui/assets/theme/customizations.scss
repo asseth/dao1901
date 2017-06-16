@@ -3,9 +3,14 @@ $brand-success: green !default;
 // React-Redux-Toastr
 .redux-toastr .top-left, .redux-toastr .top-right, .redux-toastr .top-center,
 .redux-toastr .bottom-left, .redux-toastr .bottom-right, .redux-toastr .bottom-center {
-  width: 480px;
+  width: 485px;
 }
-
 .toastr-right-container {
   display: none;
+}
+.redux-toastr .confirm {
+  width: 420px;
+  .message {
+    line-height: 2rem;
+  }
 }

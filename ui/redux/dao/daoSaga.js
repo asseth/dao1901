@@ -157,9 +157,9 @@ let checkMembership = (Dao1901Members, memberAddressToCheck) => {
       })
   })
 }
-export function* checkMembershipWorker(values) {
+export function* checkMembershipWorker(action) {
   try {
-    const {memberAddressToCheck} = values.values // todo Improve that ?
+    const {memberAddressToCheck} = action.values
     let Dao1901Members = yield select(s => s.dao.contract.Dao1901Members)
     let bool = yield call(checkMembership, Dao1901Members, memberAddressToCheck)
     yield put({type: 'CHECK_MEMBERSHIP_SUCCEED', isMember: bool})
@@ -179,23 +179,21 @@ let transferOwnership = (Owned, ownerAddress, newOwnerAddress) => {
   return new Promise((resolve, reject) => {
     console.log('ownerAddress,newOwnerAddress', ownerAddress, newOwnerAddress)
     Owned.changeOwner
-      .sendTransaction(newOwnerAddress, {from: ownerAddress, gas: 200000})
+      .sendTransaction(newOwnerAddress, {from: ownerAddress, gas: 200000}) // todo check gas
       .then((tx) => {
-        // Set new Owner
-        //this.setState({owner: values.changeOwnerInput});
-        /*this.refs.toastContainer.success(
-         `The ownership has been transferred to ${values.changeOwnerInput}`, '', {
-         timeOut: 7000
-         }
-         );*/
-        console.log(`Change Owner Tx: ${tx}`)
-        resolve(tx)
+        const toastrConfirmOptions = {
+          onOk: () => {
+            toastr.success('Organization management', `The ownership has been transferred to ${newOwnerAddress}`)
+            console.log(`Change Owner Tx: ${tx}`)
+            resolve(tx)
+          },
+          onCancel: () => console.log('Ownership transfer cancelled')
+        };
+        toastr.confirm(`Are you sure that you want to transfer ownership to ${newOwnerAddress}`, toastrConfirmOptions);
       })
-      .catch((err) => {
-        /*this.refs.toastContainer.error(
-         "You don't have the rights to transfer ownership", '', {
-         timeOut: 7000})*/
-        reject(err)
+      .catch((e) => {
+        toastr.error('Organization management', "You don't have the rights to transfer ownership")
+        reject(e)
       })
   })
 }
