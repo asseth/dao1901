@@ -1,7 +1,6 @@
-import React from 'react';
+import React from 'react'
 import {Button, Form, FormControl, Input} from 'reactstrap'
 import {Field, reduxForm} from 'redux-form'
-
 const validate = values => {
   const errors = {}
   if (!values.memberAddressToCheck) {
@@ -10,7 +9,6 @@ const validate = values => {
     errors.memberAddressToCheck = 'Address is not valid'
   }
 }
-
 const CheckMembershipInput = ({id, input, label, type, placeholder}) => (
   <div>
     <Input
@@ -23,7 +21,6 @@ const CheckMembershipInput = ({id, input, label, type, placeholder}) => (
     />
   </div>
 )
-
 /**
  * Check membership
  * @returns {XML}
@@ -31,19 +28,23 @@ const CheckMembershipInput = ({id, input, label, type, placeholder}) => (
  */
 function CheckMembershipForm(props) {
   const {checkMembership, handleSubmit} = props
-
   return (
-    <div>
+    <div id="CheckMembershipForm" className="form">
       <Form
         onSubmit={handleSubmit(checkMembership)}
       >
-        <Field
-          component={CheckMembershipInput}
-          id="memberAddressToCheck"
-          name="memberAddressToCheck"
-          placeholder="Enter an address"
-          type="text"
-        />
+        <div className="row">
+          <div className="col-12">
+            <Field
+              component={CheckMembershipInput}
+              id="memberAddressToCheck"
+              name="memberAddressToCheck"
+              placeholder="Enter an address"
+              type="text"
+            />
+          </div>
+        </div>
+
         <Button
           block
           color="primary"
@@ -57,7 +58,6 @@ function CheckMembershipForm(props) {
     </div>
   )
 }
-
 export default CheckMembershipForm = reduxForm({
   form: 'CheckMembershipForm',
   validate,

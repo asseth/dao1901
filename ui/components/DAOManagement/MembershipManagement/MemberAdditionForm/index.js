@@ -1,8 +1,7 @@
-import React from 'react';
-import './styles.scss';
+import React from 'react'
+import './styles.scss'
 import {Button, Form, FormControl, Input} from 'reactstrap'
 import {Field, reduxForm} from 'redux-form'
-
 const validate = values => {
   const errors = {}
   if (!values.memberAddressInput) {
@@ -21,7 +20,6 @@ const warn = values => {
   const warnings = {}
   return warnings
 }
-
 const memberAddressInput = ({input, label, type, placeholder, id}) => (
   <div>
     <Input
@@ -46,7 +44,6 @@ const yearsDurationInput = ({input, className, id, label, type, placeholder}) =>
     />
   </div>
 )
-
 /**
  * Member Addition - Stateless functional component
  * @param props
@@ -55,41 +52,49 @@ const yearsDurationInput = ({input, className, id, label, type, placeholder}) =>
  */
 function MemberAdditionForm(props) {
   const {addMember, handleSubmit, submitSucceeded, clearSubmit} = props
-
   return (
-    <Form
-      onSubmit={handleSubmit(addMember)}
-    >
-      <Field
-        component={memberAddressInput}
-        id="AddMemberAddress"
-        label="AddMemberAddressLabel"
-        name="memberAddress"
-        placeholder="Enter the Ethereum address of the member"
-        required
-        type="text"
-      />
-      <Field
-        component={yearsDurationInput}
-        id="yearsDuration"
-        label="yearsDurationLabel"
-        name="yearsDuration"
-        placeholder="Enter the number of years the subscription will last"
-        required
-        type="number"
-      />
-      <Button
-        block
-        color="primary"
-        outline
-        size="lg"
+    <div id="MemberAdditionForm" className="form">
+      <Form
+        onSubmit={handleSubmit(addMember)}
       >
-        {'Add Member'}
-      </Button>
-    </Form>
+        <div className="row">
+          <div className="col-12">
+            <Field
+              component={memberAddressInput}
+              id="AddMemberAddress"
+              label="AddMemberAddressLabel"
+              name="memberAddress"
+              placeholder="Enter the Ethereum address of the member"
+              required
+              type="text"
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <Field
+              component={yearsDurationInput}
+              id="yearsDuration"
+              label="yearsDurationLabel"
+              name="yearsDuration"
+              placeholder="Enter the number of years the subscription will last"
+              required
+              type="number"
+            />
+          </div>
+        </div>
+        <Button
+          block
+          color="primary"
+          outline
+          size="lg"
+        >
+          {'Add Member'}
+        </Button>
+      </Form>
+    </div>
   )
 }
-
 export default MemberAdditionForm = reduxForm({
   form: 'MemberAdditionForm',
   validate,

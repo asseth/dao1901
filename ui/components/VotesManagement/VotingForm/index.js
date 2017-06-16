@@ -47,7 +47,7 @@ const voteValueInput = ({className, input, label, type, placeholder, id}) => (
 let VotingForm = (props) => {
   const {handleSubmit, onVoteSubmit} = props
   return (
-    <div id="voteForm">
+    <div id="voteForm" className="form">
       <Form onSubmit={ handleSubmit(onVoteSubmit) }>
         <div className="row">
           <div className="col-12">
@@ -64,7 +64,6 @@ let VotingForm = (props) => {
         <div className="row">
           <div className="col-12">
             <Field
-              className="m-top-15"
               component={voteValueInput}
               label="voteValue"
               name="voteValue"
@@ -76,7 +75,6 @@ let VotingForm = (props) => {
 
         <Button
           block
-          className="m-top-20"
           color="primary"
           outline
           size="lg"

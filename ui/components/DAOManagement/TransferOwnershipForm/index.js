@@ -1,8 +1,7 @@
-import React from 'react';
+import React from 'react'
 //import './styles.scss';
 import {Button, Form, FormControl, Input} from 'reactstrap'
 import {Field, reduxForm} from 'redux-form'
-
 const validate = values => {
   const errors = {}
   if (!values.newOwnerAddress) {
@@ -12,7 +11,6 @@ const validate = values => {
   }
   return errors
 }
-
 const ChangeOwnerInput = ({input, label, type, placeholder, id}) => (
   <div>
     <Input
@@ -25,7 +23,6 @@ const ChangeOwnerInput = ({input, label, type, placeholder, id}) => (
     />
   </div>
 )
-
 /**
  * Transfer ownership form - Stateless functional component
  * @param props
@@ -34,32 +31,37 @@ const ChangeOwnerInput = ({input, label, type, placeholder, id}) => (
  */
 function TransferOwnershipForm(props) {
   const {transferOwnership, handleSubmit, submitSucceeded, clearSubmit} = props
-
   return (
-    <Form
-      onSubmit={handleSubmit(transferOwnership)}
-    >
-      <Field
-        component={ChangeOwnerInput}
-        id="changeOwnerInput"
-        label="changeOwnerLabel"
-        name="newOwnerAddress"
-        placeholder="New owner address"
-        required
-        type="text"
-      />
-      <Button
-        block
-        color="danger"
-        outline
-        size="lg"
+    <div id="TransferOwnershipForm" className="form">
+      <Form
+        onSubmit={handleSubmit(transferOwnership)}
       >
-        {'Change Owner'}
-      </Button>
-    </Form>
+        <div className="row">
+          <div className="col-12">
+            <Field
+              component={ChangeOwnerInput}
+              id="changeOwnerInput"
+              label="changeOwnerLabel"
+              name="newOwnerAddress"
+              placeholder="New owner address"
+              required
+              type="text"
+            />
+          </div>
+        </div>
+
+        <Button
+          block
+          color="danger"
+          outline
+          size="lg"
+        >
+          {'Change Owner'}
+        </Button>
+      </Form>
+    </div>
   )
 }
-
 export default TransferOwnershipForm = reduxForm({
   form: 'TransferOwnershipForm',
   validate,

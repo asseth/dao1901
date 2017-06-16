@@ -8,6 +8,8 @@ function ProposalSubmissionPage(props) {
   const {createProposal, proposals} = props
   return (
     <div id="ProposalSubmissionPageContainer">
+      <h1>Proposal Submission</h1>
+      <h2>Submit a proposal</h2>
       <ProposalSubmissionForm
         createProposal={createProposal}
       />

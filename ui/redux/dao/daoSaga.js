@@ -91,7 +91,7 @@ function* revokeMemberWorker(action) {
  * @param Dao1901Members
  * @returns {Promise}
  */
-let generateMemberList = (Dao1901Members) => {
+let fetchAllMembers = (Dao1901Members) => {
   return new Promise((resolve, reject) => {
     let membersInfo = []
     let endSubscriptionDate = ''
@@ -125,10 +125,10 @@ let generateMemberList = (Dao1901Members) => {
       })
   })
 }
-function* generateMemberListWorker() {
+function* fetchAllMembersWorker() {
   try {
     let Dao1901Members = yield select(s => s.dao.contract.Dao1901Members)
-    const members = yield call(generateMemberList, Dao1901Members)
+    const members = yield call(fetchAllMembers, Dao1901Members)
     yield put({type: 'FETCH_ALL_MEMBERS_SUCCEED', members})
   } catch (e) {
     yield put({type: 'FETCH_ALL_MEMBERS_FAILED', error: e})
@@ -177,7 +177,6 @@ export function* checkMembershipWorker(action) {
  */
 let transferOwnership = (Owned, ownerAddress, newOwnerAddress) => {
   return new Promise((resolve, reject) => {
-    console.log('ownerAddress,newOwnerAddress', ownerAddress, newOwnerAddress)
     Owned.changeOwner
       .sendTransaction(newOwnerAddress, {from: ownerAddress, gas: 200000}) // todo check gas
       .then((tx) => {
@@ -211,9 +210,9 @@ function* fetchOwnerAddressWorker() {
   try {
     let Owned = yield select(s => s.dao.contract.Owned)
     let ownerAddress = yield Owned.owner()
-    yield put({type: 'DAO_OWNER_ADDRESS_SUCCEED', ownerAddress})
+    yield put({type: 'FETCH_OWNER_ADDRESS_SUCCEED', ownerAddress})
   } catch (e) {
-    yield put({type: 'DAO_OWNER_ADDRESS_FAILED', error: e})
+    yield put({type: 'FETCH_OWNER_ADDRESS_FAILED', error: e})
   }
 }
 // ------------------------------------
@@ -221,10 +220,10 @@ function* fetchOwnerAddressWorker() {
 // ------------------------------------
 export default function* dao() {
   yield takeEvery('FETCH_CONTRACTS_REQUESTED', getDeployedContractsWorker)
-  yield takeEvery('DAO_OWNER_ADDRESS_REQUESTED', fetchOwnerAddressWorker)
+  yield takeEvery('FETCH_OWNER_ADDRESS_REQUESTED', fetchOwnerAddressWorker)
   yield takeEvery('ADD_MEMBER_REQUESTED', addMemberWorker)
   yield takeEvery('REVOKE_MEMBER_REQUESTED', revokeMemberWorker)
   yield takeEvery('CHECK_MEMBERSHIP_REQUESTED', checkMembershipWorker)
-  yield takeEvery('FETCH_ALL_MEMBERS_REQUESTED', generateMemberListWorker)
+  yield takeEvery('FETCH_ALL_MEMBERS_REQUESTED', fetchAllMembersWorker)
   yield takeEvery('TRANSFER_OWNERSHIP_REQUESTED', transferOwnershipWorker)
 }

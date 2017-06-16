@@ -46,10 +46,9 @@ class AppContainer extends Component {
       <div>
         <TopBar />
 
-        <div className="m-top-50">
-          <div className="row content">
-            <div className="col"></div>
-            <div className="col-8">
+        <div className="container m-top-50">
+          <div className="row">
+            <div className="col-12">
               <Provider store={this.props.store}>
                 <ConnectedRouter history={history}>
                   <div>
@@ -72,7 +71,6 @@ class AppContainer extends Component {
                 </ConnectedRouter>
               </Provider>
             </div>
-            <div className="col"></div>
           </div>
         </div>
       </div>

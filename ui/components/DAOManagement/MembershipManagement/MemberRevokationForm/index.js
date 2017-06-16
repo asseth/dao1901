@@ -1,8 +1,7 @@
-import React from 'react';
-import './styles.scss';
+import React from 'react'
+import './styles.scss'
 import {Button, Form, FormControl, Input} from 'reactstrap'
 import {Field, reduxForm} from 'redux-form'
-
 const validate = values => {
   const errors = {}
   if (!values.memberAddressInput) {
@@ -12,7 +11,6 @@ const validate = values => {
   }
   return errors
 }
-
 const RevokeMemberAddressInput = ({input, label, type, placeholder, id}) => (
   <div>
     <Input
@@ -25,7 +23,6 @@ const RevokeMemberAddressInput = ({input, label, type, placeholder, id}) => (
     />
   </div>
 )
-
 /**
  * Member revokation - Stateless functional component
  * @param props
@@ -34,32 +31,37 @@ const RevokeMemberAddressInput = ({input, label, type, placeholder, id}) => (
  */
 function MemberRevokationForm(props) {
   const {revokeMember, handleSubmit, submitSucceeded, clearSubmit} = props
-
   return (
-    <Form
-      onSubmit={handleSubmit(revokeMember)}
-    >
-      <Field
-        component={RevokeMemberAddressInput}
-        id="RevokeMemberAddressInput"
-        label="memberAddressLabel"
-        name="memberAddress"
-        placeholder="Enter the Ethereum address of the member"
-        required
-        type="text"
-      />
-      <Button
-        block
-        color="warning"
-        outline
-        size="lg"
+    <div id="MemberRevokationForm" className="form">
+      <Form
+        onSubmit={handleSubmit(revokeMember)}
       >
-        {'Revoke Member'}
-      </Button>
-    </Form>
+        <div className="row">
+          <div className="col-12">
+            <Field
+              component={RevokeMemberAddressInput}
+              id="RevokeMemberAddressInput"
+              label="memberAddressLabel"
+              name="memberAddress"
+              placeholder="Enter the Ethereum address of the member"
+              required
+              type="text"
+            />
+          </div>
+        </div>
+
+        <Button
+          block
+          color="warning"
+          outline
+          size="lg"
+        >
+          {'Revoke Member'}
+        </Button>
+      </Form>
+    </div>
   )
 }
-
 export default MemberRevokationForm = reduxForm({
   form: 'MemberRevokationForm',
   validate,

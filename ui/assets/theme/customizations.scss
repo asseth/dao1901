@@ -1,4 +1,13 @@
-$brand-success: green !default;
+// headers
+h1 {
+  margin-bottom: 2rem;
+}
+h2 {
+  margin-bottom: 1.5rem;
+}
+h3 {
+  margin-bottom: 1rem;
+}
 
 // React-Redux-Toastr
 .redux-toastr .top-left, .redux-toastr .top-right, .redux-toastr .top-center,
@@ -12,5 +21,15 @@ $brand-success: green !default;
   width: 420px;
   .message {
     line-height: 2rem;
+  }
+}
+
+// Forms
+.form {
+  input, textarea {
+    margin-bottom: 1rem;
+  }
+  button {
+    margin-top: 0.5rem;
   }
 }

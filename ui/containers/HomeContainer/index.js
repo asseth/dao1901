@@ -22,7 +22,7 @@ let HomePage = (props) => {
         } = props
 
   return (
-    <div className="container">
+    <div id="home-page">
       <div className="row">
         <div className="col">
           <h2>Home</h2>
@@ -38,6 +38,7 @@ let HomePage = (props) => {
         contractAddressMembers={contractAddressMembers}
         contractAddressOwned={contractAddressOwned}
         contractAddressVotes={contractAddressVotes}
+        isWeb3Connected={web3 && web3.isConnected}
         ownerAddress={dao && dao.ownerAddress}
       />
 
@@ -108,7 +109,7 @@ const mapStateToProps = (state) => {
     ethereum: state.ethereum,
     isConnected: state.web3Wrap.isConnected,
     user: state.user,
-    web3: state.web3Wrap.web3
+    web3: {...state.web3Wrap.web3, isConnected: state.web3Wrap.isConnected}
   }
 }
 export default connect(mapStateToProps)(HomePage)

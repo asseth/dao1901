@@ -10,9 +10,9 @@ export default function NestedLists (props) {
 
   let renderList = (proposalID) => {
     return (
-      <div key={`list-${proposalID}`}>
+      <div key={`list-${proposalID}`} styleName="list">
         <h3>{`Proposal n° ${proposalID}`}</h3>
-        <ul styleName="list">
+        <ul>
           {list}
         </ul>
       </div>
