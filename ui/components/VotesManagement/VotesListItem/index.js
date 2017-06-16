@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './styles.scss';
-console.log('styles.itemContent', styles.itemContent)
+import './styles.scss';
 
 function VotesListItem(props) {
   return (
-    <li className={props.className || styles.item}>
-      <div className={styles.itemContent}>
+    <li styleName={props.className || "item"}>
+      <div styleName="itemContent">
         <p>Voter's Address: {props.item.voterAddr}</p>
         <p>The Voter's vote: {props.item.voteValue}</p>
       </div>

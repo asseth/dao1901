@@ -2,14 +2,13 @@ import React from 'react';
 import './styles.scss';
 import {Button, Form, FormControl, Input} from 'reactstrap'
 import {Field, reduxForm} from 'redux-form'
-import {toastr} from 'react-redux-toastr'
 
 const validate = values => {
   const errors = {}
   if (!values.memberAddressInput) {
     errors.memberAddressInput = 'Required'
-  } else if (!web3.eth.isAddress(values.memberAddressInput)) {
-    errors.username = 'Address is not valid'
+  } else if (!web3.isAddress(values.memberAddressInput)) {
+    errors.memberAddressInput = 'Address is not valid'
   }
   if (!values.yearsDurationInput) {
     errors.yearsDurationInput = 'Required'
@@ -82,7 +81,6 @@ function MemberAdditionForm(props) {
       <Button
         block
         color="primary"
-        //onClick={() => toastr.success('The title', 'The message')}
         outline
         size="lg"
       >
