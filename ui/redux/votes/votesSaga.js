@@ -2,6 +2,8 @@
 /**************************** ETHEREUM ***************************************/
 /******************************************************************************/
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
+import {toastr} from 'react-redux-toastr'
+import waitForMined from '../../helpers/waitForMined'
 
 /**
  * onVoteSubmit
@@ -11,9 +13,14 @@ let onVoteSubmit = (Dao1901Votes, defaultAccount, proposalId, voteValue) => {
     Dao1901Votes.vote.sendTransaction(proposalId, voteValue, {from: defaultAccount})
       .then(tx => {
         console.log(`Vote tx hash: ${tx}`)
+        toastr.success('Voting', `Your vote has been successfully submitted. Transaction ID: ${tx}`)
         resolve(tx)
       })
-      .catch(e => reject(e))
+      .catch(e => {
+        toastr.error('Error', `An error occurred. Please try later or contact the support. ` +
+        `Hint: Check that the proposal id is valid`)
+        reject(e)
+      })
   })
 }
 function* onVoteSubmitWorker(action) {
@@ -46,7 +53,10 @@ let fetchProposalByIndex = (Dao1901Votes, proposalId) => {
         proposalDeadline: proposal[1].toNumber(),
         voterHead: proposal[2]
       }})
-    .catch((err) => {throw new Error(err.message)})
+    .catch((err) => {
+      toastr.error('Error', `An error occurred. Please try later or contact the support`)
+      throw new Error(err.message)
+    })
 }
 
 /**
@@ -168,27 +178,29 @@ function* fetchAllProposalsWorker() {
  */
 let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
   return new Promise((resolve, reject) => {
-    Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline)
+    Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: web3.eth.defaultAccount}) // from is necessary for Metamask!
       .then((tx) => {
-        resolve(tx)
         console.log('TX createProposal successful. Tx Hash: ', tx)
-        // Check if Tx is mined
-        var setIntervalId = setInterval(() => web3.eth.getTransactionReceipt(tx, (err, receipt) => {
-          if (err) reject(err.message)
-          if (receipt) {
-            console.log('Receipt Tx Dao1901Votes.createProposal: ', receipt)
-            window.clearInterval(setIntervalId)
-          }
-        }), 2000)
+        resolve(tx)
       })
-      .catch((err) => reject(err.message))
+      .catch((e) => {
+        if (e.message === 'invalid address') {
+          toastr.error('Error', `Invalid address. Check your permissions`)
+        } else {
+          toastr.error('Error', `An error occurred. Please try later or contact the support`)
+        }
+        reject(e.message)
+      })
   })
 }
+
 function* createProposalWorker({values}) {
   try {
     const {proposalDescription, proposalDeadline} = values
     let Dao1901Votes = yield select(s => s.dao.contract.Dao1901Votes)
-    yield call(createProposal, Dao1901Votes, proposalDescription, proposalDeadline)
+    const tx = yield call(createProposal, Dao1901Votes, proposalDescription, proposalDeadline)
+    console.log('create proposal done')
+    yield call(waitForMined, tx, 'create proposal') // setInterval until mined
     yield put({type: 'CREATE_PROPOSAL_SUCCEED'})
     yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
