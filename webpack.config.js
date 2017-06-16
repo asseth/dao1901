@@ -108,5 +108,8 @@ module.exports = {
     hot: true,
     historyApiFallback: true
     //publicPath: path.join(__dirname, "ui", "public")
+  },
+  performance: {
+    //hints: "warning"
   }
 };

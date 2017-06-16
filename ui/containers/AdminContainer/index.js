@@ -1,15 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import './styles.scss';
-import 'babel-polyfill';
-
 import List from '../../components/common/List';
 import MembersListItem from '../../components/DAOManagement/MembershipManagement/MembersListItem';
 import MemberAdditionForm from '../../components/DAOManagement/MembershipManagement/MemberAdditionForm';
 import MemberRevokationForm from '../../components/DAOManagement/MembershipManagement/MemberRevokationForm';
 import CheckMembershipForm from '../../components/DAOManagement/MembershipManagement/CheckMembershipForm';
 import TransferOwnershipForm from '../../components/DAOManagement/TransferOwnershipForm';
-
 
 /**
  * Admin Page
@@ -21,17 +18,15 @@ import TransferOwnershipForm from '../../components/DAOManagement/TransferOwners
  */
 let AdminPage = (props) => {
   const {addMember, checkMembership, dao, transferOwnership, revokeMember, web3Wrap} = props
-  //const {web3} = web3Wrap
   const {members} = dao
 
   return (
-    <div className="container">
+    <div className="">
       <div className="row">
         <div className="col">
-          <h1>Admin Page</h1>
+          <h1>Administration dashboard</h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias at blanditiis cum deserunt
-            dolores error id ipsa molestias numquam optio quod sequi tempore, ut vel vero, vitae voluptas?
+            This is where authorized people can manage the organization.
           </p>
         </div>
       </div>
@@ -78,10 +73,8 @@ let AdminPage = (props) => {
           <h2>Organization management</h2>
           <h3>Transfer organization ownership</h3>
           <p>
-            Organization ownership gives the right to control de DAO. Are you sure you want to transfer ownership? Make sure you understand all
+            Organization ownership gives the right to control the DAO. Make sure you understand all
             the implications.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam, assumenda beatae culpa ea
-            eveniet facilis fugit illo laborum molestias officiis praesentium provident quia quidem quod sunt
           </p>
           <p>{`The current owner is: ${dao.ownerAddress}`}</p>
           <TransferOwnershipForm

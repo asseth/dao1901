@@ -2,10 +2,10 @@
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  ['DAO_OWNER_ADDRESS_SUCCEED']: (state, action) => {
+  ['FETCH_OWNER_ADDRESS_SUCCEED']: (state, action) => {
     return {...state, ownerAddress: action.ownerAddress}
   },
-  ['DAO_OWNER_ADDRESS_FAILED']: (state, action) => {
+  ['FETCH_OWNER_ADDRESS_FAILED']: (state, action) => {
     return {...state, error: action.error}
   },
   ['FETCH_CONTRACTS_SUCCEED']: (state, action) => {

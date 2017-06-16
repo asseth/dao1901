@@ -40,7 +40,6 @@ import user from './user/userSaga'
   - proposals[]
     - proposal
       - id
-      - isPassed
       - description
 */
 
@@ -54,7 +53,7 @@ function* bootstrap() {
     error: take('FETCH_CONTRACTS_FAILED'),
   })
   if (error) throw new Error(error)
-  yield put({type: 'DAO_OWNER_ADDRESS_REQUESTED'})
+  yield put({type: 'FETCH_OWNER_ADDRESS_REQUESTED'})
   yield bootstrapProposalSubmissionPage()
   yield bootstrapVotingPage()
   yield bootstrapAdminPage()

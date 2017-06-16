@@ -7,7 +7,9 @@ function VotingPage(props) {
   const {onVoteSubmit, votes} = props
   return (
     <div id="VotingPageContainer">
-      <div className="row">
+      <h1>Voting</h1>
+      <p>But it's more about commenting proposals actually</p>
+      <div className="m-top-50 row">
         <div className="col-12">
           <h2>Vote for a Proposal</h2>
           <VoteForm
