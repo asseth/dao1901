@@ -103,9 +103,9 @@ let HomePage = (props) => {
 }
 const mapStateToProps = (state) => {
   return {
-    contractAddressMembers: state.dao && state.dao.contract && state.dao.contract.Dao1901Members.address,
-    contractAddressVotes: state.dao && state.dao.contract && state.dao.contract.Dao1901Votes.address,
-    contractAddressOwned: state.dao && state.dao.contract && state.dao.contract.Owned.address,
+    contractAddressMembers: state.dao.contracts && state.dao.contracts.Dao1901Members.address,
+    contractAddressVotes: state.dao.contracts && state.dao.contracts.Dao1901Votes.address,
+    contractAddressOwned: state.dao.contracts && state.dao.contracts.Owned.address,
     dao: state.dao,
     ethereum: state.ethereum,
     isConnected: state.web3Wrap.isConnected,

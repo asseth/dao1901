@@ -15,7 +15,7 @@ const ACTION_HANDLERS = {
       return {[name]: contract}
     }
     let subStates = action.contracts.map(formSubState)
-    return {...state, contract: Object.assign(...subStates)}
+    return {...state, contracts: Object.assign(...subStates)}
   },
   ['FETCH_CONTRACTS_FAILED']: (state, action) => {
     return {...state, error: action.error}
