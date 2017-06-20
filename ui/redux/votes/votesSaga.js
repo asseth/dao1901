@@ -33,6 +33,7 @@ function* onVoteSubmitWorker(action) {
       }
     })
     const tx = yield call(onVoteSubmit, o.Dao1901Votes, o.defaultAccount, proposalId, voteValue)
+    yield call(waitForMined, tx, 'onVoteSubmit') // setInterval until mined
     yield put({type: 'VOTE_SUBMISSION_SUCCEED', tx})
   } catch (e) {
     yield put({type: 'VOTE_SUBMISSION_SUCCEED', error: e})
@@ -199,7 +200,6 @@ function* createProposalWorker({values}) {
     const {proposalDescription, proposalDeadline} = values
     let Dao1901Votes = yield select(s => s.dao.contracts.Dao1901Votes)
     const tx = yield call(createProposal, Dao1901Votes, proposalDescription, proposalDeadline)
-    console.log('create proposal done')
     yield call(waitForMined, tx, 'create proposal') // setInterval until mined
     yield put({type: 'CREATE_PROPOSAL_SUCCEED'})
     yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})
