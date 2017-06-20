@@ -48,7 +48,7 @@ let addMember = (Dao1901Members, values) => {
 }
 function* addMemberWorker(action) {
   try {
-    let Dao1901Members = yield select(s => s.dao.contract.Dao1901Members)
+    let Dao1901Members = yield select(s => s.dao.contracts.Dao1901Members)
     const member = yield call(addMember, Dao1901Members, action.values)
     yield put({type: 'ADD_MEMBER_SUCCEED', member})
     yield put({type: 'FETCH_ALL_MEMBERS_REQUESTED'})
@@ -68,13 +68,13 @@ let revokeMember = (Dao1901Members, values) => {
       .sendTransaction(values.memberAddress, 0, {gas: 70000})
       .then((tx) => {
         toastr.success('Membership management', `The member ${values.memberAddress} has been revoked successfully`)
-        console.log(`The account ${web3.eth.defaultAccount} have revoked the member ${values.memberAddress}`)
+        console.log(`The account ${window.web3.eth.defaultAccount} have revoked the member ${values.memberAddress}`)
         console.log(`Revokation TxId: ${tx}`)
         resolve(tx)
       })
       .catch((e) => {
         toastr.error('Membership management', `The member ${values.memberAddress} has not been revoked. Please try later`)
-        console.log(`The account ${web3.eth.defaultAccount} have failed to revoke ${values.memberAddress}`)
+        console.log(`The account ${window.web3.eth.defaultAccount} have failed to revoke ${values.memberAddress}`)
         reject(e)
       })
   })
