@@ -181,23 +181,23 @@ export function* checkMembershipWorker(action) {
  */
 let transferOwnership = (Owned, ownerAddress, newOwnerAddress) => {
   return new Promise((resolve, reject) => {
-    Owned.changeOwner
-      .sendTransaction(newOwnerAddress, {from: ownerAddress, gas: 200000}) // todo check gas
-      .then((tx) => {
-        const toastrConfirmOptions = {
-          onOk: () => {
+    const toastrConfirmOptions = {
+      onOk: () => {
+        Owned.changeOwner
+          .sendTransaction(newOwnerAddress, {from: ownerAddress, gas: 200000}) // todo check gas
+          .then((tx) => {
             toastr.success('Organization management', `The ownership has been transferred to ${newOwnerAddress}`)
             console.log(`Change Owner Tx: ${tx}`)
             resolve(tx)
-          },
-          onCancel: () => console.log('Ownership transfer cancelled')
-        };
-        toastr.confirm(`Are you sure that you want to transfer ownership to ${newOwnerAddress}`, toastrConfirmOptions);
-      })
-      .catch((e) => {
-        toastr.error('Organization management', "You don't have the rights to transfer ownership")
-        reject(e)
-      })
+          })
+          .catch((e) => {
+            toastr.error('Organization management', "You don't have the rights to transfer ownership")
+            reject(e)
+          })
+      },
+      onCancel: () => console.log('Ownership transfer cancelled')
+    }
+    toastr.confirm(`Are you sure that you want to transfer ownership to ${newOwnerAddress}`, toastrConfirmOptions)
   })
 }
 function* transferOwnershipWorker(action) {
