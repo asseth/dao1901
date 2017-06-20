@@ -13,27 +13,32 @@ export const WEB3_DISCONNECTED = 'WEB3_DISCONNECTED';
 // Called in AppContainer
 export const web3Connect = () => {
   return (dispatch) => {
-    let web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`;
-    //let actionNoWeb3 = { type: WEB3_DISCONNECTED, payload: { web3: null, isConnected: false } }
-
-    if (typeof window.web3 !== 'undefined') {
-      console.log('actionIsWeb3')
-      dispatch({ type: WEB3_CONNECTED, payload: { web3: new Web3(window.web3.currentProvider), isConnected: true } })
-    }
-    else {
-      console.log('actionIsNotWeb3')
-      window.web3 = new Web3(new Web3.providers.HttpProvider(web3Location))
-      console.log('web3 added to window')
-      dispatch({ type: WEB3_CONNECTED, payload: { web3: window.web3, isConnected: true } })
-    }
+    // Check load event
+    // avoids race conditions with web3 injection timing
+    //window.addEventListener('load', function() {
+      let web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`;
+      //let actionNoWeb3 = { type: WEB3_DISCONNECTED, payload: { web3: null, isConnected: false } }
+      if (typeof window.web3 !== 'undefined') {
+        console.log('Web3 Detected on window')
+        // Use Mist/MetaMask's provider
+        window.web3 = new Web3(window.web3.currentProvider)
+        dispatch({type: WEB3_CONNECTED, payload: {isConnected: true}})
+      }
+      else {
+        console.log('No Web3 Detected \nSet Web3')
+        // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+        window.web3 = new Web3(new Web3.providers.HttpProvider(web3Location))
+        console.log('web3 added to window')
+        dispatch({type: WEB3_CONNECTED, payload: {isConnected: true}})
+      }
+    //})
   }
 };
 
-export function web3Connected ({ web3, isConnected }) {
+export function web3Connected ({ isConnected }) {
   return {
     type: WEB3_CONNECTED,
     payload: {
-      web3,
       isConnected
     }
   }
@@ -43,7 +48,6 @@ export function web3Disconnected () {
   return {
     type: WEB3_DISCONNECTED,
     payload: {
-      web3: null,
       isConnected: false
     }
   }

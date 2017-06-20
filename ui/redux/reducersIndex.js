@@ -44,7 +44,7 @@ export const makeRootReducer = (asyncReducers) => {
     toastr: toastrReducer,
     user: userReducer,
     vote: votesReducer,
-    web3Wrap: web3Reducer,
+    web3: web3Reducer,
     ...asyncReducers
   })
 }

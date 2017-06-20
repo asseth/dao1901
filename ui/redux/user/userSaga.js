@@ -4,11 +4,11 @@ import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
 // Set user balance
 // ========================================================
 let setUserBalance = (state) => {
-  const {user, web3Wrap} = state;
+  const {user} = state;
   return new Promise((resolve, reject) => {
-    web3Wrap.web3.eth.getBalance(user.defaultAccount, (err, balance) => {
+    window.web3.eth.getBalance(user.defaultAccount, (err, balance) => {
       if (err) reject(err.message);
-      resolve(web3Wrap.web3.fromWei(balance, "ether").valueOf());
+      resolve(window.web3.fromWei(balance, "ether").valueOf());
     });
   })
 }
