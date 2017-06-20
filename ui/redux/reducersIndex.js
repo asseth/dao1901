@@ -3,7 +3,6 @@ import {routerReducer} from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form'
 import {reducer as toastrReducer} from 'react-redux-toastr'
 
-import web3Reducer from './web3'
 import daoReducer from './dao/daoReducer'
 import ethereumReducer from './ethereum/ethereumReducer'
 import votesReducer from './votes/votesReducer'
@@ -44,7 +43,6 @@ export const makeRootReducer = (asyncReducers) => {
     toastr: toastrReducer,
     user: userReducer,
     vote: votesReducer,
-    web3: web3Reducer,
     ...asyncReducers
   })
 }

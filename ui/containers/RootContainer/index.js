@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {web3Connect} from '../../redux/web3'
 import ReduxToastr from 'react-redux-toastr'
 import './styles.scss'
 import {Route} from 'react-router-dom'
@@ -27,18 +26,6 @@ import rootSaga from '../../redux/sagasIndex'
 class RootContainer extends Component {
   constructor(props, context) {
     super(props, context)
-  }
-
-  /**
-   * Initial bootstraping
-   */
-  componentDidMount() {
-    // Inject web3 in redux store after waiting in case of Metamask injection takes more time
-    setTimeout(() => {
-      this.props.web3Connect()
-      // Then we can run the sagas
-      sagaMiddleware.run(rootSaga)
-    }, 50)
   }
 
   render() {
@@ -78,7 +65,5 @@ class RootContainer extends Component {
   }
 }
 const mapStateToProps = (state) => state
-const mapDispatchToProps = {
-  web3Connect
-}
-export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)
+
+export default connect(mapStateToProps)(RootContainer)

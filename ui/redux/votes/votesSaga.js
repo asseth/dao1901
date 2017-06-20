@@ -28,7 +28,7 @@ function* onVoteSubmitWorker(action) {
   try {
     let o = yield select(s => {
       return {
-        Dao1901Votes: s.dao.contract.Dao1901Votes,
+        Dao1901Votes: s.dao.contracts.Dao1901Votes,
         defaultAccount: s.user.defaultAccount
       }
     })
@@ -123,7 +123,7 @@ let fetchAllVotesForAllProposals = (Dao1901Votes) => {
 }
 function* fetchAllVotesForAllProposalsWorker() {
   try {
-    let Dao1901Votes = yield select(s => s.dao.contract.Dao1901Votes)
+    let Dao1901Votes = yield select(s => s.dao.contracts.Dao1901Votes)
     const votes = yield call(fetchAllVotesForAllProposals, Dao1901Votes)
     yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED', votes: votes})
   } catch (e) {
@@ -161,7 +161,7 @@ let fetchAllProposals = (Dao1901Votes) => {
 }
 function* fetchAllProposalsWorker() {
   try {
-    let Dao1901Votes = yield select(s => s.dao.contract.Dao1901Votes)
+    let Dao1901Votes = yield select(s => s.dao.contracts.Dao1901Votes)
     const proposals = yield call(fetchAllProposals, Dao1901Votes)
     yield put({type: 'FETCH_ALL_PROPOSALS_SUCCEED', proposals})
   } catch (e) {
@@ -178,7 +178,7 @@ function* fetchAllProposalsWorker() {
  */
 let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
   return new Promise((resolve, reject) => {
-    Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: web3.eth.defaultAccount}) // from is necessary for Metamask!
+    Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: window.web3.eth.defaultAccount}) // from is necessary for Metamask!
       .then((tx) => {
         console.log('TX createProposal successful. Tx Hash: ', tx)
         resolve(tx)
@@ -197,7 +197,7 @@ let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
 function* createProposalWorker({values}) {
   try {
     const {proposalDescription, proposalDeadline} = values
-    let Dao1901Votes = yield select(s => s.dao.contract.Dao1901Votes)
+    let Dao1901Votes = yield select(s => s.dao.contracts.Dao1901Votes)
     const tx = yield call(createProposal, Dao1901Votes, proposalDescription, proposalDeadline)
     console.log('create proposal done')
     yield call(waitForMined, tx, 'create proposal') // setInterval until mined

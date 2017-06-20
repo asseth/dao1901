@@ -17,7 +17,6 @@ let HomePage = (props) => {
           contractAddressOwned,
           dao,
           ethereum,
-          isWeb3Connected,
           user
         } = props
 
@@ -39,7 +38,7 @@ let HomePage = (props) => {
         contractAddressMembers={contractAddressMembers}
         contractAddressOwned={contractAddressOwned}
         contractAddressVotes={contractAddressVotes}
-        isWeb3Connected={isWeb3Connected}
+        isWeb3Connected={!!window.web3}
         ownerAddress={dao && dao.ownerAddress}
       />
 
@@ -108,7 +107,6 @@ const mapStateToProps = (state) => {
     contractAddressOwned: state.dao.contracts && state.dao.contracts.Owned.address,
     dao: state.dao,
     ethereum: state.ethereum,
-    isWeb3Connected: state.web3.isConnected,
     user: state.user,
   }
 }
