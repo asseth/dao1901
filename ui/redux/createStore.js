@@ -11,7 +11,6 @@ export const history = createHistory()
 // ======================================================
 // Middlewares
 // ======================================================
-import thunkMiddleware from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga'
 export const sagaMiddleware = createSagaMiddleware()
 import {routerMiddleware} from 'react-router-redux'
@@ -20,14 +19,14 @@ import logger from 'redux-logger'
 // ======================================================
 // Reducers
 // ======================================================
-import makeRootReducer, {injectReducer} from './reducersIndex'
+import makeRootReducer from './reducersIndex'
 import rootSaga from './sagasIndex'
 
 export default () => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middlewares = [reduxRouterMiddleware, sagaMiddleware, thunkMiddleware, logger]
+  const middlewares = [reduxRouterMiddleware, sagaMiddleware, logger]
 
   // ======================================================
   // Store Enhancers
@@ -54,6 +53,9 @@ export default () => {
     enhancers
   )
 
+  // ======================================================
+  // Set Web3
+  // ======================================================
   window.addEventListener('load', function() {
     // Set Web3
     let web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`;
@@ -68,6 +70,9 @@ export default () => {
       window.web3 = new Web3(new Web3.providers.HttpProvider(web3Location))
       console.log('web3 added to window')
     }
+    // ======================================================
+    // Run Sagas
+    // ======================================================
     sagaMiddleware.run(rootSaga)
   })
 
