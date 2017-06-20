@@ -9,7 +9,17 @@ let bootstrapConfig = isProd ? bootstrapEntryPoints.prod : bootstrapEntryPoints.
 
 module.exports = {
   entry: {
-    app: './ui/index.js',
+    app: [
+      'react-hot-loader/patch', // RHL patch
+      // bundle the client for webpack-dev-server
+      // and connect to the provided endpoint
+      'webpack-dev-server/client?http://localhost:8080', // todo check if it's necessary
+      // bundle the client for hot reloading
+      // only- means to only hot reload for successful updates
+      'webpack/hot/only-dev-server', // todo check if it's necessary
+      'babel-polyfill',
+      './ui/index.js',
+    ],
     bootstrap: bootstrapConfig
   },
   output: {
@@ -20,6 +30,10 @@ module.exports = {
   //devtool: 'cheap-module-eval-source-map',
   devtool: 'source-map',
   plugins: [
+    // enable HMR globally
+    new webpack.HotModuleReplacementPlugin(),
+    // prints more readable module names in the browser console on HMR updates
+    new webpack.NamedModulesPlugin(),
     // Copy our app's index.html to the public folder.
     new CopyWebpackPlugin([
       {from: './ui/index.html', to: "index.html"},
@@ -105,7 +119,7 @@ module.exports = {
     compress: true,
     //open: true,
     port: 8080,
-    hot: true,
+    hot: true, // enable HMR on the server
     historyApiFallback: true
     //publicPath: path.join(__dirname, "ui", "public")
   },

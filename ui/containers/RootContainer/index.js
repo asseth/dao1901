@@ -21,10 +21,10 @@ import VotePage from '../VotesManagementContainer'
 import rootSaga from '../../redux/sagasIndex'
 
 /**
- * AppContainer
+ * RootContainer
  * Root component, core layout, route handling, web3 setup
  */
-class AppContainer extends Component {
+class RootContainer extends Component {
   constructor(props, context) {
     super(props, context)
   }
@@ -81,4 +81,4 @@ const mapStateToProps = (state) => state
 const mapDispatchToProps = {
   web3Connect
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AppContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)

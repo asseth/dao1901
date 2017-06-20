@@ -53,17 +53,6 @@ export default () => {
   )
 
   // ======================================================
-  // HMR Setup
-  // ======================================================
-  //store.asyncReducers = {}
-  // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
-  //store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
-  if (module.hot) {
-    console.log('HMR activated')
-    module.hot.accept('./reducersIndex')
-  }
-
-  // ======================================================
   // Return the store
   // ======================================================
   return store
