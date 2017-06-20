@@ -4,11 +4,12 @@ import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
 // Set user balance
 // ========================================================
 let setUserBalance = (state) => {
-  const {user, web3Wrap} = state;
+  const {user} = state;
   return new Promise((resolve, reject) => {
-    web3Wrap.web3.eth.getBalance(user.defaultAccount, (err, balance) => {
+    if (!user.defaultAccount) reject(new Error('No default account'));
+    window.web3.eth.getBalance(user.defaultAccount, (err, balance) => {
       if (err) reject(err.message);
-      resolve(web3Wrap.web3.fromWei(balance, "ether").valueOf());
+      resolve(window.web3.fromWei(balance, "ether").valueOf());
     });
   })
 }
@@ -29,8 +30,8 @@ function* setUserBalanceWorker() {
 // ========================================================
 let fetchAccounts = () => {
   return new Promise((resolve, reject) => {
-    web3.eth.getAccounts((err, accounts) => {
-      if (err) reject(err.message);
+    window.web3.eth.getAccounts((e, accounts) => {
+      if (e) reject(e.message);
       resolve(accounts);
     });
   })
@@ -46,7 +47,7 @@ function* fetchUserAccountsWorker() {
     yield put({type: 'USER_BALANCE_REQUESTED'});
 
   } catch (e) {
-    yield put({type: 'USER_ADDRESS_FAILED', message: e.message});
+    yield put({type: 'USER_ADDRESS_FAILED', error: e});
   }
 }
 
@@ -54,11 +55,15 @@ function* fetchUserAccountsWorker() {
 // Set user default account
 // ========================================================
 function* setUserDefaultAccountWorker() {
-  let accounts = yield select(state => state.user.accounts);
-  let defaultAccount = accounts[0];
-  window.web3.eth.defaultAccount = defaultAccount;
-  console.log(`Set the default account to: ${defaultAccount}`);
-  yield put({type: 'USER_DEFAULT_ACCOUNT_SUCCEED', defaultAccount});
+    let accounts = yield select(state => state.user.accounts)
+    if (accounts.length === 0) {
+      yield put({type: 'USER_DEFAULT_ACCOUNT_FAILED', error: 'No accounts'})
+    } else {
+      let defaultAccount = accounts[0];
+      window.web3.eth.defaultAccount = defaultAccount;
+      console.log(`Set the default account to: ${defaultAccount}`)
+      yield put({type: 'USER_DEFAULT_ACCOUNT_SUCCEED', defaultAccount})
+    }
 }
 
 export default function* user() {

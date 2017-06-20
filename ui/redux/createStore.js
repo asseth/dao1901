@@ -1,6 +1,8 @@
 import 'babel-polyfill';
 import {applyMiddleware, compose, createStore} from 'redux'
-import DevTools from '../components/common/DevTools';
+import DevTools from '../components/common/DevTools'
+import truffleConfig from '../../protocol/truffle.js'
+
 // ======================================================
 // History
 // ======================================================
@@ -19,7 +21,7 @@ import logger from 'redux-logger'
 // Reducers
 // ======================================================
 import makeRootReducer, {injectReducer} from './reducersIndex'
-
+import rootSaga from './sagasIndex'
 
 export default () => {
   // ======================================================
@@ -52,16 +54,22 @@ export default () => {
     enhancers
   )
 
-  // ======================================================
-  // HMR Setup
-  // ======================================================
-  //store.asyncReducers = {}
-  // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
-  //store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
-  if (module.hot) {
-    console.log('HMR activated')
-    module.hot.accept('./reducersIndex')
-  }
+  window.addEventListener('load', function() {
+    // Set Web3
+    let web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`;
+    if (typeof window.web3 !== 'undefined') {
+      console.log('Web3 Detected on window')
+      // Use Mist/MetaMask's provider
+      window.web3 = new Web3(window.web3.currentProvider)
+    }
+    else {
+      console.log('No Web3 Detected \nSet Web3')
+      // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+      window.web3 = new Web3(new Web3.providers.HttpProvider(web3Location))
+      console.log('web3 added to window')
+    }
+    sagaMiddleware.run(rootSaga)
+  })
 
   // ======================================================
   // Return the store

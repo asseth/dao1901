@@ -17,7 +17,7 @@ import TransferOwnershipForm from '../../components/DAOManagement/TransferOwners
  *  - Revoke a member
  */
 let AdminPage = (props) => {
-  const {addMember, checkMembership, dao, transferOwnership, revokeMember, web3Wrap} = props
+  const {addMember, checkMembership, dao, transferOwnership, revokeMember} = props
   const {members} = dao
 
   return (

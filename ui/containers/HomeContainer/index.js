@@ -17,11 +17,10 @@ let HomePage = (props) => {
           contractAddressOwned,
           dao,
           ethereum,
-          user,
-          web3
+          user
         } = props
 
-  const {currentProvider: {host = null, constructor: {name = null} = {}} = {}} = web3;
+  const {currentProvider: {host = null, constructor: {name = null} = {}} = {}} = window.web3 || {};
 
   return (
     <div id="home-page">
@@ -39,7 +38,7 @@ let HomePage = (props) => {
         contractAddressMembers={contractAddressMembers}
         contractAddressOwned={contractAddressOwned}
         contractAddressVotes={contractAddressVotes}
-        isWeb3Connected={web3 && web3.isConnected}
+        isWeb3Connected={!!window.web3}
         ownerAddress={dao && dao.ownerAddress}
       />
 
@@ -103,14 +102,12 @@ let HomePage = (props) => {
 }
 const mapStateToProps = (state) => {
   return {
-    contractAddressMembers: state.dao && state.dao.contract && state.dao.contract.Dao1901Members.address,
-    contractAddressVotes: state.dao && state.dao.contract && state.dao.contract.Dao1901Votes.address,
-    contractAddressOwned: state.dao && state.dao.contract && state.dao.contract.Owned.address,
+    contractAddressMembers: state.dao.contracts && state.dao.contracts.Dao1901Members.address,
+    contractAddressVotes: state.dao.contracts && state.dao.contracts.Dao1901Votes.address,
+    contractAddressOwned: state.dao.contracts && state.dao.contracts.Owned.address,
     dao: state.dao,
     ethereum: state.ethereum,
-    isConnected: state.web3Wrap.isConnected,
     user: state.user,
-    web3: {...state.web3Wrap.web3, isConnected: state.web3Wrap.isConnected}
   }
 }
 export default connect(mapStateToProps)(HomePage)

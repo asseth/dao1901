@@ -19,6 +19,7 @@
   ],
   "plugins": [
     // See: http://2ality.com/2015/12/webpack-tree-shaking.html
+    "react-hot-loader/babel",
     "transform-es2015-template-literals",
     "transform-es2015-literals",
     "transform-es2015-function-name",
@@ -37,18 +38,13 @@
     "transform-es2015-parameters",
     "transform-es2015-destructuring",
     "transform-es2015-block-scoping",
+    "transform-es2015-modules-commonjs",
     "transform-es2015-typeof-symbol",
     ["transform-regenerator", { "async": false, "asyncGenerators": false }]
   ],
   "env": {
-    "test": {
-      "plugins": [
-        "transform-es2015-modules-commonjs"
-      ]
-    },
-    "development": {
-    },
-    "production": {
-    }
+    "test": {},
+    "development": {},
+    "production": {}
   }
 }
