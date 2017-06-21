@@ -4,7 +4,6 @@ import { AppContainer } from 'react-hot-loader';
 //import dao1901 from 'dao1901-truffle-library';
 import RootContainer from './containers/RootContainer'
 import createStore, {sagaMiddleware} from './redux/createStore';
-
 // Global styles
 import './assets/theme/app.scss';
 
@@ -42,9 +41,6 @@ render(RootContainer)
 // ======================================================
 // HMR Setup
 // ======================================================
-//store.asyncReducers = {}
-// To unsubscribe, invoke `store.unsubscribeHistory()` anytime
-//store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
 if (module.hot) {
   console.log('HMR activated---------', module)
   module.hot.accept('./containers/RootContainer', () => {
@@ -56,13 +52,11 @@ if (module.hot) {
     return store.replaceReducer(reducers);
   });
 
-  /*
-  module.hot.accept('./redux/sagas', () => {
+  module.hot.accept('./redux/sagasIndex', () => {
     const newSagas = require('./redux/sagasIndex').default;
     sagaTask.cancel()
     sagaTask.done.then(() => {
       sagaTask = sagaMiddleware.run(newSagas);
     })
   })
-  */
 }

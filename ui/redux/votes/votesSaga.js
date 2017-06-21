@@ -33,7 +33,9 @@ function* onVoteSubmitWorker(action) {
       }
     })
     const tx = yield call(onVoteSubmit, o.Dao1901Votes, o.defaultAccount, proposalId, voteValue)
+    yield call(waitForMined, tx, 'onVoteSubmit') // setInterval until mined
     yield put({type: 'VOTE_SUBMISSION_SUCCEED', tx})
+    yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
     yield put({type: 'VOTE_SUBMISSION_SUCCEED', error: e})
   }
@@ -46,17 +48,20 @@ function* onVoteSubmitWorker(action) {
  * @returns {*|Promise.<T>}
  */
 let fetchProposalByIndex = (Dao1901Votes, proposalId) => {
-  return Dao1901Votes.proposals(proposalId)
-    .then((proposal) => {
-      return {
-        proposalDesc: proposal[0],
-        proposalDeadline: proposal[1].toNumber(),
-        voterHead: proposal[2]
-      }})
-    .catch((err) => {
-      toastr.error('Error', `An error occurred. Please try later or contact the support`)
-      throw new Error(err.message)
-    })
+  return new Promise((resolve, reject) => {
+    return Dao1901Votes.proposals(proposalId)
+      .then((proposal) => {
+        resolve({
+          proposalDesc: proposal[0],
+          proposalDeadline: proposal[1].toNumber(),
+          voterHead: proposal[2]
+        })
+      })
+      .catch((e) => {
+        toastr.error('Error', `An error occurred. Please try later or contact the support`)
+        reject(e)
+      })
+  })
 }
 
 /**
@@ -93,6 +98,7 @@ let fetchAllVotesForAProposal = (Dao1901Votes, proposalId) => {
         addr = voterHead
         generateVoteList(proposalId, addr)
     })
+      .catch((e) => reject(e))
   })
 }
 
@@ -107,7 +113,7 @@ let fetchAllVotesForAllProposals = (Dao1901Votes) => {
     Dao1901Votes.nProposals()
       .then(totalProposals => {
         let i = 1
-        while (totalProposals >= i) {
+        while (i <= totalProposals.valueOf()) {
           fetchAllVotesForAProposal(Dao1901Votes, i)
             .then((votesForOneProposal) => {
               if (votesForOneProposal.length !== 0) {
@@ -199,7 +205,6 @@ function* createProposalWorker({values}) {
     const {proposalDescription, proposalDeadline} = values
     let Dao1901Votes = yield select(s => s.dao.contracts.Dao1901Votes)
     const tx = yield call(createProposal, Dao1901Votes, proposalDescription, proposalDeadline)
-    console.log('create proposal done')
     yield call(waitForMined, tx, 'create proposal') // setInterval until mined
     yield put({type: 'CREATE_PROPOSAL_SUCCEED'})
     yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})

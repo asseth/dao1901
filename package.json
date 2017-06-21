@@ -88,7 +88,6 @@
     "redux-form": "^6.8.0",
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.15.3",
-    "redux-thunk": "^2.2.0",
     "web3": "^0.19.0"
   }
 }
