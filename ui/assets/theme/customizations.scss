@@ -12,10 +12,16 @@ h3 {
 // React-Redux-Toastr
 .redux-toastr .top-left, .redux-toastr .top-right, .redux-toastr .top-center,
 .redux-toastr .bottom-left, .redux-toastr .bottom-right, .redux-toastr .bottom-center {
-  width: 485px;
-}
-.toastr-right-container {
-  display: none;
+  width: 50%;
+  word-wrap: break-word;
+
+  .toastr-middle-container {
+    padding: 10px 50px 10px 0 !important;
+    width: 90% !important;
+  }
+  .toastr-right-container {
+    display: none;
+  }
 }
 .redux-toastr .confirm {
   width: 420px;

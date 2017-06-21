@@ -8,20 +8,11 @@ const ACTION_HANDLERS = {
   ['FETCH_OWNER_ADDRESS_FAILED']: (state, action) => {
     return {...state, error: action.error}
   },
-  ['FETCH_CONTRACTS_SUCCEED']: (state, action) => {
-    let formSubState = (contract, i) => {
-      let name = action.contracts[i].constructor.contract_name;
-      // Put all in the store, todo ?
-      return {[name]: contract}
-    }
-    let subStates = action.contracts.map(formSubState)
-    return {...state, contracts: Object.assign(...subStates)}
+  ['FETCH_CONTRACTS_INFO_SUCCEED']: (state, action) => {
+    return {...state, contracts: action.contractsInfos}
   },
-  ['FETCH_CONTRACTS_FAILED']: (state, action) => {
+  ['FETCH_CONTRACTS_INFO_FAILED']: (state, action) => {
     return {...state, error: action.error}
-  },
-  ['ADD_MEMBER_SUCCEED']: (state, action) => {
-    return {...state}
   },
   ['ADD_MEMBER_FAILED']: (state, action) => {
     return {...state, error: action.error}
