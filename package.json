@@ -13,7 +13,7 @@
     "linkprotocol": "npm un dao1901-contracts; cd protocol; npm link; cd ..; npm link dao1901-contracts",
     "dev": "webpack-dev-server --progress",
     "lint": "eslint ./",
-    "test": "mocha-webpack"
+    "test": "jest"
   },
   "author": "Mathieu Sornay, Stéphane Roche <rstephane@protonmail.com>, Alexandre Kurth",
   "license": "MIT",
@@ -49,6 +49,7 @@
     "html-webpack-plugin": "^2.28.0",
     "image-webpack-loader": "^3.3.1",
     "imports-loader": "^0.7.1",
+    "jest": "^20.0.4",
     "json-loader": "^0.5.4",
     "lodash": "^4.17.4",
     "node-sass": "^4.5.3",

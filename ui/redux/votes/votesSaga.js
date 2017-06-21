@@ -127,7 +127,7 @@ let fetchAllVotesForAllProposals = (Dao1901Votes) => {
       .catch((e) => reject(e))
   })
 }
-function* fetchAllVotesForAllProposalsWorker() {
+export function* fetchAllVotesForAllProposalsWorker() {
   try {
     let Dao1901Votes = yield select(s => s.dao.contracts.Dao1901Votes)
     const votes = yield call(fetchAllVotesForAllProposals, Dao1901Votes)
