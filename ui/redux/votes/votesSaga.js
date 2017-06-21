@@ -1,16 +1,17 @@
-/******************************************************************************/
-/**************************** ETHEREUM ***************************************/
-/******************************************************************************/
+// ========================================================
+// Votes Sagas
+// ========================================================
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
 import {toastr} from 'react-redux-toastr'
 import waitForMined from '../../helpers/waitForMined'
-
-/**
- * onVoteSubmit
- */
-let onVoteSubmit = (Dao1901Votes, defaultAccount, proposalId, voteValue) => {
+import {contracts} from '../createStore'
+// ========================================================
+// Vote submission
+// ========================================================
+let onVoteSubmit = (proposalId, voteValue) => {
   return new Promise((resolve, reject) => {
-    Dao1901Votes.vote.sendTransaction(proposalId, voteValue, {from: defaultAccount})
+    const {Dao1901Votes} = contracts
+    Dao1901Votes.vote.sendTransaction(proposalId, voteValue /*, {from: window.web3.eth.defaultAccount}*/)
       .then(tx => {
         console.log(`Vote tx hash: ${tx}`)
         toastr.success('Voting', `Your vote has been successfully submitted. Transaction ID: ${tx}`)
@@ -24,15 +25,9 @@ let onVoteSubmit = (Dao1901Votes, defaultAccount, proposalId, voteValue) => {
   })
 }
 function* onVoteSubmitWorker(action) {
-  const {proposalId, voteValue} = action.values
   try {
-    let o = yield select(s => {
-      return {
-        Dao1901Votes: s.dao.contracts.Dao1901Votes,
-        defaultAccount: s.user.defaultAccount
-      }
-    })
-    const tx = yield call(onVoteSubmit, o.Dao1901Votes, o.defaultAccount, proposalId, voteValue)
+    const { proposalId, voteValue } = action.values
+    const tx = yield call(onVoteSubmit, proposalId, voteValue)
     yield call(waitForMined, tx, 'onVoteSubmit') // setInterval until mined
     yield put({type: 'VOTE_SUBMISSION_SUCCEED', tx})
     yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED'})
@@ -47,9 +42,10 @@ function* onVoteSubmitWorker(action) {
  * @param proposalId
  * @returns {*|Promise.<T>}
  */
-let fetchProposalByIndex = (Dao1901Votes, proposalId) => {
+let fetchProposalByIndex = (proposalId) => {
   return new Promise((resolve, reject) => {
-    return Dao1901Votes.proposals(proposalId)
+    const {Dao1901Votes} = contracts
+    Dao1901Votes.proposals(proposalId)
       .then((proposal) => {
         resolve({
           proposalDesc: proposal[0],
@@ -66,18 +62,20 @@ let fetchProposalByIndex = (Dao1901Votes, proposalId) => {
 
 /**
  * getTotalProposals
- * @param Dao1901Votes
  */
-let getTotalProposals = (Dao1901Votes) => Dao1901Votes.nProposals().then(n => n.valueOf())
+let getTotalProposals = () => {
+  const {Dao1901Votes} = contracts
+  Dao1901Votes.nProposals().then(n => n.valueOf())
+}
 
 /**
  * fetchAllVotesForAProposal
- * @param Dao1901Votes
  * @param proposalId
  * @returns {Promise}
  */
-let fetchAllVotesForAProposal = (Dao1901Votes, proposalId) => {
+let fetchAllVotesForAProposal = (proposalId) => {
   return new Promise((resolve, reject) => {
+    const {Dao1901Votes} = contracts
     let votes = []
     let addr = 0
     let generateVoteList = (proposalId, addr) => {
@@ -93,7 +91,7 @@ let fetchAllVotesForAProposal = (Dao1901Votes, proposalId) => {
         resolve(votes)
       }
     }
-    fetchProposalByIndex(Dao1901Votes, proposalId)
+    fetchProposalByIndex(proposalId)
       .then(({voterHead}) => {
         addr = voterHead
         generateVoteList(proposalId, addr)
@@ -104,22 +102,23 @@ let fetchAllVotesForAProposal = (Dao1901Votes, proposalId) => {
 
 /**
  * fetchAllVotesForAllProposals
- * @param Dao1901Votes
  * @returns {Promise}
  */
-let fetchAllVotesForAllProposals = (Dao1901Votes) => {
+let fetchAllVotesForAllProposals = () => {
   return new Promise((resolve, reject) => {
     let allVotes = {}
+    const {Dao1901Votes} = contracts
     Dao1901Votes.nProposals()
       .then(totalProposals => {
         let i = 1
         while (i <= totalProposals.valueOf()) {
-          fetchAllVotesForAProposal(Dao1901Votes, i)
+          fetchAllVotesForAProposal(i)
             .then((votesForOneProposal) => {
               if (votesForOneProposal.length !== 0) {
                 allVotes[votesForOneProposal[0].proposalId] = votesForOneProposal
               }
             })
+            .catch((e) => reject(e))
           i++
         }
         resolve(allVotes)
@@ -129,8 +128,7 @@ let fetchAllVotesForAllProposals = (Dao1901Votes) => {
 }
 export function* fetchAllVotesForAllProposalsWorker() {
   try {
-    let Dao1901Votes = yield select(s => s.dao.contracts.Dao1901Votes)
-    const votes = yield call(fetchAllVotesForAllProposals, Dao1901Votes)
+    const votes = yield call(fetchAllVotesForAllProposals)
     yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED', votes: votes})
   } catch (e) {
     yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSAL_FAILED', error: e})
@@ -139,24 +137,24 @@ export function* fetchAllVotesForAllProposalsWorker() {
 
 /**
  * fetchAllProposals
- * @param Dao1901Votes
  * @returns {Promise}
  */
-let fetchAllProposals = (Dao1901Votes) => {
+let fetchAllProposals = () => {
   return new Promise((resolve, reject) => {
     let proposalListItems = []
+    const {Dao1901Votes} = contracts
     Dao1901Votes.nProposals()
-      .then(n => {
-        let totalProposals = n.valueOf()
+      .then(totalProposals => {
         let proposalId = 1 // there is no proposal index 0
         let getAllProposalListItems = (proposalId) => {
-          if (proposalId <= totalProposals) {
-            fetchProposalByIndex(Dao1901Votes, proposalId)
+          if (proposalId <= totalProposals.valueOf()) {
+            fetchProposalByIndex(proposalId)
               .then(({proposalDesc, proposalDeadline}) => {
                 proposalListItems.push({proposalDesc, proposalDeadline})
                 proposalId += 1
                 getAllProposalListItems(proposalId)
               })
+              .catch((e) => reject(e))
           } else {
             resolve(proposalListItems)
           }
@@ -167,8 +165,7 @@ let fetchAllProposals = (Dao1901Votes) => {
 }
 function* fetchAllProposalsWorker() {
   try {
-    let Dao1901Votes = yield select(s => s.dao.contracts.Dao1901Votes)
-    const proposals = yield call(fetchAllProposals, Dao1901Votes)
+    const proposals = yield call(fetchAllProposals)
     yield put({type: 'FETCH_ALL_PROPOSALS_SUCCEED', proposals})
   } catch (e) {
     yield put({type: 'FETCH_ALL_PROPOSALS_FAILED', error: e})
@@ -177,14 +174,14 @@ function* fetchAllProposalsWorker() {
 
 /**
  * Create Proposal
- * @param Dao1901Votes
  * @param proposalDesc
  * @param proposalDeadline
  * @returns {Promise}
  */
-let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
+let createProposal = (proposalDesc, proposalDeadline) => {
   return new Promise((resolve, reject) => {
-    Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: window.web3.eth.defaultAccount}) // from is necessary for Metamask!
+    const {Dao1901Votes} = contracts
+    Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: window.web3.eth.defaultAccount}) // todo: from is necessary for Metamask ?!
       .then((tx) => {
         console.log('TX createProposal successful. Tx Hash: ', tx)
         toastr.success('Proposal submission', `Your proposal has been successfully submitted. Transaction ID: ${tx}`)
@@ -204,8 +201,7 @@ let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
 function* createProposalWorker({values}) {
   try {
     const {proposalDescription, proposalDeadline} = values
-    let Dao1901Votes = yield select(s => s.dao.contracts.Dao1901Votes)
-    const tx = yield call(createProposal, Dao1901Votes, proposalDescription, proposalDeadline)
+    const tx = yield call(createProposal, proposalDescription, proposalDeadline)
     yield call(waitForMined, tx, 'create proposal') // setInterval until mined
     yield put({type: 'CREATE_PROPOSAL_SUCCEED'})
     yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})

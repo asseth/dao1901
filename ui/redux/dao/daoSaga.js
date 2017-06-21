@@ -1,25 +1,25 @@
-import Dao1901Contracts from 'dao1901-contracts'
+import {contracts} from '../createStore'
 import {call, put, select, takeEvery} from 'redux-saga/effects'
 import {toastr} from 'react-redux-toastr'
 // ------------------------------------
-// Contracts management
+// Put useful contract info in store
 // ------------------------------------
-let setWeb3Provider = (contract) => {
-  // Todo: warning web3 from window
-  contract.setProvider(window.web3.currentProvider)
-  return contract.deployed()
+let fetchContractsInfo = () => {
+  let contractsInfos = {}
+  for (let key in contracts) {
+    if(contracts.hasOwnProperty(key)) {
+      contractsInfos = {...contractsInfos, [contracts[key].name]: {}}
+      contractsInfos[ contracts[key].name ].address = contracts[key].address
+    }
+  }
+  return contractsInfos
 }
-function* getDeployedContractsWorker() {
+function* fetchContractsInfoWorker() {
   try {
-    let contractsFromRedux = yield select(s => s.dao.contracts)
-    console.log('contractsFromRedux', contractsFromRedux)
-    if (!contractsFromRedux) {
-      const {Dao1901Members, Dao1901Votes, Owned} = Dao1901Contracts
-      const contracts = yield call(() => Promise.all([Dao1901Members, Dao1901Votes, Owned].map(setWeb3Provider)))
-      yield put({type: 'FETCH_CONTRACTS_SUCCEED', contracts})
-   }
+    let contractsInfos = yield call(fetchContractsInfo)
+    yield put({type: 'FETCH_CONTRACTS_INFO_SUCCEED', contractsInfos})
   } catch (e) {
-    yield put({type: 'FETCH_CONTRACTS_FAILED', error: e.message})
+    yield put({type: 'FETCH_CONTRACTS_INFO_FAILED', error: e})
   }
 }
 // ------------------------------------
@@ -29,27 +29,27 @@ function* getDeployedContractsWorker() {
  * Add a member to the organization
  * @param values
  */
-let addMember = (Dao1901Members, values) => {
+let addMember = (values) => {
   return new Promise((resolve, reject) => {
+    const {Dao1901Members} = contracts
     Dao1901Members.subscribe
       .sendTransaction(values.memberAddress, values.yearsDuration, {gas: 70000}) // todo check gas amount
       .then((tx) => {
         toastr.success('Membership management', `The member ${values.memberAddress} has been added successfully`)
-        console.log(`New member ${values.memberAddress} added by ${web3.eth.defaultAccount}`)
+        console.log(`New member ${values.memberAddress} added by ${window.web3.eth.defaultAccount}`)
         console.log(`Subscribe TxId: ${tx}`)
         resolve(tx)
       })
       .catch((e) => {
         toastr.error('Membership management', `The member ${values.memberAddress} has not been added. Please try later`)
-        console.log(`The account ${web3.eth.defaultAccount} has failed to add ${values.memberAddress}`)
+        console.log(`The account ${window.web3.eth.defaultAccount} has failed to add ${values.memberAddress}`)
         reject(e)
       })
   })
 }
 function* addMemberWorker(action) {
   try {
-    let Dao1901Members = yield select(s => s.dao.contracts.Dao1901Members)
-    const member = yield call(addMember, Dao1901Members, action.values)
+    const member = yield call(addMember, action.values)
     yield put({type: 'ADD_MEMBER_SUCCEED', member})
     yield put({type: 'FETCH_ALL_MEMBERS_REQUESTED'})
   } catch (e) {
@@ -62,8 +62,9 @@ function* addMemberWorker(action) {
  * @param values
  */
 
-let revokeMember = (Dao1901Members, values) => {
+let revokeMember = (values) => {
   return new Promise((resolve, reject) => {
+    const {Dao1901Members} = contracts
     Dao1901Members.subscribe
       .sendTransaction(values.memberAddress, 0, {gas: 70000})
       .then((tx) => {
@@ -81,8 +82,7 @@ let revokeMember = (Dao1901Members, values) => {
 }
 function* revokeMemberWorker(action) {
   try {
-    let Dao1901Members = yield select(s => s.dao.contracts.Dao1901Members)
-    yield call(revokeMember, Dao1901Members, action.values)
+    yield call(revokeMember, action.values)
     yield put({type: 'REVOKE_MEMBER_SUCCEED'})
     yield put({type: 'FETCH_ALL_MEMBERS_REQUESTED'})
   } catch (e) {
@@ -95,8 +95,9 @@ function* revokeMemberWorker(action) {
  * @param Dao1901Members
  * @returns {Promise}
  */
-let fetchAllMembers = (Dao1901Members) => {
+let fetchAllMembers = () => {
   return new Promise((resolve, reject) => {
+    const {Dao1901Members} = contracts
     let membersInfo = []
     let endSubscriptionDate = ''
     let addr = ''
@@ -131,8 +132,7 @@ let fetchAllMembers = (Dao1901Members) => {
 }
 function* fetchAllMembersWorker() {
   try {
-    let Dao1901Members = yield select(s => s.dao.contracts.Dao1901Members)
-    const members = yield call(fetchAllMembers, Dao1901Members)
+    const members = yield call(fetchAllMembers)
     yield put({type: 'FETCH_ALL_MEMBERS_SUCCEED', members})
   } catch (e) {
     yield put({type: 'FETCH_ALL_MEMBERS_FAILED', error: e})
@@ -142,8 +142,9 @@ function* fetchAllMembersWorker() {
  * Check Membership
  * Call fn that returns a boolean
  */
-let checkMembership = (Dao1901Members, memberAddressToCheck) => {
+let checkMembership = (memberAddressToCheck) => {
   return new Promise((resolve, reject) => {
+    const {Dao1901Members} = contracts
     Dao1901Members.isMember(memberAddressToCheck)
       .then((isMember) => {
         if (isMember) {
@@ -164,8 +165,7 @@ let checkMembership = (Dao1901Members, memberAddressToCheck) => {
 export function* checkMembershipWorker(action) {
   try {
     const {memberAddressToCheck} = action.values
-    let Dao1901Members = yield select(s => s.dao.contracts.Dao1901Members)
-    let bool = yield call(checkMembership, Dao1901Members, memberAddressToCheck)
+    let bool = yield call(checkMembership, memberAddressToCheck)
     yield put({type: 'CHECK_MEMBERSHIP_SUCCEED', isMember: bool})
   } catch (e) {
     yield put({type: 'CHECK_MEMBERSHIP_FAILED', error: e})
@@ -179,8 +179,9 @@ export function* checkMembershipWorker(action) {
  * @param values
  * @returns {Promise.<void>}
  */
-let transferOwnership = (Owned, ownerAddress, newOwnerAddress) => {
+let transferOwnership = (ownerAddress, newOwnerAddress) => {
   return new Promise((resolve, reject) => {
+    const {Owned} = contracts
     const toastrConfirmOptions = {
       onOk: () => {
         Owned.changeOwner
@@ -203,16 +204,18 @@ let transferOwnership = (Owned, ownerAddress, newOwnerAddress) => {
 function* transferOwnershipWorker(action) {
   try {
     let dao = yield select(s => s.dao)
-    yield call(transferOwnership, dao.contracts.Owned, dao.ownerAddress, action.values.newOwnerAddress)
+    yield call(transferOwnership, dao.ownerAddress, action.values.newOwnerAddress)
     yield put({type: 'TRANSFER_OWNERSHIP_SUCCEED', ownerAddress: action.values.newOwnerAddress})
   } catch (e) {
     yield put({type: 'TRANSFER_OWNERSHIP_FAILED', error: e})
   }
 }
-// todo Change it to computed state - Reselect.js ?
+/**
+ * Fetch owner address worker
+ */
 function* fetchOwnerAddressWorker() {
   try {
-    let Owned = yield select(s => s.dao.contracts.Owned)
+    const {Owned} = contracts
     let ownerAddress = yield Owned.owner()
     yield put({type: 'FETCH_OWNER_ADDRESS_SUCCEED', ownerAddress})
   } catch (e) {
@@ -223,7 +226,7 @@ function* fetchOwnerAddressWorker() {
 // The DAO Watcher Saga
 // ------------------------------------
 export default function* dao() {
-  yield takeEvery('FETCH_CONTRACTS_REQUESTED', getDeployedContractsWorker)
+  yield takeEvery('FETCH_CONTRACTS_INFO_REQUESTED', fetchContractsInfoWorker)
   yield takeEvery('FETCH_OWNER_ADDRESS_REQUESTED', fetchOwnerAddressWorker)
   yield takeEvery('ADD_MEMBER_REQUESTED', addMemberWorker)
   yield takeEvery('REVOKE_MEMBER_REQUESTED', revokeMemberWorker)

@@ -1,21 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-//import dao1901 from 'dao1901-truffle-library';
 import RootContainer from './containers/RootContainer'
 import createStore, {sagaMiddleware} from './redux/createStore';
 // Global styles
 import './assets/theme/app.scss';
-
-// ========================================================
-// Expose contracts globally
-// ========================================================
-// Expose Dao1901Members globally
-//window.Dao1901Members = dao1901.Dao1901Members;
-// Expose Dao1901Votes globally
-//window.Dao1901Votes = dao1901.Dao1901Votes;
-// Expose Owned globally
-//window.Owned = dao1901.Owned;
 
 // ========================================================
 // Store Instantiation
@@ -42,7 +31,6 @@ render(RootContainer)
 // HMR Setup
 // ======================================================
 if (module.hot) {
-  console.log('HMR activated---------', module)
   module.hot.accept('./containers/RootContainer', () => {
     render(RootContainer)
   });

@@ -44,7 +44,7 @@ class RootContainer extends Component {
                     <Route path="/admin" component={AdminPage}/>
                     <Route path="/vote" component={VotePage}/>
                     <Route path="/proposal_submission" component={ProposalSubmissionPage}/>
-                    <DevTools />
+                    {/*<DevTools />*/}
                     <ReduxToastr
                       timeOut={10000}
                       newestOnTop={true}
