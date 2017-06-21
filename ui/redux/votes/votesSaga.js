@@ -187,6 +187,7 @@ let createProposal = (Dao1901Votes, proposalDesc, proposalDeadline) => {
     Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: window.web3.eth.defaultAccount}) // from is necessary for Metamask!
       .then((tx) => {
         console.log('TX createProposal successful. Tx Hash: ', tx)
+        toastr.success('Proposal submission', `Your proposal has been successfully submitted. Transaction ID: ${tx}`)
         resolve(tx)
       })
       .catch((e) => {
