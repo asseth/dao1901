@@ -104,7 +104,7 @@ let fetchAllVotesForAProposal = (proposalId) => {
  * fetchAllVotesForAllProposals
  * @returns {Promise}
  */
-let fetchAllVotesForAllProposals = () => {
+export let fetchAllVotesForAllProposals = () => {
   return new Promise((resolve, reject) => {
     let allVotes = {}
     const {Dao1901Votes} = contracts

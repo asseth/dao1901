@@ -9,11 +9,11 @@ import votesReducer from './votes/votesReducer'
 import userReducer from './user/userReducer'
 
 /***************************** App State **************************************
-- ethereum // from web3
+- ethereum - Technical info about the Ethereum blockchain
  - blockNumber
- - currentProvider
  - numberOfPeers
-- dao // from blockchain - Useful info for dao admin
+
+- dao - Useful info for dao admin
  - ownerAddress
  - contract
    - owned
@@ -22,16 +22,20 @@ import userReducer from './user/userReducer'
     - address
    - votes
     - address
-- user // from web3
+ - members[]
+  - member
+    - address
+    - endSubscriptionDate
+
+- user
   - address
   - balance
-- members // from blockchain
-  - address
-  - endSubscriptionDate
-- vote // from blockchain
-  - proposals
-    - isPassed
-    - description
+
+- votes
+  - proposals[]
+    - proposal
+      - id
+      - description
 */
 
 export const makeRootReducer = (asyncReducers) => {

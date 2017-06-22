@@ -83,7 +83,7 @@
     "react-redux": "^5.0.5",
     "react-redux-toastr": "^6.2.7",
     "react-router-dom": "^4.1.1",
-    "react-router-redux": "^5.0.0-alpha.4",
+    "react-router-redux": "^5.0.0-alpha.6",
     "reactstrap": "^4.6.2",
     "redux": "^3.6.0",
     "redux-form": "^6.8.0",
