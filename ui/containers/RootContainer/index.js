@@ -43,7 +43,7 @@ class RootContainer extends Component {
                     <Route path="/proposal_submission" component={ProposalSubmissionPage}/>
                     {/*<DevTools />*/}
                     <ReduxToastr
-                      timeOut={10000}
+                      timeOut={8500}
                       newestOnTop={true}
                       preventDuplicates
                       position="top-right"
