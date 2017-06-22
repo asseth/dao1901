@@ -1,62 +1,45 @@
 import React from "react"
-import {Button, Input, Form, FormControl, FormGroup, HelpBlock} from "reactstrap"
-import {Field, reduxForm} from 'redux-form'
+import {Button, Form} from "reactstrap"
+import {Field, reduxForm, reset} from 'redux-form'
+import {Input} from '../../common/Inputs'
+// ------------------------------------
+// Validation
+// ------------------------------------
 const validate = values => {
   const errors = {}
   if (!values.proposalId) {
     errors.proposalId = 'Required'
-  } else if (Number.isInteger(Number(values.proposalId))) {
-    errors.username = 'Must be a number'
+  } else if (!Number.isInteger(Number(values.proposalId))) {
+    errors.proposalId = 'Proposal ID must be a number'
   }
   if (!values.voteValue) {
     errors.voteValue = 'Required'
-  } else if (values.voteValue.length <= 60) {
+  } else if (values.voteValue.length >= 60) {
     errors.voteValue = 'Length must be 60 char max'
   }
   return errors
 }
-const warn = values => {
-  const warnings = {}
-  return warnings
-}
-const proposalIDInput = ({input, label, type, placeholder, id}) => (
-  <div>
-    <Input
-      {...input}
-      id={id}
-      label={label}
-      placeholder={placeholder}
-      required
-      type={type}
-    />
-  </div>
-)
-const voteValueInput = ({className, input, label, type, placeholder, id}) => (
-  <div>
-    <Input
-      {...input}
-      className={className}
-      id={id}
-      label={label}
-      placeholder={placeholder}
-      required
-      type={type}
-    />
-  </div>
-)
+// ------------------------------------
+// After Submit
+// ------------------------------------
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset('votingForm'))
+// ------------------------------------
+// Form
+// ------------------------------------
 let VotingForm = (props) => {
   const {handleSubmit, onVoteSubmit} = props
   return (
     <div id="voteForm" className="form">
-      <Form onSubmit={ handleSubmit(onVoteSubmit) }>
+      <Form onSubmit={handleSubmit(onVoteSubmit)}>
         <div className="row">
           <div className="col-12">
             <Field
-              component={proposalIDInput}
+              component={Input}
               label="proposalId"
               name="proposalId"
               placeholder="Enter the proposal ID"
-              type="text"
+              type="number"
             />
           </div>
         </div>
@@ -64,7 +47,7 @@ let VotingForm = (props) => {
         <div className="row">
           <div className="col-12">
             <Field
-              component={voteValueInput}
+              component={Input}
               label="voteValue"
               name="voteValue"
               placeholder="Enter your vote"
@@ -80,12 +63,14 @@ let VotingForm = (props) => {
           size="lg"
           type="submit"
         >
-          Submit
+          {'Submit'}
         </Button>
       </Form>
     </div>
   )
 }
 export default VotingForm = reduxForm({
-  form: 'voting'
+  form: 'votingForm',
+  onSubmitSuccess: afterSubmit,
+  validate
 })(VotingForm)

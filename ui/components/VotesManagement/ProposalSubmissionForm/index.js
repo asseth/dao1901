@@ -1,63 +1,46 @@
 import React from "react"
-import {Button, Form, FormControl, Input} from 'reactstrap'
-import {Field, reduxForm} from 'redux-form'
-
+import {Button, Form} from 'reactstrap'
+import {Field, reduxForm, reset} from 'redux-form'
+import {Input, TextArea} from '../../common/Inputs'
+// ------------------------------------
+// Validation
+// ------------------------------------
 const validate = values => {
   const errors = {}
+  if (!values.proposalDescription) {
+    errors.proposalDescription = 'Required'
+  } else if (values.proposalDescription.length >= 600) {
+    errors.proposalDescription = 'Description length must be 600 char max'
+  }
   if (!values.proposalDeadline) {
     errors.proposalDeadline = 'Required'
-  } else if (Number.isInteger(Number(values.proposalDeadline))) {
-    errors.username = 'Must be a number'
-  }
-  if (!values.proposalDesc) {
-    errors.proposalDesc = 'Required'
-  } else if (values.proposalDesc.length <= 600) {
-    errors.proposalDesc = 'Length must be 600 char max'
+  } else if (!Number.isInteger(Number(values.proposalDeadline))) {
+    errors.proposalDeadline = 'Proposal deadline must be a number (number of days)'
   }
   return errors
 }
-
-const proposalDescriptionInput = ({input, label, type, placeholder, id}) => (
-  <div>
-    <Input
-      {...input}
-      id={id}
-      label={label}
-      placeholder={placeholder}
-      required
-      rows={5}
-      type={type}
-    />
-  </div>
-)
-const proposalDeadlineInput = ({input, className, id, label, type, placeholder}) => (
-  <div>
-    <Input
-      {...input}
-      className={className}
-      id={id}
-      label={label}
-      type={type}
-      placeholder={placeholder}
-    />
-  </div>
-)
+// ------------------------------------
+// After Submit
+// ------------------------------------
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset('proposalSubmissionForm'))
+// ------------------------------------
+// Form
+// ------------------------------------
 let ProposalSubmissionForm = props => {
-  const {createProposal, handleSubmit, submitSucceeded, clearSubmit} = props
+  const {createProposal, handleSubmit} = props
   return (
     <div id="proposalSubmissionForm" className="form">
-      <Form onSubmit={ handleSubmit(createProposal) }>
+      <Form onSubmit={handleSubmit(createProposal)}>
         <div className="row">
           <div className="col-12">
             <Field
-              component={proposalDescriptionInput}
+              component={TextArea}
               id="proposalDescriptionInput"
               placeholder="Enter description of the proposal"
               type="textarea"
               label="Proposal Description"
               name="proposalDescription"
-              required
-              rows={5}
             />
           </div>
         </div>
@@ -65,11 +48,11 @@ let ProposalSubmissionForm = props => {
         <div className="row">
           <div className="col-12">
             <Field
-              component={proposalDeadlineInput}
+              component={Input}
               id="proposalDeadlineInput"
               label="Days until deadline"
               name="proposalDeadline"
-              type="text"
+              type="number"
               placeholder="Enter the number of days until the deadline"
             />
           </div>
@@ -90,6 +73,7 @@ let ProposalSubmissionForm = props => {
   )
 }
 export default ProposalSubmissionForm = reduxForm({
-  form: 'proposalSubmission',
+  form: 'proposalSubmissionForm',
+  onSubmitSuccess: afterSubmit,
   validate,
 })(ProposalSubmissionForm)
