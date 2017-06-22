@@ -27,7 +27,7 @@ export default function Info (props) {
           <p>{`Web3 status: ${props.isWeb3Connected ? "connected" : "not connected"}`}</p>
           <p>{`Current web3 provider host: ${props.currentProvider}`}</p>
           <p>{`Block number: ${props.blockNumber}`}</p>
-          <h4>DAO Infos</h4>
+          <h4>DAO Info</h4>
           <p>{props.ownerAddress === props.defaultAccount ? 'You are the owner'
             : `You are not the owner. Owner: ${props.ownerAddress ? props.ownerAddress : 'Unknown'}`}</p>
           <p>

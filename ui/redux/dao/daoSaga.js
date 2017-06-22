@@ -71,7 +71,6 @@ let revokeMember = (values) => {
       .then((tx) => {
         toastr.success('Membership management', `The member ${values.memberAddress} has been revoked successfully`)
         console.log(`The account ${window.web3.eth.defaultAccount} have revoked the member ${values.memberAddress}`)
-        console.log(`Revokation TxId: ${tx}`)
         resolve(tx)
       })
       .catch((e) => {
@@ -83,8 +82,9 @@ let revokeMember = (values) => {
 }
 function* revokeMemberWorker(action) {
   try {
-    yield call(revokeMember, action.values)
-    yield put({type: 'REVOKE_MEMBER_SUCCEED'})
+    const tx = yield call(revokeMember, action.values)
+    yield call(waitForMined, tx, 'revokeMember') // setInterval until mined
+    yield put({type: 'REVOKE_MEMBER_SUCCEED', tx})
     yield put({type: 'FETCH_ALL_MEMBERS_REQUESTED'})
   } catch (e) {
     yield put({type: 'REVOKE_MEMBER_FAILED', e})
@@ -189,7 +189,6 @@ let transferOwnership = (ownerAddress, newOwnerAddress) => {
           .sendTransaction(newOwnerAddress, {from: ownerAddress, gas: 200000}) // todo check gas
           .then((tx) => {
             toastr.success('Organization management', `The ownership has been transferred to ${newOwnerAddress}`)
-            console.log(`Change Owner Tx: ${tx}`)
             resolve(tx)
           })
           .catch((e) => {
@@ -204,8 +203,9 @@ let transferOwnership = (ownerAddress, newOwnerAddress) => {
 }
 function* transferOwnershipWorker(action) {
   try {
-    let dao = yield select(s => s.dao)
-    yield call(transferOwnership, dao.ownerAddress, action.values.newOwnerAddress)
+    let ownerAddress = yield select(s => s.dao.ownerAddress)
+    const tx = yield call(transferOwnership, ownerAddress, action.values.newOwnerAddress)
+    yield call(waitForMined, tx, 'transferOwnership') // setInterval until mined
     yield put({type: 'TRANSFER_OWNERSHIP_SUCCEED', ownerAddress: action.values.newOwnerAddress})
   } catch (e) {
     yield put({type: 'TRANSFER_OWNERSHIP_FAILED', error: e})
@@ -217,7 +217,7 @@ function* transferOwnershipWorker(action) {
 function* fetchOwnerAddressWorker() {
   try {
     const {Owned} = contracts
-    let ownerAddress = yield Owned.owner()
+    let ownerAddress = yield call(Owned.owner)
     yield put({type: 'FETCH_OWNER_ADDRESS_SUCCEED', ownerAddress})
   } catch (e) {
     yield put({type: 'FETCH_OWNER_ADDRESS_FAILED', error: e})
