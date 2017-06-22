@@ -1,6 +1,6 @@
 import React from "react"
 import {Button, Form} from "reactstrap"
-import {Field, reduxForm} from 'redux-form'
+import {Field, reduxForm, reset} from 'redux-form'
 import {Input} from '../../common/Inputs'
 // ------------------------------------
 // Validation
@@ -20,6 +20,11 @@ const validate = values => {
   return errors
 }
 // ------------------------------------
+// After Submit
+// ------------------------------------
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset('votingForm'))
+// ------------------------------------
 // Form
 // ------------------------------------
 let VotingForm = (props) => {
@@ -34,7 +39,7 @@ let VotingForm = (props) => {
               label="proposalId"
               name="proposalId"
               placeholder="Enter the proposal ID"
-              type="text"
+              type="number"
             />
           </div>
         </div>
@@ -65,6 +70,7 @@ let VotingForm = (props) => {
   )
 }
 export default VotingForm = reduxForm({
-  form: 'voting',
+  form: 'votingForm',
+  onSubmitSuccess: afterSubmit,
   validate
 })(VotingForm)

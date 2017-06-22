@@ -52,7 +52,7 @@ let ProposalSubmissionForm = props => {
               id="proposalDeadlineInput"
               label="Days until deadline"
               name="proposalDeadline"
-              type="text"
+              type="number"
               placeholder="Enter the number of days until the deadline"
             />
           </div>
