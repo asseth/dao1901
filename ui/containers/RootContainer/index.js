@@ -17,8 +17,6 @@ import HomePage from '../HomeContainer'
 import ProposalSubmissionPage from '../ProposalSubmissionContainer'
 import VotePage from '../VotesManagementContainer'
 //import NotFoundPage from '../NotFoundContainer';
-import rootSaga from '../../redux/rootSaga'
-
 /**
  * RootContainer
  * Root component, core layout, route handling, web3 setup
@@ -30,14 +28,13 @@ class RootContainer extends Component {
 
   render() {
     return (
-      <div>
-        <TopBar />
-
-        <div className="container m-top-50">
-          <div className="row">
-            <div className="col-12">
-              <Provider store={this.props.store}>
-                <ConnectedRouter history={history}>
+      <Provider store={this.props.store}>
+        <ConnectedRouter history={history}>
+          <div>
+            <TopBar />
+            <div className="container m-top-50">
+              <div className="row">
+                <div className="col-12">
                   <div>
                     {/*<Route exact path="/" component={TestPage}/>*/}
                     <Route exact path="/" component={HomePage}/>
@@ -55,15 +52,15 @@ class RootContainer extends Component {
                       progressBar={true}
                     />
                   </div>
-                </ConnectedRouter>
-              </Provider>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </ConnectedRouter>
+      </Provider>
+
     )
   }
 }
 const mapStateToProps = (state) => state
-
 export default connect(mapStateToProps)(RootContainer)

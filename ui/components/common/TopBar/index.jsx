@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
 import './styles.scss';
 
@@ -39,16 +40,16 @@ export default class TopBar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav styleName="navbar-nav" navbar>
               <NavItem>
-                <NavLink href="/">Home</NavLink>
+                <NavLink tag={Link} to="/">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/proposal_submission">Proposal Submission</NavLink>
+                <NavLink tag={Link} to="/proposal_submission">Proposal Submission</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/vote">Vote</NavLink>
+                <NavLink tag={Link} to="/vote">Vote</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/admin">Admin</NavLink>
+                <NavLink tag={Link} to="/admin">Admin</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
@@ -57,8 +58,7 @@ export default class TopBar extends React.Component {
     )
   }
 }
-/*
- TopBar.contextTypes = {
- router: PropTypes.object.isRequired
- };
- */
+
+TopBar.contextTypes = {
+  router: PropTypes.object
+};
