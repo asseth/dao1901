@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import List from '../../components/common/List'
-import ProposalSubmissionForm from '../../components/VotesManagement/ProposalSubmissionForm'
+import ProposalSubmissionForm from '../../components/VotesManagement/ProposalSubmissionForm/index'
 import ProposalsListItem from '../../components/VotesManagement/ProposalsListItem'
 
 function ProposalSubmissionPage(props) {

@@ -1,42 +1,31 @@
 import React from 'react'
-import {Button, Form, FormControl, Input} from 'reactstrap'
+import {Button, Form} from 'reactstrap'
 import {Field, reduxForm} from 'redux-form'
+import {Input} from '../../../common/Inputs'
+// ------------------------------------
+// Validation
+// ------------------------------------
 const validate = values => {
   const errors = {}
   if (!values.memberAddressToCheck) {
     errors.memberAddressToCheck = 'Required'
-  } else if (!web3.isAddress(values.memberAddressToCheck)) {
+  } else if (!window.web3.isAddress(values.memberAddressToCheck)) {
     errors.memberAddressToCheck = 'Address is not valid'
   }
+  return errors
 }
-const CheckMembershipInput = ({id, input, label, type, placeholder}) => (
-  <div>
-    <Input
-      {...input}
-      id={id}
-      label={label}
-      placeholder={placeholder}
-      required
-      type={type}
-    />
-  </div>
-)
-/**
- * Check membership
- * @returns {XML}
- * @constructor
- */
+// ------------------------------------
+// Form
+// ------------------------------------
 function CheckMembershipForm(props) {
   const {checkMembership, handleSubmit} = props
   return (
     <div id="CheckMembershipForm" className="form">
-      <Form
-        onSubmit={handleSubmit(checkMembership)}
-      >
+      <Form onSubmit={handleSubmit(checkMembership)}>
         <div className="row">
           <div className="col-12">
             <Field
-              component={CheckMembershipInput}
+              component={Input}
               id="memberAddressToCheck"
               name="memberAddressToCheck"
               placeholder="Enter an address"
@@ -61,5 +50,4 @@ function CheckMembershipForm(props) {
 export default CheckMembershipForm = reduxForm({
   form: 'CheckMembershipForm',
   validate,
-  //warn
 })(CheckMembershipForm)

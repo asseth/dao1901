@@ -1,55 +1,27 @@
 import React from 'react'
-import './styles.scss'
-import {Button, Form, FormControl, Input} from 'reactstrap'
+import {Button, Form} from 'reactstrap'
 import {Field, reduxForm} from 'redux-form'
+import {Input} from '../../../common/Inputs'
+// ------------------------------------
+// Validation
+// ------------------------------------
 const validate = values => {
   const errors = {}
-  if (!values.memberAddressInput) {
-    errors.memberAddressInput = 'Required'
-  } else if (!web3.isAddress(values.memberAddressInput)) {
-    errors.memberAddressInput = 'Address is not valid'
+  if (!values.memberAddress) {
+    errors.memberAddress = 'Required'
+  } else if (!window.web3.isAddress(values.memberAddress)) {
+    errors.memberAddress = 'Address is not valid'
   }
-  if (!values.yearsDurationInput) {
-    errors.yearsDurationInput = 'Required'
-  } else if (!(Number.isInteger(Number(values.yearsDurationInput)) && Number(values.yearsDurationInput) > 0)) {
-    errors.yearsDurationInput = 'Must be a number'
+  if (!values.yearsDuration) {
+    errors.yearsDuration = 'Required'
+  } else if (!(Number.isInteger(Number(values.yearsDuration)) && Number(values.yearsDuration) > 0)) {
+    errors.yearsDuration = 'Year(s) of subscription must be a number superior to zero'
   }
   return errors
 }
-const warn = values => {
-  const warnings = {}
-  return warnings
-}
-const memberAddressInput = ({input, label, type, placeholder, id}) => (
-  <div>
-    <Input
-      {...input}
-      id={id}
-      label={label}
-      placeholder={placeholder}
-      required
-      type={type}
-    />
-  </div>
-)
-const yearsDurationInput = ({input, className, id, label, type, placeholder}) => (
-  <div>
-    <Input
-      {...input}
-      className={className}
-      id={id}
-      label={label}
-      type={type}
-      placeholder={placeholder}
-    />
-  </div>
-)
-/**
- * Member Addition - Stateless functional component
- * @param props
- * @returns {XML}
- * @constructor
- */
+// ------------------------------------
+// Form
+// ------------------------------------
 function MemberAdditionForm(props) {
   const {addMember, handleSubmit, submitSucceeded, clearSubmit} = props
   return (
@@ -60,12 +32,11 @@ function MemberAdditionForm(props) {
         <div className="row">
           <div className="col-12">
             <Field
-              component={memberAddressInput}
+              component={Input}
               id="AddMemberAddress"
               label="AddMemberAddressLabel"
               name="memberAddress"
               placeholder="Enter the Ethereum address of the member"
-              required
               type="text"
             />
           </div>
@@ -73,12 +44,11 @@ function MemberAdditionForm(props) {
         <div className="row">
           <div className="col-12">
             <Field
-              component={yearsDurationInput}
+              component={Input}
               id="yearsDuration"
               label="yearsDurationLabel"
               name="yearsDuration"
               placeholder="Enter the number of years the subscription will last"
-              required
               type="number"
             />
           </div>
@@ -98,5 +68,4 @@ function MemberAdditionForm(props) {
 export default MemberAdditionForm = reduxForm({
   form: 'MemberAdditionForm',
   validate,
-  //warn
 })(MemberAdditionForm)
