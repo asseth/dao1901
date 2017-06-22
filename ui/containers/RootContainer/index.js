@@ -17,7 +17,7 @@ import HomePage from '../HomeContainer'
 import ProposalSubmissionPage from '../ProposalSubmissionContainer'
 import VotePage from '../VotesManagementContainer'
 //import NotFoundPage from '../NotFoundContainer';
-import rootSaga from '../../redux/sagasIndex'
+import rootSaga from '../../redux/rootSaga'
 
 /**
  * RootContainer

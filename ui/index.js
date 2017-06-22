@@ -40,8 +40,8 @@ if (module.hot) {
     return store.replaceReducer(reducers);
   });
 
-  module.hot.accept('./redux/sagasIndex', () => {
-    const newSagas = require('./redux/sagasIndex').default
+  module.hot.accept('./redux/rootSaga', () => {
+    const newSagas = require('./redux/rootSaga').default
     sagaTask.cancel()
     sagaTask.done.then(() => {
       sagaTask = sagaMiddleware.run(newSagas)

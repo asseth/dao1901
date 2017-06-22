@@ -19,7 +19,7 @@ import logger from 'redux-logger'
 // Reducers
 // ======================================================
 import makeRootReducer from './reducersIndex'
-import rootSaga from './sagasIndex'
+import rootSaga from './rootSaga'
 // ======================================================
 // Ready to use smart contracts
 // ======================================================

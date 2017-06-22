@@ -13,36 +13,6 @@ import {watchGetBlockNumber} from './ethereum/ethereumSaga'
 import vote from './votes/votesSaga'
 import user from './user/userSaga'
 
-/***************************** App State **************************************
-- ethereum - Technical info about the Ethereum blockchain
- - blockNumber
- - numberOfPeers
-
-- dao - Useful info for dao admin
- - ownerAddress
- - contract
-   - owned
-    - address
-   - members
-    - address
-   - votes
-    - address
- - members[]
-  - member
-    - address
-    - endSubscriptionDate
-
-- user
-  - address
-  - balance
- 
-- votes
-  - proposals[]
-    - proposal
-      - id
-      - description
-*/
-
 function* bootstrap() {
   console.log('bootstrap sagas')
   yield put({type: 'USER_ACCOUNTS_REQUESTED'})
