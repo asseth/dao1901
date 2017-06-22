@@ -5,12 +5,12 @@ const validate = values => {
   const errors = {}
   if (!values.proposalId) {
     errors.proposalId = 'Required'
-  } else if (Number.isInteger(Number(values.proposalId))) {
-    errors.username = 'Must be a number'
+  } else if (!Number.isInteger(Number(values.proposalId))) {
+    errors.proposalId = 'Proposal ID must be a number'
   }
   if (!values.voteValue) {
     errors.voteValue = 'Required'
-  } else if (values.voteValue.length <= 60) {
+  } else if (values.voteValue.length >= 60) {
     errors.voteValue = 'Length must be 60 char max'
   }
   return errors
@@ -19,7 +19,7 @@ const warn = values => {
   const warnings = {}
   return warnings
 }
-const proposalIDInput = ({input, label, type, placeholder, id}) => (
+const proposalIDInput = ({input, label, type, placeholder, id, meta: { touched, error, warning }}) => (
   <div>
     <Input
       {...input}
@@ -29,9 +29,10 @@ const proposalIDInput = ({input, label, type, placeholder, id}) => (
       required
       type={type}
     />
+    {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
   </div>
 )
-const voteValueInput = ({className, input, label, type, placeholder, id}) => (
+const voteValueInput = ({className, input, label, type, placeholder, id, meta: { touched, error, warning }}) => (
   <div>
     <Input
       {...input}
@@ -42,6 +43,7 @@ const voteValueInput = ({className, input, label, type, placeholder, id}) => (
       required
       type={type}
     />
+    {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
   </div>
 )
 let VotingForm = (props) => {
@@ -87,5 +89,6 @@ let VotingForm = (props) => {
   )
 }
 export default VotingForm = reduxForm({
-  form: 'voting'
+  form: 'voting',
+  validate
 })(VotingForm)
