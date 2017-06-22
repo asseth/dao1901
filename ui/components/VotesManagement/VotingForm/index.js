@@ -1,6 +1,10 @@
 import React from "react"
-import {Button, Input, Form, FormControl, FormGroup, HelpBlock} from "reactstrap"
+import {Button, Form} from "reactstrap"
 import {Field, reduxForm} from 'redux-form'
+import {Input} from '../../common/Inputs'
+// ------------------------------------
+// Validation
+// ------------------------------------
 const validate = values => {
   const errors = {}
   if (!values.proposalId) {
@@ -15,46 +19,18 @@ const validate = values => {
   }
   return errors
 }
-const warn = values => {
-  const warnings = {}
-  return warnings
-}
-const proposalIDInput = ({input, label, type, placeholder, id, meta: { touched, error, warning }}) => (
-  <div>
-    <Input
-      {...input}
-      id={id}
-      label={label}
-      placeholder={placeholder}
-      required
-      type={type}
-    />
-    {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
-  </div>
-)
-const voteValueInput = ({className, input, label, type, placeholder, id, meta: { touched, error, warning }}) => (
-  <div>
-    <Input
-      {...input}
-      className={className}
-      id={id}
-      label={label}
-      placeholder={placeholder}
-      required
-      type={type}
-    />
-    {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
-  </div>
-)
+// ------------------------------------
+// Form
+// ------------------------------------
 let VotingForm = (props) => {
   const {handleSubmit, onVoteSubmit} = props
   return (
     <div id="voteForm" className="form">
-      <Form onSubmit={ handleSubmit(onVoteSubmit) }>
+      <Form onSubmit={handleSubmit(onVoteSubmit)}>
         <div className="row">
           <div className="col-12">
             <Field
-              component={proposalIDInput}
+              component={Input}
               label="proposalId"
               name="proposalId"
               placeholder="Enter the proposal ID"
@@ -66,7 +42,7 @@ let VotingForm = (props) => {
         <div className="row">
           <div className="col-12">
             <Field
-              component={voteValueInput}
+              component={Input}
               label="voteValue"
               name="voteValue"
               placeholder="Enter your vote"
@@ -82,7 +58,7 @@ let VotingForm = (props) => {
           size="lg"
           type="submit"
         >
-          Submit
+          {'Submit'}
         </Button>
       </Form>
     </div>
