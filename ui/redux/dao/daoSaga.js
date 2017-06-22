@@ -1,6 +1,7 @@
 import {contracts} from '../createStore'
 import {call, put, select, takeEvery} from 'redux-saga/effects'
 import {toastr} from 'react-redux-toastr'
+import waitForMined from '../../helpers/waitForMined'
 // ------------------------------------
 // Put useful contract info in store
 // ------------------------------------
@@ -28,16 +29,16 @@ function* fetchContractsInfoWorker() {
 /**
  * Add a member to the organization
  * @param values
+ * @returns {Promise}
  */
 let addMember = (values) => {
   return new Promise((resolve, reject) => {
     const {Dao1901Members} = contracts
     Dao1901Members.subscribe
-      .sendTransaction(values.memberAddress, values.yearsDuration, {gas: 70000}) // todo check gas amount
+      .sendTransaction(values.memberAddress, values.yearsDuration, {gas: 70000}) // gasUsed: 68866
       .then((tx) => {
         toastr.success('Membership management', `The member ${values.memberAddress} has been added successfully`)
         console.log(`New member ${values.memberAddress} added by ${window.web3.eth.defaultAccount}`)
-        console.log(`Subscribe TxId: ${tx}`)
         resolve(tx)
       })
       .catch((e) => {
@@ -49,8 +50,9 @@ let addMember = (values) => {
 }
 function* addMemberWorker(action) {
   try {
-    const member = yield call(addMember, action.values)
-    yield put({type: 'ADD_MEMBER_SUCCEED', member})
+    const tx = yield call(addMember, action.values)
+    yield call(waitForMined, tx, 'addMember') // setInterval until mined
+    yield put({type: 'ADD_MEMBER_SUCCEED', tx})
     yield put({type: 'FETCH_ALL_MEMBERS_REQUESTED'})
   } catch (e) {
     yield put({type: 'ADD_MEMBER_FAILED', error: e})
@@ -61,7 +63,6 @@ function* addMemberWorker(action) {
  * The address member is preserved on the linked list on Ethereum
  * @param values
  */
-
 let revokeMember = (values) => {
   return new Promise((resolve, reject) => {
     const {Dao1901Members} = contracts
@@ -92,7 +93,6 @@ function* revokeMemberWorker(action) {
 /**
  * Create Member List
  * Browse the chained list
- * @param Dao1901Members
  * @returns {Promise}
  */
 let fetchAllMembers = () => {
@@ -176,8 +176,9 @@ export function* checkMembershipWorker(action) {
 // ------------------------------------
 /**
  * Transfer ownership
- * @param values
- * @returns {Promise.<void>}
+ * @param ownerAddress
+ * @param newOwnerAddress
+ * @returns {Promise}
  */
 let transferOwnership = (ownerAddress, newOwnerAddress) => {
   return new Promise((resolve, reject) => {
