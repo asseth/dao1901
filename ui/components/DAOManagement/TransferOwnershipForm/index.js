@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button, Form} from 'reactstrap'
-import {Field, reduxForm} from 'redux-form'
+import {Field, reduxForm, reset} from 'redux-form'
 import {Input} from '../../common/Inputs'
 // ------------------------------------
 // Validation
@@ -15,10 +15,15 @@ const validate = values => {
   return errors
 }
 // ------------------------------------
+// After Submit
+// ------------------------------------
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset('TransferOwnershipForm'))
+// ------------------------------------
 // Form
 // ------------------------------------
 function TransferOwnershipForm(props) {
-  const {transferOwnership, handleSubmit, submitSucceeded, clearSubmit} = props
+  const {transferOwnership, handleSubmit} = props
   return (
     <div id="TransferOwnershipForm" className="form">
       <Form onSubmit={handleSubmit(transferOwnership)}>
@@ -49,5 +54,6 @@ function TransferOwnershipForm(props) {
 }
 export default TransferOwnershipForm = reduxForm({
   form: 'TransferOwnershipForm',
+  onSubmitSuccess: afterSubmit,
   validate,
 })(TransferOwnershipForm)

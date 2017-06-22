@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button, Form} from 'reactstrap'
-import {Field, reduxForm} from 'redux-form'
+import {Field, reduxForm, reset} from 'redux-form'
 import {Input} from '../../../common/Inputs'
 // ------------------------------------
 // Validation
@@ -14,6 +14,11 @@ const validate = values => {
   }
   return errors
 }
+// ------------------------------------
+// After Submit
+// ------------------------------------
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset('CheckMembershipForm'))
 // ------------------------------------
 // Form
 // ------------------------------------
@@ -49,5 +54,6 @@ function CheckMembershipForm(props) {
 }
 export default CheckMembershipForm = reduxForm({
   form: 'CheckMembershipForm',
+  onSubmitSuccess: afterSubmit,
   validate,
 })(CheckMembershipForm)

@@ -1,6 +1,6 @@
 import React from "react"
 import {Button, Form} from 'reactstrap'
-import {Field, reduxForm} from 'redux-form'
+import {Field, reduxForm, reset} from 'redux-form'
 import {Input, TextArea} from '../../common/Inputs'
 // ------------------------------------
 // Validation
@@ -20,10 +20,15 @@ const validate = values => {
   return errors
 }
 // ------------------------------------
+// After Submit
+// ------------------------------------
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset('proposalSubmissionForm'))
+// ------------------------------------
 // Form
 // ------------------------------------
 let ProposalSubmissionForm = props => {
-  const {createProposal, handleSubmit, submitSucceeded, clearSubmit} = props
+  const {createProposal, handleSubmit} = props
   return (
     <div id="proposalSubmissionForm" className="form">
       <Form onSubmit={handleSubmit(createProposal)}>
@@ -68,6 +73,7 @@ let ProposalSubmissionForm = props => {
   )
 }
 export default ProposalSubmissionForm = reduxForm({
-  form: 'proposalSubmission',
+  form: 'proposalSubmissionForm',
+  onSubmitSuccess: afterSubmit,
   validate,
 })(ProposalSubmissionForm)
