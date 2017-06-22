@@ -150,7 +150,7 @@ let fetchAllProposals = () => {
           if (proposalId <= totalProposals.valueOf()) {
             fetchProposalByIndex(proposalId)
               .then(({proposalDesc, proposalDeadline}) => {
-                proposalListItems.push({proposalDesc, proposalDeadline})
+                proposalListItems.push({proposalId, proposalDesc, proposalDeadline})
                 proposalId += 1
                 getAllProposalListItems(proposalId)
               })
