@@ -30,7 +30,6 @@ module.exports = {
   //devtool: 'cheap-module-eval-source-map',
   devtool: 'source-map',
   plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin(),
     // enable HMR globally
     new webpack.HotModuleReplacementPlugin(),
     // prints more readable module names in the browser console on HMR updates
