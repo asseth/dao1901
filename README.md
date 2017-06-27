@@ -2,8 +2,8 @@ Requirements:
 - node ^7.8.0
 - python 3.5
 - solc ^0.4.4
-- Truffle ^3.2.1
-- Testrpc 3.0.3
+- Truffle ^3.3.0
+- Testrpc ^3.0.5
 
 Trello: https://trello.com/b/bVfPFfjM/tasks
 
@@ -14,7 +14,7 @@ This application is divided in two sections, protocol and ui.
 Protocol folder manage all things related to Ethereum, whereas ui will import protocol as a npm module.
 This architecture offers a clean separation between front and back.
 
-The UI is built with React and Bootstrap 4.
+The UI is built with React, Redux, Redux-Saga, Bootstrap 4, etc.
     
 
 Run the app with Testrpc and Truffle (recommended way)
@@ -47,9 +47,13 @@ Serve the app
 
 => Go to http://localhost:8080/
 
-Run Mocha tests
+Run UI tests (using Jest)
 
-    npm run test
+    npm run testUI
+
+Run Smart Contract tests (using Mocha and Chai under the hood)
+
+    npm run testProtocol
     
     
 If you work on the protocol, you may want to use npm link to avoid reinstalling the lib at each change.
@@ -58,7 +62,6 @@ If you work on the protocol, you may want to use npm link to avoid reinstalling 
     
     
 
-
 Run the app with Geth
 =====================
 
@@ -66,14 +69,9 @@ Launch the Geth node
 
     geth --dev --rpc --rpcapi 'web3,eth,debug' --rpccorsdomain="*" --datadir /tmp/ethereum_dev_mode
 
-In an other shell, run the following to attach a console
-and preloading the test functions
+To load the auto setup
 
-    geth --dev --preload tests/TestDao1901.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
-
-To load the auto setup directly
-
-    geth --dev --preload autoSetupForGeth.js,test/TestDao1901.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
+    geth --dev --preload autoSetupForGeth.js attach ipc:/tmp/ethereum_dev_mode/geth.ipc
     
 
 Prepare contracts to be deployed, with python, based on a template 
@@ -84,14 +82,15 @@ run
 
 which is equivalent to
 
-    cd tests
+    cd ./protocol/customDeploy
     python3.5 compile.py ../contracts/Owned.sol
     python3.5 compile.py ../contracts/Dao1901Members.sol
     python3.5 compile.py ../contracts/Dao1901Votes.sol
 
 Three files are created (one per contracts)
 
-Then you need to do some boilerplate stuff, either using autoSetup or manually
+Then you need to do the following boilerplate stuff, either using autoSetup or manually
+
 
 Auto Setup for Geth
 ===================
@@ -117,10 +116,10 @@ then serve the app
     npm run start
 
 
-The manual way
-==============
+The manual way with Geth
+========================
+In the geth console
 
-    // loadScript("TestDao1901.js")    // equiv to --preload
     // check if accounts exists
     personal.listAccounts 
     // create account if no one exists
@@ -137,10 +136,7 @@ run the miner
     
 Deploy the contracts
 
-load the Dao1901Members deploy function
-and run it.
-you also initiate daoMembers variable with the returned js object,
-used in runMemberTests()
+load the Dao1901Members deploy function and run it
 
     loadScript("Dao1901Members.js");
     var Dao1901Members = deployDao1901Members();
@@ -152,12 +148,5 @@ same for Dao1901Votes
     var Dao1901Votes = deployDao1901Votes(Dao1901Members.address);
     
 Wait Dao1901Votes to be mined
-
-
-Run the tests
-=============
-    runMemberTests();
-    runVoteTests(Dao1901Votes);
-    
 
 Type `exit` to quit the console 
