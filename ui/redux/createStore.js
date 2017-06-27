@@ -1,6 +1,6 @@
 import Dao1901Contracts from 'dao1901-contracts'
 import {applyMiddleware, compose, createStore} from 'redux'
-import DevTools from '../components/common/DevTools'
+//import DevTools from '../components/common/DevTools'
 import truffleConfig from '../../protocol/truffle.js'
 // ======================================================
 // History

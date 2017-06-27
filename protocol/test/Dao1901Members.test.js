@@ -19,16 +19,16 @@ async function memberList(daoMembers) {
   return members
 }
 
-describe('Dao1901Members', () => {
+contract('Dao1901Members', (accounts) => {
   before(async () => {
     Dao1901Members = await Dao1901MembersAbstraction.deployed()
     Dao1901Votes = await Dao1901VotesAbstraction.deployed()
-    alice = web3.eth.accounts[0];
-    console.log('alice: ', alice);
-    bob = web3.eth.accounts[1];
-    console.log('bob: ', bob);
-    carol = web3.eth.accounts[2];
-    console.log('carol: ', carol);
+    alice = accounts[0]
+    console.log('alice: ', alice)
+    bob = accounts[1]
+    console.log('bob: ', bob)
+    carol = accounts[2]
+    console.log('carol: ', carol)
   })
 
   contract('initialization phase', () => {

@@ -5,20 +5,20 @@ let alice, bob, carol;
 
 let owned = null;
 
-contract('Owned', () => {
+contract('Owned', (accounts) => {
   before(async () => {
     owned = await Owned.deployed()
-    alice = web3.eth.accounts[0];
+    alice = accounts[0];
     console.log('alice: ', alice);
-    bob = web3.eth.accounts[1];
+    bob = accounts[1];
     console.log('bob: ', bob);
-    carol = web3.eth.accounts[2];
+    carol = accounts[2];
     console.log('carol: ', carol);
   })
 
   it('should have an address property', () => {
     assert(owned.address, "contract is not deployed")
-  });
+  })
 
   it('should not be able to transfer DAO1901 ownership', async () => {
     await expectThrow(owned.changeOwner.sendTransaction(carol, {from: carol}))

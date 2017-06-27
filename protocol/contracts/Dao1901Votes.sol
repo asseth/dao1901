@@ -46,8 +46,8 @@ contract Dao1901Votes is Owned {
     //LogAddress(msg.sender);
     LogAddress(membersContract);
 
-    /* XXX check gas value */
-    //if(!membersContract.isMember.gas(1000)(msg.sender)) throw;
+    // todo: check gas value
+    if(!membersContract.isMember.gas(2000)(msg.sender)) throw;
 
     /* Invalid proposal id */
     if (_propId == 0 || _propId > nProposals) throw;
