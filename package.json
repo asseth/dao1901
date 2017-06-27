@@ -13,7 +13,8 @@
     "linkprotocol": "npm un dao1901-contracts; cd protocol; npm link; cd ..; npm link dao1901-contracts",
     "dev": "webpack-dev-server --progress",
     "lint": "eslint ./",
-    "test": "jest"
+    "testUI": "jest",
+    "testProtocol": "cd protocol && truffle test"
   },
   "author": "Mathieu Sornay, Stéphane Roche <rstephane@protonmail.com>, Alexandre Kurth",
   "license": "MIT",
