@@ -11,7 +11,7 @@ import {contracts} from '../createStore'
 let onVoteSubmit = (proposalId, voteValue) => {
   return new Promise((resolve, reject) => {
     const {Dao1901Votes} = contracts
-    Dao1901Votes.vote.sendTransaction(proposalId, voteValue /*, {from: window.web3.eth.defaultAccount}*/)
+    Dao1901Votes.vote.sendTransaction(proposalId, voteValue)
       .then(tx => {
         console.log(`Vote tx hash: ${tx}`)
         toastr.success('Voting', `Your vote has been successfully submitted. Transaction ID: ${tx}`)
@@ -19,7 +19,7 @@ let onVoteSubmit = (proposalId, voteValue) => {
       })
       .catch(e => {
         toastr.error('Error', `An error occurred. Please try later or contact the support. ` +
-        `Hint: Check that the proposal id is valid`)
+          `Hint: Check that the proposal id is valid and that you are registered as member`)
         reject(e)
       })
   })

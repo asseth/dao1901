@@ -83,8 +83,8 @@ export default () => {
       .then((deployedContracts) => {
         deployedContracts.forEach(function (contract) {
           // Add name property to the object
-          name = contract.constructor.contract_name
-          contract.name = name
+          let name = contract.constructor.contract_name
+          contract['name'] = name
           // Add each contract to exported contracts
           contracts[name] = contract
         })
