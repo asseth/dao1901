@@ -80,7 +80,6 @@
     "babel-plugin-react-css-modules": "^2.8.0",
     "classnames": "^2.2.5",
     "dao1901-contracts": "./protocol",
-    "ethereumjs-testrpc": "^3.0.5",
     "precss": "^1.4.0",
     "prop-types": "^15.5.10",
     "ramda": "^0.24.1",
