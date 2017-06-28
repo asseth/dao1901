@@ -9,7 +9,7 @@ function ProposalSubmissionPage(props) {
   return (
     <div id="ProposalSubmissionPageContainer">
       <h1>Proposal Submission</h1>
-      <h2>Submit a proposal</h2>
+      <h2>Submit a proposal - *owner only</h2>
       <ProposalSubmissionForm
         createProposal={createProposal}
       />
