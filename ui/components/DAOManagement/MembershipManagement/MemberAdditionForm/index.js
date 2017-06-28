@@ -39,7 +39,6 @@ function MemberAdditionForm(props) {
             <Field
               component={Input}
               id="AddMemberAddress"
-              label="AddMemberAddressLabel"
               name="memberAddress"
               placeholder="Enter the Ethereum address of the member"
               type="text"
@@ -51,7 +50,6 @@ function MemberAdditionForm(props) {
             <Field
               component={Input}
               id="yearsDuration"
-              label="yearsDurationLabel"
               name="yearsDuration"
               placeholder="Enter the number of years the subscription will last"
               type="number"

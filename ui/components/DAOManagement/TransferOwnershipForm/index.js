@@ -32,7 +32,6 @@ function TransferOwnershipForm(props) {
             <Field
               component={Input}
               id="changeOwnerInput"
-              label="changeOwnerLabel"
               name="newOwnerAddress"
               placeholder="New owner address"
               type="text"

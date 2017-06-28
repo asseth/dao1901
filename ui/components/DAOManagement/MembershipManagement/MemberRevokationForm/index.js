@@ -32,7 +32,6 @@ function MemberRevokationForm(props) {
             <Field
               component={Input}
               id="RevokeMemberAddressInput"
-              label="memberAddressLabel"
               name="memberAddress"
               placeholder="Enter the Ethereum address of the member"
               type="text"

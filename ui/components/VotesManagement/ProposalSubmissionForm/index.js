@@ -39,7 +39,6 @@ let ProposalSubmissionForm = props => {
               id="proposalDescriptionInput"
               placeholder="Enter description of the proposal"
               type="textarea"
-              label="Proposal Description"
               name="proposalDescription"
             />
           </div>
@@ -50,7 +49,6 @@ let ProposalSubmissionForm = props => {
             <Field
               component={Input}
               id="proposalDeadlineInput"
-              label="Days until deadline"
               name="proposalDeadline"
               type="number"
               placeholder="Enter the number of days until the deadline"

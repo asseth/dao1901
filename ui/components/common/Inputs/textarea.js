@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
-import {FormGroup, FormFeedback, Input} from 'reactstrap';
+import {FormGroup, FormFeedback, Input, Label} from 'reactstrap';
 
 export default class RenderInput extends Component {
   /*static propTypes = {
@@ -15,7 +15,9 @@ export default class RenderInput extends Component {
 
   render() {
     const {
+            id,
             input,
+            label,
             placeholder,
             type,
             meta: {
@@ -31,6 +33,7 @@ export default class RenderInput extends Component {
 
     return (
       <FormGroup color={classes}>
+        {id && label && <Label for={id}>{label}</Label>}
         <Input {...input} type={type} placeholder={placeholder} rows={5} state={classes} />
         {touched && error && <FormFeedback>{error}</FormFeedback>}
       </FormGroup>
