@@ -35,7 +35,7 @@ let addMember = (values) => {
   return new Promise((resolve, reject) => {
     const {Dao1901Members} = contracts
     Dao1901Members.subscribe
-      .sendTransaction(values.memberAddress, values.yearsDuration, {gas: 70000}) // gasUsed: 68866
+      .sendTransaction(values.memberAddress, values.yearsDuration, {from: web3.eth.defaultAccount, gas: 70000}) // gasUsed: 68866
       .then((tx) => {
         toastr.success('Membership management', `The member ${values.memberAddress} has been added successfully`)
         console.log(`New member ${values.memberAddress} added by ${window.web3.eth.defaultAccount}`)
