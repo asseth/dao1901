@@ -34,7 +34,7 @@ let AdminPage = (props) => {
       <div className="row mt-5">
         <div className="col">
           <h2>{'Membership management'}</h2>
-          <h3>{'Add a member'}</h3>
+          <h3>{'Add a member '}<span className="caution">owner only</span></h3>
           <MemberAdditionForm
             addMember={addMember}
           />
@@ -43,7 +43,7 @@ let AdminPage = (props) => {
 
       <div className="row mt-5">
         <div className="col">
-          <h3>{'Revoke a member'}</h3>
+          <h3>{'Revoke a member '}<span className="caution">owner only</span></h3>
           <MemberRevokationForm
             revokeMember={revokeMember}
           />
@@ -71,7 +71,7 @@ let AdminPage = (props) => {
       <div className="row mt-5 mb-5">
         <div className="col">
           <h2>Organization management</h2>
-          <h3>Transfer organization ownership</h3>
+          <h3>Transfer organization ownership <span className="caution">owner only</span></h3>
           <p>
             Organization ownership gives the right to control the DAO. Make sure you understand all
             the implications.

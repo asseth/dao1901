@@ -1,3 +1,14 @@
+/* HELPERS */
+/* Margin*/
+.m-btm-15 {margin-bottom: 15px}
+.m-btm-20 {margin-bottom: 20px}
+.m-btm-30 {margin-bottom: 30px}
+
+.m-top-15 {margin-top: 15px}
+.m-top-20 {margin-top: 20px}
+.m-top-30 {margin-top: 30px}
+.m-top-50 {margin-top: 50px}
+
 // headers
 h1 {
   margin-bottom: 2rem;
@@ -38,4 +49,14 @@ h3 {
   button {
     margin-top: 0.5rem;
   }
+}
+
+.ethereum-address {
+  color: #c94d42;
+}
+
+.caution {
+  font-style: italic;
+  color: red;
+  font-size: 1rem;
 }
