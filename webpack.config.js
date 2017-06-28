@@ -1,10 +1,17 @@
-const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const bootstrapEntryPoints = require('./webpack.bootstrap.config');
-const webpack = require('webpack');
+const webpack = require('webpack')
+const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+let HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: __dirname + '/ui/index.html',
+  filename: 'index.html',
+  inject: 'body',
+})
+const bootstrapEntryPoints = require('./webpack.bootstrap.config')
 
-let isProd = process.env.NODE_ENV === 'production';
-let bootstrapConfig = isProd ? bootstrapEntryPoints.prod : bootstrapEntryPoints.dev;
+let isProd = process.env.NODE_ENV === 'production'
+let bootstrapConfig = isProd ? bootstrapEntryPoints.prod : bootstrapEntryPoints.dev
 
 
 module.exports = {
@@ -56,7 +63,26 @@ module.exports = {
       Tab: "exports-loader?Tab!bootstrap/js/dist/tab",
       Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
       Util: "exports-loader?Util!bootstrap/js/dist/util",
-    })
+    }),
+    new FaviconsWebpackPlugin({
+      logo: './ui/assets/images/Dao1901Logo.png',
+      // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
+      icons: {
+        android: true,
+        appleIcon: true,
+        appleStartup: true,
+        coast: false,
+        favicons: true,
+        firefox: true,
+        opengraph: false,
+        twitter: false,
+        yandex: false,
+        windows: false
+      },
+      // Inject the html into the html-webpack-plugin
+      inject: true
+    }),
+    HTMLWebpackPluginConfig
   ],
   module: {
     rules: [

@@ -35,7 +35,7 @@ export default class TopBar extends React.Component {
             href="/"
             styleName="navbar-brand"
           >
-            <img src="images/DAO1901Last.png" alt="logo" />
+            <img src="images/Dao1901Logo.png" alt="logo" />
           </NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav styleName="navbar-nav" navbar>
