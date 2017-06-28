@@ -1,7 +1,7 @@
+import {expectThrow} from '../helpers/index.js'
 const Dao1901MembersAbstraction = artifacts.require('Dao1901Members')
 const Dao1901VotesAbstraction = artifacts.require('Dao1901Votes')
 let Dao1901Members, Dao1901Votes
-let expectThrow = require('../helpers/expectThrow.js')
 let alice, bob, carol
 let itClean = (title, itCb) => contract(title, () => it(title, itCb))
 
@@ -99,7 +99,7 @@ contract('Dao1901Votes', (accounts) => {
       assert(votes.indexOf('Second vote') !== -1, "alice vote was not updated")
     })
 
-    it.skip('should have vote expiration', async () => {
+    it('should have vote expiration', async () => {
       await Dao1901Votes.createProposal.sendTransaction('expiration vote', 0, {from: alice})
       await Dao1901Members.subscribe.sendTransaction(alice, 1, {from: alice})
       await Dao1901Members.subscribe.sendTransaction(bob, 1, {from: alice})

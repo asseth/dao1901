@@ -1,19 +1,18 @@
+import {expectThrow} from '../helpers/index.js'
 const Owned = artifacts.require('Owned')
-let expectThrow = require('../helpers/expectThrow.js')
-let alice, bob, carol;
+let alice, bob, carol
 // let itClean = (title, itCb) => contract(title, () => it(title, itCb))
-
-let owned = null;
+let owned = null
 
 contract('Owned', (accounts) => {
   before(async () => {
     owned = await Owned.deployed()
-    alice = accounts[0];
-    console.log('alice: ', alice);
-    bob = accounts[1];
-    console.log('bob: ', bob);
-    carol = accounts[2];
-    console.log('carol: ', carol);
+    alice = accounts[0]
+    console.log('alice: ', alice)
+    bob = accounts[1]
+    console.log('bob: ', bob)
+    carol = accounts[2]
+    console.log('carol: ', carol)
   })
 
   it('should have an address property', () => {
