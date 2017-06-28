@@ -32,7 +32,7 @@ function* onVoteSubmitWorker(action) {
     yield put({type: 'VOTE_SUBMISSION_SUCCEED', tx})
     yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
-    yield put({type: 'VOTE_SUBMISSION_SUCCEED', error: e})
+    yield put({type: 'VOTE_SUBMISSION_FAILED', error: e})
   }
 }
 
@@ -112,7 +112,7 @@ export let fetchAllVotesForAllProposals = () => {
       .then(totalProposals => {
         let i = 1
         while (i <= totalProposals.valueOf()) {
-          fetchAllVotesForAProposal(i)
+          return fetchAllVotesForAProposal(i)
             .then((votesForOneProposal) => {
               if (votesForOneProposal.length !== 0) {
                 allVotes[votesForOneProposal[0].proposalId] = votesForOneProposal
@@ -121,8 +121,8 @@ export let fetchAllVotesForAllProposals = () => {
             .catch((e) => reject(e))
           i++
         }
-        resolve(allVotes)
       })
+      .then(() => resolve(allVotes))
       .catch((e) => reject(e))
   })
 }
