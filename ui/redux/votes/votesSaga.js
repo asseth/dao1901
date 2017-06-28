@@ -11,7 +11,7 @@ import {contracts} from '../createStore'
 let onVoteSubmit = (proposalId, voteValue) => {
   return new Promise((resolve, reject) => {
     const {Dao1901Votes} = contracts
-    Dao1901Votes.vote.sendTransaction(proposalId, voteValue)
+    Dao1901Votes.vote.sendTransaction(proposalId, voteValue, {from: window.web3.eth.defaultAccount})
       .then(tx => {
         console.log(`Vote tx hash: ${tx}`)
         toastr.success('Voting', `Your vote has been successfully submitted. Transaction ID: ${tx}`)
@@ -181,7 +181,7 @@ function* fetchAllProposalsWorker() {
 let createProposal = (proposalDesc, proposalDeadline) => {
   return new Promise((resolve, reject) => {
     const {Dao1901Votes} = contracts
-    Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: window.web3.eth.defaultAccount}) // todo: from is necessary for Metamask ?!
+    Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: window.web3.eth.defaultAccount})
       .then((tx) => {
         console.log('TX createProposal successful. Tx Hash: ', tx)
         toastr.success('Proposal submission', `Your proposal has been successfully submitted. Transaction ID: ${tx}`)
