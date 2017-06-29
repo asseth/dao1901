@@ -33,13 +33,14 @@ render(RootContainer)
 if (module.hot) {
   module.hot.accept('./containers/RootContainer', () => {
     render(RootContainer)
-  });
+  })
 
   module.hot.accept('./redux/reducersIndex', () => {
     const reducers = require('./redux/reducersIndex').default
-    return store.replaceReducer(reducers);
-  });
+    return store.replaceReducer(reducers)
+  })
 
+  /*
   module.hot.accept('./redux/rootSaga', () => {
     const newSagas = require('./redux/rootSaga').default
     sagaTask.cancel()
@@ -47,4 +48,5 @@ if (module.hot) {
       sagaTask = sagaMiddleware.run(newSagas)
     })
   })
+  */
 }

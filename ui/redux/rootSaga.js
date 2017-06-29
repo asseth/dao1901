@@ -11,7 +11,7 @@ import {call, fork, put, race, select, take, takeEvery} from 'redux-saga/effects
 import dao from './dao/daoSaga'
 import {watchGetBlockNumber} from './ethereum/ethereumSaga'
 import vote from './votes/votesSaga'
-import user from './user/userSaga'
+import user, {watchDefaultAccountChange} from './user/userSaga'
 
 function* bootstrap() {
   console.log('bootstrap sagas')
@@ -51,5 +51,6 @@ export default function* rootSaga() {
     fork(vote),
     fork(user),
     fork(bootstrap),
+    call(watchDefaultAccountChange)
   ]
 }

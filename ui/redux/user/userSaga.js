@@ -1,6 +1,7 @@
 // ========================================================
 // User Sagas
 // ========================================================
+import { delay } from 'redux-saga'
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
 // ========================================================
 // Set user default account
@@ -58,6 +59,26 @@ function* fetchUserAccountsWorker() {
     yield put({type: 'USER_ADDRESS_FAILED', error: e})
   }
 }
+// ========================================================
+// Watch default account change
+// ========================================================
+export function* watchDefaultAccountChange() {
+  let defaultAccount = window.web3.eth.accounts[0]
+  while (true) {
+    try {
+      yield call(delay, 2000)
+      if (window.web3.eth.accounts[0] !== defaultAccount) {
+        defaultAccount = window.web3.eth.accounts[0]
+        yield put({type: 'USER_ACCOUNTS_REQUESTED'})
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+}
+// ========================================================
+// Watch user sagas
+// ========================================================
 export default function* user() {
   yield takeEvery('USER_ACCOUNTS_REQUESTED', fetchUserAccountsWorker)
   yield takeEvery('USER_DEFAULT_ACCOUNT_REQUESTED', setUserDefaultAccountWorker)
