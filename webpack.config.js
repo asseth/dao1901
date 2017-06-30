@@ -8,11 +8,10 @@ let HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   filename: 'index.html',
   inject: 'body',
 })
-const bootstrapEntryPoints = require('./webpack.bootstrap.config')
-
 let isProd = process.env.NODE_ENV === 'production'
-let bootstrapConfig = isProd ? bootstrapEntryPoints.prod : bootstrapEntryPoints.dev
 
+const bootstrapEntryPoints = require('./webpack.bootstrap.config')
+let bootstrapConfig = isProd ? bootstrapEntryPoints.prod : bootstrapEntryPoints.dev
 
 module.exports = {
   entry: {
@@ -34,8 +33,8 @@ module.exports = {
     filename: '[name].bundle.js',
     publicPath: '/'
   },
-  //devtool: 'cheap-module-eval-source-map',
-  devtool: 'source-map',
+  devtool: 'cheap-module-eval-source-map',
+  //devtool: 'source-map',
   plugins: [
     // enable HMR globally
     new webpack.HotModuleReplacementPlugin(),
@@ -92,12 +91,30 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader?module&importLoaders=1&localIdentName=[local]_[hash:base64:5]',
-          'postcss-loader',
-          'sass-loader?sourceMap'
-        ]
+        use: [{
+          loader: "style-loader",
+          options: {
+            sourceMap: false
+          }
+        }, {
+          loader: "css-loader",
+          options: {
+            importLoaders: 2, // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loader
+            localIdentName: '[local]_[hash:base64:5]',
+            modules: true,
+            sourceMap: false
+          }
+        }, {
+          loader: "postcss-loader",
+          options: {
+            sourceMap: false
+          }
+        }, {
+          loader: "sass-loader",
+          options: {
+            sourceMap: false
+          }
+        }]
       },
       {
         test: /\.jsx?$/,
@@ -105,13 +122,15 @@ module.exports = {
         loader: 'babel-loader',
         query: {
           plugins: [
-            //'transform-react-jsx',
+            'transform-react-jsx',
             [
               'react-css-modules',
               {
                 "generateScopedName": "[local]_[hash:base64:5]",
                 "filetypes": {
-                  ".scss": "postcss-scss"
+                  ".scss": {
+                    "syntax": "postcss-scss"
+                  }
                 },
                 "webpackHotModuleReloading": true
               }
@@ -150,6 +169,6 @@ module.exports = {
     //publicPath: path.join(__dirname, "ui", "public")
   },
   performance: {
-    //hints: "warning"
+    hints: false
   }
-};
+}
