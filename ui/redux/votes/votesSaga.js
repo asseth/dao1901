@@ -16,7 +16,6 @@ function* onVoteSubmitWorker(action) {
   try {
     const { proposalId, voteValue } = action.values
     const tx = yield call(onVoteSubmit, proposalId, voteValue)
-    console.log(`Vote tx hash: ${tx}`)
     yield call(waitForMined, tx, 'onVoteSubmit') // setInterval until mined
     yield put({type: 'VOTE_SUBMISSION_SUCCEED', tx})
     yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED'})
@@ -82,7 +81,7 @@ function* createProposalWorker({values}) {
     console.log('TX createProposal successful. Tx Hash: ', tx)
     toastr.success('Proposal submission', `Your proposal has been successfully submitted. Transaction ID: ${tx}`)
     yield call(waitForMined, tx, 'create proposal') // setInterval until mined
-    yield put({type: 'CREATE_PROPOSAL_SUCCEED'})
+    yield put({type: 'CREATE_PROPOSAL_SUCCEED', tx})
     yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
     yield put({type: 'CREATE_PROPOSAL_FAILED', e})

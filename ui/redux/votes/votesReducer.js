@@ -1,18 +1,8 @@
-/*
-- votes
-  - proposals[]
-    - proposal
-      - id
-      - isPassed
-      - description
-*/
-
 const initialState = {
   proposals: [],
   txs: [],
   votes: {}
 }
-
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -33,14 +23,14 @@ const ACTION_HANDLERS = {
     return {...state, error: action.error}
   },
   ['VOTE_SUBMISSION_SUCCEED']: (state, action) => {
-    const txs = [...state.txs, action.tx]
+    const txLog = {event: 'VOTE_SUBMISSION_SUCCEED', tx: action.tx}
+    const txs = [...state.txs, txLog]
     return {...state, txs}
   },
   ['VOTE_SUBMISSION_FAILED']: (state, action) => {
     return {...state, error: action.error}
   },
-};
-
+}
 // ------------------------------------
 // Reducer
 // ------------------------------------
