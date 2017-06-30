@@ -16,6 +16,7 @@ let bootstrapConfig = isProd ? bootstrapEntryPoints.prod : bootstrapEntryPoints.
 module.exports = {
   entry: {
     app: [
+      'bootstrap-loader',
       'react-hot-loader/patch', // RHL patch
       // bundle the client for webpack-dev-server
       // and connect to the provided endpoint
