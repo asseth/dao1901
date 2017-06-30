@@ -21,10 +21,15 @@ export default function NestedLists (props) {
 
   if (items && Object.keys(items).length !== 0) {
     for (var proposalID in items) {
-      if (items.hasOwnProperty(proposalID)) {
-        list = items[proposalID].map((item, index) => (
-          <VoteListItem key={`item-${index}`} item={item} />
-        ))
+      if (items[proposalID].length) {
+        if (items.hasOwnProperty(proposalID)) {
+          list = items[proposalID].map((item, index) => (
+            <VoteListItem key={`item-${index}`} item={item} />
+          ))
+          lists.push(renderList(proposalID))
+        }
+      } else {
+        list = <li>{'No votes yet'}</li>
         lists.push(renderList(proposalID))
       }
     }
