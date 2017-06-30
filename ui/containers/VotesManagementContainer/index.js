@@ -13,10 +13,19 @@ class VotingPage extends Component {
   componentWillUpdate(nextProps) {
     // Checking if new tx and show a toast message
     if (nextProps.txs.length > 0) {
-      let {[nextProps.txs.length - 1] : tx} = nextProps.txs
-      if (this.lastTx !== tx) {
-        this.lastTx = tx
-        toastr.success('Voting', `Your vote has been successfully submitted. Transaction ID: ${tx}`)
+      let newTx = nextProps.txs[nextProps.txs.length - 1].tx
+      if (this.lastTx !== newTx) {
+        this.lastTx = newTx
+        let message, title
+        switch (nextProps.txs[nextProps.txs.length - 1].event) {
+          case 'VOTE_SUBMISSION_SUCCEED':
+            message = 'Your vote has been successfully submitted. Transaction ID'
+            title = 'Voting'
+            break;
+          default:
+           throw new Error('Unknown event')
+        }
+        toastr.success(title, `${message}: ${newTx}`)
       }
     }
   }
