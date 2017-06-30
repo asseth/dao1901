@@ -38,9 +38,9 @@ function* onVoteSubmitWorker(action) {
 // ========================================================
 // Fetch votes
 // ========================================================
-function fetchProposalById(proposalId) {
-    const {Dao1901Votes} = contracts
-    return Dao1901Votes.proposals(proposalId)
+function getVote(proposalId, addr) {
+  const {Dao1901Votes} = contracts
+  return Dao1901Votes.getVote(proposalId, addr)
 }
 function* generateVoteListByProposal(proposalId, _addr) {
   let votes = []
@@ -55,10 +55,6 @@ function* generateVoteListByProposal(proposalId, _addr) {
   }
   yield call(iter, addr)
   return votes
-}
-function getVote(proposalId, addr) {
-  const {Dao1901Votes} = contracts
-  return Dao1901Votes.getVote(proposalId, addr)
 }
 function* fetchVotesForAProposal(proposalId) {
   const proposal = yield call(fetchProposalById, proposalId)
@@ -84,39 +80,36 @@ function* fetchAllVotesForAllProposalsWorker() {
 // ========================================================
 // Proposal Creation
 // ========================================================
-let createProposal = (proposalDesc, proposalDeadline) => {
-  return new Promise((resolve, reject) => {
-    const {Dao1901Votes} = contracts
-    Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: window.web3.eth.defaultAccount})
-      .then((tx) => {
-        console.log('TX createProposal successful. Tx Hash: ', tx)
-        toastr.success('Proposal submission', `Your proposal has been successfully submitted. Transaction ID: ${tx}`)
-        resolve(tx)
-      })
-      .catch((e) => {
-        if (e.message === 'invalid address') {
-          toastr.error('Error', `Invalid address. Check your permissions`)
-        } else {
-          toastr.error('Error', `An error occurred. Please try later or contact the support`)
-        }
-        reject(e.message)
-      })
-  })
+function createProposal(proposalDesc, proposalDeadline) {
+  const {Dao1901Votes} = contracts
+  return Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: window.web3.eth.defaultAccount})
 }
 function* createProposalWorker({values}) {
   try {
     const {proposalDescription, proposalDeadline} = values
     const tx = yield call(createProposal, proposalDescription, proposalDeadline)
+    console.log('TX createProposal successful. Tx Hash: ', tx)
+    toastr.success('Proposal submission', `Your proposal has been successfully submitted. Transaction ID: ${tx}`)
     yield call(waitForMined, tx, 'create proposal') // setInterval until mined
     yield put({type: 'CREATE_PROPOSAL_SUCCEED'})
     yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
     yield put({type: 'CREATE_PROPOSAL_FAILED', e})
+    // todo move in component ?
+    if (e.message === 'invalid address') {
+      toastr.error('Error', `Invalid address. Check your permissions`)
+    } else {
+      toastr.error('Error', `An error occurred. Please try later or contact the support`)
+    }
   }
 }
 // ========================================================
 // Fetch proposals
 // ========================================================
+function fetchProposalById(proposalId) {
+  const {Dao1901Votes} = contracts
+  return Dao1901Votes.proposals(proposalId)
+}
 function getTotalProposals() {
   const {Dao1901Votes} = contracts
   return Dao1901Votes.nProposals()
