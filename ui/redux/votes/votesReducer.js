@@ -7,8 +7,13 @@ const initialState = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
+  ['CREATE_PROPOSAL_SUCCEED']: (state, action) => {
+    const txLog = {event: 'CREATE_PROPOSAL_SUCCEED', tx: action.tx}
+    const txs = [...state.txs, txLog]
+    return {...state, txs}
+  },
   ['CREATE_PROPOSAL_FAILED']: (state, action) => {
-    return  {...state, errorMessage: action.errorMessage}
+    return {...state, errorMessage: action.errorMessage}
   },
   ['FETCH_ALL_PROPOSALS_SUCCEED']: (state, action) => {
     return {...state, proposals: action.proposals}
@@ -34,7 +39,7 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-export default function votesReducer (state = initialState, action) {
-  const handler = ACTION_HANDLERS[action.type];
+export default function votesReducer(state = initialState, action) {
+  const handler = ACTION_HANDLERS[action.type]
   return handler ? handler(state, action) : state
 }

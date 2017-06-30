@@ -78,8 +78,6 @@ function* createProposalWorker({values}) {
   try {
     const {proposalDescription, proposalDeadline} = values
     const tx = yield call(createProposal, proposalDescription, proposalDeadline)
-    console.log('TX createProposal successful. Tx Hash: ', tx)
-    toastr.success('Proposal submission', `Your proposal has been successfully submitted. Transaction ID: ${tx}`)
     yield call(waitForMined, tx, 'create proposal') // setInterval until mined
     yield put({type: 'CREATE_PROPOSAL_SUCCEED', tx})
     yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})
