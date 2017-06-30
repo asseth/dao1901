@@ -9,29 +9,20 @@ import {contracts} from '../createStore'
 // Vote submission
 // ========================================================
 let onVoteSubmit = (proposalId, voteValue) => {
-  return new Promise((resolve, reject) => {
     const {Dao1901Votes} = contracts
-    Dao1901Votes.vote.sendTransaction(proposalId, voteValue, {from: window.web3.eth.defaultAccount})
-      .then(tx => {
-        console.log(`Vote tx hash: ${tx}`)
-        toastr.success('Voting', `Your vote has been successfully submitted. Transaction ID: ${tx}`)
-        resolve(tx)
-      })
-      .catch(e => {
-        toastr.error('Error', `An error occurred. Please try later or contact the support. ` +
-          `Hint: Check that the proposal id is valid and that you are registered as member`)
-        reject(e)
-      })
-  })
+    return Dao1901Votes.vote.sendTransaction(proposalId, voteValue, {from: window.web3.eth.defaultAccount})
 }
 function* onVoteSubmitWorker(action) {
   try {
     const { proposalId, voteValue } = action.values
     const tx = yield call(onVoteSubmit, proposalId, voteValue)
+    console.log(`Vote tx hash: ${tx}`)
     yield call(waitForMined, tx, 'onVoteSubmit') // setInterval until mined
     yield put({type: 'VOTE_SUBMISSION_SUCCEED', tx})
     yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
+    toastr.error('Error', `An error occurred. Please try later or contact the support. ` +
+      `Hint: Check that the proposal id is valid and that you are registered as member`) // todo: move to component
     yield put({type: 'VOTE_SUBMISSION_FAILED', error: e})
   }
 }
