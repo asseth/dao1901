@@ -1,4 +1,5 @@
 const initialState = {
+  errors: [],
   proposals: [],
   txs: [],
   votes: {}
@@ -13,7 +14,9 @@ const ACTION_HANDLERS = {
     return {...state, txs}
   },
   ['CREATE_PROPOSAL_FAILED']: (state, action) => {
-    return {...state, errorMessage: action.errorMessage}
+    const errorLog = {event: 'CREATE_PROPOSAL_FAILED', message: action.e}
+    const errors = [...state.errors, errorLog]
+    return {...state, errors}
   },
   ['FETCH_ALL_PROPOSALS_SUCCEED']: (state, action) => {
     return {...state, proposals: action.proposals}

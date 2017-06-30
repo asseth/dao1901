@@ -9,6 +9,7 @@ class ProposalSubmissionPage extends Component {
   constructor(props) {
     super(props)
     this.lastTx = ''
+    this.lastErrorId = this.props.errors.length
   }
 
   componentWillUpdate(nextProps) {
@@ -27,6 +28,23 @@ class ProposalSubmissionPage extends Component {
             throw new Error('Unknown event')
         }
         toastr.success(title, `${message}: ${newTx}`)
+      }
+    }
+
+    if (nextProps.errors.length > 0) {
+      let newErrorId = nextProps.errors.length
+      if (this.lastErrorId !== newErrorId) {
+        this.lastErrorId = newErrorId
+        let message, title
+        switch (nextProps.errors[nextProps.errors.length - 1].event) {
+          case 'CREATE_PROPOSAL_FAILED':
+            message = 'An error occurred. Please try later or contact the support'
+            title = 'Error'
+            break;
+          default:
+            throw new Error('Unknown event')
+        }
+        toastr.error(title, message)
       }
     }
   }
@@ -60,6 +78,7 @@ class ProposalSubmissionPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    errors: state.vote.errors,
     txs: state.vote.txs,
     proposals: state.vote.proposals
   }

@@ -82,13 +82,7 @@ function* createProposalWorker({values}) {
     yield put({type: 'CREATE_PROPOSAL_SUCCEED', tx})
     yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
-    yield put({type: 'CREATE_PROPOSAL_FAILED', e})
-    // todo move in component ?
-    if (e.message === 'invalid address') {
-      toastr.error('Error', `Invalid address. Check your permissions`)
-    } else {
-      toastr.error('Error', `An error occurred. Please try later or contact the support`)
-    }
+    yield put({type: 'CREATE_PROPOSAL_FAILED', e: e.message})
   }
 }
 // ========================================================
