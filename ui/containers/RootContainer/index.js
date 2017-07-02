@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import ReduxToastr from 'react-redux-toastr'
-import './styles.scss'
 import {Route} from 'react-router-dom'
 // import PropTypes from 'prop-types';
 import TopBar from '../../components/common/TopBar'
@@ -9,7 +8,7 @@ import DevTools from '../../components/common/DevTools'
 // Redux
 import {Provider} from 'react-redux'
 import {ConnectedRouter} from 'react-router-redux'
-import {history, sagaMiddleware} from '../../redux/createStore'
+import {history} from '../../redux/createStore'
 // Pages
 // import TestPage from '../TestContainer';
 import AdminPage from '../AdminContainer'
@@ -58,9 +57,7 @@ class RootContainer extends Component {
           </div>
         </ConnectedRouter>
       </Provider>
-
     )
   }
 }
-const mapStateToProps = (state) => state
-export default connect(mapStateToProps)(RootContainer)
+export default connect()(RootContainer)

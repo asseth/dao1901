@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import './styles.scss';
 import List from '../../components/common/List';
 import MembersListItem from '../../components/DAOManagement/MembershipManagement/MembersListItem';
 import MemberAdditionForm from '../../components/DAOManagement/MembershipManagement/MemberAdditionForm';
