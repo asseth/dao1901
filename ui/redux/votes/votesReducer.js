@@ -22,21 +22,26 @@ const ACTION_HANDLERS = {
     return {...state, proposals: action.proposals}
   },
   ['FETCH_ALL_PROPOSALS_FAILED']: (state, action) => {
-    return {...state, error: action.error}
+    const errorLog = {event: 'FETCH_ALL_PROPOSALS_FAILED', message: action.e}
+    const errors = [...state.errors, errorLog]
+    return {...state, errors}
   },
   ['FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED']: (state, action) => {
     return {...state, votes: action.votes}
   },
   ['FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_FAILED']: (state, action) => {
-    return {...state, error: action.error}
-  },
+    const errorLog = {event: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_FAILED', message: action.e}
+    const errors = [...state.errors, errorLog]
+    return {...state, errors}  },
   ['VOTE_SUBMISSION_SUCCEED']: (state, action) => {
     const txLog = {event: 'VOTE_SUBMISSION_SUCCEED', tx: action.tx}
     const txs = [...state.txs, txLog]
     return {...state, txs}
   },
   ['VOTE_SUBMISSION_FAILED']: (state, action) => {
-    return {...state, error: action.error}
+    const errorLog = {event: 'VOTE_SUBMISSION_FAILED', message: action.e}
+    const errors = [...state.errors, errorLog]
+    return {...state, errors}
   },
 }
 // ------------------------------------

@@ -1,52 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {toastr} from 'react-redux-toastr'
+import toastrManager from '../../helpers/toastrManager'
 import List from '../../components/common/List'
 import ProposalSubmissionForm from '../../components/VotesManagement/ProposalSubmissionForm/index'
 import ProposalsListItem from '../../components/VotesManagement/ProposalsListItem'
-
+// ========================================================
+// Proposal Submission
+// ========================================================
 class ProposalSubmissionPage extends Component {
   constructor(props) {
     super(props)
-    this.lastTx = ''
-    this.lastErrorId = this.props.errors.length
   }
 
-  componentWillUpdate(nextProps) {
-    // Checking if new tx and show a toast message
-    if (nextProps.txs.length > 0) {
-      let newTx = nextProps.txs[nextProps.txs.length - 1].tx
-      if (this.lastTx !== newTx) {
-        this.lastTx = newTx
-        let message, title
-        switch (nextProps.txs[nextProps.txs.length - 1].event) {
-          case 'CREATE_PROPOSAL_SUCCEED':
-            message = 'Your proposal has been successfully submitted. Transaction ID'
-            title = 'Proposal submission'
-            break;
-          default:
-            throw new Error('Unknown event')
-        }
-        toastr.success(title, `${message}: ${newTx}`)
-      }
-    }
-
-    if (nextProps.errors.length > 0) {
-      let newErrorId = nextProps.errors.length
-      if (this.lastErrorId !== newErrorId) {
-        this.lastErrorId = newErrorId
-        let message, title
-        switch (nextProps.errors[nextProps.errors.length - 1].event) {
-          case 'CREATE_PROPOSAL_FAILED':
-            message = 'An error occurred. Please try later or contact the support'
-            title = 'Error'
-            break;
-          default:
-            throw new Error('Unknown event')
-        }
-        toastr.error(title, message)
-      }
-    }
+  componentWillReceiveProps(nextProps) {
+    toastrManager(nextProps, this.props)
   }
 
   render() {
@@ -75,7 +42,6 @@ class ProposalSubmissionPage extends Component {
     )
   }
 }
-
 const mapStateToProps = (state) => {
   return {
     errors: state.vote.errors,
@@ -89,5 +55,4 @@ const mapDispatchToProps = dispatch => {
     //getAllProposals: () => dispatch({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})  Triggered in saga bootstrap for now
   })
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(ProposalSubmissionPage)

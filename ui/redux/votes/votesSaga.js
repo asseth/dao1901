@@ -2,7 +2,6 @@
 // Votes Sagas
 // ========================================================
 import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
-import {toastr} from 'react-redux-toastr'
 import waitForMined from '../../helpers/waitForMined'
 import {contracts} from '../createStore'
 // ========================================================
@@ -20,9 +19,7 @@ function* onVoteSubmitWorker(action) {
     yield put({type: 'VOTE_SUBMISSION_SUCCEED', tx})
     yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
-    toastr.error('Error', `An error occurred. Please try later or contact the support. ` +
-      `Hint: Check that the proposal id is valid and that you are registered as member`) // todo: move to component
-    yield put({type: 'VOTE_SUBMISSION_FAILED', error: e})
+    yield put({type: 'VOTE_SUBMISSION_FAILED', e: e.message})
   }
 }
 // ========================================================
@@ -64,7 +61,7 @@ function* fetchAllVotesForAllProposalsWorker() {
     }
     yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED', votes: votes})
   } catch (e) {
-    yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSAL_FAILED', error: e})
+    yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSAL_FAILED', e: e.message})
   }
 }
 // ========================================================
@@ -112,7 +109,7 @@ function* fetchAllProposalsWorker() {
     let proposals = yield call(generateProposalList, totalProposals.valueOf())
     yield put({type: 'FETCH_ALL_PROPOSALS_SUCCEED', proposals})
   } catch (e) {
-    yield put({type: 'FETCH_ALL_PROPOSALS_FAILED', error: e})
+    yield put({type: 'FETCH_ALL_PROPOSALS_FAILED', e: e.message})
   }
 }
 // ========================================================
