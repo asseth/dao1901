@@ -64,12 +64,14 @@ function* fetchUserAccountsWorker() {
 // Watch default account change
 // ========================================================
 export function* watchDefaultAccountChange() {
-  let defaultAccount = window.web3.eth.accounts[0]
+  let accounts = yield call(fetchAccounts)
+  let defaultAccount = accounts[0]
   while (true) {
     try {
       yield call(delay, 2000)
-      if (window.web3.eth.accounts[0] !== defaultAccount) {
-        defaultAccount = window.web3.eth.accounts[0]
+      accounts = yield call(fetchAccounts)
+      if (accounts[0] !== defaultAccount) {
+        defaultAccount = accounts[0]
         yield put({type: 'USER_ACCOUNTS_REQUESTED'})
       }
     } catch (e) {
