@@ -1,29 +1,27 @@
 /******************************************************************************/
 /**************************** ETHEREUM ***************************************/
 /******************************************************************************/
-import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
-
+import {call, put, takeEvery} from 'redux-saga/effects'
 // ========================================================
 // Get Ethereum current block number
 // ========================================================
 let getBlockNumber = () => {
   return new Promise((resolve, reject) => {
-    window.web3.eth.getBlockNumber((e, r) => !e ? resolve(r) : reject(e.message))
+    window.web3.eth.getBlockNumber((e, r) => !e ? resolve(r) : reject(e))
   })
 }
-function* getBlockNumberWorker() {
+function* fetchEthereumInfoWorker() {
   try {
+    yield put({type: 'BLOCK_NUMBER_REQUESTED'})
     const blockNumber = yield call(getBlockNumber)
     yield put({type: 'BLOCK_NUMBER_SUCCEED', blockNumber})
   } catch (e) {
-    yield put({type: 'BLOCK_NUMBER_FAILED', ...e.message})
+    yield put({type: 'BLOCK_NUMBER_FAILED', e: e.message})
   }
 }
-
-/******************************************************************************/
-/**************************** WATCHERS SAGAS **********************************/
-/******************************************************************************/
+// ========================================================
+// Watch Ethereum saga
+// ========================================================
 export function* watchGetBlockNumber() {
-  yield takeEvery('BLOCK_NUMBER_REQUESTED', getBlockNumberWorker);
+  yield takeEvery('FETCH_ETHEREUM_INFO_REQUESTED', fetchEthereumInfoWorker)
 }
-
