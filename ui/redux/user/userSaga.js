@@ -1,8 +1,9 @@
 // ========================================================
 // User Sagas
+// Current user management, login, ...
 // ========================================================
 import { delay } from 'redux-saga'
-import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
+import {call, put, select, takeEvery} from 'redux-saga/effects'
 // ========================================================
 // Set user default account
 // ========================================================
@@ -22,8 +23,8 @@ function* setUserDefaultAccountWorker() {
 let setUserBalance = (user) => {
   return new Promise((resolve, reject) => {
     if (!user.defaultAccount) reject(new Error('No default account'))
-    window.web3.eth.getBalance(user.defaultAccount, (err, balance) => {
-      if (err) reject(err.message)
+    window.web3.eth.getBalance(user.defaultAccount, (e, balance) => {
+      if (e) reject(e)
       resolve(window.web3.fromWei(balance, "ether").valueOf())
     })
   })
@@ -34,7 +35,7 @@ function* setUserBalanceWorker() {
     const balance = yield call(setUserBalance, user)
     yield put({type: 'USER_BALANCE_SUCCEED', balance})
   } catch (e) {
-    yield put({type: 'USER_BALANCE__FAILED', error: e})
+    yield put({type: 'USER_BALANCE_FAILED', e: e.message})
   }
 }
 // ========================================================

@@ -23,8 +23,7 @@ const ACTION_HANDLERS = {
   ['TRANSFER_OWNERSHIP_SUCCEED']: (state, action) => {
     return {...state, ownerAddress: action.ownerAddress}
   },
-};
-
+}
 // ------------------------------------
 // Reducer
 // ------------------------------------
