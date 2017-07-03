@@ -13,9 +13,6 @@ module.exports = {
       test_timeout: 300000    // specify Mocha timeout per network
     }
   },
-  deploy: [
-    "Owned",
-  ],
   mocha: {
     timeout: 200000,
     useColors: true
