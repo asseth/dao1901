@@ -58,7 +58,7 @@ contract('Dao1901Members', (accounts) => {
     })
 
     it('should have owner able to revoke a member', async () => {
-      await Dao1901Members.subscribe.sendTransaction(bob, 0, {from: alice}) // Subscription ends now
+      await Dao1901Members.subscribe.sendTransaction(bob, -1, {from: alice}) // Subscription ends now
       assert(!(await Dao1901Members.isMember(bob)), "Bob is still a member after revokation")
     })
 
@@ -77,7 +77,7 @@ contract('Dao1901Members', (accounts) => {
     })
 
     it('should revoke head (the last added member) and retrieve list', async () => {
-      await Dao1901Members.subscribe.sendTransaction(await Dao1901Members.head(), 0, {from: alice})
+      await Dao1901Members.subscribe.sendTransaction(await Dao1901Members.head(), -1, {from: alice})
       let members = await memberList(Dao1901Members)
       assert.equal(members.length, 1, `Dao should have 1 members, got ${members.length}`)
       assert(members.indexOf(bob) !== -1, "Bob should be a member")
