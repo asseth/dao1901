@@ -8,6 +8,11 @@ export default function toastrManager(nextProps, props) {
   if (newTxsLength > 0 && newTxsLength !== props.txs.length) {
     let message, title
     switch (nextProps.txs[newTxsLength - 1].event) {
+      case 'ADD_MEMBER_SUCCEED':
+        message = `The member ${'nextProps.members[0].memberAddress'} has been added successfully.` +
+          `Transaction ID`
+        title = 'Membership management'
+        break
       case 'CREATE_PROPOSAL_SUCCEED':
         message = 'Your proposal has been successfully submitted. Transaction ID'
         title = 'Proposal submission'
@@ -25,6 +30,10 @@ export default function toastrManager(nextProps, props) {
   if (newErrorsLength > 0 && newErrorsLength !== props.errors.length) {
     let message, title
     switch (nextProps.errors[newErrorsLength - 1].event) {
+      case 'ADD_MEMBER_FAILED':
+        message = `The member ${'nextProps.members[0].memberAddress'} has not been added. Please try later`
+        title = 'Error'
+        break
       case 'CREATE_PROPOSAL_FAILED':
         message = 'An error occurred. Please try later or contact the support'
         title = 'Error'

@@ -1,3 +1,9 @@
+const initialState = {
+  contracts: {},
+  errors: [],
+  members: [],
+  txs: [],
+}
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -14,8 +20,15 @@ const ACTION_HANDLERS = {
   ['FETCH_CONTRACTS_INFO_FAILED']: (state, action) => {
     return {...state, error: action.error}
   },
+  ['ADD_MEMBER_SUCCEED']: (state, action) => {
+    const txLog = {event: 'ADD_MEMBER_SUCCEED', tx: action.tx}
+    const txs = [...state.txs, txLog]
+    return {...state, txs}
+  },
   ['ADD_MEMBER_FAILED']: (state, action) => {
-    return {...state, error: action.error}
+    const errorLog = {event: 'ADD_MEMBER_FAILED', message: action.e}
+    const errors = [...state.errors, errorLog]
+    return {...state, errors}
   },
   ['FETCH_ALL_MEMBERS_SUCCEED']: (state, action) => {
     return {...state, members: action.members}
@@ -27,7 +40,7 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-export default function daoReducer (state = {}, action) {
+export default function daoReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
   return handler ? handler(state, action) : state
 }

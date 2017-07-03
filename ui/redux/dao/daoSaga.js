@@ -17,37 +17,19 @@ let fetchContractsInfo = () => {
 }
 function* fetchContractsInfoWorker() {
   try {
-    let contractsInfos = yield call(fetchContractsInfo)
-    yield put({type: 'FETCH_CONTRACTS_INFO_SUCCEED', contractsInfos})
+    let contractsInfo = yield call(fetchContractsInfo)
+    yield put({type: 'FETCH_CONTRACTS_INFO_SUCCEED', contractsInfo})
   } catch (e) {
     yield put({type: 'FETCH_CONTRACTS_INFO_FAILED', error: e})
   }
 }
-// ------------------------------------
-// Members management
-// ------------------------------------
-/**
- * Add a member to the organization
- * @param values
- * @returns {Promise}
- */
+
 let addMember = (values) => {
-  return new Promise((resolve, reject) => {
-    const {Dao1901Members} = contracts
-    Dao1901Members.subscribe
-      .sendTransaction(values.memberAddress, values.yearsDuration, {from: web3.eth.defaultAccount, gas: 70000}) // gasUsed: 68866
-      .then((tx) => {
-        toastr.success('Membership management', `The member ${values.memberAddress} has been added successfully`)
-        console.log(`New member ${values.memberAddress} added by ${window.web3.eth.defaultAccount}`)
-        resolve(tx)
-      })
-      .catch((e) => {
-        toastr.error('Membership management', `The member ${values.memberAddress} has not been added. Please try later`)
-        console.log(`The account ${window.web3.eth.defaultAccount} has failed to add ${values.memberAddress}`)
-        reject(e)
-      })
-  })
+  const {Dao1901Members} = contracts
+  return Dao1901Members.subscribe
+    .sendTransaction(values.memberAddress, values.yearsDuration, {from: web3.eth.defaultAccount, gas: 70000}) // gasUsed: 68866
 }
+
 function* addMemberWorker(action) {
   try {
     const tx = yield call(addMember, action.values)
@@ -138,37 +120,24 @@ function* fetchAllMembersWorker() {
     yield put({type: 'FETCH_ALL_MEMBERS_FAILED', error: e})
   }
 }
-/**
- * Check Membership
- * Call fn that returns a boolean
- */
+
 let checkMembership = (memberAddressToCheck) => {
-  return new Promise((resolve, reject) => {
-    const {Dao1901Members} = contracts
-    Dao1901Members.isMember(memberAddressToCheck)
-      .then((isMember) => {
-        if (isMember) {
-          console.log(`${memberAddressToCheck} is a member.`)
-          toastr.success('Membership management', `${memberAddressToCheck} is a member`)
-        } else {
-          console.log(`${memberAddressToCheck} is not a member.`)
-          toastr.error('Membership management', `${memberAddressToCheck} is not a member`)
-        }
-        resolve(isMember)
-      })
-      .catch((e) => {
-        toastr.error('Membership management', `We can't check membership for now. Please try later`)
-        reject(e)
-      })
-  })
+  const {Dao1901Members} = contracts
+  return Dao1901Members.isMember(memberAddressToCheck)
 }
+
 export function* checkMembershipWorker(action) {
   try {
     const {memberAddressToCheck} = action.values
-    let bool = yield call(checkMembership, memberAddressToCheck)
-    yield put({type: 'CHECK_MEMBERSHIP_SUCCEED', isMember: bool})
+    let isMember = yield call(checkMembership, memberAddressToCheck)
+    if (isMember) {
+      toastr.success('Membership management', `${memberAddressToCheck} is a member`)
+    } else {
+      toastr.error('Membership management', `${memberAddressToCheck} is not a member`)
+    }
+    yield put({type: 'CHECK_MEMBERSHIP_SUCCEED', isMember})
   } catch (e) {
-    yield put({type: 'CHECK_MEMBERSHIP_FAILED', error: e})
+    yield put({type: 'CHECK_MEMBERSHIP_FAILED', error: e.message})
   }
 }
 // ------------------------------------
