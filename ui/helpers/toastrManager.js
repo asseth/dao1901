@@ -9,8 +9,12 @@ export default function toastrManager(nextProps, props) {
     let message, title
     switch (nextProps.txs[newTxsLength - 1].event) {
       case 'ADD_MEMBER_SUCCEED':
-        message = `The member ${'nextProps.members[0].memberAddress'} has been added successfully.` +
+        message = `The member ${nextProps.members[nextProps.members.length - 1].memberAddress} has been added successfully.` +
           `Transaction ID`
+        title = 'Membership management'
+        break
+      case 'REVOKE_MEMBER_SUCCEED':
+        message = `The member has been revoked successfully. Transaction ID`
         title = 'Membership management'
         break
       case 'CREATE_PROPOSAL_SUCCEED':
@@ -31,8 +35,13 @@ export default function toastrManager(nextProps, props) {
     let message, title
     switch (nextProps.errors[newErrorsLength - 1].event) {
       case 'ADD_MEMBER_FAILED':
-        message = `The member ${'nextProps.members[0].memberAddress'} has not been added. Please try later`
+        message = `The member ${nextProps.members[nextProps.members.length - 1].memberAddress} has not been added. Please try later`
         title = 'Error'
+        break
+      case 'REVOKE_MEMBER_FAILED':
+        message = `The member has not been revoked successfully.` +
+          `Please try later`
+        title = 'Membership management'
         break
       case 'CREATE_PROPOSAL_FAILED':
         message = 'An error occurred. Please try later or contact the support'

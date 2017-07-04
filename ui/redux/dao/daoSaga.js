@@ -23,44 +23,33 @@ function* fetchContractsInfoWorker() {
     yield put({type: 'FETCH_CONTRACTS_INFO_FAILED', error: e})
   }
 }
-
-let addMember = (values) => {
+// ------------------------------------
+// Add member
+// ------------------------------------
+function addMember(memberAddress, yearsDuration) {
   const {Dao1901Members} = contracts
   return Dao1901Members.subscribe
-    .sendTransaction(values.memberAddress, values.yearsDuration, {from: web3.eth.defaultAccount, gas: 70000}) // gasUsed: 68866
+    .sendTransaction(memberAddress, yearsDuration, {from: window.web3.eth.defaultAccount, gas: 70000}) // gasUsed: 68866
 }
-
 function* addMemberWorker(action) {
   try {
-    const tx = yield call(addMember, action.values)
+    const {memberAddress, yearsDuration} = action.values
+    const tx = yield call(addMember, memberAddress, yearsDuration)
     yield call(waitForMined, tx, 'addMember') // setInterval until mined
-    yield put({type: 'ADD_MEMBER_SUCCEED', tx})
-    yield put({type: 'FETCH_ALL_MEMBERS_REQUESTED'})
+    let endSubscriptionDate = new Date().setFullYear(new Date().getFullYear() + Number(yearsDuration))
+    endSubscriptionDate = String(endSubscriptionDate).substring(0,10)
+    yield put({type: 'ADD_MEMBER_SUCCEED', tx, memberAddress, endSubscriptionDate})
   } catch (e) {
-    yield put({type: 'ADD_MEMBER_FAILED', error: e})
+    yield put({type: 'ADD_MEMBER_FAILED', e: e.message})
   }
 }
-/**
- * Revoke a member by updating his subscription to zero
- * The address member is preserved on the linked list on Ethereum
- * @param values
- */
-let revokeMember = (values) => {
-  return new Promise((resolve, reject) => {
-    const {Dao1901Members} = contracts
-    Dao1901Members.subscribe
-      .sendTransaction(values.memberAddress, 0, {gas: 70000})
-      .then((tx) => {
-        toastr.success('Membership management', `The member ${values.memberAddress} has been revoked successfully`)
-        console.log(`The account ${window.web3.eth.defaultAccount} have revoked the member ${values.memberAddress}`)
-        resolve(tx)
-      })
-      .catch((e) => {
-        toastr.error('Membership management', `The member ${values.memberAddress} has not been revoked. Please try later`)
-        console.log(`The account ${window.web3.eth.defaultAccount} have failed to revoke ${values.memberAddress}`)
-        reject(e)
-      })
-  })
+// ------------------------------------
+// Revoke member
+// ------------------------------------
+function revokeMember(values) {
+  const {Dao1901Members} = contracts
+  return Dao1901Members.subscribe
+    .sendTransaction(values.memberAddress, -1, {from: window.web3.eth.defaultAccount, gas: 70000})
 }
 function* revokeMemberWorker(action) {
   try {
@@ -69,67 +58,51 @@ function* revokeMemberWorker(action) {
     yield put({type: 'REVOKE_MEMBER_SUCCEED', tx})
     yield put({type: 'FETCH_ALL_MEMBERS_REQUESTED'})
   } catch (e) {
-    yield put({type: 'REVOKE_MEMBER_FAILED', e})
+    yield put({type: 'REVOKE_MEMBER_FAILED', e: e.message})
   }
 }
-/**
- * Create Member List
- * Browse the chained list
- * @returns {Promise}
- */
-let fetchAllMembers = () => {
-  return new Promise((resolve, reject) => {
-    const {Dao1901Members} = contracts
-    let membersInfo = []
-    let endSubscriptionDate = ''
-    let addr = ''
-    // Get the head of the linked list - Either 0x0 or the last added
-    Dao1901Members.head()
-      .then((r) => {
-        addr = r
-        let iterateOnSubscriptions = () => {
-          // On metamask testnet: first head is '0x'
-          // On on metamask with local Geth: '0x0000000000000000000000000000000000000000'
-          if (addr != 0 && addr != '0x' && addr != '0x0') {
-            Dao1901Members.isMember(addr)
-              .then((isMember) => {
-                Dao1901Members.subscriptions(addr)
-                  .then((subscription) => {
-                    endSubscriptionDate = subscription[0].toString()
-                    isMember && membersInfo.push({memberAddress: addr, endSubscriptionDate})
-                    // take the next element to follow the linked list
-                    addr = subscription[1]
-                    iterateOnSubscriptions()
-                  })
-                  .catch((e) => reject(e))
-              })
-              .catch((errIsMember) => errIsMember && reject(errIsMember))
-          } else {
-            resolve(membersInfo)
-          }
-        }
-        iterateOnSubscriptions()
-      })
-  })
+// ------------------------------------
+// Fetch members
+// ------------------------------------
+function* fetchAllMembers(_addr) {
+  const {Dao1901Members} = contracts
+  let members = []
+  let endSubscriptionDate = ''
+  let addr = _addr
+  function* iter() {
+    if (addr != 0 && addr != '0x' && addr != '0x0') {
+      let isMember = yield call(Dao1901Members.isMember, addr)
+      let subscription = yield call(Dao1901Members.subscriptions, addr)
+      endSubscriptionDate = subscription[0].toString()
+      isMember && members.push({memberAddress: addr, endSubscriptionDate})
+      // take the next element to follow the linked list
+      addr = subscription[1]
+      yield call(iter, addr)
+    }
+  }
+  yield call(iter, addr)
+  return members.reverse()
 }
+
 function* fetchAllMembersWorker() {
+  const {Dao1901Members} = contracts
   try {
-    const members = yield call(fetchAllMembers)
+    // Get the head of the linked list - Either 0x0 or the last added
+    const head = yield call(Dao1901Members.head)
+    const members = yield call(fetchAllMembers, head)
     yield put({type: 'FETCH_ALL_MEMBERS_SUCCEED', members})
   } catch (e) {
     yield put({type: 'FETCH_ALL_MEMBERS_FAILED', error: e})
   }
 }
-
-let checkMembership = (memberAddressToCheck) => {
+// ------------------------------------
+// Check membership
+// ------------------------------------
+function* checkMembershipWorker(action) {
   const {Dao1901Members} = contracts
-  return Dao1901Members.isMember(memberAddressToCheck)
-}
-
-export function* checkMembershipWorker(action) {
   try {
     const {memberAddressToCheck} = action.values
-    let isMember = yield call(checkMembership, memberAddressToCheck)
+    let isMember = yield call(Dao1901Members.isMember, memberAddressToCheck)
     if (isMember) {
       toastr.success('Membership management', `${memberAddressToCheck} is a member`)
     } else {
@@ -143,13 +116,7 @@ export function* checkMembershipWorker(action) {
 // ------------------------------------
 // Owner management
 // ------------------------------------
-/**
- * Transfer ownership
- * @param ownerAddress
- * @param newOwnerAddress
- * @returns {Promise}
- */
-let transferOwnership = (ownerAddress, newOwnerAddress) => {
+function transferOwnership(ownerAddress, newOwnerAddress) {
   return new Promise((resolve, reject) => {
     const {Owned} = contracts
     const toastrConfirmOptions = {
@@ -180,9 +147,6 @@ function* transferOwnershipWorker(action) {
     yield put({type: 'TRANSFER_OWNERSHIP_FAILED', error: e})
   }
 }
-/**
- * Fetch owner address worker
- */
 function* fetchOwnerAddressWorker() {
   try {
     const {Owned} = contracts
