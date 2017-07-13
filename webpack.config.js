@@ -20,7 +20,7 @@ module.exports = {
       'react-hot-loader/patch', // RHL patch
       // bundle the client for webpack-dev-server
       // and connect to the provided endpoint
-      'webpack-dev-server/client?http://localhost:8080', // todo check if it's necessary
+      'webpack-dev-server/client?http://localhost:8085', // todo check if it's necessary
       // bundle the client for hot reloading
       // only- means to only hot reload for successful updates
       'webpack/hot/only-dev-server', // todo check if it's necessary
@@ -164,7 +164,7 @@ module.exports = {
     contentBase: path.join(__dirname, "ui", "public"),
     compress: true,
     //open: true,
-    port: 8080,
+    port: 8085,
     hot: true, // enable HMR on the server
     historyApiFallback: true
     //publicPath: path.join(__dirname, "ui", "public")
