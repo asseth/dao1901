@@ -1,4 +1,4 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.11;
 
 contract Owned {
   /* The owner of the contract can add members and transfer ownership.

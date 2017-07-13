@@ -1,4 +1,4 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.11;
 
 import "./Owned.sol";
 import "./Dao1901Members.sol";
