@@ -1,0 +1,4 @@
+### kovan
+  Owned: 0xe7aec434b79be00a9234bbb9f89e605c783f92c6
+  Dao1901Members: 0x88493e1615a633dbf463eb81c1bb3af4f2fa0fc5
+  Dao1901Votes: 0x032ec2932573a3903901b2d7ddba266d39d979fd

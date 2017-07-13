@@ -11,6 +11,12 @@ module.exports = {
       network_id: '*',        // Match any network id
       before_timeout: 200000, // specify Mocha timeout per network
       test_timeout: 300000    // specify Mocha timeout per network
+    },
+    kovan: {
+      host: 'localhost',
+      port: 8545,
+      network_id: '42',
+      gas:4900000
     }
   },
   mocha: {
