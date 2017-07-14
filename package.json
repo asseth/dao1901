@@ -12,7 +12,6 @@
     "compile": "cd tests && python3.5 compile.py ../contracts/Owned.sol && python3.5 compile.py ../contracts/Dao1901Members.sol && python3.5 compile.py ../contracts/Dao1901Votes.sol",
     "dev": "webpack-dev-server --progress",
     "linkprotocol": "npm un dao1901-contracts; cd protocol; npm link; cd ..; npm link dao1901-contracts",
-    "lint": "eslint ./",
     "migrate": "cd protocol && truffle migrate",
     "testUI": "jest",
     "testProtocol": "cd protocol && truffle test"
@@ -79,7 +78,7 @@
     "truffle-artifactor": "^2.1.4",
     "url-loader": "^0.5.9",
     "web3": "^0.19.0",
-    "webpack": "^2.7.0",
+    "webpack": "^3.2.0",
     "webpack-dev-server": "^2.5.1"
   },
   "dependencies": {
