@@ -1,46 +1,15 @@
-/package-lock.json
-
+### global
 node_modules
 yarn-error.log
 
 ### protocol
-protocol/build/
-protocol/node_modules/
+/protocol/build/
 
 ### ui
-ui/public/
-ui/node_modules/
+/ui/public/
+
 .tmp/
 npm-debug.log
-
-### macOS template
-*.DS_Store
-.AppleDouble
-.LSOverride
-
-# Icon must end with two \r
-Icon
-
-
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
 
 ### Webstorm
 .idea/
@@ -52,7 +21,6 @@ Temporary Items
 
 # Icon must end with two \r
 Icon
-
 
 # Thumbnails
 ._*
