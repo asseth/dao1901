@@ -30,7 +30,7 @@ render(RootContainer)
 // ======================================================
 // HMR Setup
 // ======================================================
-if (module.hot) {
+if (module.hot && process.env.NODE_ENV === 'development') {
   module.hot.accept('./containers/RootContainer', () => {
     render(RootContainer)
   })
