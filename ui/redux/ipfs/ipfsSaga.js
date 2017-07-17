@@ -1,9 +1,10 @@
 import {call, put} from 'redux-saga/effects'
-import ipfsAPI from 'ipfs-api'
-let ipfs = ipfsAPI('localhost', '5001')
+//import ipfsAPI from 'ipfs-api'
 
 export function* fetchIpfsInfo() {
   try {
+    //let ipfs = ipfsAPI('localhost', '5001')
+    if (!ipfs) return
     yield put({type: 'IPFS_ID_REQUESTED'})
     const info = yield call(ipfs.id)
     yield put({type: 'IPFS_ID_SUCCEED', info})
