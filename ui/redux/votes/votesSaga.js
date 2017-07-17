@@ -40,7 +40,6 @@ function* generateVoteListByProposal(proposalId, _addr) {
       yield call(iter, addr)
     }
   }
-
   yield call(iter, addr)
   return votes
 }
