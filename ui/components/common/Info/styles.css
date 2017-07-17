@@ -1,10 +1,10 @@
 .info {
   padding: 20px;
   margin: 3rem;
-  > p {
+  & p {
     margin-bottom: 0.5rem;
   }
-  > h4 {
+  & h4 {
     margin-top: 1rem;
   }
 }

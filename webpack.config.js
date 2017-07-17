@@ -66,6 +66,18 @@ module.exports = (env = {}) => {
       rules: [
         {
           test: /\.css$/,
+          include: [/ui\/assets\/theme\/app\.css/, /ui\/assets\/theme\/custom\.css/],
+          use: [{
+            loader: "style-loader"
+          }, {
+            loader: "css-loader"
+          }, {
+            loader: "postcss-loader"
+          }]
+        },
+        {
+          test: /\.css$/,
+          exclude: [/ui\/assets\/theme\/app\.css/, /ui\/assets\/theme\/custom\.css/],
           use: [{
             loader: "style-loader",
             options: {}

@@ -3,7 +3,7 @@
 }
 
 .list {
-  li {
+  & li {
     line-height: 0.8rem;
     margin-bottom: 2rem;
   }

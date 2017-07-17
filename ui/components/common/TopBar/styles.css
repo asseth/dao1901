@@ -4,7 +4,7 @@
 
 .navbar-nav {
   margin-left: 2rem;
-  .nav-item {
+  & a {
     margin-left: 1rem;
   }
 }
