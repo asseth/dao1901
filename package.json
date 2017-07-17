@@ -50,6 +50,7 @@
     "jest": "^20.0.4",
     "json-loader": "^0.5.4",
     "node-sass": "^4.5.3",
+    "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.6",
     "postcss-scss": "^1.0.1",
     "precss": "^1.4.0",
@@ -82,6 +83,6 @@
     "webpack-dev-server": "^2.5.1"
   },
   "dependencies": {
-    "babel-plugin-react-css-modules": "^3.0.0"
+    "babel-plugin-react-css-modules": "^3.1.0"
   }
 }

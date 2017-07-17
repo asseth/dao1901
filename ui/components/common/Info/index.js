@@ -1,6 +1,6 @@
 import React from 'react'
 //import PropTypes from 'prop-types'
-import './styles.scss'
+import './styles.css'
 import {Card} from 'reactstrap'
 import {Icon} from 'react-fa'
 

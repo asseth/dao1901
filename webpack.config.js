@@ -9,27 +9,19 @@ module.exports = (env = {}) => {
     filename: 'index.html',
     inject: 'body',
   })
-  //let isProd = process.env.NODE_ENV === 'production'
   const isProd = env.production === true
-
-  const bootstrapEntryPoints = require('./webpack.bootstrap.config')
-  let bootstrapConfig = isProd ? bootstrapEntryPoints.prod : bootstrapEntryPoints.dev
-
   return {
     entry: {
       app: [
         'babel-polyfill',
-        'bootstrap-loader',
         'react-hot-loader/patch', // RHL patch
-        // bundle the client for webpack-dev-server
-        // and connect to the provided endpoint
+        // bundle the client for webpack-dev-server and connect to the provided endpoint
         'webpack-dev-server/client?http://localhost:8085', // todo check if it's necessary
         // bundle the client for hot reloading
         // only- means to only hot reload for successful updates
         'webpack/hot/only-dev-server', // todo check if it's necessary
         './ui/index.js',
-      ],
-      bootstrap: bootstrapConfig
+      ]
     },
     output: {
       path: path.resolve(__dirname, 'ui', 'public'),
@@ -50,24 +42,6 @@ module.exports = (env = {}) => {
         {from: './ui/index.html', to: "index.html"},
         {from: './ui/assets/images', to: "images"}
       ]),
-      new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery",
-        "window.jQuery": "jquery",
-        Tether: "tether",
-        "window.Tether": "tether",
-        Alert: "exports-loader?Alert!bootstrap/js/dist/alert",
-        Button: "exports-loader?Button!bootstrap/js/dist/button",
-        Carousel: "exports-loader?Carousel!bootstrap/js/dist/carousel",
-        Collapse: "exports-loader?Collapse!bootstrap/js/dist/collapse",
-        Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown",
-        Modal: "exports-loader?Modal!bootstrap/js/dist/modal",
-        Popover: "exports-loader?Popover!bootstrap/js/dist/popover",
-        Scrollspy: "exports-loader?Scrollspy!bootstrap/js/dist/scrollspy",
-        Tab: "exports-loader?Tab!bootstrap/js/dist/tab",
-        Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
-        Util: "exports-loader?Util!bootstrap/js/dist/util",
-      }),
       new FaviconsWebpackPlugin({
         logo: './ui/assets/images/Dao1901Logo.png',
         // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
@@ -92,33 +66,18 @@ module.exports = (env = {}) => {
       rules: [
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader']
-        },
-        {
-          test: /\.scss$/,
           use: [{
             loader: "style-loader",
-            options: {
-              sourceMap: false
-            }
+            options: {}
           }, {
             loader: "css-loader",
             options: {
-              importLoaders: 2, // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loader
+              importLoaders: 1, // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loader
               localIdentName: '[local]_[hash:base64:5]',
-              modules: true,
-              sourceMap: false
+              modules: true
             }
           }, {
-            loader: "postcss-loader",
-            options: {
-              sourceMap: false
-            }
-          }, {
-            loader: "sass-loader",
-            options: {
-              sourceMap: false
-            }
+            loader: "postcss-loader"
           }]
         },
         {
@@ -131,13 +90,8 @@ module.exports = (env = {}) => {
               [
                 'react-css-modules',
                 {
-                  "generateScopedName": "[local]_[hash:base64:5]",
-                  "filetypes": {
-                    ".scss": {
-                      "syntax": "postcss-scss"
-                    }
-                  },
-                  "webpackHotModuleReloading": true
+                  generateScopedName: '[local]_[hash:base64:5]',
+                  //webpackHotModuleReloading: true
                 }
               ]
             ]

@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import RootContainer from './containers/RootContainer'
-import createStore, {sagaMiddleware} from './redux/createStore'
+import createStore from './redux/createStore'
 // Global styles
-import './assets/theme/app.scss'
+import './assets/theme/app.css'
 
 // ========================================================
 // Store Instantiation

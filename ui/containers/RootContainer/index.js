@@ -4,7 +4,7 @@ import ReduxToastr from 'react-redux-toastr'
 import {Route} from 'react-router-dom'
 // import PropTypes from 'prop-types';
 import TopBar from '../../components/common/TopBar'
-import DevTools from '../../components/common/DevTools'
+//import DevTools from '../../components/common/DevTools'
 // Redux
 import {Provider} from 'react-redux'
 import {ConnectedRouter} from 'react-router-redux'

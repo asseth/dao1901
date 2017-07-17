@@ -1,7 +1,7 @@
 Requirements:
 - node ^7.8.0
 - python 3.5
-- solc ^0.4.4
+- solc ^0.4.11
 - Truffle ^3.3.0
 - Testrpc ^3.0.5
 

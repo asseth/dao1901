@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './styles.scss'
+import './styles.css'
 import VoteListItem from '../../VotesManagement/VotesListItem'
 
 export default function NestedLists (props) {
