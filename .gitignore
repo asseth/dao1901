@@ -4,6 +4,7 @@ yarn-error.log
 
 ### protocol
 /protocol/build/
+/protocol/.env
 
 ### ui
 /ui/public/
