@@ -1,19 +1,19 @@
 // ========================================================
 // Votes Sagas
 // ========================================================
-import {call, fork, put, select, take, takeEvery} from 'redux-saga/effects'
+import {call, put, takeEvery} from 'redux-saga/effects'
 import waitForMined from '../../helpers/waitForMined'
 import {contracts} from '../createStore'
 // ========================================================
 // Vote submission
 // ========================================================
 let onVoteSubmit = (proposalId, voteValue) => {
-    const {Dao1901Votes} = contracts
-    return Dao1901Votes.vote.sendTransaction(proposalId, voteValue, {from: window.web3.eth.defaultAccount})
+  const {Dao1901Votes} = contracts
+  return Dao1901Votes.vote.sendTransaction(proposalId, voteValue, {from: window.web3.eth.defaultAccount, gas: 100000})
 }
 function* onVoteSubmitWorker(action) {
   try {
-    const { proposalId, voteValue } = action.values
+    const {proposalId, voteValue} = action.values
     const tx = yield call(onVoteSubmit, proposalId, voteValue)
     yield call(waitForMined, tx, 'onVoteSubmit') // setInterval until mined
     yield put({type: 'VOTE_SUBMISSION_SUCCEED', tx})
@@ -40,6 +40,7 @@ function* generateVoteListByProposal(proposalId, _addr) {
       yield call(iter, addr)
     }
   }
+
   yield call(iter, addr)
   return votes
 }
@@ -69,7 +70,10 @@ function* fetchAllVotesForAllProposalsWorker() {
 // ========================================================
 function createProposal(proposalDesc, proposalDeadline) {
   const {Dao1901Votes} = contracts
-  return Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {from: window.web3.eth.defaultAccount})
+  return Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {
+    from: window.web3.eth.defaultAccount,
+    gas: 600000
+  }) //600000 gas == around 600 chars
 }
 function* createProposalWorker({values}) {
   try {
