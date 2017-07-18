@@ -1,4 +1,4 @@
-/*@import 'node_modules/react-redux-toastr/src/styles/index';*/
+@import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 
 /* HELPERS */
 /* Margin*/
@@ -12,19 +12,11 @@
 .m-top-50 {margin-top: 50px}
 
 /* headers */
-h1 {
-  margin-bottom: 2rem;
-}
-h2 {
-  margin-bottom: 1.5rem;
-}
-h3 {
-  margin-bottom: 1rem;
-}
+h1 {margin-bottom: 2rem}
+h2 {margin-bottom: 1.5rem}
+h3 {margin-bottom: 1rem}
 
-p {
-  word-wrap: break-word;
-}
+p {word-wrap: break-word}
 
 /* React-Redux-Toastr */
 .redux-toastr .top-left, .redux-toastr .top-right, .redux-toastr .top-center,
@@ -32,27 +24,27 @@ p {
   width: 50%;
   word-wrap: break-word;
 
-  .toastr-middle-container {
-    padding: 10px 50px 10px 0 !important;
-    width: 90% !important;
+  & .toastr-middle-container {
+    padding: 10px 50px 10px 0;
+    width: 90%;
   }
-  .toastr-right-container {
+  & .toastr-right-container {
     display: none;
   }
 }
 .redux-toastr .confirm {
   width: 420px;
-  .message {
+  & .message {
     line-height: 2rem;
   }
 }
 
 /* Forms */
 .form {
-  input, textarea {
+  & input, & textarea {
     margin-bottom: 1rem;
   }
-  button {
+  & button {
     margin-top: 0.5rem;
   }
 }
