@@ -11,6 +11,7 @@ stats.json
 
 ### ui
 /ui/public/
+/build
 
 .tmp/
 npm-debug.log
