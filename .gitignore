@@ -4,14 +4,9 @@ yarn-error.log
 .env
 stats.json
 .fusebox
-
-### protocol
-/protocol/build/
-/protocol/.env
-
-### ui
-/ui/public/
-/build
+build
+dist
+public
 
 .tmp/
 npm-debug.log

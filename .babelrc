@@ -10,6 +10,7 @@
     "stage-0"
   ],
   "plugins": [
-    ["transform-react-jsx"]
+    ["transform-react-jsx"],
+    ["transform-regenerator", { "async": false, "asyncGenerators": false }]
   ]
 }

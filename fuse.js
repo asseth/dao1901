@@ -1,4 +1,4 @@
-const {BabelPlugin, CSSModules, CSSPlugin, EnvPlugin, FuseBox, JSONPlugin, PostCSSPlugin, WebIndexPlugin} = require("fuse-box")
+const {BabelPlugin, CSSModules, CSSPlugin, EnvPlugin, FuseBox, JSONPlugin, PostCSSPlugin, RawPlugin, WebIndexPlugin} = require("fuse-box")
 
 const resolveId = require('postcss-import/lib/resolve-id');
 
@@ -18,6 +18,7 @@ const POSTCSS_PLUGINS = [
 
 const fuse = FuseBox.init({
   experimentalFeatures: true,
+  target: 'browser',
   homeDir: "ui",
   output: "build/$name.js",
   log: true,
@@ -25,6 +26,7 @@ const fuse = FuseBox.init({
   plugins: [
     BabelPlugin(),
     EnvPlugin({NODE_ENV: production ? "production" : "development"}),
+    RawPlugin(),
     [PostCSSPlugin(POSTCSS_PLUGINS), CSSModules(), CSSPlugin()],
     JSONPlugin(),
     WebIndexPlugin({

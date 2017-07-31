@@ -1,4 +1,4 @@
-import { default as contract } from 'truffle-contract';
+import * as contract from 'truffle-contract';
 
 const Dao1901Members = contract(require('./build/contracts/Dao1901Members.json'));
 const Dao1901Votes = contract(require('./build/contracts/Dao1901Votes.json'));
