@@ -1,9 +1,10 @@
 Requirements:
-- node ^7.8.0
+- node ^8.1.4
+- npm ^5.3.0
 - python 3.5
 - solc ^0.4.11
-- Truffle ^3.3.0
-- Testrpc ^3.0.5
+- Truffle ^3.4.4
+- Testrpc ^4.0.1
 
 Trello: https://trello.com/b/bVfPFfjM/tasks
 
@@ -14,7 +15,7 @@ This application is divided in two sections, protocol and ui.
 Protocol folder manage all things related to Ethereum, whereas ui will import protocol as a npm module.
 This architecture offers a clean separation between front and back.
 
-The UI is built with React, Redux, Redux-Saga, Bootstrap 4, etc.
+The UI is built with React, Redux, Redux-Saga, Bootstrap 4, Webpack, etc.
     
 
 Run the app with Testrpc and Truffle (recommended way)
@@ -45,7 +46,7 @@ Serve the app
 
     npm run dev
 
-=> Go to http://localhost:8080/
+=> Go to http://localhost:8085/
 
 Run UI tests (using Jest)
 
