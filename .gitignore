@@ -1,6 +1,8 @@
 ### global
 node_modules
 yarn-error.log
+.env
+stats.json
 
 ### protocol
 /protocol/build/
