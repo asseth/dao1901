@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import * as React from "react"
+import {Component} from 'react'
 import {connect} from 'react-redux'
 import toastrManager from '../../helpers/toastrManager'
 import List from '../../components/common/List'

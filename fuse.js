@@ -37,7 +37,7 @@ const fuse = FuseBox.init({
   ]
 })
 fuse.bundle("app")
-  .instructions(`>index.js`)
+  .instructions(`>index.tsx`)
 
 fuse.dev({
   open: false,

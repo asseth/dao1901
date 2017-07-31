@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from 'react'
+import { connect } from 'react-redux'
 
 /**
  * TestContainer
@@ -13,4 +13,4 @@ class TestContainer extends React.Component {
   }
 }
 
-export default connect()(TestContainer);
+export default connect()(TestContainer)

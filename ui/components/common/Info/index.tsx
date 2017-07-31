@@ -1,5 +1,4 @@
-import React from 'react'
-//import PropTypes from 'prop-types'
+import * as React from 'react'
 import './styles.css'
 import {Card} from 'reactstrap'
 import {Icon} from 'react-fa'

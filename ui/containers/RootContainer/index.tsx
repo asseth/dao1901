@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import * as React from 'react'
+import { Component } from 'react'
 import {connect} from 'react-redux'
 import ReduxToastr from 'react-redux-toastr'
 import {Route} from 'react-router-dom'

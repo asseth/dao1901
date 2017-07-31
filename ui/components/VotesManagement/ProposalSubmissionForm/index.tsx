@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import {Button, Form} from 'reactstrap'
 import {Field, reduxForm, reset} from 'redux-form'
 import {Input, TextArea} from '../../common/Inputs'

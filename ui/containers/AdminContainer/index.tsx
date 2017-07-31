@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
+import * as React from "react"
+import {Component} from 'react'
 import {connect} from 'react-redux'
 import toastrManager from '../../helpers/toastrManager'
-import List from '../../components/common/List';
-import MembersListItem from '../../components/DAOManagement/MembershipManagement/MembersListItem';
-import MemberAdditionForm from '../../components/DAOManagement/MembershipManagement/MemberAdditionForm';
-import MemberRevokationForm from '../../components/DAOManagement/MembershipManagement/MemberRevokationForm';
-import CheckMembershipForm from '../../components/DAOManagement/MembershipManagement/CheckMembershipForm';
-import TransferOwnershipForm from '../../components/DAOManagement/TransferOwnershipForm';
+import List from '../../components/common/List'
+import MembersListItem from '../../components/DAOManagement/MembershipManagement/MembersListItem'
+import MemberAdditionForm from '../../components/DAOManagement/MembershipManagement/MemberAdditionForm'
+import MemberRevokationForm from '../../components/DAOManagement/MembershipManagement/MemberRevokationForm'
+import CheckMembershipForm from '../../components/DAOManagement/MembershipManagement/CheckMembershipForm'
+import TransferOwnershipForm from '../../components/DAOManagement/TransferOwnershipForm'
 
 /**
  * Admin Page

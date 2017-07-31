@@ -1,6 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import './styles.css';
+import * as React from 'react'
+import {Component} from 'react'
+import PropTypes from 'prop-types'
+import './styles.css'
 
 /**
  * List
@@ -10,8 +11,8 @@ import './styles.css';
  * @constructor
  */
 export default function List(props) {
-  const ListItem = props.component;
-  let content = (<div></div>);
+  const ListItem = props.component
+  let content = (<div></div>)
 
   // If we have items, render them
   if (props.items && props.items.length !== 0) {
@@ -20,7 +21,7 @@ export default function List(props) {
     ));
   } else {
     // Otherwise render a single component
-    content = <p>{'No Content'}</p>;
+    content = <p>{'No Content'}</p>
   }
 
   return (
