@@ -39,7 +39,7 @@ import userReducer from './user/userReducer'
       - description
 */
 
-export const makeRootReducer = (asyncReducers) => {
+export const makeRootReducer = (asyncReducers = null) => {
   return combineReducers({
     dao: daoReducer,
     ethereum: ethereumReducer,

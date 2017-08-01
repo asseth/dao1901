@@ -1,4 +1,4 @@
-const {BabelPlugin, CSSModules, CSSPlugin, EnvPlugin, FuseBox, JSONPlugin, PostCSSPlugin, RawPlugin, WebIndexPlugin} = require("fuse-box")
+const {CSSModules, CSSPlugin, EnvPlugin, FuseBox, JSONPlugin, PostCSSPlugin, RawPlugin, WebIndexPlugin} = require("fuse-box")
 
 const resolveId = require('postcss-import/lib/resolve-id');
 
@@ -19,25 +19,27 @@ const POSTCSS_PLUGINS = [
 const fuse = FuseBox.init({
   experimentalFeatures: true,
   target: 'browser',
-  homeDir: "ui",
-  output: "build/$name.js",
+  homeDir: 'ui',
+  modulesFolder: 'protocol',
+  output: 'build/$name.js',
   log: true,
   debug: true,
   plugins: [
-    BabelPlugin(),
     EnvPlugin({NODE_ENV: production ? "production" : "development"}),
-    RawPlugin(),
-    [PostCSSPlugin(POSTCSS_PLUGINS), CSSModules(), CSSPlugin()],
+    //RawPlugin(),
+    [CSSModules(), CSSPlugin()],
+    //[PostCSSPlugin(POSTCSS_PLUGINS), CSSModules(), CSSPlugin()],
     JSONPlugin(),
     WebIndexPlugin({
-      title: "React Code Splitting demo",
       template: "ui/index.html",
       path: "/ui/assets/"
     })
   ]
 })
-fuse.bundle("app")
+const app = fuse.bundle("app")
   .instructions(`>index.tsx`)
+
+//if (!production) { app.hmr().watch() }
 
 fuse.dev({
   open: false,

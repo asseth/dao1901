@@ -1,5 +1,5 @@
 import * as React from 'react'
-import './styles.css'
+import styles from './styles.css'
 import {Card} from 'reactstrap'
 import {Icon} from 'react-fa'
 
@@ -14,7 +14,7 @@ export default function Info (props) {
   return (
     <div className="row">
       <div className="col">
-        <Card className="mx-auto" styleName="info">
+        <Card className={`mx-auto ${styles.info}`}>
           <h4>User Info</h4>
           <p>{'User account: '}<span className="ethereum-address">{props.defaultAccount}</span></p>
           <p>

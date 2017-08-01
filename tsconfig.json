@@ -1,28 +1,26 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "allowJs": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
     "isolatedModules": false,
     "jsx": "react",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "declaration": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitHelpers": true,
     "noImplicitAny": false,
     "noImplicitUseStrict": false,
-    "removeComments": true,
     "noLib": false,
     "outDir": "build/",
-    "noEmitHelpers": true,
     "preserveConstEnums": true,
-    "suppressImplicitAnyIndexErrors": true
+    "removeComments": true,
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es6"
   },
-  "exclude": [],
-  "compileOnSave": false,
   "buildOnSave": false,
-  "atom": {
-    "rewriteTsconfig": false
-  },
-  "noEmitHelpers": true,
-  "importHelpers": true
+  "compileOnSave": false,
+  "exclude": []
 }

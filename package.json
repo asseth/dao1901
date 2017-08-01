@@ -19,6 +19,7 @@
   "author": "Mathieu Sornay, Stéphane Roche <rstephane@protonmail.com>, Alexandre Kurth",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^8.0.18",
     "classnames": "^2.2.5",
     "dao1901-contracts": "file:protocol",
     "fuse-box": "^2.2.2-beta.6",
@@ -29,6 +30,7 @@
     "prop-types": "^15.5.10",
     "ramda": "^0.24.1",
     "react": "^15.6.1",
+    "react-css-modules": "^4.6.0",
     "react-dom": "^15.6.1",
     "react-fa": "^4.2.0",
     "react-hot-loader": "^3.0.0-beta.7",
@@ -46,6 +48,7 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.15.6",
     "truffle-artifactor": "^2.1.5",
+    "tslib": "^1.7.1",
     "typescript": "^2.4.2",
     "web3": "^0.19.1"
   }

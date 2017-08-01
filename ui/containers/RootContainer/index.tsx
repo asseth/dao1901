@@ -1,9 +1,8 @@
 import * as React from 'react'
-import { Component } from 'react'
 import {connect} from 'react-redux'
 import ReduxToastr from 'react-redux-toastr'
 import {Route} from 'react-router-dom'
-// import PropTypes from 'prop-types';
+// import * as PropTypes from 'prop-types';
 import TopBar from '../../components/common/TopBar'
 //import DevTools from '../../components/common/DevTools'
 // Redux
@@ -21,7 +20,7 @@ import VotePage from '../VotesManagementContainer'
  * RootContainer
  * Root component, core layout, route handling, web3 setup
  */
-class RootContainer extends Component {
+class RootContainer extends React.Component {
   constructor(props, context) {
     super(props, context)
   }

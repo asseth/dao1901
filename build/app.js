@@ -2,1812 +2,986 @@
 var __process_env__ = {"NODE_ENV":"development"};
 FuseBox.pkg("default", {}, function(___scope___){
 ___scope___.file("index.jsx", function(exports, require, module, __filename, __dirname){
-/* fuse:injection: */ var process = require("process");
-"use strict";
 
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var react_dom_1 = require("react-dom");
-var react_hot_loader_1 = require("react-hot-loader");
-var RootContainer_1 = require("./containers/RootContainer");
-var createStore_1 = require("./redux/createStore");
+const React = require("react");
+const ReactDOM = require("react-dom");
+const react_hot_loader_1 = require("react-hot-loader");
+const RootContainer_1 = require("./containers/RootContainer");
+const createStore_1 = require("./redux/createStore");
 require("./assets/theme/app.css");
-var store = createStore_1.default();
-var render = function render(Component) {
-    react_dom_1.default.render(react_1.default.createElement(react_hot_loader_1.AppContainer, null, react_1.default.createElement(Component, { store: store })), document.getElementById('root'));
+const render = Component => {
+    ReactDOM.render(React.createElement(react_hot_loader_1.AppContainer, null,
+        React.createElement(Component, { store: createStore_1.default })), document.getElementById('root'));
 };
 render(RootContainer_1.default);
-if (module.hot && process.env.NODE_ENV === 'development') {
-    module.hot.accept('./containers/RootContainer', function () {
-        render(RootContainer_1.default);
-    });
-    module.hot.accept('./redux/reducersIndex', function () {
-        var reducers = require('./redux/reducersIndex').default;
-        return store.replaceReducer(reducers);
-    });
-}
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("containers/RootContainer/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-var react_1 = require("react");
-var react_redux_1 = require("react-redux");
-var react_redux_toastr_1 = require("react-redux-toastr");
-var react_router_dom_1 = require("react-router-dom");
-var TopBar_1 = require("../../components/common/TopBar");
-var react_redux_2 = require("react-redux");
-var react_router_redux_1 = require("react-router-redux");
-var createStore_1 = require("../../redux/createStore");
-var AdminContainer_1 = require("../AdminContainer");
-var HomeContainer_1 = require("../HomeContainer");
-var ProposalSubmissionContainer_1 = require("../ProposalSubmissionContainer");
-var VotesManagementContainer_1 = require("../VotesManagementContainer");
-
-var RootContainer = function (_react_1$Component) {
-    _inherits(RootContainer, _react_1$Component);
-
-    function RootContainer(props, context) {
-        _classCallCheck(this, RootContainer);
-
-        return _possibleConstructorReturn(this, (RootContainer.__proto__ || Object.getPrototypeOf(RootContainer)).call(this, props, context));
+const React = require("react");
+const react_redux_1 = require("react-redux");
+const react_redux_toastr_1 = require("react-redux-toastr");
+const react_router_dom_1 = require("react-router-dom");
+const TopBar_1 = require("../../components/common/TopBar");
+const react_redux_2 = require("react-redux");
+const react_router_redux_1 = require("react-router-redux");
+const createStore_1 = require("../../redux/createStore");
+const AdminContainer_1 = require("../AdminContainer");
+const HomeContainer_1 = require("../HomeContainer");
+const ProposalSubmissionContainer_1 = require("../ProposalSubmissionContainer");
+const VotesManagementContainer_1 = require("../VotesManagementContainer");
+class RootContainer extends React.Component {
+    constructor(props, context) {
+        super(props, context);
     }
-
-    _createClass(RootContainer, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(react_redux_2.Provider, { store: this.props.store }, React.createElement(react_router_redux_1.ConnectedRouter, { history: createStore_1.history }, React.createElement("div", null, React.createElement(TopBar_1.default, null), React.createElement("div", { className: "container m-top-50" }, React.createElement("div", { className: "row" }, React.createElement("div", { className: "col-12" }, React.createElement("div", null, React.createElement(react_router_dom_1.Route, { exact: true, path: "/", component: HomeContainer_1.default }), React.createElement(react_router_dom_1.Route, { path: "/admin", component: AdminContainer_1.default }), React.createElement(react_router_dom_1.Route, { path: "/vote", component: VotesManagementContainer_1.default }), React.createElement(react_router_dom_1.Route, { path: "/proposal_submission", component: ProposalSubmissionContainer_1.default }), React.createElement(react_redux_toastr_1.default, { timeOut: 8500, newestOnTop: true, preventDuplicates: true, position: "top-right", transitionIn: "bounceIn", transitionOut: "bounceOut", progressBar: true }))))))));
-        }
-    }]);
-
-    return RootContainer;
-}(react_1.Component);
-
+    render() {
+        return (React.createElement(react_redux_2.Provider, { store: this.props.store },
+            React.createElement(react_router_redux_1.ConnectedRouter, { history: createStore_1.history },
+                React.createElement("div", null,
+                    React.createElement(TopBar_1.default, null),
+                    React.createElement("div", { className: "container m-top-50" },
+                        React.createElement("div", { className: "row" },
+                            React.createElement("div", { className: "col-12" },
+                                React.createElement("div", null,
+                                    React.createElement(react_router_dom_1.Route, { exact: true, path: "/", component: HomeContainer_1.default }),
+                                    React.createElement(react_router_dom_1.Route, { path: "/admin", component: AdminContainer_1.default }),
+                                    React.createElement(react_router_dom_1.Route, { path: "/vote", component: VotesManagementContainer_1.default }),
+                                    React.createElement(react_router_dom_1.Route, { path: "/proposal_submission", component: ProposalSubmissionContainer_1.default }),
+                                    React.createElement(react_redux_toastr_1.default, { timeOut: 8500, newestOnTop: true, preventDuplicates: true, position: "top-right", transitionIn: "bounceIn", transitionOut: "bounceOut", progressBar: true })))))))));
+    }
+}
 exports.default = react_redux_1.connect()(RootContainer);
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/common/TopBar/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-var PropTypes = require("prop-types");
-var react_router_dom_1 = require("react-router-dom");
-var reactstrap_1 = require("reactstrap");
-require("./styles.css");
-
-var TopBar = function (_React$Component) {
-    _inherits(TopBar, _React$Component);
-
-    function TopBar(props, context) {
-        _classCallCheck(this, TopBar);
-
-        var _this = _possibleConstructorReturn(this, (TopBar.__proto__ || Object.getPrototypeOf(TopBar)).call(this, props, context));
-
-        _this.state = {
+const React = require("react");
+const react_1 = require("react");
+const PropTypes = require("prop-types");
+const react_router_dom_1 = require("react-router-dom");
+const reactstrap_1 = require("reactstrap");
+const styles_css_1 = require("./styles.css");
+class TopBar extends react_1.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
             isOpen: false
         };
-        return _this;
     }
-
-    _createClass(TopBar, [{
-        key: "toggle",
-        value: function toggle() {
-            this.setState({
-                isOpen: !this.state.isOpen
-            });
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            return React.createElement("div", null, React.createElement(reactstrap_1.Navbar, { color: "faded", light: true, toggleable: true }, React.createElement(reactstrap_1.NavbarToggler, { right: true, onClick: function onClick() {
-                    return _this2.toggle();
-                } }), React.createElement(reactstrap_1.NavbarBrand, { href: "/", styleName: "navbar-brand" }, React.createElement("img", { src: "images/Dao1901Logo.png", alt: "logo" })), React.createElement(reactstrap_1.Collapse, { isOpen: this.state.isOpen, navbar: true }, React.createElement(reactstrap_1.Nav, { styleName: "navbar-nav", navbar: true }, React.createElement(reactstrap_1.NavItem, null, React.createElement(reactstrap_1.NavLink, { tag: react_router_dom_1.Link, to: "/" }, "Home")), React.createElement(reactstrap_1.NavItem, null, React.createElement(reactstrap_1.NavLink, { tag: react_router_dom_1.Link, to: "/proposal_submission" }, "Proposal Submission")), React.createElement(reactstrap_1.NavItem, null, React.createElement(reactstrap_1.NavLink, { tag: react_router_dom_1.Link, to: "/vote" }, "Vote")), React.createElement(reactstrap_1.NavItem, null, React.createElement(reactstrap_1.NavLink, { tag: react_router_dom_1.Link, to: "/admin" }, "Admin"))))));
-        }
-    }]);
-
-    return TopBar;
-}(React.Component);
-
+    toggle() {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+    render() {
+        return (React.createElement("div", null,
+            React.createElement(reactstrap_1.Navbar, { color: "faded", light: true, toggleable: true },
+                React.createElement(reactstrap_1.NavbarToggler, { right: true, onClick: () => this.toggle() }),
+                React.createElement(reactstrap_1.NavbarBrand, { href: "/", className: styles_css_1.default['navbar-brand'] },
+                    React.createElement("img", { src: "images/Dao1901Logo.png", alt: "logo" })),
+                React.createElement(reactstrap_1.Collapse, { isOpen: this.state.isOpen, navbar: true },
+                    React.createElement(reactstrap_1.Nav, { className: styles_css_1.default['navbar-nav'], navbar: true },
+                        React.createElement(reactstrap_1.NavItem, null,
+                            React.createElement(reactstrap_1.NavLink, { tag: react_router_dom_1.Link, to: "/" }, "Home")),
+                        React.createElement(reactstrap_1.NavItem, null,
+                            React.createElement(reactstrap_1.NavLink, { tag: react_router_dom_1.Link, to: "/proposal_submission" }, "Proposal Submission")),
+                        React.createElement(reactstrap_1.NavItem, null,
+                            React.createElement(reactstrap_1.NavLink, { tag: react_router_dom_1.Link, to: "/vote" }, "Vote")),
+                        React.createElement(reactstrap_1.NavItem, null,
+                            React.createElement(reactstrap_1.NavLink, { tag: react_router_dom_1.Link, to: "/admin" }, "Admin")))))));
+    }
+}
 exports.default = TopBar;
 TopBar.contextTypes = {
     router: PropTypes.object
 };
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/common/TopBar/styles.css", function(exports, require, module, __filename, __dirname){
 
-module.exports = ".navbar-brand > img {\n  height: 4rem;\n}\n\n.navbar-nav {\n  margin-left: 2rem;\n  & a {\n    margin-left: 1rem;\n  }\n}"
+
+module.exports.default = {"navbar-brand":"_navbar-brand_1vmtg_1","navbar-nav":"_navbar-nav_1vmtg_5"};
+require("fuse-box-css")("components/common/TopBar/styles.css", "._navbar-brand_1vmtg_1 > img {\n  height: 4rem;\n}\n\n._navbar-nav_1vmtg_5 {\n  margin-left: 2rem;\n  & a {\n    margin-left: 1rem;\n  }\n}")
 });
 ___scope___.file("redux/createStore.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var dao1901_contracts_1 = require("dao1901-contracts");
-var redux_1 = require("redux");
-var truffle_js_1 = require("../../protocol/truffle.js");
-var createBrowserHistory_1 = require("history/createBrowserHistory");
+const dao1901_contracts_1 = require("dao1901-contracts");
+const redux_1 = require("redux");
+const truffleConfig = require('../../protocol/truffle.js');
+console.log("truffleConfig", truffleConfig);
+const createBrowserHistory_1 = require("history/createBrowserHistory");
 exports.history = createBrowserHistory_1.default();
-var redux_saga_1 = require("redux-saga");
-exports.sagaMiddleware = redux_saga_1.default();
-var react_router_redux_1 = require("react-router-redux");
-var reduxRouterMiddleware = react_router_redux_1.routerMiddleware(exports.history);
-var redux_logger_1 = require("redux-logger");
-var reducersIndex_1 = require("./reducersIndex");
-var rootSaga_1 = require("./rootSaga");
+const redux_saga_1 = require("redux-saga");
+const sagaMiddleware = redux_saga_1.default();
+const react_router_redux_1 = require("react-router-redux");
+const reduxRouterMiddleware = react_router_redux_1.routerMiddleware(exports.history);
+const redux_logger_1 = require("redux-logger");
+const reducersIndex_1 = require("./reducersIndex");
+const rootSaga_1 = require("./rootSaga");
 exports.contracts = {};
-exports.default = function () {
-    var middlewares = [reduxRouterMiddleware, exports.sagaMiddleware, redux_logger_1.default];
-    var composeEnhancers = (typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : redux_1.compose;
-    var enhancers = composeEnhancers(redux_1.applyMiddleware.apply(redux_1, middlewares));
-    var store = redux_1.createStore(reducersIndex_1.default(), enhancers);
-    window.addEventListener('load', function () {
-        var web3Location = "http://" + truffle_js_1.default.networks.development.host + ":" + truffle_js_1.default.networks.development.port;
-        if (typeof window.web3 !== 'undefined') {
-            console.log('Web3 detected on window');
-            window.web3 = new Web3(window.web3.currentProvider);
-        } else {
-            console.log('No Web3 detected \nSet Web3');
-            window.web3 = new Web3(new Web3.providers.HttpProvider(web3Location));
-            console.log('web3 added to window');
-        }
-        var _dao1901_contracts_1$ = dao1901_contracts_1.default,
-            Dao1901Members = _dao1901_contracts_1$.Dao1901Members,
-            Dao1901Votes = _dao1901_contracts_1$.Dao1901Votes,
-            Owned = _dao1901_contracts_1$.Owned;
-
-        Promise.all([Dao1901Members, Dao1901Votes, Owned].map(function (contract) {
-            contract.setProvider(window.web3.currentProvider);
-            return contract.deployed();
-        })).then(function (deployedContracts) {
-            deployedContracts.forEach(function (contract) {
-                var name = contract.constructor.contract_name;
-                contract['name'] = name;
-                exports.contracts[name] = contract;
-            });
-            console.log('Smart contracts ready');
-        }).then(function () {
-            exports.sagaMiddleware.run(rootSaga_1.default);
+const middlewares = [reduxRouterMiddleware, sagaMiddleware, redux_logger_1.default];
+const composeEnhancers = typeof window === 'object' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : redux_1.compose;
+const finalCreateStore = composeEnhancers(redux_1.applyMiddleware(...middlewares))(redux_1.createStore);
+const store = finalCreateStore(reducersIndex_1.default());
+window.addEventListener('load', function () {
+    let web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`;
+    if (typeof window.web3 !== 'undefined') {
+        console.log('Web3 detected on window');
+        window.web3 = new Web3(window.web3.currentProvider);
+    }
+    else {
+        console.log('No Web3 detected \nSet Web3');
+        window.web3 = new Web3(new Web3.providers.HttpProvider(web3Location));
+        console.log('web3 added to window');
+    }
+    const { Dao1901Members, Dao1901Votes, Owned } = dao1901_contracts_1.default;
+    Promise.all([Dao1901Members, Dao1901Votes, Owned]
+        .map((contract) => {
+        contract.setProvider(window.web3.currentProvider);
+        return contract.deployed();
+    }))
+        .then((deployedContracts) => {
+        deployedContracts.forEach(function (contract) {
+            let name = contract.constructor.contract_name;
+            contract['name'] = name;
+            exports.contracts[name] = contract;
         });
+        console.log('Smart contracts ready');
+    })
+        .then(() => {
+        sagaMiddleware.run(rootSaga_1.default);
     });
-    return store;
-};
+});
+exports.default = store;
+//# sourceMappingURL=createStore.js.map
+});
+___scope___.file("Users/steph/Desktop/PRO/Projects/dao1901/protocol/truffle.js", function(exports, require, module, __filename, __dirname){
+
+module.exports = {
+  networks: {
+    development: {
+      host: 'localhost',
+      port: 8545,
+      network_id: '*',        // Match any network id
+      before_timeout: 200000, // specify Mocha timeout per network
+      test_timeout: 300000    // specify Mocha timeout per network
+    },
+    kovan: {
+      host: 'localhost',
+      port: 8545,
+      network_id: '42',
+      gas:4900000
+    }
+  },
+  mocha: {
+    timeout: 200000,
+    useColors: true
+  }
+}
+
 });
 ___scope___.file("redux/reducersIndex.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var redux_1 = require("redux");
-var react_router_redux_1 = require("react-router-redux");
-var redux_form_1 = require("redux-form");
-var react_redux_toastr_1 = require("react-redux-toastr");
-var daoReducer_1 = require("./dao/daoReducer");
-var ethereumReducer_1 = require("./ethereum/ethereumReducer");
-var ipfsReducer_1 = require("./ipfs/ipfsReducer");
-var votesReducer_1 = require("./votes/votesReducer");
-var userReducer_1 = require("./user/userReducer");
-exports.makeRootReducer = function (asyncReducers) {
+const redux_1 = require("redux");
+const react_router_redux_1 = require("react-router-redux");
+const redux_form_1 = require("redux-form");
+const react_redux_toastr_1 = require("react-redux-toastr");
+const daoReducer_1 = require("./dao/daoReducer");
+const ethereumReducer_1 = require("./ethereum/ethereumReducer");
+const ipfsReducer_1 = require("./ipfs/ipfsReducer");
+const votesReducer_1 = require("./votes/votesReducer");
+const userReducer_1 = require("./user/userReducer");
+exports.makeRootReducer = (asyncReducers = null) => {
     return redux_1.combineReducers(Object.assign({ dao: daoReducer_1.default, ethereum: ethereumReducer_1.default, form: redux_form_1.reducer, ipfs: ipfsReducer_1.default, routing: react_router_redux_1.routerReducer, toastr: react_redux_toastr_1.reducer, user: userReducer_1.default, vote: votesReducer_1.default }, asyncReducers));
 };
-exports.injectReducer = function (store, _ref) {
-    var key = _ref.key,
-        reducer = _ref.reducer;
-
-    if (Object.hasOwnProperty.call(store.asyncReducers, key)) return;
+exports.injectReducer = (store, { key, reducer }) => {
+    if (Object.hasOwnProperty.call(store.asyncReducers, key))
+        return;
     store.asyncReducers[key] = reducer;
     store.replaceReducer(exports.makeRootReducer(store.asyncReducers));
 };
 exports.default = exports.makeRootReducer;
+//# sourceMappingURL=reducersIndex.js.map
 });
 ___scope___.file("redux/dao/daoReducer.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _ACTION_HANDLERS;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var initialState = {
+const initialState = {
     contracts: {},
     errors: [],
     members: [],
-    txs: []
+    txs: [],
 };
-var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, _defineProperty(_ACTION_HANDLERS, 'FETCH_OWNER_ADDRESS_SUCCEED', function FETCH_OWNER_ADDRESS_SUCCEED(state, action) {
-    return Object.assign({}, state, { ownerAddress: action.ownerAddress });
-}), _defineProperty(_ACTION_HANDLERS, 'FETCH_OWNER_ADDRESS_FAILED', function FETCH_OWNER_ADDRESS_FAILED(state, action) {
-    return Object.assign({}, state, { error: action.error });
-}), _defineProperty(_ACTION_HANDLERS, 'FETCH_CONTRACTS_INFO_SUCCEED', function FETCH_CONTRACTS_INFO_SUCCEED(state, action) {
-    return Object.assign({}, state, { contracts: action.contractsInfo });
-}), _defineProperty(_ACTION_HANDLERS, 'FETCH_CONTRACTS_INFO_FAILED', function FETCH_CONTRACTS_INFO_FAILED(state, action) {
-    return Object.assign({}, state, { error: action.error });
-}), _defineProperty(_ACTION_HANDLERS, 'FETCH_ALL_MEMBERS_SUCCEED', function FETCH_ALL_MEMBERS_SUCCEED(state, action) {
-    return Object.assign({}, state, { members: action.members });
-}), _defineProperty(_ACTION_HANDLERS, 'FETCH_ALL_MEMBERS_FAILED', function FETCH_ALL_MEMBERS_FAILED(state, action) {
-    var errorLog = { event: 'FETCH_ALL_MEMBERS_FAILED', message: action.e };
-    var errors = [].concat(_toConsumableArray(state.errors), [errorLog]);
-    return Object.assign({}, state, { errors: errors });
-}), _defineProperty(_ACTION_HANDLERS, 'ADD_MEMBER_SUCCEED', function ADD_MEMBER_SUCCEED(state, action) {
-    var txLog = { event: 'ADD_MEMBER_SUCCEED', tx: action.tx };
-    var txs = [].concat(_toConsumableArray(state.txs), [txLog]);
-    var members = [].concat(_toConsumableArray(state.members), [{
-        memberAddress: action.memberAddress,
-        endSubscriptionDate: action.endSubscriptionDate
-    }]);
-    return Object.assign({}, state, { members: members, txs: txs });
-}), _defineProperty(_ACTION_HANDLERS, 'ADD_MEMBER_FAILED', function ADD_MEMBER_FAILED(state, action) {
-    var errorLog = { event: 'ADD_MEMBER_FAILED', message: action.e };
-    var errors = [].concat(_toConsumableArray(state.errors), [errorLog]);
-    return Object.assign({}, state, { errors: errors });
-}), _defineProperty(_ACTION_HANDLERS, 'REVOKE_MEMBER_SUCCEED', function REVOKE_MEMBER_SUCCEED(state, action) {
-    var txLog = { event: 'REVOKE_MEMBER_SUCCEED', tx: action.tx };
-    var txs = [].concat(_toConsumableArray(state.txs), [txLog]);
-    return Object.assign({}, state, { txs: txs });
-}), _defineProperty(_ACTION_HANDLERS, 'REVOKE_MEMBER_FAILED', function REVOKE_MEMBER_FAILED(state, action) {
-    var errorLog = { event: 'REVOKE_MEMBER_FAILED', message: action.e };
-    var errors = [].concat(_toConsumableArray(state.errors), [errorLog]);
-    return Object.assign({}, state, { errors: errors });
-}), _defineProperty(_ACTION_HANDLERS, 'TRANSFER_OWNERSHIP_SUCCEED', function TRANSFER_OWNERSHIP_SUCCEED(state, action) {
-    return Object.assign({}, state, { ownerAddress: action.ownerAddress });
-}), _ACTION_HANDLERS);
-function daoReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-    var action = arguments[1];
-
-    var handler = ACTION_HANDLERS[action.type];
+const ACTION_HANDLERS = {
+    ['FETCH_OWNER_ADDRESS_SUCCEED']: (state, action) => {
+        return Object.assign({}, state, { ownerAddress: action.ownerAddress });
+    },
+    ['FETCH_OWNER_ADDRESS_FAILED']: (state, action) => {
+        return Object.assign({}, state, { error: action.error });
+    },
+    ['FETCH_CONTRACTS_INFO_SUCCEED']: (state, action) => {
+        return Object.assign({}, state, { contracts: action.contractsInfo });
+    },
+    ['FETCH_CONTRACTS_INFO_FAILED']: (state, action) => {
+        return Object.assign({}, state, { error: action.error });
+    },
+    ['FETCH_ALL_MEMBERS_SUCCEED']: (state, action) => {
+        return Object.assign({}, state, { members: action.members });
+    },
+    ['FETCH_ALL_MEMBERS_FAILED']: (state, action) => {
+        const errorLog = { event: 'FETCH_ALL_MEMBERS_FAILED', message: action.e };
+        const errors = [...state.errors, errorLog];
+        return Object.assign({}, state, { errors });
+    },
+    ['ADD_MEMBER_SUCCEED']: (state, action) => {
+        const txLog = { event: 'ADD_MEMBER_SUCCEED', tx: action.tx };
+        const txs = [...state.txs, txLog];
+        const members = [...state.members, {
+                memberAddress: action.memberAddress,
+                endSubscriptionDate: action.endSubscriptionDate
+            }];
+        return Object.assign({}, state, { members, txs });
+    },
+    ['ADD_MEMBER_FAILED']: (state, action) => {
+        const errorLog = { event: 'ADD_MEMBER_FAILED', message: action.e };
+        const errors = [...state.errors, errorLog];
+        return Object.assign({}, state, { errors });
+    },
+    ['REVOKE_MEMBER_SUCCEED']: (state, action) => {
+        const txLog = { event: 'REVOKE_MEMBER_SUCCEED', tx: action.tx };
+        const txs = [...state.txs, txLog];
+        return Object.assign({}, state, { txs });
+    },
+    ['REVOKE_MEMBER_FAILED']: (state, action) => {
+        const errorLog = { event: 'REVOKE_MEMBER_FAILED', message: action.e };
+        const errors = [...state.errors, errorLog];
+        return Object.assign({}, state, { errors });
+    },
+    ['TRANSFER_OWNERSHIP_SUCCEED']: (state, action) => {
+        return Object.assign({}, state, { ownerAddress: action.ownerAddress });
+    },
+};
+function daoReducer(state = initialState, action) {
+    const handler = ACTION_HANDLERS[action.type];
     return handler ? handler(state, action) : state;
 }
 exports.default = daoReducer;
+//# sourceMappingURL=daoReducer.js.map
 });
 ___scope___.file("redux/ethereum/ethereumReducer.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _ACTION_HANDLERS;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, _defineProperty(_ACTION_HANDLERS, 'BLOCK_NUMBER_SUCCEED', function BLOCK_NUMBER_SUCCEED(state, action) {
-    return Object.assign({}, state, { blockNumber: action.blockNumber });
-}), _defineProperty(_ACTION_HANDLERS, 'BLOCK_NUMBER_FAILED', function BLOCK_NUMBER_FAILED(state, action) {
-    return Object.assign({}, state, { errorMessage: action.errorMessage });
-}), _ACTION_HANDLERS);
-function ethereumReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var action = arguments[1];
-
-    var handler = ACTION_HANDLERS[action.type];
+const ACTION_HANDLERS = {
+    ['BLOCK_NUMBER_SUCCEED']: (state, action) => {
+        return Object.assign({}, state, { blockNumber: action.blockNumber });
+    },
+    ['BLOCK_NUMBER_FAILED']: (state, action) => {
+        return Object.assign({}, state, { errorMessage: action.errorMessage });
+    }
+};
+function ethereumReducer(state = {}, action) {
+    const handler = ACTION_HANDLERS[action.type];
     return handler ? handler(state, action) : state;
 }
 exports.default = ethereumReducer;
+//# sourceMappingURL=ethereumReducer.js.map
 });
 ___scope___.file("redux/ipfs/ipfsReducer.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _ACTION_HANDLERS;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var initialState = {};
-var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, _defineProperty(_ACTION_HANDLERS, 'IPFS_ID_SUCCEED', function IPFS_ID_SUCCEED(state, action) {
-    return Object.assign({}, state, action.info);
-}), _defineProperty(_ACTION_HANDLERS, 'IPFS_ID_FAILED', function IPFS_ID_FAILED(state, action) {
-    return Object.assign({}, state, { error: action.e });
-}), _ACTION_HANDLERS);
-function ipfsReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-    var action = arguments[1];
-
-    var handler = ACTION_HANDLERS[action.type];
+const initialState = {};
+const ACTION_HANDLERS = {
+    ['IPFS_ID_SUCCEED']: (state, action) => {
+        return Object.assign({}, state, action.info);
+    },
+    ['IPFS_ID_FAILED']: (state, action) => {
+        return Object.assign({}, state, { error: action.e });
+    }
+};
+function ipfsReducer(state = initialState, action) {
+    const handler = ACTION_HANDLERS[action.type];
     return handler ? handler(state, action) : state;
 }
 exports.default = ipfsReducer;
+//# sourceMappingURL=ipfsReducer.js.map
 });
 ___scope___.file("redux/votes/votesReducer.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _ACTION_HANDLERS;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var initialState = {
+const initialState = {
     errors: [],
     proposals: [],
     txs: [],
     votes: {}
 };
-var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, _defineProperty(_ACTION_HANDLERS, 'CREATE_PROPOSAL_SUCCEED', function CREATE_PROPOSAL_SUCCEED(state, action) {
-    var txLog = { event: 'CREATE_PROPOSAL_SUCCEED', tx: action.tx };
-    var txs = [].concat(_toConsumableArray(state.txs), [txLog]);
-    return Object.assign({}, state, { txs: txs });
-}), _defineProperty(_ACTION_HANDLERS, 'CREATE_PROPOSAL_FAILED', function CREATE_PROPOSAL_FAILED(state, action) {
-    var errorLog = { event: 'CREATE_PROPOSAL_FAILED', message: action.e };
-    var errors = [].concat(_toConsumableArray(state.errors), [errorLog]);
-    return Object.assign({}, state, { errors: errors });
-}), _defineProperty(_ACTION_HANDLERS, 'FETCH_ALL_PROPOSALS_SUCCEED', function FETCH_ALL_PROPOSALS_SUCCEED(state, action) {
-    return Object.assign({}, state, { proposals: action.proposals });
-}), _defineProperty(_ACTION_HANDLERS, 'FETCH_ALL_PROPOSALS_FAILED', function FETCH_ALL_PROPOSALS_FAILED(state, action) {
-    var errorLog = { event: 'FETCH_ALL_PROPOSALS_FAILED', message: action.e };
-    var errors = [].concat(_toConsumableArray(state.errors), [errorLog]);
-    return Object.assign({}, state, { errors: errors });
-}), _defineProperty(_ACTION_HANDLERS, 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED', function FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED(state, action) {
-    return Object.assign({}, state, { votes: action.votes });
-}), _defineProperty(_ACTION_HANDLERS, 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_FAILED', function FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_FAILED(state, action) {
-    var errorLog = { event: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_FAILED', message: action.e };
-    var errors = [].concat(_toConsumableArray(state.errors), [errorLog]);
-    return Object.assign({}, state, { errors: errors });
-}), _defineProperty(_ACTION_HANDLERS, 'VOTE_SUBMISSION_SUCCEED', function VOTE_SUBMISSION_SUCCEED(state, action) {
-    var txLog = { event: 'VOTE_SUBMISSION_SUCCEED', tx: action.tx };
-    var txs = [].concat(_toConsumableArray(state.txs), [txLog]);
-    return Object.assign({}, state, { txs: txs });
-}), _defineProperty(_ACTION_HANDLERS, 'VOTE_SUBMISSION_FAILED', function VOTE_SUBMISSION_FAILED(state, action) {
-    var errorLog = { event: 'VOTE_SUBMISSION_FAILED', message: action.e };
-    var errors = [].concat(_toConsumableArray(state.errors), [errorLog]);
-    return Object.assign({}, state, { errors: errors });
-}), _ACTION_HANDLERS);
-function votesReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-    var action = arguments[1];
-
-    var handler = ACTION_HANDLERS[action.type];
+const ACTION_HANDLERS = {
+    ['CREATE_PROPOSAL_SUCCEED']: (state, action) => {
+        const txLog = { event: 'CREATE_PROPOSAL_SUCCEED', tx: action.tx };
+        const txs = [...state.txs, txLog];
+        return Object.assign({}, state, { txs });
+    },
+    ['CREATE_PROPOSAL_FAILED']: (state, action) => {
+        const errorLog = { event: 'CREATE_PROPOSAL_FAILED', message: action.e };
+        const errors = [...state.errors, errorLog];
+        return Object.assign({}, state, { errors });
+    },
+    ['FETCH_ALL_PROPOSALS_SUCCEED']: (state, action) => {
+        return Object.assign({}, state, { proposals: action.proposals });
+    },
+    ['FETCH_ALL_PROPOSALS_FAILED']: (state, action) => {
+        const errorLog = { event: 'FETCH_ALL_PROPOSALS_FAILED', message: action.e };
+        const errors = [...state.errors, errorLog];
+        return Object.assign({}, state, { errors });
+    },
+    ['FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED']: (state, action) => {
+        return Object.assign({}, state, { votes: action.votes });
+    },
+    ['FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_FAILED']: (state, action) => {
+        const errorLog = { event: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_FAILED', message: action.e };
+        const errors = [...state.errors, errorLog];
+        return Object.assign({}, state, { errors });
+    },
+    ['VOTE_SUBMISSION_SUCCEED']: (state, action) => {
+        const txLog = { event: 'VOTE_SUBMISSION_SUCCEED', tx: action.tx };
+        const txs = [...state.txs, txLog];
+        return Object.assign({}, state, { txs });
+    },
+    ['VOTE_SUBMISSION_FAILED']: (state, action) => {
+        const errorLog = { event: 'VOTE_SUBMISSION_FAILED', message: action.e };
+        const errors = [...state.errors, errorLog];
+        return Object.assign({}, state, { errors });
+    },
+};
+function votesReducer(state = initialState, action) {
+    const handler = ACTION_HANDLERS[action.type];
     return handler ? handler(state, action) : state;
 }
 exports.default = votesReducer;
+//# sourceMappingURL=votesReducer.js.map
 });
 ___scope___.file("redux/user/userReducer.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _ACTION_HANDLERS;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, _defineProperty(_ACTION_HANDLERS, 'USER_ACCOUNTS_SUCCEED', function USER_ACCOUNTS_SUCCEED(state, action) {
-    return Object.assign({}, state, { accounts: action.accounts });
-}), _defineProperty(_ACTION_HANDLERS, 'USER_ACCOUNTS_FAILED', function USER_ACCOUNTS_FAILED(state, action) {
-    return Object.assign({}, state, { error: action.e });
-}), _defineProperty(_ACTION_HANDLERS, 'USER_DEFAULT_ACCOUNT_SUCCEED', function USER_DEFAULT_ACCOUNT_SUCCEED(state, action) {
-    return Object.assign({}, state, { defaultAccount: action.defaultAccount });
-}), _defineProperty(_ACTION_HANDLERS, 'USER_DEFAULT_ACCOUNT_FAILED', function USER_DEFAULT_ACCOUNT_FAILED(state, action) {
-    return Object.assign({}, state, { error: action.e });
-}), _defineProperty(_ACTION_HANDLERS, 'USER_BALANCE_SUCCEED', function USER_BALANCE_SUCCEED(state, action) {
-    return Object.assign({}, state, { balance: action.balance });
-}), _defineProperty(_ACTION_HANDLERS, 'USER_BALANCE_FAILED', function USER_BALANCE_FAILED(state, action) {
-    return Object.assign({}, state, { error: action.e });
-}), _ACTION_HANDLERS);
-function userReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var action = arguments[1];
-
-    var handler = ACTION_HANDLERS[action.type];
+const ACTION_HANDLERS = {
+    ['USER_ACCOUNTS_SUCCEED']: (state, action) => {
+        return Object.assign({}, state, { accounts: action.accounts });
+    },
+    ['USER_ACCOUNTS_FAILED']: (state, action) => {
+        return Object.assign({}, state, { error: action.e });
+    },
+    ['USER_DEFAULT_ACCOUNT_SUCCEED']: (state, action) => {
+        return Object.assign({}, state, { defaultAccount: action.defaultAccount });
+    },
+    ['USER_DEFAULT_ACCOUNT_FAILED']: (state, action) => {
+        return Object.assign({}, state, { error: action.e });
+    },
+    ['USER_BALANCE_SUCCEED']: (state, action) => {
+        return Object.assign({}, state, { balance: action.balance });
+    },
+    ['USER_BALANCE_FAILED']: (state, action) => {
+        return Object.assign({}, state, { error: action.e });
+    }
+};
+function userReducer(state = {}, action) {
+    const handler = ACTION_HANDLERS[action.type];
     return handler ? handler(state, action) : state;
 }
 exports.default = userReducer;
+//# sourceMappingURL=userReducer.js.map
 });
 ___scope___.file("redux/rootSaga.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _marked = [bootstrap, bootstrapProposalSubmissionPage, bootstrapVotingPage, bootstrapAdminPage, rootSaga].map(regeneratorRuntime.mark);
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var effects_1 = require("redux-saga/effects");
-var daoSaga_1 = require("./dao/daoSaga");
-var ethereumSaga_1 = require("./ethereum/ethereumSaga");
-var ipfsSaga_1 = require("./ipfs/ipfsSaga");
-var votesSaga_1 = require("./votes/votesSaga");
-var userSaga_1 = require("./user/userSaga");
-function bootstrap() {
-    var _ref, error;
-
-    return regeneratorRuntime.wrap(function bootstrap$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    console.log('bootstrap sagas');
-                    _context.next = 3;
-                    return effects_1.put({ type: 'USER_ACCOUNTS_REQUESTED' });
-
-                case 3:
-                    _context.next = 5;
-                    return effects_1.put({ type: 'FETCH_ETHEREUM_INFO_REQUESTED' });
-
-                case 5:
-                    _context.next = 7;
-                    return effects_1.put({ type: 'FETCH_CONTRACTS_INFO_REQUESTED' });
-
-                case 7:
-                    _context.next = 9;
-                    return effects_1.race({
-                        success: effects_1.take('FETCH_CONTRACTS_INFO_SUCCEED'),
-                        error: effects_1.take('FETCH_CONTRACTS_INFO_FAILED')
-                    });
-
-                case 9:
-                    _ref = _context.sent;
-                    error = _ref.error;
-
-                    if (!error) {
-                        _context.next = 13;
-                        break;
-                    }
-
-                    throw new Error(error);
-
-                case 13:
-                    _context.next = 15;
-                    return effects_1.put({ type: 'FETCH_OWNER_ADDRESS_REQUESTED' });
-
-                case 15:
-                    _context.next = 17;
-                    return bootstrapProposalSubmissionPage();
-
-                case 17:
-                    _context.next = 19;
-                    return bootstrapVotingPage();
-
-                case 19:
-                    _context.next = 21;
-                    return bootstrapAdminPage();
-
-                case 21:
-                case "end":
-                    return _context.stop();
-            }
-        }
-    }, _marked[0], this);
+const effects_1 = require("redux-saga/effects");
+const daoSaga_1 = require("./dao/daoSaga");
+const ethereumSaga_1 = require("./ethereum/ethereumSaga");
+const ipfsSaga_1 = require("./ipfs/ipfsSaga");
+const votesSaga_1 = require("./votes/votesSaga");
+const userSaga_1 = require("./user/userSaga");
+function* bootstrap() {
+    console.log('bootstrap sagas');
+    yield effects_1.put({ type: 'USER_ACCOUNTS_REQUESTED' });
+    yield effects_1.put({ type: 'FETCH_ETHEREUM_INFO_REQUESTED' });
+    yield effects_1.put({ type: 'FETCH_CONTRACTS_INFO_REQUESTED' });
+    const { error } = yield effects_1.race({
+        success: effects_1.take('FETCH_CONTRACTS_INFO_SUCCEED'),
+        error: effects_1.take('FETCH_CONTRACTS_INFO_FAILED'),
+    });
+    if (error)
+        throw new Error(error);
+    yield effects_1.put({ type: 'FETCH_OWNER_ADDRESS_REQUESTED' });
+    yield bootstrapProposalSubmissionPage();
+    yield bootstrapVotingPage();
+    yield bootstrapAdminPage();
 }
-function bootstrapProposalSubmissionPage() {
-    return regeneratorRuntime.wrap(function bootstrapProposalSubmissionPage$(_context2) {
-        while (1) {
-            switch (_context2.prev = _context2.next) {
-                case 0:
-                    _context2.next = 2;
-                    return effects_1.put({ type: 'FETCH_ALL_PROPOSALS_REQUESTED' });
-
-                case 2:
-                case "end":
-                    return _context2.stop();
-            }
-        }
-    }, _marked[1], this);
+function* bootstrapProposalSubmissionPage() {
+    yield effects_1.put({ type: 'FETCH_ALL_PROPOSALS_REQUESTED' });
 }
-function bootstrapVotingPage() {
-    return regeneratorRuntime.wrap(function bootstrapVotingPage$(_context3) {
-        while (1) {
-            switch (_context3.prev = _context3.next) {
-                case 0:
-                    _context3.next = 2;
-                    return effects_1.put({ type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED' });
-
-                case 2:
-                case "end":
-                    return _context3.stop();
-            }
-        }
-    }, _marked[2], this);
+function* bootstrapVotingPage() {
+    yield effects_1.put({ type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED' });
 }
-function bootstrapAdminPage() {
-    return regeneratorRuntime.wrap(function bootstrapAdminPage$(_context4) {
-        while (1) {
-            switch (_context4.prev = _context4.next) {
-                case 0:
-                    _context4.next = 2;
-                    return effects_1.put({ type: 'FETCH_ALL_MEMBERS_REQUESTED' });
-
-                case 2:
-                case "end":
-                    return _context4.stop();
-            }
-        }
-    }, _marked[3], this);
+function* bootstrapAdminPage() {
+    yield effects_1.put({ type: 'FETCH_ALL_MEMBERS_REQUESTED' });
 }
-function rootSaga() {
-    return regeneratorRuntime.wrap(function rootSaga$(_context5) {
-        while (1) {
-            switch (_context5.prev = _context5.next) {
-                case 0:
-                    _context5.next = 2;
-                    return [effects_1.fork(ethereumSaga_1.watchGetBlockNumber), effects_1.fork(daoSaga_1.default), effects_1.fork(votesSaga_1.default), effects_1.fork(userSaga_1.default), effects_1.fork(bootstrap), effects_1.call(userSaga_1.watchDefaultAccountChange), effects_1.call(ipfsSaga_1.fetchIpfsInfo)];
-
-                case 2:
-                case "end":
-                    return _context5.stop();
-            }
-        }
-    }, _marked[4], this);
+function* rootSaga() {
+    yield [
+        effects_1.fork(ethereumSaga_1.watchGetBlockNumber),
+        effects_1.fork(daoSaga_1.default),
+        effects_1.fork(votesSaga_1.default),
+        effects_1.fork(userSaga_1.default),
+        effects_1.fork(bootstrap),
+        effects_1.call(userSaga_1.watchDefaultAccountChange),
+        effects_1.call(ipfsSaga_1.fetchIpfsInfo)
+    ];
 }
 exports.default = rootSaga;
+//# sourceMappingURL=rootSaga.js.map
 });
 ___scope___.file("redux/dao/daoSaga.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _marked = [fetchContractsInfoWorker, addMemberWorker, revokeMemberWorker, fetchAllMembers, fetchAllMembersWorker, checkMembershipWorker, transferOwnershipWorker, fetchOwnerAddressWorker, dao].map(regeneratorRuntime.mark);
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var createStore_1 = require("../createStore");
-var effects_1 = require("redux-saga/effects");
-var react_redux_toastr_1 = require("react-redux-toastr");
-var waitForMined_1 = require("../../helpers/waitForMined");
-var fetchContractsInfo = function fetchContractsInfo() {
-    var contractsInfos = {};
-    for (var key in createStore_1.contracts) {
+const createStore_1 = require("../createStore");
+const effects_1 = require("redux-saga/effects");
+const react_redux_toastr_1 = require("react-redux-toastr");
+const waitForMined_1 = require("../../helpers/waitForMined");
+let fetchContractsInfo = () => {
+    let contractsInfos = {};
+    for (let key in createStore_1.contracts) {
         if (createStore_1.contracts.hasOwnProperty(key)) {
-            contractsInfos = Object.assign({}, contractsInfos, _defineProperty({}, createStore_1.contracts[key].name, {}));
+            contractsInfos = Object.assign({}, contractsInfos, { [createStore_1.contracts[key].name]: {} });
             contractsInfos[createStore_1.contracts[key].name].address = createStore_1.contracts[key].address;
         }
     }
     return contractsInfos;
 };
-function fetchContractsInfoWorker() {
-    var contractsInfo;
-    return regeneratorRuntime.wrap(function fetchContractsInfoWorker$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    _context.prev = 0;
-                    _context.next = 3;
-                    return effects_1.call(fetchContractsInfo);
-
-                case 3:
-                    contractsInfo = _context.sent;
-                    _context.next = 6;
-                    return effects_1.put({ type: 'FETCH_CONTRACTS_INFO_SUCCEED', contractsInfo: contractsInfo });
-
-                case 6:
-                    _context.next = 12;
-                    break;
-
-                case 8:
-                    _context.prev = 8;
-                    _context.t0 = _context["catch"](0);
-                    _context.next = 12;
-                    return effects_1.put({ type: 'FETCH_CONTRACTS_INFO_FAILED', error: _context.t0 });
-
-                case 12:
-                case "end":
-                    return _context.stop();
-            }
-        }
-    }, _marked[0], this, [[0, 8]]);
+function* fetchContractsInfoWorker() {
+    try {
+        let contractsInfo = yield effects_1.call(fetchContractsInfo);
+        yield effects_1.put({ type: 'FETCH_CONTRACTS_INFO_SUCCEED', contractsInfo });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'FETCH_CONTRACTS_INFO_FAILED', error: e });
+    }
 }
 function addMember(memberAddress, yearsDuration) {
-    var Dao1901Members = createStore_1.contracts.Dao1901Members;
-
-    return Dao1901Members.subscribe.sendTransaction(memberAddress, yearsDuration, { from: window.web3.eth.defaultAccount, gas: 70000 });
+    const { Dao1901Members } = createStore_1.contracts;
+    return Dao1901Members.subscribe
+        .sendTransaction(memberAddress, yearsDuration, { from: window.web3.eth.defaultAccount, gas: 70000 });
 }
-function addMemberWorker(action) {
-    var _action$values, memberAddress, yearsDuration, tx, endSubscriptionDate;
-
-    return regeneratorRuntime.wrap(function addMemberWorker$(_context2) {
-        while (1) {
-            switch (_context2.prev = _context2.next) {
-                case 0:
-                    _context2.prev = 0;
-                    _action$values = action.values, memberAddress = _action$values.memberAddress, yearsDuration = _action$values.yearsDuration;
-                    _context2.next = 4;
-                    return effects_1.call(addMember, memberAddress, yearsDuration);
-
-                case 4:
-                    tx = _context2.sent;
-                    _context2.next = 7;
-                    return effects_1.call(waitForMined_1.default, tx, 'addMember');
-
-                case 7:
-                    endSubscriptionDate = new Date().setFullYear(new Date().getFullYear() + Number(yearsDuration));
-
-                    endSubscriptionDate = String(endSubscriptionDate).substring(0, 10);
-                    _context2.next = 11;
-                    return effects_1.put({ type: 'ADD_MEMBER_SUCCEED', tx: tx, memberAddress: memberAddress, endSubscriptionDate: endSubscriptionDate });
-
-                case 11:
-                    _context2.next = 17;
-                    break;
-
-                case 13:
-                    _context2.prev = 13;
-                    _context2.t0 = _context2["catch"](0);
-                    _context2.next = 17;
-                    return effects_1.put({ type: 'ADD_MEMBER_FAILED', e: _context2.t0.message });
-
-                case 17:
-                case "end":
-                    return _context2.stop();
-            }
-        }
-    }, _marked[1], this, [[0, 13]]);
+function* addMemberWorker(action) {
+    try {
+        const { memberAddress, yearsDuration } = action.values;
+        const tx = yield effects_1.call(addMember, memberAddress, yearsDuration);
+        yield effects_1.call(waitForMined_1.default, tx, 'addMember');
+        let endSubscriptionDate = new Date().setFullYear(new Date().getFullYear() + Number(yearsDuration));
+        endSubscriptionDate = String(endSubscriptionDate).substring(0, 10);
+        yield effects_1.put({ type: 'ADD_MEMBER_SUCCEED', tx, memberAddress, endSubscriptionDate });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'ADD_MEMBER_FAILED', e: e.message });
+    }
 }
 function revokeMember(values) {
-    var Dao1901Members = createStore_1.contracts.Dao1901Members;
-
-    return Dao1901Members.subscribe.sendTransaction(values.memberAddress, -1, { from: window.web3.eth.defaultAccount, gas: 70000 });
+    const { Dao1901Members } = createStore_1.contracts;
+    return Dao1901Members.subscribe
+        .sendTransaction(values.memberAddress, -1, { from: window.web3.eth.defaultAccount, gas: 70000 });
 }
-function revokeMemberWorker(action) {
-    var tx;
-    return regeneratorRuntime.wrap(function revokeMemberWorker$(_context3) {
-        while (1) {
-            switch (_context3.prev = _context3.next) {
-                case 0:
-                    _context3.prev = 0;
-                    _context3.next = 3;
-                    return effects_1.call(revokeMember, action.values);
-
-                case 3:
-                    tx = _context3.sent;
-                    _context3.next = 6;
-                    return effects_1.call(waitForMined_1.default, tx, 'revokeMember');
-
-                case 6:
-                    _context3.next = 8;
-                    return effects_1.put({ type: 'REVOKE_MEMBER_SUCCEED', tx: tx });
-
-                case 8:
-                    _context3.next = 10;
-                    return effects_1.put({ type: 'FETCH_ALL_MEMBERS_REQUESTED' });
-
-                case 10:
-                    _context3.next = 16;
-                    break;
-
-                case 12:
-                    _context3.prev = 12;
-                    _context3.t0 = _context3["catch"](0);
-                    _context3.next = 16;
-                    return effects_1.put({ type: 'REVOKE_MEMBER_FAILED', e: _context3.t0.message });
-
-                case 16:
-                case "end":
-                    return _context3.stop();
-            }
-        }
-    }, _marked[2], this, [[0, 12]]);
+function* revokeMemberWorker(action) {
+    try {
+        const tx = yield effects_1.call(revokeMember, action.values);
+        yield effects_1.call(waitForMined_1.default, tx, 'revokeMember');
+        yield effects_1.put({ type: 'REVOKE_MEMBER_SUCCEED', tx });
+        yield effects_1.put({ type: 'FETCH_ALL_MEMBERS_REQUESTED' });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'REVOKE_MEMBER_FAILED', e: e.message });
+    }
 }
-function fetchAllMembers(_addr) {
-    var _marked2, Dao1901Members, members, endSubscriptionDate, addr, iter;
-
-    return regeneratorRuntime.wrap(function fetchAllMembers$(_context5) {
-        while (1) {
-            switch (_context5.prev = _context5.next) {
-                case 0:
-                    iter = function iter() {
-                        var isMember, subscription;
-                        return regeneratorRuntime.wrap(function iter$(_context4) {
-                            while (1) {
-                                switch (_context4.prev = _context4.next) {
-                                    case 0:
-                                        if (!(addr != 0 && addr != '0x' && addr != '0x0')) {
-                                            _context4.next = 12;
-                                            break;
-                                        }
-
-                                        _context4.next = 3;
-                                        return effects_1.call(Dao1901Members.isMember, addr);
-
-                                    case 3:
-                                        isMember = _context4.sent;
-                                        _context4.next = 6;
-                                        return effects_1.call(Dao1901Members.subscriptions, addr);
-
-                                    case 6:
-                                        subscription = _context4.sent;
-
-                                        endSubscriptionDate = subscription[0].toString();
-                                        isMember && members.push({ memberAddress: addr, endSubscriptionDate: endSubscriptionDate });
-                                        addr = subscription[1];
-                                        _context4.next = 12;
-                                        return effects_1.call(iter, addr);
-
-                                    case 12:
-                                    case "end":
-                                        return _context4.stop();
-                                }
-                            }
-                        }, _marked2[0], this);
-                    };
-
-                    _marked2 = [iter].map(regeneratorRuntime.mark);
-                    Dao1901Members = createStore_1.contracts.Dao1901Members;
-                    members = [];
-                    endSubscriptionDate = '';
-                    addr = _addr;
-                    _context5.next = 8;
-                    return effects_1.call(iter, addr);
-
-                case 8:
-                    return _context5.abrupt("return", members.reverse());
-
-                case 9:
-                case "end":
-                    return _context5.stop();
-            }
+function* fetchAllMembers(_addr) {
+    const { Dao1901Members } = createStore_1.contracts;
+    let members = [];
+    let endSubscriptionDate = '';
+    let addr = _addr;
+    function* iter() {
+        if (addr != 0 && addr != '0x' && addr != '0x0') {
+            let isMember = yield effects_1.call(Dao1901Members.isMember, addr);
+            let subscription = yield effects_1.call(Dao1901Members.subscriptions, addr);
+            endSubscriptionDate = subscription[0].toString();
+            isMember && members.push({ memberAddress: addr, endSubscriptionDate });
+            addr = subscription[1];
+            yield effects_1.call(iter, addr);
         }
-    }, _marked[3], this);
+    }
+    yield effects_1.call(iter, addr);
+    return members.reverse();
 }
-function fetchAllMembersWorker() {
-    var Dao1901Members, head, members;
-    return regeneratorRuntime.wrap(function fetchAllMembersWorker$(_context6) {
-        while (1) {
-            switch (_context6.prev = _context6.next) {
-                case 0:
-                    Dao1901Members = createStore_1.contracts.Dao1901Members;
-                    _context6.prev = 1;
-                    _context6.next = 4;
-                    return effects_1.call(Dao1901Members.head);
-
-                case 4:
-                    head = _context6.sent;
-                    _context6.next = 7;
-                    return effects_1.call(fetchAllMembers, head);
-
-                case 7:
-                    members = _context6.sent;
-                    _context6.next = 10;
-                    return effects_1.put({ type: 'FETCH_ALL_MEMBERS_SUCCEED', members: members });
-
-                case 10:
-                    _context6.next = 16;
-                    break;
-
-                case 12:
-                    _context6.prev = 12;
-                    _context6.t0 = _context6["catch"](1);
-                    _context6.next = 16;
-                    return effects_1.put({ type: 'FETCH_ALL_MEMBERS_FAILED', error: _context6.t0 });
-
-                case 16:
-                case "end":
-                    return _context6.stop();
-            }
-        }
-    }, _marked[4], this, [[1, 12]]);
+function* fetchAllMembersWorker() {
+    const { Dao1901Members } = createStore_1.contracts;
+    try {
+        const head = yield effects_1.call(Dao1901Members.head);
+        const members = yield effects_1.call(fetchAllMembers, head);
+        yield effects_1.put({ type: 'FETCH_ALL_MEMBERS_SUCCEED', members });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'FETCH_ALL_MEMBERS_FAILED', error: e });
+    }
 }
-function checkMembershipWorker(action) {
-    var Dao1901Members, memberAddressToCheck, isMember;
-    return regeneratorRuntime.wrap(function checkMembershipWorker$(_context7) {
-        while (1) {
-            switch (_context7.prev = _context7.next) {
-                case 0:
-                    Dao1901Members = createStore_1.contracts.Dao1901Members;
-                    _context7.prev = 1;
-                    memberAddressToCheck = action.values.memberAddressToCheck;
-                    _context7.next = 5;
-                    return effects_1.call(Dao1901Members.isMember, memberAddressToCheck);
-
-                case 5:
-                    isMember = _context7.sent;
-
-                    if (isMember) {
-                        react_redux_toastr_1.toastr.success('Membership management', memberAddressToCheck + " is a member");
-                    } else {
-                        react_redux_toastr_1.toastr.error('Membership management', memberAddressToCheck + " is not a member");
-                    }
-                    _context7.next = 9;
-                    return effects_1.put({ type: 'CHECK_MEMBERSHIP_SUCCEED', isMember: isMember });
-
-                case 9:
-                    _context7.next = 15;
-                    break;
-
-                case 11:
-                    _context7.prev = 11;
-                    _context7.t0 = _context7["catch"](1);
-                    _context7.next = 15;
-                    return effects_1.put({ type: 'CHECK_MEMBERSHIP_FAILED', error: _context7.t0.message });
-
-                case 15:
-                case "end":
-                    return _context7.stop();
-            }
+function* checkMembershipWorker(action) {
+    const { Dao1901Members } = createStore_1.contracts;
+    try {
+        const { memberAddressToCheck } = action.values;
+        let isMember = yield effects_1.call(Dao1901Members.isMember, memberAddressToCheck);
+        if (isMember) {
+            react_redux_toastr_1.toastr.success('Membership management', `${memberAddressToCheck} is a member`);
         }
-    }, _marked[5], this, [[1, 11]]);
+        else {
+            react_redux_toastr_1.toastr.error('Membership management', `${memberAddressToCheck} is not a member`);
+        }
+        yield effects_1.put({ type: 'CHECK_MEMBERSHIP_SUCCEED', isMember });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'CHECK_MEMBERSHIP_FAILED', error: e.message });
+    }
 }
 function transferOwnership(ownerAddress, newOwnerAddress) {
-    return new Promise(function (resolve, reject) {
-        var Owned = createStore_1.contracts.Owned;
-
-        var toastrConfirmOptions = {
-            onOk: function onOk() {
-                Owned.changeOwner.sendTransaction(newOwnerAddress, { from: ownerAddress, gas: 200000 }).then(function (tx) {
-                    react_redux_toastr_1.toastr.success('Organization management', "The ownership has been transferred to " + newOwnerAddress);
+    return new Promise((resolve, reject) => {
+        const { Owned } = createStore_1.contracts;
+        const toastrConfirmOptions = {
+            onOk: () => {
+                Owned.changeOwner
+                    .sendTransaction(newOwnerAddress, { from: ownerAddress, gas: 200000 })
+                    .then((tx) => {
+                    react_redux_toastr_1.toastr.success('Organization management', `The ownership has been transferred to ${newOwnerAddress}`);
                     resolve(tx);
-                }).catch(function (e) {
+                })
+                    .catch((e) => {
                     react_redux_toastr_1.toastr.error('Organization management', "You don't have the rights to transfer ownership");
                     reject(e);
                 });
             },
-            onCancel: function onCancel() {
-                return console.log('Ownership transfer cancelled');
-            }
+            onCancel: () => console.log('Ownership transfer cancelled')
         };
-        react_redux_toastr_1.toastr.confirm("Are you sure that you want to transfer ownership to " + newOwnerAddress, toastrConfirmOptions);
+        react_redux_toastr_1.toastr.confirm(`Are you sure that you want to transfer ownership to ${newOwnerAddress}`, toastrConfirmOptions);
     });
 }
-function transferOwnershipWorker(action) {
-    var ownerAddress, tx;
-    return regeneratorRuntime.wrap(function transferOwnershipWorker$(_context8) {
-        while (1) {
-            switch (_context8.prev = _context8.next) {
-                case 0:
-                    _context8.prev = 0;
-                    _context8.next = 3;
-                    return effects_1.select(function (s) {
-                        return s.dao.ownerAddress;
-                    });
-
-                case 3:
-                    ownerAddress = _context8.sent;
-                    _context8.next = 6;
-                    return effects_1.call(transferOwnership, ownerAddress, action.values.newOwnerAddress);
-
-                case 6:
-                    tx = _context8.sent;
-                    _context8.next = 9;
-                    return effects_1.call(waitForMined_1.default, tx, 'transferOwnership');
-
-                case 9:
-                    _context8.next = 11;
-                    return effects_1.put({ type: 'TRANSFER_OWNERSHIP_SUCCEED', ownerAddress: action.values.newOwnerAddress });
-
-                case 11:
-                    _context8.next = 17;
-                    break;
-
-                case 13:
-                    _context8.prev = 13;
-                    _context8.t0 = _context8["catch"](0);
-                    _context8.next = 17;
-                    return effects_1.put({ type: 'TRANSFER_OWNERSHIP_FAILED', error: _context8.t0 });
-
-                case 17:
-                case "end":
-                    return _context8.stop();
-            }
-        }
-    }, _marked[6], this, [[0, 13]]);
+function* transferOwnershipWorker(action) {
+    try {
+        let ownerAddress = yield effects_1.select(s => s.dao.ownerAddress);
+        const tx = yield effects_1.call(transferOwnership, ownerAddress, action.values.newOwnerAddress);
+        yield effects_1.call(waitForMined_1.default, tx, 'transferOwnership');
+        yield effects_1.put({ type: 'TRANSFER_OWNERSHIP_SUCCEED', ownerAddress: action.values.newOwnerAddress });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'TRANSFER_OWNERSHIP_FAILED', error: e });
+    }
 }
-function fetchOwnerAddressWorker() {
-    var Owned, ownerAddress;
-    return regeneratorRuntime.wrap(function fetchOwnerAddressWorker$(_context9) {
-        while (1) {
-            switch (_context9.prev = _context9.next) {
-                case 0:
-                    _context9.prev = 0;
-                    Owned = createStore_1.contracts.Owned;
-                    _context9.next = 4;
-                    return effects_1.call(Owned.owner);
-
-                case 4:
-                    ownerAddress = _context9.sent;
-                    _context9.next = 7;
-                    return effects_1.put({ type: 'FETCH_OWNER_ADDRESS_SUCCEED', ownerAddress: ownerAddress });
-
-                case 7:
-                    _context9.next = 13;
-                    break;
-
-                case 9:
-                    _context9.prev = 9;
-                    _context9.t0 = _context9["catch"](0);
-                    _context9.next = 13;
-                    return effects_1.put({ type: 'FETCH_OWNER_ADDRESS_FAILED', error: _context9.t0 });
-
-                case 13:
-                case "end":
-                    return _context9.stop();
-            }
-        }
-    }, _marked[7], this, [[0, 9]]);
+function* fetchOwnerAddressWorker() {
+    try {
+        const { Owned } = createStore_1.contracts;
+        let ownerAddress = yield effects_1.call(Owned.owner);
+        yield effects_1.put({ type: 'FETCH_OWNER_ADDRESS_SUCCEED', ownerAddress });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'FETCH_OWNER_ADDRESS_FAILED', error: e });
+    }
 }
-function dao() {
-    return regeneratorRuntime.wrap(function dao$(_context10) {
-        while (1) {
-            switch (_context10.prev = _context10.next) {
-                case 0:
-                    _context10.next = 2;
-                    return effects_1.takeEvery('FETCH_CONTRACTS_INFO_REQUESTED', fetchContractsInfoWorker);
-
-                case 2:
-                    _context10.next = 4;
-                    return effects_1.takeEvery('FETCH_OWNER_ADDRESS_REQUESTED', fetchOwnerAddressWorker);
-
-                case 4:
-                    _context10.next = 6;
-                    return effects_1.takeEvery('ADD_MEMBER_REQUESTED', addMemberWorker);
-
-                case 6:
-                    _context10.next = 8;
-                    return effects_1.takeEvery('REVOKE_MEMBER_REQUESTED', revokeMemberWorker);
-
-                case 8:
-                    _context10.next = 10;
-                    return effects_1.takeEvery('CHECK_MEMBERSHIP_REQUESTED', checkMembershipWorker);
-
-                case 10:
-                    _context10.next = 12;
-                    return effects_1.takeEvery('FETCH_ALL_MEMBERS_REQUESTED', fetchAllMembersWorker);
-
-                case 12:
-                    _context10.next = 14;
-                    return effects_1.takeEvery('TRANSFER_OWNERSHIP_REQUESTED', transferOwnershipWorker);
-
-                case 14:
-                case "end":
-                    return _context10.stop();
-            }
-        }
-    }, _marked[8], this);
+function* dao() {
+    yield effects_1.takeEvery('FETCH_CONTRACTS_INFO_REQUESTED', fetchContractsInfoWorker);
+    yield effects_1.takeEvery('FETCH_OWNER_ADDRESS_REQUESTED', fetchOwnerAddressWorker);
+    yield effects_1.takeEvery('ADD_MEMBER_REQUESTED', addMemberWorker);
+    yield effects_1.takeEvery('REVOKE_MEMBER_REQUESTED', revokeMemberWorker);
+    yield effects_1.takeEvery('CHECK_MEMBERSHIP_REQUESTED', checkMembershipWorker);
+    yield effects_1.takeEvery('FETCH_ALL_MEMBERS_REQUESTED', fetchAllMembersWorker);
+    yield effects_1.takeEvery('TRANSFER_OWNERSHIP_REQUESTED', transferOwnershipWorker);
 }
 exports.default = dao;
+//# sourceMappingURL=daoSaga.js.map
 });
 ___scope___.file("helpers/waitForMined.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
 function waitForMined(tx, description) {
-    return new Promise(function (resolve, reject) {
-        var setIntervalId = setInterval(function () {
-            return window.web3.eth.getTransactionReceipt(tx, function (err, receipt) {
-                if (err) reject(err.message);
-                if (receipt) {
-                    console.log("Receipt Tx " + description + ": ", receipt);
-                    window.clearInterval(setIntervalId);
-                    resolve(receipt);
-                }
-            });
-        }, 1000);
+    return new Promise((resolve, reject) => {
+        let setIntervalId = setInterval(() => window.web3.eth.getTransactionReceipt(tx, (err, receipt) => {
+            if (err)
+                reject(err.message);
+            if (receipt) {
+                console.log(`Receipt Tx ${description}: `, receipt);
+                window.clearInterval(setIntervalId);
+                resolve(receipt);
+            }
+        }), 1000);
     });
 }
 exports.default = waitForMined;
+//# sourceMappingURL=waitForMined.js.map
 });
 ___scope___.file("redux/ethereum/ethereumSaga.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _marked = [fetchEthereumInfoWorker, watchGetBlockNumber].map(regeneratorRuntime.mark);
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var effects_1 = require("redux-saga/effects");
-var getBlockNumber = function getBlockNumber() {
-    return new Promise(function (resolve, reject) {
-        window.web3.eth.getBlockNumber(function (e, r) {
-            return !e ? resolve(r) : reject(e);
-        });
+const effects_1 = require("redux-saga/effects");
+let getBlockNumber = () => {
+    return new Promise((resolve, reject) => {
+        window.web3.eth.getBlockNumber((e, r) => !e ? resolve(r) : reject(e));
     });
 };
-function fetchEthereumInfoWorker() {
-    var blockNumber;
-    return regeneratorRuntime.wrap(function fetchEthereumInfoWorker$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    _context.prev = 0;
-                    _context.next = 3;
-                    return effects_1.put({ type: 'BLOCK_NUMBER_REQUESTED' });
-
-                case 3:
-                    _context.next = 5;
-                    return effects_1.call(getBlockNumber);
-
-                case 5:
-                    blockNumber = _context.sent;
-                    _context.next = 8;
-                    return effects_1.put({ type: 'BLOCK_NUMBER_SUCCEED', blockNumber: blockNumber });
-
-                case 8:
-                    _context.next = 14;
-                    break;
-
-                case 10:
-                    _context.prev = 10;
-                    _context.t0 = _context["catch"](0);
-                    _context.next = 14;
-                    return effects_1.put({ type: 'BLOCK_NUMBER_FAILED', e: _context.t0.message });
-
-                case 14:
-                case "end":
-                    return _context.stop();
-            }
-        }
-    }, _marked[0], this, [[0, 10]]);
+function* fetchEthereumInfoWorker() {
+    try {
+        yield effects_1.put({ type: 'BLOCK_NUMBER_REQUESTED' });
+        const blockNumber = yield effects_1.call(getBlockNumber);
+        yield effects_1.put({ type: 'BLOCK_NUMBER_SUCCEED', blockNumber });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'BLOCK_NUMBER_FAILED', e: e.message });
+    }
 }
-function watchGetBlockNumber() {
-    return regeneratorRuntime.wrap(function watchGetBlockNumber$(_context2) {
-        while (1) {
-            switch (_context2.prev = _context2.next) {
-                case 0:
-                    _context2.next = 2;
-                    return effects_1.takeEvery('FETCH_ETHEREUM_INFO_REQUESTED', fetchEthereumInfoWorker);
-
-                case 2:
-                case "end":
-                    return _context2.stop();
-            }
-        }
-    }, _marked[1], this);
+function* watchGetBlockNumber() {
+    yield effects_1.takeEvery('FETCH_ETHEREUM_INFO_REQUESTED', fetchEthereumInfoWorker);
 }
 exports.watchGetBlockNumber = watchGetBlockNumber;
+//# sourceMappingURL=ethereumSaga.js.map
 });
 ___scope___.file("redux/ipfs/ipfsSaga.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _marked = [fetchIpfsInfo].map(regeneratorRuntime.mark);
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var effects_1 = require("redux-saga/effects");
-function fetchIpfsInfo() {
-    var info;
-    return regeneratorRuntime.wrap(function fetchIpfsInfo$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    _context.prev = 0;
-
-                    if (ipfs) {
-                        _context.next = 3;
-                        break;
-                    }
-
-                    return _context.abrupt("return");
-
-                case 3:
-                    _context.next = 5;
-                    return effects_1.put({ type: 'IPFS_ID_REQUESTED' });
-
-                case 5:
-                    _context.next = 7;
-                    return effects_1.call(ipfs.id);
-
-                case 7:
-                    info = _context.sent;
-                    _context.next = 10;
-                    return effects_1.put({ type: 'IPFS_ID_SUCCEED', info: info });
-
-                case 10:
-                    _context.next = 16;
-                    break;
-
-                case 12:
-                    _context.prev = 12;
-                    _context.t0 = _context["catch"](0);
-                    _context.next = 16;
-                    return effects_1.put({ type: 'IPFS_ID_FAILED', e: _context.t0.message });
-
-                case 16:
-                case "end":
-                    return _context.stop();
-            }
-        }
-    }, _marked[0], this, [[0, 12]]);
+const effects_1 = require("redux-saga/effects");
+function* fetchIpfsInfo() {
+    try {
+        if (!ipfs)
+            return;
+        yield effects_1.put({ type: 'IPFS_ID_REQUESTED' });
+        const info = yield effects_1.call(ipfs.id);
+        yield effects_1.put({ type: 'IPFS_ID_SUCCEED', info });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'IPFS_ID_FAILED', e: e.message });
+    }
 }
 exports.fetchIpfsInfo = fetchIpfsInfo;
+//# sourceMappingURL=ipfsSaga.js.map
 });
 ___scope___.file("redux/votes/votesSaga.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _marked = [onVoteSubmitWorker, generateVoteListByProposal, fetchVotesForAProposal, fetchAllVotesForAllProposalsWorker, createProposalWorker, generateProposalList, fetchAllProposalsWorker, vote].map(regeneratorRuntime.mark);
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var effects_1 = require("redux-saga/effects");
-var waitForMined_1 = require("../../helpers/waitForMined");
-var createStore_1 = require("../createStore");
-var onVoteSubmit = function onVoteSubmit(proposalId, voteValue) {
-    var Dao1901Votes = createStore_1.contracts.Dao1901Votes;
-
+const effects_1 = require("redux-saga/effects");
+const waitForMined_1 = require("../../helpers/waitForMined");
+const createStore_1 = require("../createStore");
+let onVoteSubmit = (proposalId, voteValue) => {
+    const { Dao1901Votes } = createStore_1.contracts;
     return Dao1901Votes.vote.sendTransaction(proposalId, voteValue, { from: window.web3.eth.defaultAccount, gas: 100000 });
 };
-function onVoteSubmitWorker(action) {
-    var _action$values, proposalId, voteValue, tx;
-
-    return regeneratorRuntime.wrap(function onVoteSubmitWorker$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    _context.prev = 0;
-                    _action$values = action.values, proposalId = _action$values.proposalId, voteValue = _action$values.voteValue;
-                    _context.next = 4;
-                    return effects_1.call(onVoteSubmit, proposalId, voteValue);
-
-                case 4:
-                    tx = _context.sent;
-                    _context.next = 7;
-                    return effects_1.call(waitForMined_1.default, tx, 'onVoteSubmit');
-
-                case 7:
-                    _context.next = 9;
-                    return effects_1.put({ type: 'VOTE_SUBMISSION_SUCCEED', tx: tx });
-
-                case 9:
-                    _context.next = 11;
-                    return effects_1.put({ type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED' });
-
-                case 11:
-                    _context.next = 17;
-                    break;
-
-                case 13:
-                    _context.prev = 13;
-                    _context.t0 = _context["catch"](0);
-                    _context.next = 17;
-                    return effects_1.put({ type: 'VOTE_SUBMISSION_FAILED', e: _context.t0.message });
-
-                case 17:
-                case "end":
-                    return _context.stop();
-            }
-        }
-    }, _marked[0], this, [[0, 13]]);
+function* onVoteSubmitWorker(action) {
+    try {
+        const { proposalId, voteValue } = action.values;
+        const tx = yield effects_1.call(onVoteSubmit, proposalId, voteValue);
+        yield effects_1.call(waitForMined_1.default, tx, 'onVoteSubmit');
+        yield effects_1.put({ type: 'VOTE_SUBMISSION_SUCCEED', tx });
+        yield effects_1.put({ type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED' });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'VOTE_SUBMISSION_FAILED', e: e.message });
+    }
 }
 function getVote(proposalId, addr) {
-    var Dao1901Votes = createStore_1.contracts.Dao1901Votes;
-
+    const { Dao1901Votes } = createStore_1.contracts;
     return Dao1901Votes.getVote(proposalId, addr);
 }
-function generateVoteListByProposal(proposalId, _addr) {
-    var _marked2, votes, addr, iter;
-
-    return regeneratorRuntime.wrap(function generateVoteListByProposal$(_context3) {
-        while (1) {
-            switch (_context3.prev = _context3.next) {
-                case 0:
-                    iter = function iter(addr) {
-                        var _vote;
-
-                        return regeneratorRuntime.wrap(function iter$(_context2) {
-                            while (1) {
-                                switch (_context2.prev = _context2.next) {
-                                    case 0:
-                                        if (!(addr != 0)) {
-                                            _context2.next = 8;
-                                            break;
-                                        }
-
-                                        _context2.next = 3;
-                                        return effects_1.call(getVote, proposalId, addr);
-
-                                    case 3:
-                                        _vote = _context2.sent;
-
-                                        votes.push({ voterAddr: addr, proposalId: proposalId, voteValue: _vote[0] });
-                                        addr = _vote[1];
-                                        _context2.next = 8;
-                                        return effects_1.call(iter, addr);
-
-                                    case 8:
-                                    case "end":
-                                        return _context2.stop();
-                                }
-                            }
-                        }, _marked2[0], this);
-                    };
-
-                    _marked2 = [iter].map(regeneratorRuntime.mark);
-                    votes = [];
-                    addr = _addr;
-                    _context3.next = 6;
-                    return effects_1.call(iter, addr);
-
-                case 6:
-                    return _context3.abrupt("return", votes);
-
-                case 7:
-                case "end":
-                    return _context3.stop();
-            }
+function* generateVoteListByProposal(proposalId, _addr) {
+    let votes = [];
+    let addr = _addr;
+    function* iter(addr) {
+        if (addr != 0) {
+            const vote = yield effects_1.call(getVote, proposalId, addr);
+            votes.push({ voterAddr: addr, proposalId: proposalId, voteValue: vote[0] });
+            addr = vote[1];
+            yield effects_1.call(iter, addr);
         }
-    }, _marked[1], this);
+    }
+    yield effects_1.call(iter, addr);
+    return votes;
 }
-function fetchVotesForAProposal(proposalId) {
-    var proposal, addr, votesForAProp;
-    return regeneratorRuntime.wrap(function fetchVotesForAProposal$(_context4) {
-        while (1) {
-            switch (_context4.prev = _context4.next) {
-                case 0:
-                    _context4.next = 2;
-                    return effects_1.call(fetchProposalById, proposalId);
-
-                case 2:
-                    proposal = _context4.sent;
-                    addr = proposal[2];
-                    _context4.next = 6;
-                    return effects_1.call(generateVoteListByProposal, proposalId, addr);
-
-                case 6:
-                    votesForAProp = _context4.sent;
-                    return _context4.abrupt("return", votesForAProp);
-
-                case 8:
-                case "end":
-                    return _context4.stop();
-            }
-        }
-    }, _marked[2], this);
+function* fetchVotesForAProposal(proposalId) {
+    const proposal = yield effects_1.call(fetchProposalById, proposalId);
+    let addr = proposal[2];
+    const votesForAProp = yield effects_1.call(generateVoteListByProposal, proposalId, addr);
+    return votesForAProp;
 }
-function fetchAllVotesForAllProposalsWorker() {
-    var votes, proposalId, totalProposals, votesProp;
-    return regeneratorRuntime.wrap(function fetchAllVotesForAllProposalsWorker$(_context5) {
-        while (1) {
-            switch (_context5.prev = _context5.next) {
-                case 0:
-                    _context5.prev = 0;
-                    votes = {};
-                    proposalId = 1;
-                    _context5.next = 5;
-                    return effects_1.call(getTotalProposals);
-
-                case 5:
-                    totalProposals = _context5.sent;
-
-                case 6:
-                    if (!(proposalId <= totalProposals.valueOf())) {
-                        _context5.next = 14;
-                        break;
-                    }
-
-                    _context5.next = 9;
-                    return effects_1.call(fetchVotesForAProposal, proposalId);
-
-                case 9:
-                    votesProp = _context5.sent;
-
-                    votes[proposalId] = votesProp;
-                    proposalId++;
-                    _context5.next = 6;
-                    break;
-
-                case 14:
-                    _context5.next = 16;
-                    return effects_1.put({ type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED', votes: votes });
-
-                case 16:
-                    _context5.next = 22;
-                    break;
-
-                case 18:
-                    _context5.prev = 18;
-                    _context5.t0 = _context5["catch"](0);
-                    _context5.next = 22;
-                    return effects_1.put({ type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSAL_FAILED', e: _context5.t0.message });
-
-                case 22:
-                case "end":
-                    return _context5.stop();
-            }
+function* fetchAllVotesForAllProposalsWorker() {
+    try {
+        let votes = {};
+        let proposalId = 1;
+        const totalProposals = yield effects_1.call(getTotalProposals);
+        while (proposalId <= totalProposals.valueOf()) {
+            let votesProp = yield effects_1.call(fetchVotesForAProposal, proposalId);
+            votes[proposalId] = votesProp;
+            proposalId++;
         }
-    }, _marked[3], this, [[0, 18]]);
+        yield effects_1.put({ type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED', votes: votes });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSAL_FAILED', e: e.message });
+    }
 }
 function createProposal(proposalDesc, proposalDeadline) {
-    var Dao1901Votes = createStore_1.contracts.Dao1901Votes;
-
+    const { Dao1901Votes } = createStore_1.contracts;
     return Dao1901Votes.createProposal.sendTransaction(proposalDesc, proposalDeadline, {
         from: window.web3.eth.defaultAccount,
         gas: 600000
     });
 }
-function createProposalWorker(_ref) {
-    var values = _ref.values;
-    var proposalDescription, proposalDeadline, tx;
-    return regeneratorRuntime.wrap(function createProposalWorker$(_context6) {
-        while (1) {
-            switch (_context6.prev = _context6.next) {
-                case 0:
-                    _context6.prev = 0;
-                    proposalDescription = values.proposalDescription, proposalDeadline = values.proposalDeadline;
-                    _context6.next = 4;
-                    return effects_1.call(createProposal, proposalDescription, proposalDeadline);
-
-                case 4:
-                    tx = _context6.sent;
-                    _context6.next = 7;
-                    return effects_1.call(waitForMined_1.default, tx, 'create proposal');
-
-                case 7:
-                    _context6.next = 9;
-                    return effects_1.put({ type: 'CREATE_PROPOSAL_SUCCEED', tx: tx });
-
-                case 9:
-                    _context6.next = 11;
-                    return effects_1.put({ type: 'FETCH_ALL_PROPOSALS_REQUESTED' });
-
-                case 11:
-                    _context6.next = 17;
-                    break;
-
-                case 13:
-                    _context6.prev = 13;
-                    _context6.t0 = _context6["catch"](0);
-                    _context6.next = 17;
-                    return effects_1.put({ type: 'CREATE_PROPOSAL_FAILED', e: _context6.t0.message });
-
-                case 17:
-                case "end":
-                    return _context6.stop();
-            }
-        }
-    }, _marked[4], this, [[0, 13]]);
+function* createProposalWorker({ values }) {
+    try {
+        const { proposalDescription, proposalDeadline } = values;
+        const tx = yield effects_1.call(createProposal, proposalDescription, proposalDeadline);
+        yield effects_1.call(waitForMined_1.default, tx, 'create proposal');
+        yield effects_1.put({ type: 'CREATE_PROPOSAL_SUCCEED', tx });
+        yield effects_1.put({ type: 'FETCH_ALL_PROPOSALS_REQUESTED' });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'CREATE_PROPOSAL_FAILED', e: e.message });
+    }
 }
 function fetchProposalById(proposalId) {
-    var Dao1901Votes = createStore_1.contracts.Dao1901Votes;
-
+    const { Dao1901Votes } = createStore_1.contracts;
     return Dao1901Votes.proposals(proposalId);
 }
 function getTotalProposals() {
-    var Dao1901Votes = createStore_1.contracts.Dao1901Votes;
-
+    const { Dao1901Votes } = createStore_1.contracts;
     return Dao1901Votes.nProposals();
 }
-function generateProposalList(totalProposals) {
-    var proposals, proposalId, proposal;
-    return regeneratorRuntime.wrap(function generateProposalList$(_context7) {
-        while (1) {
-            switch (_context7.prev = _context7.next) {
-                case 0:
-                    proposals = [];
-                    proposalId = 1;
-
-                case 2:
-                    if (!(proposalId <= totalProposals)) {
-                        _context7.next = 10;
-                        break;
-                    }
-
-                    _context7.next = 5;
-                    return effects_1.call(fetchProposalById, proposalId);
-
-                case 5:
-                    proposal = _context7.sent;
-
-                    proposals.push({ proposalId: proposalId, proposalDesc: proposal[0], proposalDeadline: proposal[1] });
-                    proposalId++;
-                    _context7.next = 2;
-                    break;
-
-                case 10:
-                    return _context7.abrupt("return", proposals);
-
-                case 11:
-                case "end":
-                    return _context7.stop();
-            }
-        }
-    }, _marked[5], this);
+function* generateProposalList(totalProposals) {
+    let proposals = [];
+    let proposalId = 1;
+    while (proposalId <= totalProposals) {
+        const proposal = yield effects_1.call(fetchProposalById, proposalId);
+        proposals.push({ proposalId, proposalDesc: proposal[0], proposalDeadline: proposal[1] });
+        proposalId++;
+    }
+    return proposals;
 }
-function fetchAllProposalsWorker() {
-    var totalProposals, proposals;
-    return regeneratorRuntime.wrap(function fetchAllProposalsWorker$(_context8) {
-        while (1) {
-            switch (_context8.prev = _context8.next) {
-                case 0:
-                    _context8.prev = 0;
-                    _context8.next = 3;
-                    return effects_1.call(getTotalProposals);
-
-                case 3:
-                    totalProposals = _context8.sent;
-                    _context8.next = 6;
-                    return effects_1.call(generateProposalList, totalProposals.valueOf());
-
-                case 6:
-                    proposals = _context8.sent;
-                    _context8.next = 9;
-                    return effects_1.put({ type: 'FETCH_ALL_PROPOSALS_SUCCEED', proposals: proposals });
-
-                case 9:
-                    _context8.next = 15;
-                    break;
-
-                case 11:
-                    _context8.prev = 11;
-                    _context8.t0 = _context8["catch"](0);
-                    _context8.next = 15;
-                    return effects_1.put({ type: 'FETCH_ALL_PROPOSALS_FAILED', e: _context8.t0.message });
-
-                case 15:
-                case "end":
-                    return _context8.stop();
-            }
-        }
-    }, _marked[6], this, [[0, 11]]);
+function* fetchAllProposalsWorker() {
+    try {
+        const totalProposals = yield effects_1.call(getTotalProposals);
+        let proposals = yield effects_1.call(generateProposalList, totalProposals.valueOf());
+        yield effects_1.put({ type: 'FETCH_ALL_PROPOSALS_SUCCEED', proposals });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'FETCH_ALL_PROPOSALS_FAILED', e: e.message });
+    }
 }
-function vote() {
-    return regeneratorRuntime.wrap(function vote$(_context9) {
-        while (1) {
-            switch (_context9.prev = _context9.next) {
-                case 0:
-                    _context9.next = 2;
-                    return effects_1.takeEvery('CREATE_PROPOSAL_REQUESTED', createProposalWorker);
-
-                case 2:
-                    _context9.next = 4;
-                    return effects_1.takeEvery('VOTE_SUBMISSION_REQUESTED', onVoteSubmitWorker);
-
-                case 4:
-                    _context9.next = 6;
-                    return effects_1.takeEvery('FETCH_ALL_PROPOSALS_REQUESTED', fetchAllProposalsWorker);
-
-                case 6:
-                    _context9.next = 8;
-                    return effects_1.takeEvery('FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED', fetchAllVotesForAllProposalsWorker);
-
-                case 8:
-                case "end":
-                    return _context9.stop();
-            }
-        }
-    }, _marked[7], this);
+function* vote() {
+    yield effects_1.takeEvery('CREATE_PROPOSAL_REQUESTED', createProposalWorker);
+    yield effects_1.takeEvery('VOTE_SUBMISSION_REQUESTED', onVoteSubmitWorker);
+    yield effects_1.takeEvery('FETCH_ALL_PROPOSALS_REQUESTED', fetchAllProposalsWorker);
+    yield effects_1.takeEvery('FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED', fetchAllVotesForAllProposalsWorker);
 }
 exports.default = vote;
+//# sourceMappingURL=votesSaga.js.map
 });
 ___scope___.file("redux/user/userSaga.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _marked = [setUserDefaultAccountWorker, setUserBalanceWorker, fetchUserAccountsWorker, watchDefaultAccountChange, user].map(regeneratorRuntime.mark);
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var redux_saga_1 = require("redux-saga");
-var effects_1 = require("redux-saga/effects");
-function setUserDefaultAccountWorker() {
-    var accounts, defaultAccount;
-    return regeneratorRuntime.wrap(function setUserDefaultAccountWorker$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    _context.next = 2;
-                    return effects_1.select(function (state) {
-                        return state.user.accounts;
-                    });
-
-                case 2:
-                    accounts = _context.sent;
-
-                    if (!(accounts.length === 0)) {
-                        _context.next = 8;
-                        break;
-                    }
-
-                    _context.next = 6;
-                    return effects_1.put({ type: 'USER_DEFAULT_ACCOUNT_FAILED', error: 'No accounts' });
-
-                case 6:
-                    _context.next = 12;
-                    break;
-
-                case 8:
-                    defaultAccount = accounts[0];
-
-                    window.web3.eth.defaultAccount = defaultAccount;
-                    _context.next = 12;
-                    return effects_1.put({ type: 'USER_DEFAULT_ACCOUNT_SUCCEED', defaultAccount: defaultAccount });
-
-                case 12:
-                case "end":
-                    return _context.stop();
-            }
-        }
-    }, _marked[0], this);
+const redux_saga_1 = require("redux-saga");
+const effects_1 = require("redux-saga/effects");
+function* setUserDefaultAccountWorker() {
+    let accounts = yield effects_1.select(state => state.user.accounts);
+    if (accounts.length === 0) {
+        yield effects_1.put({ type: 'USER_DEFAULT_ACCOUNT_FAILED', error: 'No accounts' });
+    }
+    else {
+        let defaultAccount = accounts[0];
+        window.web3.eth.defaultAccount = defaultAccount;
+        yield effects_1.put({ type: 'USER_DEFAULT_ACCOUNT_SUCCEED', defaultAccount });
+    }
 }
-var setUserBalance = function setUserBalance(user) {
-    return new Promise(function (resolve, reject) {
-        if (!user.defaultAccount) reject(new Error('No default account'));
-        window.web3.eth.getBalance(user.defaultAccount, function (e, balance) {
-            if (e) reject(e);
+let setUserBalance = (user) => {
+    return new Promise((resolve, reject) => {
+        if (!user.defaultAccount)
+            reject(new Error('No default account'));
+        window.web3.eth.getBalance(user.defaultAccount, (e, balance) => {
+            if (e)
+                reject(e);
             resolve(window.web3.fromWei(balance, "ether").valueOf());
         });
     });
 };
-function setUserBalanceWorker() {
-    var _user, balance;
-
-    return regeneratorRuntime.wrap(function setUserBalanceWorker$(_context2) {
-        while (1) {
-            switch (_context2.prev = _context2.next) {
-                case 0:
-                    _context2.prev = 0;
-                    _context2.next = 3;
-                    return effects_1.select(function (s) {
-                        return s.user;
-                    });
-
-                case 3:
-                    _user = _context2.sent;
-                    _context2.next = 6;
-                    return effects_1.call(setUserBalance, _user);
-
-                case 6:
-                    balance = _context2.sent;
-                    _context2.next = 9;
-                    return effects_1.put({ type: 'USER_BALANCE_SUCCEED', balance: balance });
-
-                case 9:
-                    _context2.next = 15;
-                    break;
-
-                case 11:
-                    _context2.prev = 11;
-                    _context2.t0 = _context2["catch"](0);
-                    _context2.next = 15;
-                    return effects_1.put({ type: 'USER_BALANCE_FAILED', e: _context2.t0.message });
-
-                case 15:
-                case "end":
-                    return _context2.stop();
-            }
-        }
-    }, _marked[1], this, [[0, 11]]);
+function* setUserBalanceWorker() {
+    try {
+        let user = yield effects_1.select(s => s.user);
+        const balance = yield effects_1.call(setUserBalance, user);
+        yield effects_1.put({ type: 'USER_BALANCE_SUCCEED', balance });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'USER_BALANCE_FAILED', e: e.message });
+    }
 }
-var fetchAccounts = function fetchAccounts() {
-    return new Promise(function (resolve, reject) {
-        window.web3.eth.getAccounts(function (e, accounts) {
-            if (e) reject(e.message);
+let fetchAccounts = () => {
+    return new Promise((resolve, reject) => {
+        window.web3.eth.getAccounts((e, accounts) => {
+            if (e)
+                reject(e.message);
             resolve(accounts);
         });
     });
 };
-function fetchUserAccountsWorker() {
-    var accounts;
-    return regeneratorRuntime.wrap(function fetchUserAccountsWorker$(_context3) {
-        while (1) {
-            switch (_context3.prev = _context3.next) {
-                case 0:
-                    _context3.prev = 0;
-                    _context3.next = 3;
-                    return effects_1.call(fetchAccounts);
-
-                case 3:
-                    accounts = _context3.sent;
-                    _context3.next = 6;
-                    return effects_1.put({ type: 'USER_ACCOUNTS_SUCCEED', accounts: accounts });
-
-                case 6:
-                    _context3.next = 8;
-                    return effects_1.put({ type: 'USER_DEFAULT_ACCOUNT_REQUESTED' });
-
-                case 8:
-                    _context3.next = 10;
-                    return effects_1.put({ type: 'USER_BALANCE_REQUESTED' });
-
-                case 10:
-                    _context3.next = 16;
-                    break;
-
-                case 12:
-                    _context3.prev = 12;
-                    _context3.t0 = _context3["catch"](0);
-                    _context3.next = 16;
-                    return effects_1.put({ type: 'USER_ADDRESS_FAILED', error: _context3.t0 });
-
-                case 16:
-                case "end":
-                    return _context3.stop();
-            }
-        }
-    }, _marked[2], this, [[0, 12]]);
+function* fetchUserAccountsWorker() {
+    try {
+        const accounts = yield effects_1.call(fetchAccounts);
+        yield effects_1.put({ type: 'USER_ACCOUNTS_SUCCEED', accounts });
+        yield effects_1.put({ type: 'USER_DEFAULT_ACCOUNT_REQUESTED' });
+        yield effects_1.put({ type: 'USER_BALANCE_REQUESTED' });
+    }
+    catch (e) {
+        yield effects_1.put({ type: 'USER_ADDRESS_FAILED', error: e });
+    }
 }
-function watchDefaultAccountChange() {
-    var accounts, defaultAccount;
-    return regeneratorRuntime.wrap(function watchDefaultAccountChange$(_context4) {
-        while (1) {
-            switch (_context4.prev = _context4.next) {
-                case 0:
-                    _context4.next = 2;
-                    return effects_1.call(fetchAccounts);
-
-                case 2:
-                    accounts = _context4.sent;
-                    defaultAccount = accounts[0];
-
-                case 4:
-                    if (!true) {
-                        _context4.next = 22;
-                        break;
-                    }
-
-                    _context4.prev = 5;
-                    _context4.next = 8;
-                    return effects_1.call(redux_saga_1.delay, 2000);
-
-                case 8:
-                    _context4.next = 10;
-                    return effects_1.call(fetchAccounts);
-
-                case 10:
-                    accounts = _context4.sent;
-
-                    if (!(accounts[0] !== defaultAccount)) {
-                        _context4.next = 15;
-                        break;
-                    }
-
-                    defaultAccount = accounts[0];
-                    _context4.next = 15;
-                    return effects_1.put({ type: 'USER_ACCOUNTS_REQUESTED' });
-
-                case 15:
-                    _context4.next = 20;
-                    break;
-
-                case 17:
-                    _context4.prev = 17;
-                    _context4.t0 = _context4["catch"](5);
-                    throw new Error(_context4.t0);
-
-                case 20:
-                    _context4.next = 4;
-                    break;
-
-                case 22:
-                case "end":
-                    return _context4.stop();
+function* watchDefaultAccountChange() {
+    let accounts = yield effects_1.call(fetchAccounts);
+    let defaultAccount = accounts[0];
+    while (true) {
+        try {
+            yield effects_1.call(redux_saga_1.delay, 2000);
+            accounts = yield effects_1.call(fetchAccounts);
+            if (accounts[0] !== defaultAccount) {
+                defaultAccount = accounts[0];
+                yield effects_1.put({ type: 'USER_ACCOUNTS_REQUESTED' });
             }
         }
-    }, _marked[3], this, [[5, 17]]);
+        catch (e) {
+            throw new Error(e);
+        }
+    }
 }
 exports.watchDefaultAccountChange = watchDefaultAccountChange;
-function user() {
-    return regeneratorRuntime.wrap(function user$(_context5) {
-        while (1) {
-            switch (_context5.prev = _context5.next) {
-                case 0:
-                    _context5.next = 2;
-                    return effects_1.takeEvery('USER_ACCOUNTS_REQUESTED', fetchUserAccountsWorker);
-
-                case 2:
-                    _context5.next = 4;
-                    return effects_1.takeEvery('USER_DEFAULT_ACCOUNT_REQUESTED', setUserDefaultAccountWorker);
-
-                case 4:
-                    _context5.next = 6;
-                    return effects_1.takeEvery('USER_BALANCE_REQUESTED', setUserBalanceWorker);
-
-                case 6:
-                case "end":
-                    return _context5.stop();
-            }
-        }
-    }, _marked[4], this);
+function* user() {
+    yield effects_1.takeEvery('USER_ACCOUNTS_REQUESTED', fetchUserAccountsWorker);
+    yield effects_1.takeEvery('USER_DEFAULT_ACCOUNT_REQUESTED', setUserDefaultAccountWorker);
+    yield effects_1.takeEvery('USER_BALANCE_REQUESTED', setUserBalanceWorker);
 }
 exports.default = user;
+//# sourceMappingURL=userSaga.js.map
 });
 ___scope___.file("containers/AdminContainer/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-var react_1 = require("react");
-var react_redux_1 = require("react-redux");
-var toastrManager_1 = require("../../helpers/toastrManager");
-var List_1 = require("../../components/common/List");
-var MembersListItem_1 = require("../../components/DAOManagement/MembershipManagement/MembersListItem");
-var MemberAdditionForm_1 = require("../../components/DAOManagement/MembershipManagement/MemberAdditionForm");
-var MemberRevokationForm_1 = require("../../components/DAOManagement/MembershipManagement/MemberRevokationForm");
-var CheckMembershipForm_1 = require("../../components/DAOManagement/MembershipManagement/CheckMembershipForm");
-var TransferOwnershipForm_1 = require("../../components/DAOManagement/TransferOwnershipForm");
-
-var AdminPage = function (_react_1$Component) {
-    _inherits(AdminPage, _react_1$Component);
-
-    function AdminPage(props) {
-        _classCallCheck(this, AdminPage);
-
-        return _possibleConstructorReturn(this, (AdminPage.__proto__ || Object.getPrototypeOf(AdminPage)).call(this, props));
+const React = require("react");
+const react_1 = require("react");
+const react_redux_1 = require("react-redux");
+const toastrManager_1 = require("../../helpers/toastrManager");
+const List_1 = require("../../components/common/List");
+const MembersListItem_1 = require("../../components/DAOManagement/MembershipManagement/MembersListItem");
+const MemberAdditionForm_1 = require("../../components/DAOManagement/MembershipManagement/MemberAdditionForm");
+const MemberRevokationForm_1 = require("../../components/DAOManagement/MembershipManagement/MemberRevokationForm");
+const CheckMembershipForm_1 = require("../../components/DAOManagement/MembershipManagement/CheckMembershipForm");
+const TransferOwnershipForm_1 = require("../../components/DAOManagement/TransferOwnershipForm");
+class AdminPage extends react_1.Component {
+    constructor(props) {
+        super(props);
     }
-
-    _createClass(AdminPage, [{
-        key: "componentWillReceiveProps",
-        value: function componentWillReceiveProps(nextProps) {
-            var nextDao = nextProps.dao;
-            var currentDao = this.props.dao;
-            toastrManager_1.default(nextDao, currentDao);
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _props = this.props,
-                addMember = _props.addMember,
-                checkMembership = _props.checkMembership,
-                dao = _props.dao,
-                transferOwnership = _props.transferOwnership,
-                revokeMember = _props.revokeMember;
-            var members = dao.members;
-
-            return React.createElement("div", null, React.createElement("div", { className: "row" }, React.createElement("div", { className: "col" }, React.createElement("h1", null, "Administration dashboard"), React.createElement("p", null, "This is where authorized people can manage the organization."))), React.createElement("div", { className: "row mt-5" }, React.createElement("div", { className: "col" }, React.createElement("h2", null, 'Membership management'), React.createElement("h3", null, 'Add a member ', React.createElement("span", { className: "caution" }, "owner only")), React.createElement(MemberAdditionForm_1.default, { addMember: addMember }))), React.createElement("div", { className: "row mt-5" }, React.createElement("div", { className: "col" }, React.createElement("h3", null, 'Revoke a member ', React.createElement("span", { className: "caution" }, "owner only")), React.createElement(MemberRevokationForm_1.default, { revokeMember: revokeMember }))), React.createElement("div", { className: "row mt-5" }, React.createElement("div", { className: "col" }, React.createElement("h3", null, 'Check membership'), React.createElement(CheckMembershipForm_1.default, { checkMembership: checkMembership }))), React.createElement("div", { className: "row mt-5" }, React.createElement("div", { className: "col" }, React.createElement("h3", null, "List of all members in *organization name*"), React.createElement(List_1.default, { component: MembersListItem_1.default, items: members }))), React.createElement("div", { className: "row mt-5 mb-5" }, React.createElement("div", { className: "col" }, React.createElement("h2", null, "Organization management"), React.createElement("h3", null, "Transfer organization ownership ", React.createElement("span", { className: "caution" }, "owner only")), React.createElement("p", null, "Organization ownership gives the right to control the DAO. Make sure you understand all the implications."), React.createElement("p", null, "The current owner is: " + dao.ownerAddress), React.createElement(TransferOwnershipForm_1.default, { transferOwnership: transferOwnership }))));
-        }
-    }]);
-
-    return AdminPage;
-}(react_1.Component);
-
-var mapStateToProps = function mapStateToProps(s) {
+    componentWillReceiveProps(nextProps) {
+        const nextDao = nextProps.dao;
+        const currentDao = this.props.dao;
+        toastrManager_1.default(nextDao, currentDao);
+    }
+    render() {
+        const { addMember, checkMembership, dao, transferOwnership, revokeMember } = this.props;
+        const { members } = dao;
+        return (React.createElement("div", null,
+            React.createElement("div", { className: "row" },
+                React.createElement("div", { className: "col" },
+                    React.createElement("h1", null, "Administration dashboard"),
+                    React.createElement("p", null, "This is where authorized people can manage the organization."))),
+            React.createElement("div", { className: "row mt-5" },
+                React.createElement("div", { className: "col" },
+                    React.createElement("h2", null, 'Membership management'),
+                    React.createElement("h3", null,
+                        'Add a member ',
+                        React.createElement("span", { className: "caution" }, "owner only")),
+                    React.createElement(MemberAdditionForm_1.default, { addMember: addMember }))),
+            React.createElement("div", { className: "row mt-5" },
+                React.createElement("div", { className: "col" },
+                    React.createElement("h3", null,
+                        'Revoke a member ',
+                        React.createElement("span", { className: "caution" }, "owner only")),
+                    React.createElement(MemberRevokationForm_1.default, { revokeMember: revokeMember }))),
+            React.createElement("div", { className: "row mt-5" },
+                React.createElement("div", { className: "col" },
+                    React.createElement("h3", null, 'Check membership'),
+                    React.createElement(CheckMembershipForm_1.default, { checkMembership: checkMembership }))),
+            React.createElement("div", { className: "row mt-5" },
+                React.createElement("div", { className: "col" },
+                    React.createElement("h3", null, "List of all members in *organization name*"),
+                    React.createElement(List_1.default, { component: MembersListItem_1.default, items: members }))),
+            React.createElement("div", { className: "row mt-5 mb-5" },
+                React.createElement("div", { className: "col" },
+                    React.createElement("h2", null, "Organization management"),
+                    React.createElement("h3", null,
+                        "Transfer organization ownership ",
+                        React.createElement("span", { className: "caution" }, "owner only")),
+                    React.createElement("p", null, "Organization ownership gives the right to control the DAO. Make sure you understand all the implications."),
+                    React.createElement("p", null, `The current owner is: ${dao.ownerAddress}`),
+                    React.createElement(TransferOwnershipForm_1.default, { transferOwnership: transferOwnership })))));
+    }
+}
+const mapStateToProps = s => {
     return {
         dao: s.dao
     };
 };
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
     return {
-        addMember: function addMember(values) {
-            return dispatch({ type: 'ADD_MEMBER_REQUESTED', values: values });
-        },
-        transferOwnership: function transferOwnership(values) {
-            return dispatch({ type: 'TRANSFER_OWNERSHIP_REQUESTED', values: values });
-        },
-        checkMembership: function checkMembership(values) {
-            return dispatch({ type: 'CHECK_MEMBERSHIP_REQUESTED', values: values });
-        },
-        revokeMember: function revokeMember(values) {
-            return dispatch({ type: 'REVOKE_MEMBER_REQUESTED', values: values });
-        }
+        addMember: (values) => dispatch({ type: 'ADD_MEMBER_REQUESTED', values }),
+        transferOwnership: (values) => dispatch({ type: 'TRANSFER_OWNERSHIP_REQUESTED', values }),
+        checkMembership: (values) => dispatch({ type: 'CHECK_MEMBERSHIP_REQUESTED', values }),
+        revokeMember: (values) => dispatch({ type: 'REVOKE_MEMBER_REQUESTED', values }),
     };
 };
 exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(AdminPage);
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("helpers/toastrManager.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_redux_toastr_1 = require("react-redux-toastr");
+const react_redux_toastr_1 = require("react-redux-toastr");
 function toastrManager(nextProps, props) {
-    var newErrorsLength = nextProps.errors.length;
-    var newTxsLength = nextProps.txs.length;
+    let newErrorsLength = nextProps.errors.length;
+    let newTxsLength = nextProps.txs.length;
     if (newTxsLength > 0 && newTxsLength !== props.txs.length) {
-        var message = void 0,
-            title = void 0;
+        let message, title;
         switch (nextProps.txs[newTxsLength - 1].event) {
             case 'ADD_MEMBER_SUCCEED':
-                message = "The member " + nextProps.members[nextProps.members.length - 1].memberAddress + " has been added successfully." + "Transaction ID";
+                message = `The member ${nextProps.members[nextProps.members.length - 1].memberAddress} has been added successfully.` +
+                    `Transaction ID`;
                 title = 'Membership management';
                 break;
             case 'REVOKE_MEMBER_SUCCEED':
-                message = "The member has been revoked successfully. Transaction ID";
+                message = `The member has been revoked successfully. Transaction ID`;
                 title = 'Membership management';
                 break;
             case 'CREATE_PROPOSAL_SUCCEED':
@@ -1821,383 +995,344 @@ function toastrManager(nextProps, props) {
             default:
                 throw new Error('Unknown event');
         }
-        react_redux_toastr_1.toastr.success(title, message + ": " + nextProps.txs[newTxsLength - 1].tx);
+        react_redux_toastr_1.toastr.success(title, `${message}: ${nextProps.txs[newTxsLength - 1].tx}`);
     }
     if (newErrorsLength > 0 && newErrorsLength !== props.errors.length) {
-        var _message = void 0,
-            _title = void 0;
+        let message, title;
         switch (nextProps.errors[newErrorsLength - 1].event) {
             case 'ADD_MEMBER_FAILED':
-                _message = "The member " + nextProps.members[nextProps.members.length - 1].memberAddress + " has not been added. Please try later";
-                _title = 'Error';
+                message = `The member ${nextProps.members[nextProps.members.length - 1].memberAddress} has not been added. Please try later`;
+                title = 'Error';
                 break;
             case 'REVOKE_MEMBER_FAILED':
-                _message = "The member has not been revoked successfully." + "Please try later";
-                _title = 'Membership management';
+                message = `The member has not been revoked successfully.` +
+                    `Please try later`;
+                title = 'Membership management';
                 break;
             case 'CREATE_PROPOSAL_FAILED':
-                _message = 'An error occurred. Please try later or contact the support';
-                _title = 'Error';
+                message = 'An error occurred. Please try later or contact the support';
+                title = 'Error';
                 break;
             case 'VOTE_SUBMISSION_FAILED':
-                _message = "An error occurred. Please try later or contact the support. " + "Hint: Check that the proposal id is valid and that you are registered as member";
-                _title = 'Error';
+                message = `An error occurred. Please try later or contact the support. ` +
+                    `Hint: Check that the proposal id is valid and that you are registered as member`;
+                title = 'Error';
                 break;
             default:
                 throw new Error('Unknown event');
         }
-        react_redux_toastr_1.toastr.error(_title, _message);
+        react_redux_toastr_1.toastr.error(title, message);
     }
 }
 exports.default = toastrManager;
+//# sourceMappingURL=toastrManager.js.map
 });
 ___scope___.file("components/common/List/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-var prop_types_1 = require("prop-types");
+const React = require("react");
+const PropTypes = require("prop-types");
 require("./styles.css");
 function List(props) {
-    var ListItem = props.component;
-    var content = React.createElement("div", null);
+    const ListItem = props.component;
+    let content = (React.createElement("div", null));
     if (props.items && props.items.length !== 0) {
-        content = props.items.map(function (item, index) {
-            return React.createElement(ListItem, { key: "item-" + index, item: item, index: index });
-        });
-    } else {
+        content = props.items.map((item, index) => (React.createElement(ListItem, { key: `item-${index}`, item: item, index: index })));
+    }
+    else {
         content = React.createElement("p", null, 'No Content');
     }
-    return React.createElement("div", { styleName: "listWrapper" }, React.createElement("ul", { styleName: "list" }, content));
+    return (React.createElement("div", { styleName: "listWrapper" },
+        React.createElement("ul", { styleName: "list" }, content)));
 }
 exports.default = List;
 List.propTypes = {
-    component: prop_types_1.default.func.isRequired,
-    items: prop_types_1.default.array
+    component: PropTypes.func.isRequired,
+    items: PropTypes.array
 };
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/common/List/styles.css", function(exports, require, module, __filename, __dirname){
 
-module.exports = ".listWrapper {\n  padding: 0.5rem;\n}\n\n.list {\n  & li {\n    line-height: 0.8rem;\n    margin-bottom: 2rem;\n  }\n}"
+
+module.exports.default = {"listWrapper":"_listWrapper_1b8wf_1","list":"_list_1b8wf_1"};
+require("fuse-box-css")("components/common/List/styles.css", "._listWrapper_1b8wf_1 {\n  padding: 0.5rem;\n}\n\n._list_1b8wf_1 {\n  & li {\n    line-height: 0.8rem;\n    margin-bottom: 2rem;\n  }\n}")
 });
 ___scope___.file("components/DAOManagement/MembershipManagement/MembersListItem/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var prop_types_1 = require("prop-types");
-var convertTimestampToDate_1 = require("../../../../helpers/convertTimestampToDate");
+const react_1 = require("react");
+const PropTypes = require("prop-types");
+const convertTimestampToDate_1 = require("../../../../helpers/convertTimestampToDate");
 function MembersListItem(props) {
-    return react_1.default.createElement("li", null, react_1.default.createElement("div", null, react_1.default.createElement("p", null, "Member Address: ", props.item.memberAddress), react_1.default.createElement("p", null, "End subscription date: ", convertTimestampToDate_1.default(props.item.endSubscriptionDate))));
+    return (react_1.default.createElement("li", null,
+        react_1.default.createElement("div", null,
+            react_1.default.createElement("p", null,
+                "Member Address: ",
+                props.item.memberAddress),
+            react_1.default.createElement("p", null,
+                "End subscription date: ",
+                convertTimestampToDate_1.default(props.item.endSubscriptionDate)))));
 }
 exports.default = MembersListItem;
 MembersListItem.propTypes = {
-    className: prop_types_1.default.string,
-    item: prop_types_1.default.any
+    className: PropTypes.string,
+    item: PropTypes.any,
 };
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("helpers/convertTimestampToDate.js", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
 function convertTimestampToDate(UNIX_timestamp) {
-    var a = new Date(UNIX_timestamp * 1000);
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    var year = a.getFullYear();
-    var month = months[a.getMonth()];
-    var date = a.getDate();
-    var time = date + " " + month + " " + year;
+    let a = new Date(UNIX_timestamp * 1000);
+    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    let year = a.getFullYear();
+    let month = months[a.getMonth()];
+    let date = a.getDate();
+    let time = `${date} ${month} ${year}`;
     return time;
 }
 exports.default = convertTimestampToDate;
+//# sourceMappingURL=convertTimestampToDate.js.map
 });
 ___scope___.file("components/DAOManagement/MembershipManagement/MemberAdditionForm/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var reactstrap_1 = require("reactstrap");
-var redux_form_1 = require("redux-form");
-var Inputs_1 = require("../../../common/Inputs");
-var validate = function validate(values) {
-    var errors = {};
+const react_1 = require("react");
+const reactstrap_1 = require("reactstrap");
+const redux_form_1 = require("redux-form");
+const Inputs_1 = require("../../../common/Inputs");
+const validate = values => {
+    const errors = {};
     if (!values.memberAddress) {
         errors.memberAddress = 'Required';
-    } else if (!window.web3.isAddress(values.memberAddress)) {
+    }
+    else if (!window.web3.isAddress(values.memberAddress)) {
         errors.memberAddress = 'Address is not valid';
     }
     if (!values.yearsDuration) {
         errors.yearsDuration = 'Required';
-    } else if (!(Number.isInteger(Number(values.yearsDuration)) && Number(values.yearsDuration) > 0)) {
+    }
+    else if (!(Number.isInteger(Number(values.yearsDuration)) && Number(values.yearsDuration) > 0)) {
         errors.yearsDuration = 'Year(s) of subscription must be a number superior to zero';
     }
     return errors;
 };
-var afterSubmit = function afterSubmit(result, dispatch) {
-    return dispatch(redux_form_1.reset('MemberAdditionForm'));
-};
+const afterSubmit = (result, dispatch) => dispatch(redux_form_1.reset('MemberAdditionForm'));
 function MemberAdditionForm(props) {
-    var addMember = props.addMember,
-        handleSubmit = props.handleSubmit;
-
-    return react_1.default.createElement("div", { id: "MemberAdditionForm", className: "form" }, react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(addMember) }, react_1.default.createElement("div", { className: "row" }, react_1.default.createElement("div", { className: "col-12" }, react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "AddMemberAddress", name: "memberAddress", placeholder: "Enter the Ethereum address of the member", type: "text" }))), react_1.default.createElement("div", { className: "row" }, react_1.default.createElement("div", { className: "col-12" }, react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "yearsDuration", name: "yearsDuration", placeholder: "Enter the number of years the subscription will last", type: "number" }))), react_1.default.createElement(reactstrap_1.Button, { block: true, color: "primary", outline: true, size: "lg" }, 'Add Member')));
+    const { addMember, handleSubmit } = props;
+    return (react_1.default.createElement("div", { id: "MemberAdditionForm", className: "form" },
+        react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(addMember) },
+            react_1.default.createElement("div", { className: "row" },
+                react_1.default.createElement("div", { className: "col-12" },
+                    react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "AddMemberAddress", name: "memberAddress", placeholder: "Enter the Ethereum address of the member", type: "text" }))),
+            react_1.default.createElement("div", { className: "row" },
+                react_1.default.createElement("div", { className: "col-12" },
+                    react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "yearsDuration", name: "yearsDuration", placeholder: "Enter the number of years the subscription will last", type: "number" }))),
+            react_1.default.createElement(reactstrap_1.Button, { block: true, color: "primary", outline: true, size: "lg" }, 'Add Member'))));
 }
 exports.default = MemberAdditionForm = redux_form_1.reduxForm({
     form: 'MemberAdditionForm',
     onSubmitSuccess: afterSubmit,
-    validate: validate
+    validate,
 })(MemberAdditionForm);
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/common/Inputs/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var input_1 = require("./input");
 exports.Input = input_1.default;
 var textarea_1 = require("./textarea");
 exports.TextArea = textarea_1.default;
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/common/Inputs/input.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-var react_1 = require("react");
-var classnames_1 = require("classnames");
-var reactstrap_1 = require("reactstrap");
-
-var RenderInput = function (_react_1$Component) {
-    _inherits(RenderInput, _react_1$Component);
-
-    function RenderInput() {
-        _classCallCheck(this, RenderInput);
-
-        return _possibleConstructorReturn(this, (RenderInput.__proto__ || Object.getPrototypeOf(RenderInput)).apply(this, arguments));
+const React = require("react");
+const react_1 = require("react");
+const classnames_1 = require("classnames");
+const reactstrap_1 = require("reactstrap");
+class RenderInput extends react_1.Component {
+    render() {
+        const { id, input, label, placeholder, type, meta: { touched, error, }, } = this.props;
+        const classes = classnames_1.default({
+            success: touched && !error,
+            danger: touched && error,
+        });
+        return (React.createElement(reactstrap_1.FormGroup, { color: classes },
+            id && label && React.createElement(reactstrap_1.Label, { for: id }, label),
+            React.createElement(reactstrap_1.Input, Object.assign({}, input, { type: type, placeholder: placeholder, state: classes })),
+            touched && error && React.createElement(reactstrap_1.FormFeedback, null, error)));
     }
-
-    _createClass(RenderInput, [{
-        key: "render",
-        value: function render() {
-            var _props = this.props,
-                id = _props.id,
-                input = _props.input,
-                label = _props.label,
-                placeholder = _props.placeholder,
-                type = _props.type,
-                _props$meta = _props.meta,
-                touched = _props$meta.touched,
-                error = _props$meta.error;
-
-            var classes = classnames_1.default({
-                success: touched && !error,
-                danger: touched && error
-            });
-            return React.createElement(reactstrap_1.FormGroup, { color: classes }, id && label && React.createElement(reactstrap_1.Label, { for: id }, label), React.createElement(reactstrap_1.Input, Object.assign({}, input, { type: type, placeholder: placeholder, state: classes })), touched && error && React.createElement(reactstrap_1.FormFeedback, null, error));
-        }
-    }]);
-
-    return RenderInput;
-}(react_1.Component);
-
+}
 exports.default = RenderInput;
+//# sourceMappingURL=input.js.map
 });
 ___scope___.file("components/common/Inputs/textarea.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-var react_1 = require("react");
-var classnames_1 = require("classnames");
-var reactstrap_1 = require("reactstrap");
-
-var RenderInput = function (_react_1$Component) {
-    _inherits(RenderInput, _react_1$Component);
-
-    function RenderInput() {
-        _classCallCheck(this, RenderInput);
-
-        return _possibleConstructorReturn(this, (RenderInput.__proto__ || Object.getPrototypeOf(RenderInput)).apply(this, arguments));
+const React = require("react");
+const react_1 = require("react");
+const classnames_1 = require("classnames");
+const reactstrap_1 = require("reactstrap");
+class RenderInput extends react_1.Component {
+    render() {
+        const { id, input, label, placeholder, type, meta: { touched, error, }, } = this.props;
+        const classes = classnames_1.default({
+            success: touched && !error,
+            danger: touched && error,
+        });
+        return (React.createElement(reactstrap_1.FormGroup, { color: classes },
+            id && label && React.createElement(reactstrap_1.Label, { for: id }, label),
+            React.createElement(reactstrap_1.Input, Object.assign({}, input, { type: type, placeholder: placeholder, rows: 5, state: classes })),
+            touched && error && React.createElement(reactstrap_1.FormFeedback, null, error)));
     }
-
-    _createClass(RenderInput, [{
-        key: "render",
-        value: function render() {
-            var _props = this.props,
-                id = _props.id,
-                input = _props.input,
-                label = _props.label,
-                placeholder = _props.placeholder,
-                type = _props.type,
-                _props$meta = _props.meta,
-                touched = _props$meta.touched,
-                error = _props$meta.error;
-
-            var classes = classnames_1.default({
-                success: touched && !error,
-                danger: touched && error
-            });
-            return React.createElement(reactstrap_1.FormGroup, { color: classes }, id && label && React.createElement(reactstrap_1.Label, { for: id }, label), React.createElement(reactstrap_1.Input, Object.assign({}, input, { type: type, placeholder: placeholder, rows: 5, state: classes })), touched && error && React.createElement(reactstrap_1.FormFeedback, null, error));
-        }
-    }]);
-
-    return RenderInput;
-}(react_1.Component);
-
+}
 exports.default = RenderInput;
+//# sourceMappingURL=textarea.js.map
 });
 ___scope___.file("components/DAOManagement/MembershipManagement/MemberRevokationForm/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var reactstrap_1 = require("reactstrap");
-var redux_form_1 = require("redux-form");
-var Inputs_1 = require("../../../common/Inputs");
-var validate = function validate(values) {
-    var errors = {};
+const react_1 = require("react");
+const reactstrap_1 = require("reactstrap");
+const redux_form_1 = require("redux-form");
+const Inputs_1 = require("../../../common/Inputs");
+const validate = values => {
+    const errors = {};
     if (!values.memberAddress) {
         errors.memberAddress = 'Required';
-    } else if (!window.web3.isAddress(values.memberAddress)) {
+    }
+    else if (!window.web3.isAddress(values.memberAddress)) {
         errors.memberAddress = 'Address is not valid';
     }
     return errors;
 };
-var afterSubmit = function afterSubmit(result, dispatch) {
-    return dispatch(redux_form_1.reset('MemberRevokationForm'));
-};
+const afterSubmit = (result, dispatch) => dispatch(redux_form_1.reset('MemberRevokationForm'));
 function MemberRevokationForm(props) {
-    var revokeMember = props.revokeMember,
-        handleSubmit = props.handleSubmit;
-
-    return react_1.default.createElement("div", { id: "MemberRevokationForm", className: "form" }, react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(revokeMember) }, react_1.default.createElement("div", { className: "row" }, react_1.default.createElement("div", { className: "col-12" }, react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "RevokeMemberAddressInput", name: "memberAddress", placeholder: "Enter the Ethereum address of the member", type: "text" }))), react_1.default.createElement(reactstrap_1.Button, { block: true, color: "warning", outline: true, size: "lg" }, 'Revoke Member')));
+    const { revokeMember, handleSubmit } = props;
+    return (react_1.default.createElement("div", { id: "MemberRevokationForm", className: "form" },
+        react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(revokeMember) },
+            react_1.default.createElement("div", { className: "row" },
+                react_1.default.createElement("div", { className: "col-12" },
+                    react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "RevokeMemberAddressInput", name: "memberAddress", placeholder: "Enter the Ethereum address of the member", type: "text" }))),
+            react_1.default.createElement(reactstrap_1.Button, { block: true, color: "warning", outline: true, size: "lg" }, 'Revoke Member'))));
 }
 exports.default = MemberRevokationForm = redux_form_1.reduxForm({
     form: 'MemberRevokationForm',
     onSubmitSuccess: afterSubmit,
-    validate: validate
+    validate,
 })(MemberRevokationForm);
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/DAOManagement/MembershipManagement/CheckMembershipForm/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var reactstrap_1 = require("reactstrap");
-var redux_form_1 = require("redux-form");
-var Inputs_1 = require("../../../common/Inputs");
-var validate = function validate(values) {
-    var errors = {};
+const react_1 = require("react");
+const reactstrap_1 = require("reactstrap");
+const redux_form_1 = require("redux-form");
+const Inputs_1 = require("../../../common/Inputs");
+const validate = values => {
+    const errors = {};
     if (!values.memberAddressToCheck) {
         errors.memberAddressToCheck = 'Required';
-    } else if (!window.web3.isAddress(values.memberAddressToCheck)) {
+    }
+    else if (!window.web3.isAddress(values.memberAddressToCheck)) {
         errors.memberAddressToCheck = 'Address is not valid';
     }
     return errors;
 };
-var afterSubmit = function afterSubmit(result, dispatch) {
-    return dispatch(redux_form_1.reset('CheckMembershipForm'));
-};
+const afterSubmit = (result, dispatch) => dispatch(redux_form_1.reset('CheckMembershipForm'));
 function CheckMembershipForm(props) {
-    var checkMembership = props.checkMembership,
-        handleSubmit = props.handleSubmit;
-
-    return react_1.default.createElement("div", { id: "CheckMembershipForm", className: "form" }, react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(checkMembership) }, react_1.default.createElement("div", { className: "row" }, react_1.default.createElement("div", { className: "col-12" }, react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "memberAddressToCheck", name: "memberAddressToCheck", placeholder: "Enter an address", type: "text" }))), react_1.default.createElement(reactstrap_1.Button, { block: true, color: "primary", outline: true, size: "lg", type: "submit" }, 'Check Membership')));
+    const { checkMembership, handleSubmit } = props;
+    return (react_1.default.createElement("div", { id: "CheckMembershipForm", className: "form" },
+        react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(checkMembership) },
+            react_1.default.createElement("div", { className: "row" },
+                react_1.default.createElement("div", { className: "col-12" },
+                    react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "memberAddressToCheck", name: "memberAddressToCheck", placeholder: "Enter an address", type: "text" }))),
+            react_1.default.createElement(reactstrap_1.Button, { block: true, color: "primary", outline: true, size: "lg", type: "submit" }, 'Check Membership'))));
 }
 exports.default = CheckMembershipForm = redux_form_1.reduxForm({
     form: 'CheckMembershipForm',
     onSubmitSuccess: afterSubmit,
-    validate: validate
+    validate,
 })(CheckMembershipForm);
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/DAOManagement/TransferOwnershipForm/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var reactstrap_1 = require("reactstrap");
-var redux_form_1 = require("redux-form");
-var Inputs_1 = require("../../common/Inputs");
-var validate = function validate(values) {
-    var errors = {};
+const react_1 = require("react");
+const reactstrap_1 = require("reactstrap");
+const redux_form_1 = require("redux-form");
+const Inputs_1 = require("../../common/Inputs");
+const validate = values => {
+    const errors = {};
     if (!values.newOwnerAddress) {
         errors.newOwnerAddress = 'Required';
-    } else if (!window.web3.isAddress(values.newOwnerAddress)) {
+    }
+    else if (!window.web3.isAddress(values.newOwnerAddress)) {
         errors.newOwnerAddress = 'Address is not valid';
     }
     return errors;
 };
-var afterSubmit = function afterSubmit(result, dispatch) {
-    return dispatch(redux_form_1.reset('TransferOwnershipForm'));
-};
+const afterSubmit = (result, dispatch) => dispatch(redux_form_1.reset('TransferOwnershipForm'));
 function TransferOwnershipForm(props) {
-    var transferOwnership = props.transferOwnership,
-        handleSubmit = props.handleSubmit;
-
-    return react_1.default.createElement("div", { id: "TransferOwnershipForm", className: "form" }, react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(transferOwnership) }, react_1.default.createElement("div", { className: "row" }, react_1.default.createElement("div", { className: "col-12" }, react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "changeOwnerInput", name: "newOwnerAddress", placeholder: "New owner address", type: "text" }))), react_1.default.createElement(reactstrap_1.Button, { block: true, color: "danger", outline: true, size: "lg" }, 'Change Owner')));
+    const { transferOwnership, handleSubmit } = props;
+    return (react_1.default.createElement("div", { id: "TransferOwnershipForm", className: "form" },
+        react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(transferOwnership) },
+            react_1.default.createElement("div", { className: "row" },
+                react_1.default.createElement("div", { className: "col-12" },
+                    react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "changeOwnerInput", name: "newOwnerAddress", placeholder: "New owner address", type: "text" }))),
+            react_1.default.createElement(reactstrap_1.Button, { block: true, color: "danger", outline: true, size: "lg" }, 'Change Owner'))));
 }
 exports.default = TransferOwnershipForm = redux_form_1.reduxForm({
     form: 'TransferOwnershipForm',
     onSubmitSuccess: afterSubmit,
-    validate: validate
+    validate,
 })(TransferOwnershipForm);
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("containers/HomeContainer/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var react_redux_1 = require("react-redux");
-var Info_1 = require("../../components/common/Info");
-var HomePage = function HomePage(props) {
-    var contractAddressMembers = props.contractAddressMembers,
-        contractAddressVotes = props.contractAddressVotes,
-        contractAddressOwned = props.contractAddressOwned,
-        dao = props.dao,
-        ethereum = props.ethereum,
-        ipfs = props.ipfs,
-        user = props.user;
-
-    var _ref = window.web3 || {},
-        _ref$currentProvider = _ref.currentProvider;
-
-    _ref$currentProvider = _ref$currentProvider === undefined ? {} : _ref$currentProvider;
-    var _ref$currentProvider$ = _ref$currentProvider.host,
-        host = _ref$currentProvider$ === undefined ? null : _ref$currentProvider$,
-        _ref$currentProvider$2 = _ref$currentProvider.constructor;
-    _ref$currentProvider$2 = _ref$currentProvider$2 === undefined ? {} : _ref$currentProvider$2;
-    var _ref$currentProvider$3 = _ref$currentProvider$2.name,
-        name = _ref$currentProvider$3 === undefined ? null : _ref$currentProvider$3;
-
-    return react_1.default.createElement("div", { id: "home-page" }, react_1.default.createElement("div", { className: "row" }, react_1.default.createElement("div", { className: "col" }, react_1.default.createElement("h2", null, "Home"))), react_1.default.createElement(Info_1.default, { defaultAccount: user && user.defaultAccount, balance: user && user.balance, blockNumber: ethereum && ethereum.blockNumber, currentProvider: host || name, contractAddressMembers: contractAddressMembers, contractAddressOwned: contractAddressOwned, contractAddressVotes: contractAddressVotes, ipfsId: ipfs.id, ipfsPublicKey: ipfs.publicKey, ipfsAgentVersion: ipfs.agentVersion, ipfsProtocolVersion: ipfs.protocolVersion, isWeb3Connected: !!window.web3, ownerAddress: dao && dao.ownerAddress }), react_1.default.createElement("div", { className: "row" }, react_1.default.createElement("div", { className: "col" }, react_1.default.createElement("h2", null, "What is Dao 1901 ?"), react_1.default.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis?")), react_1.default.createElement("div", { className: "col" }, react_1.default.createElement("h2", null, "How does it works"), react_1.default.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis?")), react_1.default.createElement("div", { className: "col" }, react_1.default.createElement("h2", null, "Additional Infos"), react_1.default.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis?"))));
+const React = require("react");
+const react_redux_1 = require("react-redux");
+const Info_1 = require("../../components/common/Info");
+let HomePage = (props) => {
+    const { contractAddressMembers, contractAddressVotes, contractAddressOwned, dao, ethereum, ipfs, user } = props;
+    const { currentProvider: { host = null, constructor: { name = null } = {} } = {} } = window.web3 || {};
+    return (React.createElement("div", { id: "home-page" },
+        React.createElement("div", { className: "row" },
+            React.createElement("div", { className: "col" },
+                React.createElement("h2", null, "Home"))),
+        React.createElement(Info_1.default, { defaultAccount: user && user.defaultAccount, balance: user && user.balance, blockNumber: ethereum && ethereum.blockNumber, currentProvider: host || name, contractAddressMembers: contractAddressMembers, contractAddressOwned: contractAddressOwned, contractAddressVotes: contractAddressVotes, ipfsId: ipfs.id, ipfsPublicKey: ipfs.publicKey, ipfsAgentVersion: ipfs.agentVersion, ipfsProtocolVersion: ipfs.protocolVersion, isWeb3Connected: !!window.web3, ownerAddress: dao && dao.ownerAddress }),
+        React.createElement("div", { className: "row" },
+            React.createElement("div", { className: "col" },
+                React.createElement("h2", null, "What is Dao 1901 ?"),
+                React.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis?")),
+            React.createElement("div", { className: "col" },
+                React.createElement("h2", null, "How does it works"),
+                React.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis?")),
+            React.createElement("div", { className: "col" },
+                React.createElement("h2", null, "Additional Infos"),
+                React.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aperiam beatae commodi dicta dolorem earum et hic ipsam ipsum, molestiae nulla porro quasi reiciendis, repellendus suscipit tempora velit veritatis?")))));
 };
-var mapStateToProps = function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         contractAddressMembers: state.dao.contracts.Dao1901Members && state.dao.contracts.Dao1901Members.address,
         contractAddressVotes: state.dao.contracts.Dao1901Votes && state.dao.contracts.Dao1901Votes.address,
@@ -2205,320 +1340,385 @@ var mapStateToProps = function mapStateToProps(state) {
         dao: state.dao,
         ethereum: state.ethereum,
         ipfs: state.ipfs,
-        user: state.user
+        user: state.user,
     };
 };
 exports.default = react_redux_1.connect(mapStateToProps)(HomePage);
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/common/Info/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-require("./styles.css");
-var reactstrap_1 = require("reactstrap");
-var react_fa_1 = require("react-fa");
+const React = require("react");
+const styles_css_1 = require("./styles.css");
+const reactstrap_1 = require("reactstrap");
+const react_fa_1 = require("react-fa");
 function Info(props) {
-    return React.createElement("div", { className: "row" }, React.createElement("div", { className: "col" }, React.createElement(reactstrap_1.Card, { className: "mx-auto", styleName: "info" }, React.createElement("h4", null, "User Info"), React.createElement("p", null, 'User account: ', React.createElement("span", { className: "ethereum-address" }, props.defaultAccount)), React.createElement("p", null, "Balance: ", props.balance ? props.balance + " ETH" : 'Unknown'), React.createElement("h4", null, "Ethereum Blockchain Info"), React.createElement("p", null, "Web3 status: " + (props.isWeb3Connected ? "connected" : "not connected")), React.createElement("p", null, "Current web3 provider host: " + props.currentProvider), React.createElement("p", null, "Block number: " + props.blockNumber), React.createElement("h4", null, "DAO Info"), React.createElement("p", null, props.ownerAddress === props.defaultAccount ? 'You are the owner' : "You are not the owner. Owner: " + (props.ownerAddress ? props.ownerAddress : 'Unknown')), React.createElement("p", null, "Owned contract address: ", props.contractAddressOwned ? props.contractAddressOwned : React.createElement("span", null, React.createElement(react_fa_1.Icon, { name: "warning" }), " ", 'Contract not deployed or unreachable')), React.createElement("p", null, "Members contract address: ", props.contractAddressMembers ? props.contractAddressMembers : React.createElement("span", null, React.createElement(react_fa_1.Icon, { name: "warning" }), " ", 'Contract not deployed or unreachable')), React.createElement("p", null, "Votes contract address: ", props.contractAddressVotes ? props.contractAddressVotes : React.createElement("span", null, React.createElement(react_fa_1.Icon, { name: "warning" }), " ", 'Contract not deployed or unreachable')), React.createElement("h4", null, "IPFS Info"), React.createElement("p", null, "Id: ", props.ipfsId ? props.ipfsId : "none"), React.createElement("p", null, "Public Key: ", props.ipfsPublicKey ? props.ipfsPublicKey : "none"), React.createElement("p", null, "Agent version: ", props.ipfsAgentVersion ? props.ipfsAgentVersion : "none"), React.createElement("p", null, "Protocol version: ", props.ipfsProtocolVersion ? props.ipfsProtocolVersion : "none"))));
+    return (React.createElement("div", { className: "row" },
+        React.createElement("div", { className: "col" },
+            React.createElement(reactstrap_1.Card, { className: `mx-auto ${styles_css_1.default.info}` },
+                React.createElement("h4", null, "User Info"),
+                React.createElement("p", null,
+                    'User account: ',
+                    React.createElement("span", { className: "ethereum-address" }, props.defaultAccount)),
+                React.createElement("p", null,
+                    "Balance: ",
+                    props.balance
+                        ? `${props.balance} ETH`
+                        : 'Unknown'),
+                React.createElement("h4", null, "Ethereum Blockchain Info"),
+                React.createElement("p", null, `Web3 status: ${props.isWeb3Connected ? "connected" : "not connected"}`),
+                React.createElement("p", null, `Current web3 provider host: ${props.currentProvider}`),
+                React.createElement("p", null, `Block number: ${props.blockNumber}`),
+                React.createElement("h4", null, "DAO Info"),
+                React.createElement("p", null, props.ownerAddress === props.defaultAccount ? 'You are the owner'
+                    : `You are not the owner. Owner: ${props.ownerAddress ? props.ownerAddress : 'Unknown'}`),
+                React.createElement("p", null,
+                    "Owned contract address: ",
+                    props.contractAddressOwned
+                        ? props.contractAddressOwned
+                        : React.createElement("span", null,
+                            React.createElement(react_fa_1.Icon, { name: "warning" }),
+                            " ",
+                            'Contract not deployed or unreachable')),
+                React.createElement("p", null,
+                    "Members contract address: ",
+                    props.contractAddressMembers
+                        ? props.contractAddressMembers
+                        : React.createElement("span", null,
+                            React.createElement(react_fa_1.Icon, { name: "warning" }),
+                            " ",
+                            'Contract not deployed or unreachable')),
+                React.createElement("p", null,
+                    "Votes contract address: ",
+                    props.contractAddressVotes
+                        ? props.contractAddressVotes
+                        : React.createElement("span", null,
+                            React.createElement(react_fa_1.Icon, { name: "warning" }),
+                            " ",
+                            'Contract not deployed or unreachable')),
+                React.createElement("h4", null, "IPFS Info"),
+                React.createElement("p", null,
+                    "Id: ",
+                    props.ipfsId ? props.ipfsId : "none"),
+                React.createElement("p", null,
+                    "Public Key: ",
+                    props.ipfsPublicKey ? props.ipfsPublicKey : "none"),
+                React.createElement("p", null,
+                    "Agent version: ",
+                    props.ipfsAgentVersion ? props.ipfsAgentVersion : "none"),
+                React.createElement("p", null,
+                    "Protocol version: ",
+                    props.ipfsProtocolVersion ? props.ipfsProtocolVersion : "none")))));
 }
 exports.default = Info;
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/common/Info/styles.css", function(exports, require, module, __filename, __dirname){
 
-module.exports = ".info {\n  padding: 20px;\n  margin: 3rem;\n  & p {\n    margin-bottom: 0.5rem;\n  }\n  & h4 {\n    margin-top: 1rem;\n  }\n}\n"
+
+module.exports.default = {"info":"_info_1i08f_1"};
+require("fuse-box-css")("components/common/Info/styles.css", "._info_1i08f_1 {\n  padding: 20px;\n  margin: 3rem;\n  & p {\n    margin-bottom: 0.5rem;\n  }\n  & h4 {\n    margin-top: 1rem;\n  }\n}\n")
 });
 ___scope___.file("containers/ProposalSubmissionContainer/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-var react_1 = require("react");
-var react_redux_1 = require("react-redux");
-var toastrManager_1 = require("../../helpers/toastrManager");
-var List_1 = require("../../components/common/List");
-var index_1 = require("../../components/VotesManagement/ProposalSubmissionForm/index");
-var ProposalsListItem_1 = require("../../components/VotesManagement/ProposalsListItem");
-
-var ProposalSubmissionPage = function (_react_1$Component) {
-    _inherits(ProposalSubmissionPage, _react_1$Component);
-
-    function ProposalSubmissionPage(props) {
-        _classCallCheck(this, ProposalSubmissionPage);
-
-        return _possibleConstructorReturn(this, (ProposalSubmissionPage.__proto__ || Object.getPrototypeOf(ProposalSubmissionPage)).call(this, props));
+const React = require("react");
+const react_1 = require("react");
+const react_redux_1 = require("react-redux");
+const toastrManager_1 = require("../../helpers/toastrManager");
+const List_1 = require("../../components/common/List");
+const index_1 = require("../../components/VotesManagement/ProposalSubmissionForm/index");
+const ProposalsListItem_1 = require("../../components/VotesManagement/ProposalsListItem");
+class ProposalSubmissionPage extends react_1.Component {
+    constructor(props) {
+        super(props);
     }
-
-    _createClass(ProposalSubmissionPage, [{
-        key: "componentWillReceiveProps",
-        value: function componentWillReceiveProps(nextProps) {
-            toastrManager_1.default(nextProps, this.props);
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _props = this.props,
-                createProposal = _props.createProposal,
-                proposals = _props.proposals;
-
-            return React.createElement("div", { id: "ProposalSubmissionPageContainer" }, React.createElement("h1", null, "Proposal Submission"), React.createElement("h2", null, "Submit a proposal ", React.createElement("span", { className: "caution" }, "owner only")), React.createElement(index_1.default, { createProposal: createProposal }), React.createElement("div", { className: "m-top-50" }, React.createElement("h3", null, "Current proposals"), React.createElement("p", null, "There are " + (proposals && proposals.length) + " proposals"), React.createElement(List_1.default, { component: ProposalsListItem_1.default, items: proposals }), React.createElement("h3", null, "Past proposals"), React.createElement("p", null, "Proposal n\xB01: Adopted. Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit."), React.createElement("p", null, "Proposal n\xB02: Adopted. Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit."), React.createElement("p", null, "Proposal n\xB03: Adopted. Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit.")));
-        }
-    }]);
-
-    return ProposalSubmissionPage;
-}(react_1.Component);
-
-var mapStateToProps = function mapStateToProps(state) {
+    componentWillReceiveProps(nextProps) {
+        toastrManager_1.default(nextProps, this.props);
+    }
+    render() {
+        const { createProposal, proposals } = this.props;
+        return (React.createElement("div", { id: "ProposalSubmissionPageContainer" },
+            React.createElement("h1", null, "Proposal Submission"),
+            React.createElement("h2", null,
+                "Submit a proposal ",
+                React.createElement("span", { className: "caution" }, "owner only")),
+            React.createElement(index_1.default, { createProposal: createProposal }),
+            React.createElement("div", { className: "m-top-50" },
+                React.createElement("h3", null, "Current proposals"),
+                React.createElement("p", null, `There are ${proposals && proposals.length} proposals`),
+                React.createElement(List_1.default, { component: ProposalsListItem_1.default, items: proposals }),
+                React.createElement("h3", null, "Past proposals"),
+                React.createElement("p", null, "Proposal n\u00B01: Adopted. Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit."),
+                React.createElement("p", null, "Proposal n\u00B02: Adopted. Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit."),
+                React.createElement("p", null, "Proposal n\u00B03: Adopted. Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit."))));
+    }
+}
+const mapStateToProps = (state) => {
     return {
         errors: state.vote.errors,
         txs: state.vote.txs,
         proposals: state.vote.proposals
     };
 };
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-    return {
-        createProposal: function createProposal(values) {
-            return dispatch({ type: 'CREATE_PROPOSAL_REQUESTED', values: values });
-        }
-    };
+const mapDispatchToProps = dispatch => {
+    return ({
+        createProposal: (values) => dispatch({ type: 'CREATE_PROPOSAL_REQUESTED', values }),
+    });
 };
 exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ProposalSubmissionPage);
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/VotesManagement/ProposalSubmissionForm/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var reactstrap_1 = require("reactstrap");
-var redux_form_1 = require("redux-form");
-var Inputs_1 = require("../../common/Inputs");
-var validate = function validate(values) {
-    var errors = {};
+const react_1 = require("react");
+const reactstrap_1 = require("reactstrap");
+const redux_form_1 = require("redux-form");
+const Inputs_1 = require("../../common/Inputs");
+const validate = values => {
+    const errors = {};
     if (!values.proposalDescription) {
         errors.proposalDescription = 'Required';
-    } else if (values.proposalDescription.length >= 600) {
+    }
+    else if (values.proposalDescription.length >= 600) {
         errors.proposalDescription = 'Description length must be 600 char max';
     }
     if (!values.proposalDeadline) {
         errors.proposalDeadline = 'Required';
-    } else if (!Number.isInteger(Number(values.proposalDeadline))) {
+    }
+    else if (!Number.isInteger(Number(values.proposalDeadline))) {
         errors.proposalDeadline = 'Proposal deadline must be a number (number of days)';
     }
     return errors;
 };
-var afterSubmit = function afterSubmit(result, dispatch) {
-    return dispatch(redux_form_1.reset('proposalSubmissionForm'));
-};
-var ProposalSubmissionForm = function ProposalSubmissionForm(props) {
-    var createProposal = props.createProposal,
-        handleSubmit = props.handleSubmit;
-
-    return react_1.default.createElement("div", { id: "proposalSubmissionForm", className: "form" }, react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(createProposal) }, react_1.default.createElement("div", { className: "row" }, react_1.default.createElement("div", { className: "col-12" }, react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.TextArea, id: "proposalDescriptionInput", placeholder: "Enter description of the proposal", type: "textarea", name: "proposalDescription" }))), react_1.default.createElement("div", { className: "row" }, react_1.default.createElement("div", { className: "col-12" }, react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "proposalDeadlineInput", name: "proposalDeadline", type: "number", placeholder: "Enter the number of days until the deadline" }))), react_1.default.createElement(reactstrap_1.Button, { block: true, color: "primary", outline: true, size: "lg", className: "m-top-20", type: "submit" }, 'Submit')));
+const afterSubmit = (result, dispatch) => dispatch(redux_form_1.reset('proposalSubmissionForm'));
+let ProposalSubmissionForm = props => {
+    const { createProposal, handleSubmit } = props;
+    return (react_1.default.createElement("div", { id: "proposalSubmissionForm", className: "form" },
+        react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(createProposal) },
+            react_1.default.createElement("div", { className: "row" },
+                react_1.default.createElement("div", { className: "col-12" },
+                    react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.TextArea, id: "proposalDescriptionInput", placeholder: "Enter description of the proposal", type: "textarea", name: "proposalDescription" }))),
+            react_1.default.createElement("div", { className: "row" },
+                react_1.default.createElement("div", { className: "col-12" },
+                    react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, id: "proposalDeadlineInput", name: "proposalDeadline", type: "number", placeholder: "Enter the number of days until the deadline" }))),
+            react_1.default.createElement(reactstrap_1.Button, { block: true, color: "primary", outline: true, size: "lg", className: "m-top-20", type: "submit" }, 'Submit'))));
 };
 exports.default = ProposalSubmissionForm = redux_form_1.reduxForm({
     form: 'proposalSubmissionForm',
     onSubmitSuccess: afterSubmit,
-    validate: validate
+    validate,
 })(ProposalSubmissionForm);
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/VotesManagement/ProposalsListItem/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var prop_types_1 = require("prop-types");
+const react_1 = require("react");
+const PropTypes = require("prop-types");
 require("./styles.css");
-var convertTimestampToDate_1 = require("../../../helpers/convertTimestampToDate");
+const convertTimestampToDate_1 = require("../../../helpers/convertTimestampToDate");
 function ProposalsListItem(props) {
-    return react_1.default.createElement("li", { styleName: "item" }, react_1.default.createElement("div", null, react_1.default.createElement("p", null, "Proposal #", props.index + 1), react_1.default.createElement("p", null, "Description: ", props.item.proposalDesc), react_1.default.createElement("p", null, "Expiration date: ", convertTimestampToDate_1.default(props.item.proposalDeadline))));
+    return (react_1.default.createElement("li", { styleName: "item" },
+        react_1.default.createElement("div", null,
+            react_1.default.createElement("p", null,
+                "Proposal #",
+                props.index + 1),
+            react_1.default.createElement("p", null,
+                "Description: ",
+                props.item.proposalDesc),
+            react_1.default.createElement("p", null,
+                "Expiration date: ",
+                convertTimestampToDate_1.default(props.item.proposalDeadline)))));
 }
 ProposalsListItem.propTypes = {
-    styleName: prop_types_1.default.string,
-    item: prop_types_1.default.any
+    styleName: PropTypes.string,
+    item: PropTypes.any,
 };
 exports.default = ProposalsListItem;
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/VotesManagement/ProposalsListItem/styles.css", function(exports, require, module, __filename, __dirname){
 
-module.exports = ".item {\n  margin-bottom: 1rem;\n}"
+
+module.exports.default = {"item":"_item_18a1k_1"};
+require("fuse-box-css")("components/VotesManagement/ProposalsListItem/styles.css", "._item_18a1k_1 {\n  margin-bottom: 1rem;\n}")
 });
 ___scope___.file("containers/VotesManagementContainer/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-var react_1 = require("react");
-var react_redux_1 = require("react-redux");
-var NestedLists_1 = require("../../components/common/NestedLists");
-var VotingForm_1 = require("./../../components/VotesManagement/VotingForm");
-var toastrManager_1 = require("../../helpers/toastrManager");
-
-var VotingPage = function (_react_1$Component) {
-    _inherits(VotingPage, _react_1$Component);
-
-    function VotingPage(props) {
-        _classCallCheck(this, VotingPage);
-
-        return _possibleConstructorReturn(this, (VotingPage.__proto__ || Object.getPrototypeOf(VotingPage)).call(this, props));
+const React = require("react");
+const react_1 = require("react");
+const react_redux_1 = require("react-redux");
+const NestedLists_1 = require("../../components/common/NestedLists");
+const VotingForm_1 = require("./../../components/VotesManagement/VotingForm");
+const toastrManager_1 = require("../../helpers/toastrManager");
+class VotingPage extends react_1.Component {
+    constructor(props) {
+        super(props);
     }
-
-    _createClass(VotingPage, [{
-        key: "componentWillReceiveProps",
-        value: function componentWillReceiveProps(nextProps) {
-            toastrManager_1.default(nextProps, this.props);
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _props = this.props,
-                onVoteSubmit = _props.onVoteSubmit,
-                votes = _props.votes;
-
-            return React.createElement("div", { id: "VotingPageContainer" }, React.createElement("h1", null, "Voting"), React.createElement("p", null, "But it's more about commenting proposals actually"), React.createElement("div", { className: "m-top-50 row" }, React.createElement("div", { className: "col-12" }, React.createElement("h2", null, "Vote for a Proposal ", React.createElement("span", { className: "caution" }, "member only")), React.createElement(VotingForm_1.default, { onVoteSubmit: onVoteSubmit }))), React.createElement("div", { className: "m-top-50 row" }, React.createElement("div", { className: "col-12" }, React.createElement("h2", null, "What voters said for each proposal"), React.createElement(NestedLists_1.default, { items: votes }))));
-        }
-    }]);
-
-    return VotingPage;
-}(react_1.Component);
-
-var mapStateToProps = function mapStateToProps(state) {
+    componentWillReceiveProps(nextProps) {
+        toastrManager_1.default(nextProps, this.props);
+    }
+    render() {
+        const { onVoteSubmit, votes } = this.props;
+        return (React.createElement("div", { id: "VotingPageContainer" },
+            React.createElement("h1", null, "Voting"),
+            React.createElement("p", null, "But it's more about commenting proposals actually"),
+            React.createElement("div", { className: "m-top-50 row" },
+                React.createElement("div", { className: "col-12" },
+                    React.createElement("h2", null,
+                        "Vote for a Proposal ",
+                        React.createElement("span", { className: "caution" }, "member only")),
+                    React.createElement(VotingForm_1.default, { onVoteSubmit: onVoteSubmit }))),
+            React.createElement("div", { className: "m-top-50 row" },
+                React.createElement("div", { className: "col-12" },
+                    React.createElement("h2", null, "What voters said for each proposal"),
+                    React.createElement(NestedLists_1.default, { items: votes })))));
+    }
+}
+const mapStateToProps = (state) => {
     return {
         errors: state.vote.errors,
         txs: state.vote.txs,
         votes: state.vote.votes
     };
 };
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onVoteSubmit: function onVoteSubmit(values) {
-            return dispatch({ type: 'VOTE_SUBMISSION_REQUESTED', values: values });
-        }
+        onVoteSubmit: (values) => dispatch({ type: 'VOTE_SUBMISSION_REQUESTED', values })
     };
 };
 exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(VotingPage);
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/common/NestedLists/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-var prop_types_1 = require("prop-types");
+const React = require("react");
+const PropTypes = require("prop-types");
 require("./styles.css");
-var VotesListItem_1 = require("../../VotesManagement/VotesListItem");
+const VotesListItem_1 = require("../../VotesManagement/VotesListItem");
 function NestedLists(props) {
-    var items = props.items;
-
-    var list = [];
-    var lists = [];
-    var renderList = function renderList(proposalID) {
-        return React.createElement("div", { key: "list-" + proposalID, styleName: "list" }, React.createElement("h3", null, "Proposal n\xB0 " + proposalID), React.createElement("ul", null, list));
+    const { items } = props;
+    let list = [];
+    let lists = [];
+    let renderList = (proposalID) => {
+        return (React.createElement("div", { key: `list-${proposalID}`, styleName: "list" },
+            React.createElement("h3", null, `Proposal n° ${proposalID}`),
+            React.createElement("ul", null, list)));
     };
     if (items && Object.keys(items).length !== 0) {
         for (var proposalID in items) {
             if (items[proposalID].length) {
                 if (items.hasOwnProperty(proposalID)) {
-                    list = items[proposalID].map(function (item, index) {
-                        return React.createElement(VotesListItem_1.default, { key: "item-" + index, item: item });
-                    });
+                    list = items[proposalID].map((item, index) => (React.createElement(VotesListItem_1.default, { key: `item-${index}`, item: item })));
                     lists.push(renderList(proposalID));
                 }
-            } else {
+            }
+            else {
                 list = React.createElement("li", null, 'No votes yet');
                 lists.push(renderList(proposalID));
             }
         }
-    } else {
+    }
+    else {
         lists = React.createElement("p", null, 'No Content');
     }
-    return React.createElement("div", { styleName: "listWrapper" }, lists);
+    return (React.createElement("div", { styleName: "listWrapper" }, lists));
 }
 exports.default = NestedLists;
 NestedLists.propTypes = {
-    items: prop_types_1.default.object
+    items: PropTypes.object,
 };
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/common/NestedLists/styles.css", function(exports, require, module, __filename, __dirname){
 
-module.exports = ".listWrapper {\n  padding: 0.5rem;\n}\n\n.list {\n  margin-bottom: 2rem;\n  & li {\n    line-height: 0.8rem;\n  }\n}\n"
+
+module.exports.default = {"listWrapper":"_listWrapper_1su62_1","list":"_list_1su62_1"};
+require("fuse-box-css")("components/common/NestedLists/styles.css", "._listWrapper_1su62_1 {\n  padding: 0.5rem;\n}\n\n._list_1su62_1 {\n  margin-bottom: 2rem;\n  & li {\n    line-height: 0.8rem;\n  }\n}\n")
 });
 ___scope___.file("components/VotesManagement/VotesListItem/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var prop_types_1 = require("prop-types");
+const react_1 = require("react");
+const PropTypes = require("prop-types");
 function VotesListItem(props) {
-    return react_1.default.createElement("li", null, react_1.default.createElement("div", null, react_1.default.createElement("p", null, "Voter's Address: ", props.item.voterAddr), react_1.default.createElement("p", null, "The Voter's vote: ", props.item.voteValue)));
+    return (react_1.default.createElement("li", null,
+        react_1.default.createElement("div", null,
+            react_1.default.createElement("p", null,
+                "Voter's Address: ",
+                props.item.voterAddr),
+            react_1.default.createElement("p", null,
+                "The Voter's vote: ",
+                props.item.voteValue))));
 }
 VotesListItem.propTypes = {
-    className: prop_types_1.default.string,
-    item: prop_types_1.default.any
+    className: PropTypes.string,
+    item: PropTypes.any,
 };
 exports.default = VotesListItem;
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("components/VotesManagement/VotingForm/index.jsx", function(exports, require, module, __filename, __dirname){
 
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var reactstrap_1 = require("reactstrap");
-var redux_form_1 = require("redux-form");
-var Inputs_1 = require("../../common/Inputs");
-var validate = function validate(values) {
-    var errors = {};
+const react_1 = require("react");
+const reactstrap_1 = require("reactstrap");
+const redux_form_1 = require("redux-form");
+const Inputs_1 = require("../../common/Inputs");
+const validate = values => {
+    const errors = {};
     if (!values.proposalId) {
         errors.proposalId = 'Required';
-    } else if (!Number.isInteger(Number(values.proposalId))) {
+    }
+    else if (!Number.isInteger(Number(values.proposalId))) {
         errors.proposalId = 'Proposal ID must be a number';
     }
     if (!values.voteValue) {
         errors.voteValue = 'Required';
-    } else if (values.voteValue.length >= 60) {
+    }
+    else if (values.voteValue.length >= 60) {
         errors.voteValue = 'Length must be 60 char max';
     }
     return errors;
 };
-var afterSubmit = function afterSubmit(result, dispatch) {
-    return dispatch(redux_form_1.reset('votingForm'));
-};
-var VotingForm = function VotingForm(props) {
-    var handleSubmit = props.handleSubmit,
-        onVoteSubmit = props.onVoteSubmit;
-
-    return react_1.default.createElement("div", { id: "voteForm", className: "form" }, react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(onVoteSubmit) }, react_1.default.createElement("div", { className: "row" }, react_1.default.createElement("div", { className: "col-12" }, react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, label: "proposalId", name: "proposalId", placeholder: "Enter the proposal ID", type: "number" }))), react_1.default.createElement("div", { className: "row" }, react_1.default.createElement("div", { className: "col-12" }, react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, label: "voteValue", name: "voteValue", placeholder: "Enter your vote", type: "text" }))), react_1.default.createElement(reactstrap_1.Button, { block: true, color: "primary", outline: true, size: "lg", type: "submit" }, 'Submit')));
+const afterSubmit = (result, dispatch) => dispatch(redux_form_1.reset('votingForm'));
+let VotingForm = (props) => {
+    const { handleSubmit, onVoteSubmit } = props;
+    return (react_1.default.createElement("div", { id: "voteForm", className: "form" },
+        react_1.default.createElement(reactstrap_1.Form, { onSubmit: handleSubmit(onVoteSubmit) },
+            react_1.default.createElement("div", { className: "row" },
+                react_1.default.createElement("div", { className: "col-12" },
+                    react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, label: "proposalId", name: "proposalId", placeholder: "Enter the proposal ID", type: "number" }))),
+            react_1.default.createElement("div", { className: "row" },
+                react_1.default.createElement("div", { className: "col-12" },
+                    react_1.default.createElement(redux_form_1.Field, { component: Inputs_1.Input, label: "voteValue", name: "voteValue", placeholder: "Enter your vote", type: "text" }))),
+            react_1.default.createElement(reactstrap_1.Button, { block: true, color: "primary", outline: true, size: "lg", type: "submit" }, 'Submit'))));
 };
 exports.default = VotingForm = redux_form_1.reduxForm({
     form: 'votingForm',
     onSubmitSuccess: afterSubmit,
-    validate: validate
+    validate
 })(VotingForm);
+//# sourceMappingURL=index.js.map
 });
 ___scope___.file("assets/theme/app.css", function(exports, require, module, __filename, __dirname){
 
-module.exports = "@import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';\n\n/* HELPERS */\n/* Margin*/\n.m-btm-15 {margin-bottom: 15px}\n.m-btm-20 {margin-bottom: 20px}\n.m-btm-30 {margin-bottom: 30px}\n\n.m-top-15 {margin-top: 15px}\n.m-top-20 {margin-top: 20px}\n.m-top-30 {margin-top: 30px}\n.m-top-50 {margin-top: 50px}\n\n/* headers */\nh1 {margin-bottom: 2rem}\nh2 {margin-bottom: 1.5rem}\nh3 {margin-bottom: 1rem}\n\np {word-wrap: break-word}\n\n/* React-Redux-Toastr */\n.redux-toastr .top-left, .redux-toastr .top-right, .redux-toastr .top-center,\n.redux-toastr .bottom-left, .redux-toastr .bottom-right, .redux-toastr .bottom-center {\n  width: 50%;\n  word-wrap: break-word;\n\n  & .toastr-middle-container {\n    padding: 10px 50px 10px 0;\n    width: 90%;\n  }\n  & .toastr-right-container {\n    display: none;\n  }\n}\n.redux-toastr .confirm {\n  width: 420px;\n  & .message {\n    line-height: 2rem;\n  }\n}\n\n/* Forms */\n.form {\n  & input, & textarea {\n    margin-bottom: 1rem;\n  }\n  & button {\n    margin-top: 0.5rem;\n  }\n}\n\n.ethereum-address {\n  color: #c94d42;\n}\n\n.caution {\n  font-style: italic;\n  color: red;\n  font-size: 1rem;\n}"
+
+module.exports.default = {"m-btm-15":"_m-btm-15_1nji9_5","m-btm-20":"_m-btm-20_1nji9_6","m-btm-30":"_m-btm-30_1nji9_7","m-top-15":"_m-top-15_1nji9_9","m-top-20":"_m-top-20_1nji9_10","m-top-30":"_m-top-30_1nji9_11","m-top-50":"_m-top-50_1nji9_12","redux-toastr":"_redux-toastr_1nji9_22","top-left":"_top-left_1nji9_22","top-right":"_top-right_1nji9_22","top-center":"_top-center_1nji9_22","bottom-left":"_bottom-left_1nji9_23","bottom-right":"_bottom-right_1nji9_23","bottom-center":"_bottom-center_1nji9_23","toastr-middle-container":"_toastr-middle-container_1nji9_27","toastr-right-container":"_toastr-right-container_1nji9_31","confirm":"_confirm_1nji9_35","message":"_message_1nji9_37","form":"_form_1nji9_43","ethereum-address":"_ethereum-address_1nji9_52","caution":"_caution_1nji9_56"};
+require("fuse-box-css")("assets/theme/app.css", "@import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';\n\n/* HELPERS */\n/* Margin*/\n._m-btm-15_1nji9_5 {margin-bottom: 15px}\n._m-btm-20_1nji9_6 {margin-bottom: 20px}\n._m-btm-30_1nji9_7 {margin-bottom: 30px}\n\n._m-top-15_1nji9_9 {margin-top: 15px}\n._m-top-20_1nji9_10 {margin-top: 20px}\n._m-top-30_1nji9_11 {margin-top: 30px}\n._m-top-50_1nji9_12 {margin-top: 50px}\n\n/* headers */\nh1 {margin-bottom: 2rem}\nh2 {margin-bottom: 1.5rem}\nh3 {margin-bottom: 1rem}\n\np {word-wrap: break-word}\n\n/* React-Redux-Toastr */\n._redux-toastr_1nji9_22 ._top-left_1nji9_22, ._redux-toastr_1nji9_22 ._top-right_1nji9_22, ._redux-toastr_1nji9_22 ._top-center_1nji9_22,\n._redux-toastr_1nji9_22 ._bottom-left_1nji9_23, ._redux-toastr_1nji9_22 ._bottom-right_1nji9_23, ._redux-toastr_1nji9_22 ._bottom-center_1nji9_23 {\n  width: 50%;\n  word-wrap: break-word;\n\n  & ._toastr-middle-container_1nji9_27 {\n    padding: 10px 50px 10px 0;\n    width: 90%;\n  }\n  & ._toastr-right-container_1nji9_31 {\n    display: none;\n  }\n}\n._redux-toastr_1nji9_22 ._confirm_1nji9_35 {\n  width: 420px;\n  & ._message_1nji9_37 {\n    line-height: 2rem;\n  }\n}\n\n/* Forms */\n._form_1nji9_43 {\n  & input, & textarea {\n    margin-bottom: 1rem;\n  }\n  & button {\n    margin-top: 0.5rem;\n  }\n}\n\n._ethereum-address_1nji9_52 {\n  color: #c94d42;\n}\n\n._caution_1nji9_56 {\n  font-style: italic;\n  color: red;\n  font-size: 1rem;\n}")
 });
 });
 FuseBox.pkg("react", {}, function(___scope___){
@@ -46972,6 +46172,54 @@ function getTransitionProperties() {
 });
 return ___scope___.entry = "index.js";
 });
+FuseBox.pkg("fuse-box-css", {}, function(___scope___){
+___scope___.file("index.js", function(exports, require, module, __filename, __dirname){
+
+/**
+ * Listens to 'async' requets and if the name is a css file
+ * wires it to `__fsbx_css`
+ */
+
+var cssHandler = function(__filename, contents) {
+    if (!FuseBox.isServer) {
+        var styleId = __filename.replace(/[\.\/]+/g, '-');
+        if (styleId.charAt(0) === '-') styleId = styleId.substring(1);
+        var exists = document.getElementById(styleId);
+        if (!exists) {
+            //<link href="//fonts.googleapis.com/css?family=Covered+By+Your+Grace" rel="stylesheet" type="text/css">
+            var s = document.createElement(contents ? 'style' : 'link');
+            s.id = styleId;
+            s.type = 'text/css';
+            if (contents) {
+                s.innerHTML = contents;
+            } else {
+                s.rel = 'stylesheet';
+                s.href = __filename;
+            }
+            document.getElementsByTagName('head')[0].appendChild(s);
+        } else {
+            if (contents) {
+                exists.innerHTML = contents;
+            }
+        }
+    }
+}
+if (typeof FuseBox !== "undefined" && FuseBox.isBrowser) {
+    FuseBox.on('async', function(name) {
+        if (FuseBox.isServer) {
+            return;
+        }
+        if (/\.css$/.test(name)) {
+            cssHandler(name);
+            return false;
+        }
+    });
+}
+
+module.exports = cssHandler;
+});
+return ___scope___.entry = "index.js";
+});
 FuseBox.pkg("react-router-redux", {}, function(___scope___){
 ___scope___.file("index.js", function(exports, require, module, __filename, __dirname){
 
@@ -56101,7 +55349,9 @@ return ___scope___.entry = "lib/index.js";
 FuseBox.pkg("font-awesome", {}, function(___scope___){
 ___scope___.file("css/font-awesome.css", function(exports, require, module, __filename, __dirname){
 
-module.exports = "/*!\n *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome\n *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\n */\n/* FONT PATH\n * -------------------------- */\n@font-face {\n  font-family: 'FontAwesome';\n  src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');\n  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n.fa {\n  display: inline-block;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n/* makes the font 33% larger relative to the icon container */\n.fa-lg {\n  font-size: 1.33333333em;\n  line-height: 0.75em;\n  vertical-align: -15%;\n}\n.fa-2x {\n  font-size: 2em;\n}\n.fa-3x {\n  font-size: 3em;\n}\n.fa-4x {\n  font-size: 4em;\n}\n.fa-5x {\n  font-size: 5em;\n}\n.fa-fw {\n  width: 1.28571429em;\n  text-align: center;\n}\n.fa-ul {\n  padding-left: 0;\n  margin-left: 2.14285714em;\n  list-style-type: none;\n}\n.fa-ul > li {\n  position: relative;\n}\n.fa-li {\n  position: absolute;\n  left: -2.14285714em;\n  width: 2.14285714em;\n  top: 0.14285714em;\n  text-align: center;\n}\n.fa-li.fa-lg {\n  left: -1.85714286em;\n}\n.fa-border {\n  padding: .2em .25em .15em;\n  border: solid 0.08em #eeeeee;\n  border-radius: .1em;\n}\n.fa-pull-left {\n  float: left;\n}\n.fa-pull-right {\n  float: right;\n}\n.fa.fa-pull-left {\n  margin-right: .3em;\n}\n.fa.fa-pull-right {\n  margin-left: .3em;\n}\n/* Deprecated as of 4.4.0 */\n.pull-right {\n  float: right;\n}\n.pull-left {\n  float: left;\n}\n.fa.pull-left {\n  margin-right: .3em;\n}\n.fa.pull-right {\n  margin-left: .3em;\n}\n.fa-spin {\n  -webkit-animation: fa-spin 2s infinite linear;\n  animation: fa-spin 2s infinite linear;\n}\n.fa-pulse {\n  -webkit-animation: fa-spin 1s infinite steps(8);\n  animation: fa-spin 1s infinite steps(8);\n}\n@-webkit-keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n  }\n}\n@keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n  }\n}\n.fa-rotate-90 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=1)\";\n  -webkit-transform: rotate(90deg);\n  -ms-transform: rotate(90deg);\n  transform: rotate(90deg);\n}\n.fa-rotate-180 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)\";\n  -webkit-transform: rotate(180deg);\n  -ms-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\n.fa-rotate-270 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=3)\";\n  -webkit-transform: rotate(270deg);\n  -ms-transform: rotate(270deg);\n  transform: rotate(270deg);\n}\n.fa-flip-horizontal {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)\";\n  -webkit-transform: scale(-1, 1);\n  -ms-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n.fa-flip-vertical {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)\";\n  -webkit-transform: scale(1, -1);\n  -ms-transform: scale(1, -1);\n  transform: scale(1, -1);\n}\n:root .fa-rotate-90,\n:root .fa-rotate-180,\n:root .fa-rotate-270,\n:root .fa-flip-horizontal,\n:root .fa-flip-vertical {\n  filter: none;\n}\n.fa-stack {\n  position: relative;\n  display: inline-block;\n  width: 2em;\n  height: 2em;\n  line-height: 2em;\n  vertical-align: middle;\n}\n.fa-stack-1x,\n.fa-stack-2x {\n  position: absolute;\n  left: 0;\n  width: 100%;\n  text-align: center;\n}\n.fa-stack-1x {\n  line-height: inherit;\n}\n.fa-stack-2x {\n  font-size: 2em;\n}\n.fa-inverse {\n  color: #ffffff;\n}\n/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen\n   readers do not read off random characters that represent icons */\n.fa-glass:before {\n  content: \"\\f000\";\n}\n.fa-music:before {\n  content: \"\\f001\";\n}\n.fa-search:before {\n  content: \"\\f002\";\n}\n.fa-envelope-o:before {\n  content: \"\\f003\";\n}\n.fa-heart:before {\n  content: \"\\f004\";\n}\n.fa-star:before {\n  content: \"\\f005\";\n}\n.fa-star-o:before {\n  content: \"\\f006\";\n}\n.fa-user:before {\n  content: \"\\f007\";\n}\n.fa-film:before {\n  content: \"\\f008\";\n}\n.fa-th-large:before {\n  content: \"\\f009\";\n}\n.fa-th:before {\n  content: \"\\f00a\";\n}\n.fa-th-list:before {\n  content: \"\\f00b\";\n}\n.fa-check:before {\n  content: \"\\f00c\";\n}\n.fa-remove:before,\n.fa-close:before,\n.fa-times:before {\n  content: \"\\f00d\";\n}\n.fa-search-plus:before {\n  content: \"\\f00e\";\n}\n.fa-search-minus:before {\n  content: \"\\f010\";\n}\n.fa-power-off:before {\n  content: \"\\f011\";\n}\n.fa-signal:before {\n  content: \"\\f012\";\n}\n.fa-gear:before,\n.fa-cog:before {\n  content: \"\\f013\";\n}\n.fa-trash-o:before {\n  content: \"\\f014\";\n}\n.fa-home:before {\n  content: \"\\f015\";\n}\n.fa-file-o:before {\n  content: \"\\f016\";\n}\n.fa-clock-o:before {\n  content: \"\\f017\";\n}\n.fa-road:before {\n  content: \"\\f018\";\n}\n.fa-download:before {\n  content: \"\\f019\";\n}\n.fa-arrow-circle-o-down:before {\n  content: \"\\f01a\";\n}\n.fa-arrow-circle-o-up:before {\n  content: \"\\f01b\";\n}\n.fa-inbox:before {\n  content: \"\\f01c\";\n}\n.fa-play-circle-o:before {\n  content: \"\\f01d\";\n}\n.fa-rotate-right:before,\n.fa-repeat:before {\n  content: \"\\f01e\";\n}\n.fa-refresh:before {\n  content: \"\\f021\";\n}\n.fa-list-alt:before {\n  content: \"\\f022\";\n}\n.fa-lock:before {\n  content: \"\\f023\";\n}\n.fa-flag:before {\n  content: \"\\f024\";\n}\n.fa-headphones:before {\n  content: \"\\f025\";\n}\n.fa-volume-off:before {\n  content: \"\\f026\";\n}\n.fa-volume-down:before {\n  content: \"\\f027\";\n}\n.fa-volume-up:before {\n  content: \"\\f028\";\n}\n.fa-qrcode:before {\n  content: \"\\f029\";\n}\n.fa-barcode:before {\n  content: \"\\f02a\";\n}\n.fa-tag:before {\n  content: \"\\f02b\";\n}\n.fa-tags:before {\n  content: \"\\f02c\";\n}\n.fa-book:before {\n  content: \"\\f02d\";\n}\n.fa-bookmark:before {\n  content: \"\\f02e\";\n}\n.fa-print:before {\n  content: \"\\f02f\";\n}\n.fa-camera:before {\n  content: \"\\f030\";\n}\n.fa-font:before {\n  content: \"\\f031\";\n}\n.fa-bold:before {\n  content: \"\\f032\";\n}\n.fa-italic:before {\n  content: \"\\f033\";\n}\n.fa-text-height:before {\n  content: \"\\f034\";\n}\n.fa-text-width:before {\n  content: \"\\f035\";\n}\n.fa-align-left:before {\n  content: \"\\f036\";\n}\n.fa-align-center:before {\n  content: \"\\f037\";\n}\n.fa-align-right:before {\n  content: \"\\f038\";\n}\n.fa-align-justify:before {\n  content: \"\\f039\";\n}\n.fa-list:before {\n  content: \"\\f03a\";\n}\n.fa-dedent:before,\n.fa-outdent:before {\n  content: \"\\f03b\";\n}\n.fa-indent:before {\n  content: \"\\f03c\";\n}\n.fa-video-camera:before {\n  content: \"\\f03d\";\n}\n.fa-photo:before,\n.fa-image:before,\n.fa-picture-o:before {\n  content: \"\\f03e\";\n}\n.fa-pencil:before {\n  content: \"\\f040\";\n}\n.fa-map-marker:before {\n  content: \"\\f041\";\n}\n.fa-adjust:before {\n  content: \"\\f042\";\n}\n.fa-tint:before {\n  content: \"\\f043\";\n}\n.fa-edit:before,\n.fa-pencil-square-o:before {\n  content: \"\\f044\";\n}\n.fa-share-square-o:before {\n  content: \"\\f045\";\n}\n.fa-check-square-o:before {\n  content: \"\\f046\";\n}\n.fa-arrows:before {\n  content: \"\\f047\";\n}\n.fa-step-backward:before {\n  content: \"\\f048\";\n}\n.fa-fast-backward:before {\n  content: \"\\f049\";\n}\n.fa-backward:before {\n  content: \"\\f04a\";\n}\n.fa-play:before {\n  content: \"\\f04b\";\n}\n.fa-pause:before {\n  content: \"\\f04c\";\n}\n.fa-stop:before {\n  content: \"\\f04d\";\n}\n.fa-forward:before {\n  content: \"\\f04e\";\n}\n.fa-fast-forward:before {\n  content: \"\\f050\";\n}\n.fa-step-forward:before {\n  content: \"\\f051\";\n}\n.fa-eject:before {\n  content: \"\\f052\";\n}\n.fa-chevron-left:before {\n  content: \"\\f053\";\n}\n.fa-chevron-right:before {\n  content: \"\\f054\";\n}\n.fa-plus-circle:before {\n  content: \"\\f055\";\n}\n.fa-minus-circle:before {\n  content: \"\\f056\";\n}\n.fa-times-circle:before {\n  content: \"\\f057\";\n}\n.fa-check-circle:before {\n  content: \"\\f058\";\n}\n.fa-question-circle:before {\n  content: \"\\f059\";\n}\n.fa-info-circle:before {\n  content: \"\\f05a\";\n}\n.fa-crosshairs:before {\n  content: \"\\f05b\";\n}\n.fa-times-circle-o:before {\n  content: \"\\f05c\";\n}\n.fa-check-circle-o:before {\n  content: \"\\f05d\";\n}\n.fa-ban:before {\n  content: \"\\f05e\";\n}\n.fa-arrow-left:before {\n  content: \"\\f060\";\n}\n.fa-arrow-right:before {\n  content: \"\\f061\";\n}\n.fa-arrow-up:before {\n  content: \"\\f062\";\n}\n.fa-arrow-down:before {\n  content: \"\\f063\";\n}\n.fa-mail-forward:before,\n.fa-share:before {\n  content: \"\\f064\";\n}\n.fa-expand:before {\n  content: \"\\f065\";\n}\n.fa-compress:before {\n  content: \"\\f066\";\n}\n.fa-plus:before {\n  content: \"\\f067\";\n}\n.fa-minus:before {\n  content: \"\\f068\";\n}\n.fa-asterisk:before {\n  content: \"\\f069\";\n}\n.fa-exclamation-circle:before {\n  content: \"\\f06a\";\n}\n.fa-gift:before {\n  content: \"\\f06b\";\n}\n.fa-leaf:before {\n  content: \"\\f06c\";\n}\n.fa-fire:before {\n  content: \"\\f06d\";\n}\n.fa-eye:before {\n  content: \"\\f06e\";\n}\n.fa-eye-slash:before {\n  content: \"\\f070\";\n}\n.fa-warning:before,\n.fa-exclamation-triangle:before {\n  content: \"\\f071\";\n}\n.fa-plane:before {\n  content: \"\\f072\";\n}\n.fa-calendar:before {\n  content: \"\\f073\";\n}\n.fa-random:before {\n  content: \"\\f074\";\n}\n.fa-comment:before {\n  content: \"\\f075\";\n}\n.fa-magnet:before {\n  content: \"\\f076\";\n}\n.fa-chevron-up:before {\n  content: \"\\f077\";\n}\n.fa-chevron-down:before {\n  content: \"\\f078\";\n}\n.fa-retweet:before {\n  content: \"\\f079\";\n}\n.fa-shopping-cart:before {\n  content: \"\\f07a\";\n}\n.fa-folder:before {\n  content: \"\\f07b\";\n}\n.fa-folder-open:before {\n  content: \"\\f07c\";\n}\n.fa-arrows-v:before {\n  content: \"\\f07d\";\n}\n.fa-arrows-h:before {\n  content: \"\\f07e\";\n}\n.fa-bar-chart-o:before,\n.fa-bar-chart:before {\n  content: \"\\f080\";\n}\n.fa-twitter-square:before {\n  content: \"\\f081\";\n}\n.fa-facebook-square:before {\n  content: \"\\f082\";\n}\n.fa-camera-retro:before {\n  content: \"\\f083\";\n}\n.fa-key:before {\n  content: \"\\f084\";\n}\n.fa-gears:before,\n.fa-cogs:before {\n  content: \"\\f085\";\n}\n.fa-comments:before {\n  content: \"\\f086\";\n}\n.fa-thumbs-o-up:before {\n  content: \"\\f087\";\n}\n.fa-thumbs-o-down:before {\n  content: \"\\f088\";\n}\n.fa-star-half:before {\n  content: \"\\f089\";\n}\n.fa-heart-o:before {\n  content: \"\\f08a\";\n}\n.fa-sign-out:before {\n  content: \"\\f08b\";\n}\n.fa-linkedin-square:before {\n  content: \"\\f08c\";\n}\n.fa-thumb-tack:before {\n  content: \"\\f08d\";\n}\n.fa-external-link:before {\n  content: \"\\f08e\";\n}\n.fa-sign-in:before {\n  content: \"\\f090\";\n}\n.fa-trophy:before {\n  content: \"\\f091\";\n}\n.fa-github-square:before {\n  content: \"\\f092\";\n}\n.fa-upload:before {\n  content: \"\\f093\";\n}\n.fa-lemon-o:before {\n  content: \"\\f094\";\n}\n.fa-phone:before {\n  content: \"\\f095\";\n}\n.fa-square-o:before {\n  content: \"\\f096\";\n}\n.fa-bookmark-o:before {\n  content: \"\\f097\";\n}\n.fa-phone-square:before {\n  content: \"\\f098\";\n}\n.fa-twitter:before {\n  content: \"\\f099\";\n}\n.fa-facebook-f:before,\n.fa-facebook:before {\n  content: \"\\f09a\";\n}\n.fa-github:before {\n  content: \"\\f09b\";\n}\n.fa-unlock:before {\n  content: \"\\f09c\";\n}\n.fa-credit-card:before {\n  content: \"\\f09d\";\n}\n.fa-feed:before,\n.fa-rss:before {\n  content: \"\\f09e\";\n}\n.fa-hdd-o:before {\n  content: \"\\f0a0\";\n}\n.fa-bullhorn:before {\n  content: \"\\f0a1\";\n}\n.fa-bell:before {\n  content: \"\\f0f3\";\n}\n.fa-certificate:before {\n  content: \"\\f0a3\";\n}\n.fa-hand-o-right:before {\n  content: \"\\f0a4\";\n}\n.fa-hand-o-left:before {\n  content: \"\\f0a5\";\n}\n.fa-hand-o-up:before {\n  content: \"\\f0a6\";\n}\n.fa-hand-o-down:before {\n  content: \"\\f0a7\";\n}\n.fa-arrow-circle-left:before {\n  content: \"\\f0a8\";\n}\n.fa-arrow-circle-right:before {\n  content: \"\\f0a9\";\n}\n.fa-arrow-circle-up:before {\n  content: \"\\f0aa\";\n}\n.fa-arrow-circle-down:before {\n  content: \"\\f0ab\";\n}\n.fa-globe:before {\n  content: \"\\f0ac\";\n}\n.fa-wrench:before {\n  content: \"\\f0ad\";\n}\n.fa-tasks:before {\n  content: \"\\f0ae\";\n}\n.fa-filter:before {\n  content: \"\\f0b0\";\n}\n.fa-briefcase:before {\n  content: \"\\f0b1\";\n}\n.fa-arrows-alt:before {\n  content: \"\\f0b2\";\n}\n.fa-group:before,\n.fa-users:before {\n  content: \"\\f0c0\";\n}\n.fa-chain:before,\n.fa-link:before {\n  content: \"\\f0c1\";\n}\n.fa-cloud:before {\n  content: \"\\f0c2\";\n}\n.fa-flask:before {\n  content: \"\\f0c3\";\n}\n.fa-cut:before,\n.fa-scissors:before {\n  content: \"\\f0c4\";\n}\n.fa-copy:before,\n.fa-files-o:before {\n  content: \"\\f0c5\";\n}\n.fa-paperclip:before {\n  content: \"\\f0c6\";\n}\n.fa-save:before,\n.fa-floppy-o:before {\n  content: \"\\f0c7\";\n}\n.fa-square:before {\n  content: \"\\f0c8\";\n}\n.fa-navicon:before,\n.fa-reorder:before,\n.fa-bars:before {\n  content: \"\\f0c9\";\n}\n.fa-list-ul:before {\n  content: \"\\f0ca\";\n}\n.fa-list-ol:before {\n  content: \"\\f0cb\";\n}\n.fa-strikethrough:before {\n  content: \"\\f0cc\";\n}\n.fa-underline:before {\n  content: \"\\f0cd\";\n}\n.fa-table:before {\n  content: \"\\f0ce\";\n}\n.fa-magic:before {\n  content: \"\\f0d0\";\n}\n.fa-truck:before {\n  content: \"\\f0d1\";\n}\n.fa-pinterest:before {\n  content: \"\\f0d2\";\n}\n.fa-pinterest-square:before {\n  content: \"\\f0d3\";\n}\n.fa-google-plus-square:before {\n  content: \"\\f0d4\";\n}\n.fa-google-plus:before {\n  content: \"\\f0d5\";\n}\n.fa-money:before {\n  content: \"\\f0d6\";\n}\n.fa-caret-down:before {\n  content: \"\\f0d7\";\n}\n.fa-caret-up:before {\n  content: \"\\f0d8\";\n}\n.fa-caret-left:before {\n  content: \"\\f0d9\";\n}\n.fa-caret-right:before {\n  content: \"\\f0da\";\n}\n.fa-columns:before {\n  content: \"\\f0db\";\n}\n.fa-unsorted:before,\n.fa-sort:before {\n  content: \"\\f0dc\";\n}\n.fa-sort-down:before,\n.fa-sort-desc:before {\n  content: \"\\f0dd\";\n}\n.fa-sort-up:before,\n.fa-sort-asc:before {\n  content: \"\\f0de\";\n}\n.fa-envelope:before {\n  content: \"\\f0e0\";\n}\n.fa-linkedin:before {\n  content: \"\\f0e1\";\n}\n.fa-rotate-left:before,\n.fa-undo:before {\n  content: \"\\f0e2\";\n}\n.fa-legal:before,\n.fa-gavel:before {\n  content: \"\\f0e3\";\n}\n.fa-dashboard:before,\n.fa-tachometer:before {\n  content: \"\\f0e4\";\n}\n.fa-comment-o:before {\n  content: \"\\f0e5\";\n}\n.fa-comments-o:before {\n  content: \"\\f0e6\";\n}\n.fa-flash:before,\n.fa-bolt:before {\n  content: \"\\f0e7\";\n}\n.fa-sitemap:before {\n  content: \"\\f0e8\";\n}\n.fa-umbrella:before {\n  content: \"\\f0e9\";\n}\n.fa-paste:before,\n.fa-clipboard:before {\n  content: \"\\f0ea\";\n}\n.fa-lightbulb-o:before {\n  content: \"\\f0eb\";\n}\n.fa-exchange:before {\n  content: \"\\f0ec\";\n}\n.fa-cloud-download:before {\n  content: \"\\f0ed\";\n}\n.fa-cloud-upload:before {\n  content: \"\\f0ee\";\n}\n.fa-user-md:before {\n  content: \"\\f0f0\";\n}\n.fa-stethoscope:before {\n  content: \"\\f0f1\";\n}\n.fa-suitcase:before {\n  content: \"\\f0f2\";\n}\n.fa-bell-o:before {\n  content: \"\\f0a2\";\n}\n.fa-coffee:before {\n  content: \"\\f0f4\";\n}\n.fa-cutlery:before {\n  content: \"\\f0f5\";\n}\n.fa-file-text-o:before {\n  content: \"\\f0f6\";\n}\n.fa-building-o:before {\n  content: \"\\f0f7\";\n}\n.fa-hospital-o:before {\n  content: \"\\f0f8\";\n}\n.fa-ambulance:before {\n  content: \"\\f0f9\";\n}\n.fa-medkit:before {\n  content: \"\\f0fa\";\n}\n.fa-fighter-jet:before {\n  content: \"\\f0fb\";\n}\n.fa-beer:before {\n  content: \"\\f0fc\";\n}\n.fa-h-square:before {\n  content: \"\\f0fd\";\n}\n.fa-plus-square:before {\n  content: \"\\f0fe\";\n}\n.fa-angle-double-left:before {\n  content: \"\\f100\";\n}\n.fa-angle-double-right:before {\n  content: \"\\f101\";\n}\n.fa-angle-double-up:before {\n  content: \"\\f102\";\n}\n.fa-angle-double-down:before {\n  content: \"\\f103\";\n}\n.fa-angle-left:before {\n  content: \"\\f104\";\n}\n.fa-angle-right:before {\n  content: \"\\f105\";\n}\n.fa-angle-up:before {\n  content: \"\\f106\";\n}\n.fa-angle-down:before {\n  content: \"\\f107\";\n}\n.fa-desktop:before {\n  content: \"\\f108\";\n}\n.fa-laptop:before {\n  content: \"\\f109\";\n}\n.fa-tablet:before {\n  content: \"\\f10a\";\n}\n.fa-mobile-phone:before,\n.fa-mobile:before {\n  content: \"\\f10b\";\n}\n.fa-circle-o:before {\n  content: \"\\f10c\";\n}\n.fa-quote-left:before {\n  content: \"\\f10d\";\n}\n.fa-quote-right:before {\n  content: \"\\f10e\";\n}\n.fa-spinner:before {\n  content: \"\\f110\";\n}\n.fa-circle:before {\n  content: \"\\f111\";\n}\n.fa-mail-reply:before,\n.fa-reply:before {\n  content: \"\\f112\";\n}\n.fa-github-alt:before {\n  content: \"\\f113\";\n}\n.fa-folder-o:before {\n  content: \"\\f114\";\n}\n.fa-folder-open-o:before {\n  content: \"\\f115\";\n}\n.fa-smile-o:before {\n  content: \"\\f118\";\n}\n.fa-frown-o:before {\n  content: \"\\f119\";\n}\n.fa-meh-o:before {\n  content: \"\\f11a\";\n}\n.fa-gamepad:before {\n  content: \"\\f11b\";\n}\n.fa-keyboard-o:before {\n  content: \"\\f11c\";\n}\n.fa-flag-o:before {\n  content: \"\\f11d\";\n}\n.fa-flag-checkered:before {\n  content: \"\\f11e\";\n}\n.fa-terminal:before {\n  content: \"\\f120\";\n}\n.fa-code:before {\n  content: \"\\f121\";\n}\n.fa-mail-reply-all:before,\n.fa-reply-all:before {\n  content: \"\\f122\";\n}\n.fa-star-half-empty:before,\n.fa-star-half-full:before,\n.fa-star-half-o:before {\n  content: \"\\f123\";\n}\n.fa-location-arrow:before {\n  content: \"\\f124\";\n}\n.fa-crop:before {\n  content: \"\\f125\";\n}\n.fa-code-fork:before {\n  content: \"\\f126\";\n}\n.fa-unlink:before,\n.fa-chain-broken:before {\n  content: \"\\f127\";\n}\n.fa-question:before {\n  content: \"\\f128\";\n}\n.fa-info:before {\n  content: \"\\f129\";\n}\n.fa-exclamation:before {\n  content: \"\\f12a\";\n}\n.fa-superscript:before {\n  content: \"\\f12b\";\n}\n.fa-subscript:before {\n  content: \"\\f12c\";\n}\n.fa-eraser:before {\n  content: \"\\f12d\";\n}\n.fa-puzzle-piece:before {\n  content: \"\\f12e\";\n}\n.fa-microphone:before {\n  content: \"\\f130\";\n}\n.fa-microphone-slash:before {\n  content: \"\\f131\";\n}\n.fa-shield:before {\n  content: \"\\f132\";\n}\n.fa-calendar-o:before {\n  content: \"\\f133\";\n}\n.fa-fire-extinguisher:before {\n  content: \"\\f134\";\n}\n.fa-rocket:before {\n  content: \"\\f135\";\n}\n.fa-maxcdn:before {\n  content: \"\\f136\";\n}\n.fa-chevron-circle-left:before {\n  content: \"\\f137\";\n}\n.fa-chevron-circle-right:before {\n  content: \"\\f138\";\n}\n.fa-chevron-circle-up:before {\n  content: \"\\f139\";\n}\n.fa-chevron-circle-down:before {\n  content: \"\\f13a\";\n}\n.fa-html5:before {\n  content: \"\\f13b\";\n}\n.fa-css3:before {\n  content: \"\\f13c\";\n}\n.fa-anchor:before {\n  content: \"\\f13d\";\n}\n.fa-unlock-alt:before {\n  content: \"\\f13e\";\n}\n.fa-bullseye:before {\n  content: \"\\f140\";\n}\n.fa-ellipsis-h:before {\n  content: \"\\f141\";\n}\n.fa-ellipsis-v:before {\n  content: \"\\f142\";\n}\n.fa-rss-square:before {\n  content: \"\\f143\";\n}\n.fa-play-circle:before {\n  content: \"\\f144\";\n}\n.fa-ticket:before {\n  content: \"\\f145\";\n}\n.fa-minus-square:before {\n  content: \"\\f146\";\n}\n.fa-minus-square-o:before {\n  content: \"\\f147\";\n}\n.fa-level-up:before {\n  content: \"\\f148\";\n}\n.fa-level-down:before {\n  content: \"\\f149\";\n}\n.fa-check-square:before {\n  content: \"\\f14a\";\n}\n.fa-pencil-square:before {\n  content: \"\\f14b\";\n}\n.fa-external-link-square:before {\n  content: \"\\f14c\";\n}\n.fa-share-square:before {\n  content: \"\\f14d\";\n}\n.fa-compass:before {\n  content: \"\\f14e\";\n}\n.fa-toggle-down:before,\n.fa-caret-square-o-down:before {\n  content: \"\\f150\";\n}\n.fa-toggle-up:before,\n.fa-caret-square-o-up:before {\n  content: \"\\f151\";\n}\n.fa-toggle-right:before,\n.fa-caret-square-o-right:before {\n  content: \"\\f152\";\n}\n.fa-euro:before,\n.fa-eur:before {\n  content: \"\\f153\";\n}\n.fa-gbp:before {\n  content: \"\\f154\";\n}\n.fa-dollar:before,\n.fa-usd:before {\n  content: \"\\f155\";\n}\n.fa-rupee:before,\n.fa-inr:before {\n  content: \"\\f156\";\n}\n.fa-cny:before,\n.fa-rmb:before,\n.fa-yen:before,\n.fa-jpy:before {\n  content: \"\\f157\";\n}\n.fa-ruble:before,\n.fa-rouble:before,\n.fa-rub:before {\n  content: \"\\f158\";\n}\n.fa-won:before,\n.fa-krw:before {\n  content: \"\\f159\";\n}\n.fa-bitcoin:before,\n.fa-btc:before {\n  content: \"\\f15a\";\n}\n.fa-file:before {\n  content: \"\\f15b\";\n}\n.fa-file-text:before {\n  content: \"\\f15c\";\n}\n.fa-sort-alpha-asc:before {\n  content: \"\\f15d\";\n}\n.fa-sort-alpha-desc:before {\n  content: \"\\f15e\";\n}\n.fa-sort-amount-asc:before {\n  content: \"\\f160\";\n}\n.fa-sort-amount-desc:before {\n  content: \"\\f161\";\n}\n.fa-sort-numeric-asc:before {\n  content: \"\\f162\";\n}\n.fa-sort-numeric-desc:before {\n  content: \"\\f163\";\n}\n.fa-thumbs-up:before {\n  content: \"\\f164\";\n}\n.fa-thumbs-down:before {\n  content: \"\\f165\";\n}\n.fa-youtube-square:before {\n  content: \"\\f166\";\n}\n.fa-youtube:before {\n  content: \"\\f167\";\n}\n.fa-xing:before {\n  content: \"\\f168\";\n}\n.fa-xing-square:before {\n  content: \"\\f169\";\n}\n.fa-youtube-play:before {\n  content: \"\\f16a\";\n}\n.fa-dropbox:before {\n  content: \"\\f16b\";\n}\n.fa-stack-overflow:before {\n  content: \"\\f16c\";\n}\n.fa-instagram:before {\n  content: \"\\f16d\";\n}\n.fa-flickr:before {\n  content: \"\\f16e\";\n}\n.fa-adn:before {\n  content: \"\\f170\";\n}\n.fa-bitbucket:before {\n  content: \"\\f171\";\n}\n.fa-bitbucket-square:before {\n  content: \"\\f172\";\n}\n.fa-tumblr:before {\n  content: \"\\f173\";\n}\n.fa-tumblr-square:before {\n  content: \"\\f174\";\n}\n.fa-long-arrow-down:before {\n  content: \"\\f175\";\n}\n.fa-long-arrow-up:before {\n  content: \"\\f176\";\n}\n.fa-long-arrow-left:before {\n  content: \"\\f177\";\n}\n.fa-long-arrow-right:before {\n  content: \"\\f178\";\n}\n.fa-apple:before {\n  content: \"\\f179\";\n}\n.fa-windows:before {\n  content: \"\\f17a\";\n}\n.fa-android:before {\n  content: \"\\f17b\";\n}\n.fa-linux:before {\n  content: \"\\f17c\";\n}\n.fa-dribbble:before {\n  content: \"\\f17d\";\n}\n.fa-skype:before {\n  content: \"\\f17e\";\n}\n.fa-foursquare:before {\n  content: \"\\f180\";\n}\n.fa-trello:before {\n  content: \"\\f181\";\n}\n.fa-female:before {\n  content: \"\\f182\";\n}\n.fa-male:before {\n  content: \"\\f183\";\n}\n.fa-gittip:before,\n.fa-gratipay:before {\n  content: \"\\f184\";\n}\n.fa-sun-o:before {\n  content: \"\\f185\";\n}\n.fa-moon-o:before {\n  content: \"\\f186\";\n}\n.fa-archive:before {\n  content: \"\\f187\";\n}\n.fa-bug:before {\n  content: \"\\f188\";\n}\n.fa-vk:before {\n  content: \"\\f189\";\n}\n.fa-weibo:before {\n  content: \"\\f18a\";\n}\n.fa-renren:before {\n  content: \"\\f18b\";\n}\n.fa-pagelines:before {\n  content: \"\\f18c\";\n}\n.fa-stack-exchange:before {\n  content: \"\\f18d\";\n}\n.fa-arrow-circle-o-right:before {\n  content: \"\\f18e\";\n}\n.fa-arrow-circle-o-left:before {\n  content: \"\\f190\";\n}\n.fa-toggle-left:before,\n.fa-caret-square-o-left:before {\n  content: \"\\f191\";\n}\n.fa-dot-circle-o:before {\n  content: \"\\f192\";\n}\n.fa-wheelchair:before {\n  content: \"\\f193\";\n}\n.fa-vimeo-square:before {\n  content: \"\\f194\";\n}\n.fa-turkish-lira:before,\n.fa-try:before {\n  content: \"\\f195\";\n}\n.fa-plus-square-o:before {\n  content: \"\\f196\";\n}\n.fa-space-shuttle:before {\n  content: \"\\f197\";\n}\n.fa-slack:before {\n  content: \"\\f198\";\n}\n.fa-envelope-square:before {\n  content: \"\\f199\";\n}\n.fa-wordpress:before {\n  content: \"\\f19a\";\n}\n.fa-openid:before {\n  content: \"\\f19b\";\n}\n.fa-institution:before,\n.fa-bank:before,\n.fa-university:before {\n  content: \"\\f19c\";\n}\n.fa-mortar-board:before,\n.fa-graduation-cap:before {\n  content: \"\\f19d\";\n}\n.fa-yahoo:before {\n  content: \"\\f19e\";\n}\n.fa-google:before {\n  content: \"\\f1a0\";\n}\n.fa-reddit:before {\n  content: \"\\f1a1\";\n}\n.fa-reddit-square:before {\n  content: \"\\f1a2\";\n}\n.fa-stumbleupon-circle:before {\n  content: \"\\f1a3\";\n}\n.fa-stumbleupon:before {\n  content: \"\\f1a4\";\n}\n.fa-delicious:before {\n  content: \"\\f1a5\";\n}\n.fa-digg:before {\n  content: \"\\f1a6\";\n}\n.fa-pied-piper-pp:before {\n  content: \"\\f1a7\";\n}\n.fa-pied-piper-alt:before {\n  content: \"\\f1a8\";\n}\n.fa-drupal:before {\n  content: \"\\f1a9\";\n}\n.fa-joomla:before {\n  content: \"\\f1aa\";\n}\n.fa-language:before {\n  content: \"\\f1ab\";\n}\n.fa-fax:before {\n  content: \"\\f1ac\";\n}\n.fa-building:before {\n  content: \"\\f1ad\";\n}\n.fa-child:before {\n  content: \"\\f1ae\";\n}\n.fa-paw:before {\n  content: \"\\f1b0\";\n}\n.fa-spoon:before {\n  content: \"\\f1b1\";\n}\n.fa-cube:before {\n  content: \"\\f1b2\";\n}\n.fa-cubes:before {\n  content: \"\\f1b3\";\n}\n.fa-behance:before {\n  content: \"\\f1b4\";\n}\n.fa-behance-square:before {\n  content: \"\\f1b5\";\n}\n.fa-steam:before {\n  content: \"\\f1b6\";\n}\n.fa-steam-square:before {\n  content: \"\\f1b7\";\n}\n.fa-recycle:before {\n  content: \"\\f1b8\";\n}\n.fa-automobile:before,\n.fa-car:before {\n  content: \"\\f1b9\";\n}\n.fa-cab:before,\n.fa-taxi:before {\n  content: \"\\f1ba\";\n}\n.fa-tree:before {\n  content: \"\\f1bb\";\n}\n.fa-spotify:before {\n  content: \"\\f1bc\";\n}\n.fa-deviantart:before {\n  content: \"\\f1bd\";\n}\n.fa-soundcloud:before {\n  content: \"\\f1be\";\n}\n.fa-database:before {\n  content: \"\\f1c0\";\n}\n.fa-file-pdf-o:before {\n  content: \"\\f1c1\";\n}\n.fa-file-word-o:before {\n  content: \"\\f1c2\";\n}\n.fa-file-excel-o:before {\n  content: \"\\f1c3\";\n}\n.fa-file-powerpoint-o:before {\n  content: \"\\f1c4\";\n}\n.fa-file-photo-o:before,\n.fa-file-picture-o:before,\n.fa-file-image-o:before {\n  content: \"\\f1c5\";\n}\n.fa-file-zip-o:before,\n.fa-file-archive-o:before {\n  content: \"\\f1c6\";\n}\n.fa-file-sound-o:before,\n.fa-file-audio-o:before {\n  content: \"\\f1c7\";\n}\n.fa-file-movie-o:before,\n.fa-file-video-o:before {\n  content: \"\\f1c8\";\n}\n.fa-file-code-o:before {\n  content: \"\\f1c9\";\n}\n.fa-vine:before {\n  content: \"\\f1ca\";\n}\n.fa-codepen:before {\n  content: \"\\f1cb\";\n}\n.fa-jsfiddle:before {\n  content: \"\\f1cc\";\n}\n.fa-life-bouy:before,\n.fa-life-buoy:before,\n.fa-life-saver:before,\n.fa-support:before,\n.fa-life-ring:before {\n  content: \"\\f1cd\";\n}\n.fa-circle-o-notch:before {\n  content: \"\\f1ce\";\n}\n.fa-ra:before,\n.fa-resistance:before,\n.fa-rebel:before {\n  content: \"\\f1d0\";\n}\n.fa-ge:before,\n.fa-empire:before {\n  content: \"\\f1d1\";\n}\n.fa-git-square:before {\n  content: \"\\f1d2\";\n}\n.fa-git:before {\n  content: \"\\f1d3\";\n}\n.fa-y-combinator-square:before,\n.fa-yc-square:before,\n.fa-hacker-news:before {\n  content: \"\\f1d4\";\n}\n.fa-tencent-weibo:before {\n  content: \"\\f1d5\";\n}\n.fa-qq:before {\n  content: \"\\f1d6\";\n}\n.fa-wechat:before,\n.fa-weixin:before {\n  content: \"\\f1d7\";\n}\n.fa-send:before,\n.fa-paper-plane:before {\n  content: \"\\f1d8\";\n}\n.fa-send-o:before,\n.fa-paper-plane-o:before {\n  content: \"\\f1d9\";\n}\n.fa-history:before {\n  content: \"\\f1da\";\n}\n.fa-circle-thin:before {\n  content: \"\\f1db\";\n}\n.fa-header:before {\n  content: \"\\f1dc\";\n}\n.fa-paragraph:before {\n  content: \"\\f1dd\";\n}\n.fa-sliders:before {\n  content: \"\\f1de\";\n}\n.fa-share-alt:before {\n  content: \"\\f1e0\";\n}\n.fa-share-alt-square:before {\n  content: \"\\f1e1\";\n}\n.fa-bomb:before {\n  content: \"\\f1e2\";\n}\n.fa-soccer-ball-o:before,\n.fa-futbol-o:before {\n  content: \"\\f1e3\";\n}\n.fa-tty:before {\n  content: \"\\f1e4\";\n}\n.fa-binoculars:before {\n  content: \"\\f1e5\";\n}\n.fa-plug:before {\n  content: \"\\f1e6\";\n}\n.fa-slideshare:before {\n  content: \"\\f1e7\";\n}\n.fa-twitch:before {\n  content: \"\\f1e8\";\n}\n.fa-yelp:before {\n  content: \"\\f1e9\";\n}\n.fa-newspaper-o:before {\n  content: \"\\f1ea\";\n}\n.fa-wifi:before {\n  content: \"\\f1eb\";\n}\n.fa-calculator:before {\n  content: \"\\f1ec\";\n}\n.fa-paypal:before {\n  content: \"\\f1ed\";\n}\n.fa-google-wallet:before {\n  content: \"\\f1ee\";\n}\n.fa-cc-visa:before {\n  content: \"\\f1f0\";\n}\n.fa-cc-mastercard:before {\n  content: \"\\f1f1\";\n}\n.fa-cc-discover:before {\n  content: \"\\f1f2\";\n}\n.fa-cc-amex:before {\n  content: \"\\f1f3\";\n}\n.fa-cc-paypal:before {\n  content: \"\\f1f4\";\n}\n.fa-cc-stripe:before {\n  content: \"\\f1f5\";\n}\n.fa-bell-slash:before {\n  content: \"\\f1f6\";\n}\n.fa-bell-slash-o:before {\n  content: \"\\f1f7\";\n}\n.fa-trash:before {\n  content: \"\\f1f8\";\n}\n.fa-copyright:before {\n  content: \"\\f1f9\";\n}\n.fa-at:before {\n  content: \"\\f1fa\";\n}\n.fa-eyedropper:before {\n  content: \"\\f1fb\";\n}\n.fa-paint-brush:before {\n  content: \"\\f1fc\";\n}\n.fa-birthday-cake:before {\n  content: \"\\f1fd\";\n}\n.fa-area-chart:before {\n  content: \"\\f1fe\";\n}\n.fa-pie-chart:before {\n  content: \"\\f200\";\n}\n.fa-line-chart:before {\n  content: \"\\f201\";\n}\n.fa-lastfm:before {\n  content: \"\\f202\";\n}\n.fa-lastfm-square:before {\n  content: \"\\f203\";\n}\n.fa-toggle-off:before {\n  content: \"\\f204\";\n}\n.fa-toggle-on:before {\n  content: \"\\f205\";\n}\n.fa-bicycle:before {\n  content: \"\\f206\";\n}\n.fa-bus:before {\n  content: \"\\f207\";\n}\n.fa-ioxhost:before {\n  content: \"\\f208\";\n}\n.fa-angellist:before {\n  content: \"\\f209\";\n}\n.fa-cc:before {\n  content: \"\\f20a\";\n}\n.fa-shekel:before,\n.fa-sheqel:before,\n.fa-ils:before {\n  content: \"\\f20b\";\n}\n.fa-meanpath:before {\n  content: \"\\f20c\";\n}\n.fa-buysellads:before {\n  content: \"\\f20d\";\n}\n.fa-connectdevelop:before {\n  content: \"\\f20e\";\n}\n.fa-dashcube:before {\n  content: \"\\f210\";\n}\n.fa-forumbee:before {\n  content: \"\\f211\";\n}\n.fa-leanpub:before {\n  content: \"\\f212\";\n}\n.fa-sellsy:before {\n  content: \"\\f213\";\n}\n.fa-shirtsinbulk:before {\n  content: \"\\f214\";\n}\n.fa-simplybuilt:before {\n  content: \"\\f215\";\n}\n.fa-skyatlas:before {\n  content: \"\\f216\";\n}\n.fa-cart-plus:before {\n  content: \"\\f217\";\n}\n.fa-cart-arrow-down:before {\n  content: \"\\f218\";\n}\n.fa-diamond:before {\n  content: \"\\f219\";\n}\n.fa-ship:before {\n  content: \"\\f21a\";\n}\n.fa-user-secret:before {\n  content: \"\\f21b\";\n}\n.fa-motorcycle:before {\n  content: \"\\f21c\";\n}\n.fa-street-view:before {\n  content: \"\\f21d\";\n}\n.fa-heartbeat:before {\n  content: \"\\f21e\";\n}\n.fa-venus:before {\n  content: \"\\f221\";\n}\n.fa-mars:before {\n  content: \"\\f222\";\n}\n.fa-mercury:before {\n  content: \"\\f223\";\n}\n.fa-intersex:before,\n.fa-transgender:before {\n  content: \"\\f224\";\n}\n.fa-transgender-alt:before {\n  content: \"\\f225\";\n}\n.fa-venus-double:before {\n  content: \"\\f226\";\n}\n.fa-mars-double:before {\n  content: \"\\f227\";\n}\n.fa-venus-mars:before {\n  content: \"\\f228\";\n}\n.fa-mars-stroke:before {\n  content: \"\\f229\";\n}\n.fa-mars-stroke-v:before {\n  content: \"\\f22a\";\n}\n.fa-mars-stroke-h:before {\n  content: \"\\f22b\";\n}\n.fa-neuter:before {\n  content: \"\\f22c\";\n}\n.fa-genderless:before {\n  content: \"\\f22d\";\n}\n.fa-facebook-official:before {\n  content: \"\\f230\";\n}\n.fa-pinterest-p:before {\n  content: \"\\f231\";\n}\n.fa-whatsapp:before {\n  content: \"\\f232\";\n}\n.fa-server:before {\n  content: \"\\f233\";\n}\n.fa-user-plus:before {\n  content: \"\\f234\";\n}\n.fa-user-times:before {\n  content: \"\\f235\";\n}\n.fa-hotel:before,\n.fa-bed:before {\n  content: \"\\f236\";\n}\n.fa-viacoin:before {\n  content: \"\\f237\";\n}\n.fa-train:before {\n  content: \"\\f238\";\n}\n.fa-subway:before {\n  content: \"\\f239\";\n}\n.fa-medium:before {\n  content: \"\\f23a\";\n}\n.fa-yc:before,\n.fa-y-combinator:before {\n  content: \"\\f23b\";\n}\n.fa-optin-monster:before {\n  content: \"\\f23c\";\n}\n.fa-opencart:before {\n  content: \"\\f23d\";\n}\n.fa-expeditedssl:before {\n  content: \"\\f23e\";\n}\n.fa-battery-4:before,\n.fa-battery:before,\n.fa-battery-full:before {\n  content: \"\\f240\";\n}\n.fa-battery-3:before,\n.fa-battery-three-quarters:before {\n  content: \"\\f241\";\n}\n.fa-battery-2:before,\n.fa-battery-half:before {\n  content: \"\\f242\";\n}\n.fa-battery-1:before,\n.fa-battery-quarter:before {\n  content: \"\\f243\";\n}\n.fa-battery-0:before,\n.fa-battery-empty:before {\n  content: \"\\f244\";\n}\n.fa-mouse-pointer:before {\n  content: \"\\f245\";\n}\n.fa-i-cursor:before {\n  content: \"\\f246\";\n}\n.fa-object-group:before {\n  content: \"\\f247\";\n}\n.fa-object-ungroup:before {\n  content: \"\\f248\";\n}\n.fa-sticky-note:before {\n  content: \"\\f249\";\n}\n.fa-sticky-note-o:before {\n  content: \"\\f24a\";\n}\n.fa-cc-jcb:before {\n  content: \"\\f24b\";\n}\n.fa-cc-diners-club:before {\n  content: \"\\f24c\";\n}\n.fa-clone:before {\n  content: \"\\f24d\";\n}\n.fa-balance-scale:before {\n  content: \"\\f24e\";\n}\n.fa-hourglass-o:before {\n  content: \"\\f250\";\n}\n.fa-hourglass-1:before,\n.fa-hourglass-start:before {\n  content: \"\\f251\";\n}\n.fa-hourglass-2:before,\n.fa-hourglass-half:before {\n  content: \"\\f252\";\n}\n.fa-hourglass-3:before,\n.fa-hourglass-end:before {\n  content: \"\\f253\";\n}\n.fa-hourglass:before {\n  content: \"\\f254\";\n}\n.fa-hand-grab-o:before,\n.fa-hand-rock-o:before {\n  content: \"\\f255\";\n}\n.fa-hand-stop-o:before,\n.fa-hand-paper-o:before {\n  content: \"\\f256\";\n}\n.fa-hand-scissors-o:before {\n  content: \"\\f257\";\n}\n.fa-hand-lizard-o:before {\n  content: \"\\f258\";\n}\n.fa-hand-spock-o:before {\n  content: \"\\f259\";\n}\n.fa-hand-pointer-o:before {\n  content: \"\\f25a\";\n}\n.fa-hand-peace-o:before {\n  content: \"\\f25b\";\n}\n.fa-trademark:before {\n  content: \"\\f25c\";\n}\n.fa-registered:before {\n  content: \"\\f25d\";\n}\n.fa-creative-commons:before {\n  content: \"\\f25e\";\n}\n.fa-gg:before {\n  content: \"\\f260\";\n}\n.fa-gg-circle:before {\n  content: \"\\f261\";\n}\n.fa-tripadvisor:before {\n  content: \"\\f262\";\n}\n.fa-odnoklassniki:before {\n  content: \"\\f263\";\n}\n.fa-odnoklassniki-square:before {\n  content: \"\\f264\";\n}\n.fa-get-pocket:before {\n  content: \"\\f265\";\n}\n.fa-wikipedia-w:before {\n  content: \"\\f266\";\n}\n.fa-safari:before {\n  content: \"\\f267\";\n}\n.fa-chrome:before {\n  content: \"\\f268\";\n}\n.fa-firefox:before {\n  content: \"\\f269\";\n}\n.fa-opera:before {\n  content: \"\\f26a\";\n}\n.fa-internet-explorer:before {\n  content: \"\\f26b\";\n}\n.fa-tv:before,\n.fa-television:before {\n  content: \"\\f26c\";\n}\n.fa-contao:before {\n  content: \"\\f26d\";\n}\n.fa-500px:before {\n  content: \"\\f26e\";\n}\n.fa-amazon:before {\n  content: \"\\f270\";\n}\n.fa-calendar-plus-o:before {\n  content: \"\\f271\";\n}\n.fa-calendar-minus-o:before {\n  content: \"\\f272\";\n}\n.fa-calendar-times-o:before {\n  content: \"\\f273\";\n}\n.fa-calendar-check-o:before {\n  content: \"\\f274\";\n}\n.fa-industry:before {\n  content: \"\\f275\";\n}\n.fa-map-pin:before {\n  content: \"\\f276\";\n}\n.fa-map-signs:before {\n  content: \"\\f277\";\n}\n.fa-map-o:before {\n  content: \"\\f278\";\n}\n.fa-map:before {\n  content: \"\\f279\";\n}\n.fa-commenting:before {\n  content: \"\\f27a\";\n}\n.fa-commenting-o:before {\n  content: \"\\f27b\";\n}\n.fa-houzz:before {\n  content: \"\\f27c\";\n}\n.fa-vimeo:before {\n  content: \"\\f27d\";\n}\n.fa-black-tie:before {\n  content: \"\\f27e\";\n}\n.fa-fonticons:before {\n  content: \"\\f280\";\n}\n.fa-reddit-alien:before {\n  content: \"\\f281\";\n}\n.fa-edge:before {\n  content: \"\\f282\";\n}\n.fa-credit-card-alt:before {\n  content: \"\\f283\";\n}\n.fa-codiepie:before {\n  content: \"\\f284\";\n}\n.fa-modx:before {\n  content: \"\\f285\";\n}\n.fa-fort-awesome:before {\n  content: \"\\f286\";\n}\n.fa-usb:before {\n  content: \"\\f287\";\n}\n.fa-product-hunt:before {\n  content: \"\\f288\";\n}\n.fa-mixcloud:before {\n  content: \"\\f289\";\n}\n.fa-scribd:before {\n  content: \"\\f28a\";\n}\n.fa-pause-circle:before {\n  content: \"\\f28b\";\n}\n.fa-pause-circle-o:before {\n  content: \"\\f28c\";\n}\n.fa-stop-circle:before {\n  content: \"\\f28d\";\n}\n.fa-stop-circle-o:before {\n  content: \"\\f28e\";\n}\n.fa-shopping-bag:before {\n  content: \"\\f290\";\n}\n.fa-shopping-basket:before {\n  content: \"\\f291\";\n}\n.fa-hashtag:before {\n  content: \"\\f292\";\n}\n.fa-bluetooth:before {\n  content: \"\\f293\";\n}\n.fa-bluetooth-b:before {\n  content: \"\\f294\";\n}\n.fa-percent:before {\n  content: \"\\f295\";\n}\n.fa-gitlab:before {\n  content: \"\\f296\";\n}\n.fa-wpbeginner:before {\n  content: \"\\f297\";\n}\n.fa-wpforms:before {\n  content: \"\\f298\";\n}\n.fa-envira:before {\n  content: \"\\f299\";\n}\n.fa-universal-access:before {\n  content: \"\\f29a\";\n}\n.fa-wheelchair-alt:before {\n  content: \"\\f29b\";\n}\n.fa-question-circle-o:before {\n  content: \"\\f29c\";\n}\n.fa-blind:before {\n  content: \"\\f29d\";\n}\n.fa-audio-description:before {\n  content: \"\\f29e\";\n}\n.fa-volume-control-phone:before {\n  content: \"\\f2a0\";\n}\n.fa-braille:before {\n  content: \"\\f2a1\";\n}\n.fa-assistive-listening-systems:before {\n  content: \"\\f2a2\";\n}\n.fa-asl-interpreting:before,\n.fa-american-sign-language-interpreting:before {\n  content: \"\\f2a3\";\n}\n.fa-deafness:before,\n.fa-hard-of-hearing:before,\n.fa-deaf:before {\n  content: \"\\f2a4\";\n}\n.fa-glide:before {\n  content: \"\\f2a5\";\n}\n.fa-glide-g:before {\n  content: \"\\f2a6\";\n}\n.fa-signing:before,\n.fa-sign-language:before {\n  content: \"\\f2a7\";\n}\n.fa-low-vision:before {\n  content: \"\\f2a8\";\n}\n.fa-viadeo:before {\n  content: \"\\f2a9\";\n}\n.fa-viadeo-square:before {\n  content: \"\\f2aa\";\n}\n.fa-snapchat:before {\n  content: \"\\f2ab\";\n}\n.fa-snapchat-ghost:before {\n  content: \"\\f2ac\";\n}\n.fa-snapchat-square:before {\n  content: \"\\f2ad\";\n}\n.fa-pied-piper:before {\n  content: \"\\f2ae\";\n}\n.fa-first-order:before {\n  content: \"\\f2b0\";\n}\n.fa-yoast:before {\n  content: \"\\f2b1\";\n}\n.fa-themeisle:before {\n  content: \"\\f2b2\";\n}\n.fa-google-plus-circle:before,\n.fa-google-plus-official:before {\n  content: \"\\f2b3\";\n}\n.fa-fa:before,\n.fa-font-awesome:before {\n  content: \"\\f2b4\";\n}\n.fa-handshake-o:before {\n  content: \"\\f2b5\";\n}\n.fa-envelope-open:before {\n  content: \"\\f2b6\";\n}\n.fa-envelope-open-o:before {\n  content: \"\\f2b7\";\n}\n.fa-linode:before {\n  content: \"\\f2b8\";\n}\n.fa-address-book:before {\n  content: \"\\f2b9\";\n}\n.fa-address-book-o:before {\n  content: \"\\f2ba\";\n}\n.fa-vcard:before,\n.fa-address-card:before {\n  content: \"\\f2bb\";\n}\n.fa-vcard-o:before,\n.fa-address-card-o:before {\n  content: \"\\f2bc\";\n}\n.fa-user-circle:before {\n  content: \"\\f2bd\";\n}\n.fa-user-circle-o:before {\n  content: \"\\f2be\";\n}\n.fa-user-o:before {\n  content: \"\\f2c0\";\n}\n.fa-id-badge:before {\n  content: \"\\f2c1\";\n}\n.fa-drivers-license:before,\n.fa-id-card:before {\n  content: \"\\f2c2\";\n}\n.fa-drivers-license-o:before,\n.fa-id-card-o:before {\n  content: \"\\f2c3\";\n}\n.fa-quora:before {\n  content: \"\\f2c4\";\n}\n.fa-free-code-camp:before {\n  content: \"\\f2c5\";\n}\n.fa-telegram:before {\n  content: \"\\f2c6\";\n}\n.fa-thermometer-4:before,\n.fa-thermometer:before,\n.fa-thermometer-full:before {\n  content: \"\\f2c7\";\n}\n.fa-thermometer-3:before,\n.fa-thermometer-three-quarters:before {\n  content: \"\\f2c8\";\n}\n.fa-thermometer-2:before,\n.fa-thermometer-half:before {\n  content: \"\\f2c9\";\n}\n.fa-thermometer-1:before,\n.fa-thermometer-quarter:before {\n  content: \"\\f2ca\";\n}\n.fa-thermometer-0:before,\n.fa-thermometer-empty:before {\n  content: \"\\f2cb\";\n}\n.fa-shower:before {\n  content: \"\\f2cc\";\n}\n.fa-bathtub:before,\n.fa-s15:before,\n.fa-bath:before {\n  content: \"\\f2cd\";\n}\n.fa-podcast:before {\n  content: \"\\f2ce\";\n}\n.fa-window-maximize:before {\n  content: \"\\f2d0\";\n}\n.fa-window-minimize:before {\n  content: \"\\f2d1\";\n}\n.fa-window-restore:before {\n  content: \"\\f2d2\";\n}\n.fa-times-rectangle:before,\n.fa-window-close:before {\n  content: \"\\f2d3\";\n}\n.fa-times-rectangle-o:before,\n.fa-window-close-o:before {\n  content: \"\\f2d4\";\n}\n.fa-bandcamp:before {\n  content: \"\\f2d5\";\n}\n.fa-grav:before {\n  content: \"\\f2d6\";\n}\n.fa-etsy:before {\n  content: \"\\f2d7\";\n}\n.fa-imdb:before {\n  content: \"\\f2d8\";\n}\n.fa-ravelry:before {\n  content: \"\\f2d9\";\n}\n.fa-eercast:before {\n  content: \"\\f2da\";\n}\n.fa-microchip:before {\n  content: \"\\f2db\";\n}\n.fa-snowflake-o:before {\n  content: \"\\f2dc\";\n}\n.fa-superpowers:before {\n  content: \"\\f2dd\";\n}\n.fa-wpexplorer:before {\n  content: \"\\f2de\";\n}\n.fa-meetup:before {\n  content: \"\\f2e0\";\n}\n.sr-only {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  margin: -1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n}\n.sr-only-focusable:active,\n.sr-only-focusable:focus {\n  position: static;\n  width: auto;\n  height: auto;\n  margin: 0;\n  overflow: visible;\n  clip: auto;\n}\n"
+
+module.exports.default = {"fa":"_fa_m8bnh_14","fa-lg":"_fa-lg_m8bnh_23","fa-2x":"_fa-2x_m8bnh_28","fa-3x":"_fa-3x_m8bnh_31","fa-4x":"_fa-4x_m8bnh_34","fa-5x":"_fa-5x_m8bnh_37","fa-fw":"_fa-fw_m8bnh_40","fa-ul":"_fa-ul_m8bnh_44","fa-li":"_fa-li_m8bnh_52","fa-border":"_fa-border_m8bnh_62","fa-pull-left":"_fa-pull-left_m8bnh_67","fa-pull-right":"_fa-pull-right_m8bnh_70","pull-right":"_pull-right_m8bnh_80","pull-left":"_pull-left_m8bnh_83","fa-spin":"_fa-spin_m8bnh_92","fa-pulse":"_fa-pulse_m8bnh_96","fa-rotate-90":"_fa-rotate-90_m8bnh_120","fa-rotate-180":"_fa-rotate-180_m8bnh_126","fa-rotate-270":"_fa-rotate-270_m8bnh_132","fa-flip-horizontal":"_fa-flip-horizontal_m8bnh_138","fa-flip-vertical":"_fa-flip-vertical_m8bnh_144","fa-stack":"_fa-stack_m8bnh_157","fa-stack-1x":"_fa-stack-1x_m8bnh_165","fa-stack-2x":"_fa-stack-2x_m8bnh_166","fa-inverse":"_fa-inverse_m8bnh_178","fa-glass":"_fa-glass_m8bnh_183","fa-music":"_fa-music_m8bnh_186","fa-search":"_fa-search_m8bnh_189","fa-envelope-o":"_fa-envelope-o_m8bnh_192","fa-heart":"_fa-heart_m8bnh_195","fa-star":"_fa-star_m8bnh_198","fa-star-o":"_fa-star-o_m8bnh_201","fa-user":"_fa-user_m8bnh_204","fa-film":"_fa-film_m8bnh_207","fa-th-large":"_fa-th-large_m8bnh_210","fa-th":"_fa-th_m8bnh_210","fa-th-list":"_fa-th-list_m8bnh_216","fa-check":"_fa-check_m8bnh_219","fa-remove":"_fa-remove_m8bnh_222","fa-close":"_fa-close_m8bnh_223","fa-times":"_fa-times_m8bnh_224","fa-search-plus":"_fa-search-plus_m8bnh_227","fa-search-minus":"_fa-search-minus_m8bnh_230","fa-power-off":"_fa-power-off_m8bnh_233","fa-signal":"_fa-signal_m8bnh_236","fa-gear":"_fa-gear_m8bnh_239","fa-cog":"_fa-cog_m8bnh_240","fa-trash-o":"_fa-trash-o_m8bnh_243","fa-home":"_fa-home_m8bnh_246","fa-file-o":"_fa-file-o_m8bnh_249","fa-clock-o":"_fa-clock-o_m8bnh_252","fa-road":"_fa-road_m8bnh_255","fa-download":"_fa-download_m8bnh_258","fa-arrow-circle-o-down":"_fa-arrow-circle-o-down_m8bnh_261","fa-arrow-circle-o-up":"_fa-arrow-circle-o-up_m8bnh_264","fa-inbox":"_fa-inbox_m8bnh_267","fa-play-circle-o":"_fa-play-circle-o_m8bnh_270","fa-rotate-right":"_fa-rotate-right_m8bnh_273","fa-repeat":"_fa-repeat_m8bnh_274","fa-refresh":"_fa-refresh_m8bnh_277","fa-list-alt":"_fa-list-alt_m8bnh_280","fa-lock":"_fa-lock_m8bnh_283","fa-flag":"_fa-flag_m8bnh_286","fa-headphones":"_fa-headphones_m8bnh_289","fa-volume-off":"_fa-volume-off_m8bnh_292","fa-volume-down":"_fa-volume-down_m8bnh_295","fa-volume-up":"_fa-volume-up_m8bnh_298","fa-qrcode":"_fa-qrcode_m8bnh_301","fa-barcode":"_fa-barcode_m8bnh_304","fa-tag":"_fa-tag_m8bnh_307","fa-tags":"_fa-tags_m8bnh_310","fa-book":"_fa-book_m8bnh_313","fa-bookmark":"_fa-bookmark_m8bnh_316","fa-print":"_fa-print_m8bnh_319","fa-camera":"_fa-camera_m8bnh_322","fa-font":"_fa-font_m8bnh_325","fa-bold":"_fa-bold_m8bnh_328","fa-italic":"_fa-italic_m8bnh_331","fa-text-height":"_fa-text-height_m8bnh_334","fa-text-width":"_fa-text-width_m8bnh_337","fa-align-left":"_fa-align-left_m8bnh_340","fa-align-center":"_fa-align-center_m8bnh_343","fa-align-right":"_fa-align-right_m8bnh_346","fa-align-justify":"_fa-align-justify_m8bnh_349","fa-list":"_fa-list_m8bnh_280","fa-dedent":"_fa-dedent_m8bnh_355","fa-outdent":"_fa-outdent_m8bnh_356","fa-indent":"_fa-indent_m8bnh_359","fa-video-camera":"_fa-video-camera_m8bnh_362","fa-photo":"_fa-photo_m8bnh_365","fa-image":"_fa-image_m8bnh_366","fa-picture-o":"_fa-picture-o_m8bnh_367","fa-pencil":"_fa-pencil_m8bnh_370","fa-map-marker":"_fa-map-marker_m8bnh_373","fa-adjust":"_fa-adjust_m8bnh_376","fa-tint":"_fa-tint_m8bnh_379","fa-edit":"_fa-edit_m8bnh_382","fa-pencil-square-o":"_fa-pencil-square-o_m8bnh_383","fa-share-square-o":"_fa-share-square-o_m8bnh_386","fa-check-square-o":"_fa-check-square-o_m8bnh_389","fa-arrows":"_fa-arrows_m8bnh_392","fa-step-backward":"_fa-step-backward_m8bnh_395","fa-fast-backward":"_fa-fast-backward_m8bnh_398","fa-backward":"_fa-backward_m8bnh_401","fa-play":"_fa-play_m8bnh_270","fa-pause":"_fa-pause_m8bnh_407","fa-stop":"_fa-stop_m8bnh_410","fa-forward":"_fa-forward_m8bnh_413","fa-fast-forward":"_fa-fast-forward_m8bnh_416","fa-step-forward":"_fa-step-forward_m8bnh_419","fa-eject":"_fa-eject_m8bnh_422","fa-chevron-left":"_fa-chevron-left_m8bnh_425","fa-chevron-right":"_fa-chevron-right_m8bnh_428","fa-plus-circle":"_fa-plus-circle_m8bnh_431","fa-minus-circle":"_fa-minus-circle_m8bnh_434","fa-times-circle":"_fa-times-circle_m8bnh_437","fa-check-circle":"_fa-check-circle_m8bnh_440","fa-question-circle":"_fa-question-circle_m8bnh_443","fa-info-circle":"_fa-info-circle_m8bnh_446","fa-crosshairs":"_fa-crosshairs_m8bnh_449","fa-times-circle-o":"_fa-times-circle-o_m8bnh_452","fa-check-circle-o":"_fa-check-circle-o_m8bnh_455","fa-ban":"_fa-ban_m8bnh_458","fa-arrow-left":"_fa-arrow-left_m8bnh_461","fa-arrow-right":"_fa-arrow-right_m8bnh_464","fa-arrow-up":"_fa-arrow-up_m8bnh_467","fa-arrow-down":"_fa-arrow-down_m8bnh_470","fa-mail-forward":"_fa-mail-forward_m8bnh_473","fa-share":"_fa-share_m8bnh_386","fa-expand":"_fa-expand_m8bnh_477","fa-compress":"_fa-compress_m8bnh_480","fa-plus":"_fa-plus_m8bnh_431","fa-minus":"_fa-minus_m8bnh_434","fa-asterisk":"_fa-asterisk_m8bnh_489","fa-exclamation-circle":"_fa-exclamation-circle_m8bnh_492","fa-gift":"_fa-gift_m8bnh_495","fa-leaf":"_fa-leaf_m8bnh_498","fa-fire":"_fa-fire_m8bnh_501","fa-eye":"_fa-eye_m8bnh_504","fa-eye-slash":"_fa-eye-slash_m8bnh_507","fa-warning":"_fa-warning_m8bnh_510","fa-exclamation-triangle":"_fa-exclamation-triangle_m8bnh_511","fa-plane":"_fa-plane_m8bnh_514","fa-calendar":"_fa-calendar_m8bnh_517","fa-random":"_fa-random_m8bnh_520","fa-comment":"_fa-comment_m8bnh_523","fa-magnet":"_fa-magnet_m8bnh_526","fa-chevron-up":"_fa-chevron-up_m8bnh_529","fa-chevron-down":"_fa-chevron-down_m8bnh_532","fa-retweet":"_fa-retweet_m8bnh_535","fa-shopping-cart":"_fa-shopping-cart_m8bnh_538","fa-folder":"_fa-folder_m8bnh_541","fa-folder-open":"_fa-folder-open_m8bnh_544","fa-arrows-v":"_fa-arrows-v_m8bnh_547","fa-arrows-h":"_fa-arrows-h_m8bnh_550","fa-bar-chart-o":"_fa-bar-chart-o_m8bnh_553","fa-bar-chart":"_fa-bar-chart_m8bnh_553","fa-twitter-square":"_fa-twitter-square_m8bnh_557","fa-facebook-square":"_fa-facebook-square_m8bnh_560","fa-camera-retro":"_fa-camera-retro_m8bnh_563","fa-key":"_fa-key_m8bnh_566","fa-gears":"_fa-gears_m8bnh_569","fa-cogs":"_fa-cogs_m8bnh_570","fa-comments":"_fa-comments_m8bnh_573","fa-thumbs-o-up":"_fa-thumbs-o-up_m8bnh_576","fa-thumbs-o-down":"_fa-thumbs-o-down_m8bnh_579","fa-star-half":"_fa-star-half_m8bnh_582","fa-heart-o":"_fa-heart-o_m8bnh_585","fa-sign-out":"_fa-sign-out_m8bnh_588","fa-linkedin-square":"_fa-linkedin-square_m8bnh_591","fa-thumb-tack":"_fa-thumb-tack_m8bnh_594","fa-external-link":"_fa-external-link_m8bnh_597","fa-sign-in":"_fa-sign-in_m8bnh_600","fa-trophy":"_fa-trophy_m8bnh_603","fa-github-square":"_fa-github-square_m8bnh_606","fa-upload":"_fa-upload_m8bnh_609","fa-lemon-o":"_fa-lemon-o_m8bnh_612","fa-phone":"_fa-phone_m8bnh_615","fa-square-o":"_fa-square-o_m8bnh_618","fa-bookmark-o":"_fa-bookmark-o_m8bnh_621","fa-phone-square":"_fa-phone-square_m8bnh_624","fa-twitter":"_fa-twitter_m8bnh_557","fa-facebook-f":"_fa-facebook-f_m8bnh_630","fa-facebook":"_fa-facebook_m8bnh_560","fa-github":"_fa-github_m8bnh_606","fa-unlock":"_fa-unlock_m8bnh_637","fa-credit-card":"_fa-credit-card_m8bnh_640","fa-feed":"_fa-feed_m8bnh_643","fa-rss":"_fa-rss_m8bnh_644","fa-hdd-o":"_fa-hdd-o_m8bnh_647","fa-bullhorn":"_fa-bullhorn_m8bnh_650","fa-bell":"_fa-bell_m8bnh_653","fa-certificate":"_fa-certificate_m8bnh_656","fa-hand-o-right":"_fa-hand-o-right_m8bnh_659","fa-hand-o-left":"_fa-hand-o-left_m8bnh_662","fa-hand-o-up":"_fa-hand-o-up_m8bnh_665","fa-hand-o-down":"_fa-hand-o-down_m8bnh_668","fa-arrow-circle-left":"_fa-arrow-circle-left_m8bnh_671","fa-arrow-circle-right":"_fa-arrow-circle-right_m8bnh_674","fa-arrow-circle-up":"_fa-arrow-circle-up_m8bnh_677","fa-arrow-circle-down":"_fa-arrow-circle-down_m8bnh_680","fa-globe":"_fa-globe_m8bnh_683","fa-wrench":"_fa-wrench_m8bnh_686","fa-tasks":"_fa-tasks_m8bnh_689","fa-filter":"_fa-filter_m8bnh_692","fa-briefcase":"_fa-briefcase_m8bnh_695","fa-arrows-alt":"_fa-arrows-alt_m8bnh_698","fa-group":"_fa-group_m8bnh_701","fa-users":"_fa-users_m8bnh_702","fa-chain":"_fa-chain_m8bnh_705","fa-link":"_fa-link_m8bnh_591","fa-cloud":"_fa-cloud_m8bnh_709","fa-flask":"_fa-flask_m8bnh_712","fa-cut":"_fa-cut_m8bnh_715","fa-scissors":"_fa-scissors_m8bnh_716","fa-copy":"_fa-copy_m8bnh_719","fa-files-o":"_fa-files-o_m8bnh_720","fa-paperclip":"_fa-paperclip_m8bnh_723","fa-save":"_fa-save_m8bnh_726","fa-floppy-o":"_fa-floppy-o_m8bnh_727","fa-square":"_fa-square_m8bnh_618","fa-navicon":"_fa-navicon_m8bnh_733","fa-reorder":"_fa-reorder_m8bnh_734","fa-bars":"_fa-bars_m8bnh_735","fa-list-ul":"_fa-list-ul_m8bnh_738","fa-list-ol":"_fa-list-ol_m8bnh_741","fa-strikethrough":"_fa-strikethrough_m8bnh_744","fa-underline":"_fa-underline_m8bnh_747","fa-table":"_fa-table_m8bnh_750","fa-magic":"_fa-magic_m8bnh_753","fa-truck":"_fa-truck_m8bnh_756","fa-pinterest":"_fa-pinterest_m8bnh_759","fa-pinterest-square":"_fa-pinterest-square_m8bnh_762","fa-google-plus-square":"_fa-google-plus-square_m8bnh_765","fa-google-plus":"_fa-google-plus_m8bnh_765","fa-money":"_fa-money_m8bnh_771","fa-caret-down":"_fa-caret-down_m8bnh_774","fa-caret-up":"_fa-caret-up_m8bnh_777","fa-caret-left":"_fa-caret-left_m8bnh_780","fa-caret-right":"_fa-caret-right_m8bnh_783","fa-columns":"_fa-columns_m8bnh_786","fa-unsorted":"_fa-unsorted_m8bnh_789","fa-sort":"_fa-sort_m8bnh_790","fa-sort-down":"_fa-sort-down_m8bnh_793","fa-sort-desc":"_fa-sort-desc_m8bnh_794","fa-sort-up":"_fa-sort-up_m8bnh_797","fa-sort-asc":"_fa-sort-asc_m8bnh_798","fa-envelope":"_fa-envelope_m8bnh_192","fa-linkedin":"_fa-linkedin_m8bnh_591","fa-rotate-left":"_fa-rotate-left_m8bnh_807","fa-undo":"_fa-undo_m8bnh_808","fa-legal":"_fa-legal_m8bnh_811","fa-gavel":"_fa-gavel_m8bnh_812","fa-dashboard":"_fa-dashboard_m8bnh_815","fa-tachometer":"_fa-tachometer_m8bnh_816","fa-comment-o":"_fa-comment-o_m8bnh_819","fa-comments-o":"_fa-comments-o_m8bnh_822","fa-flash":"_fa-flash_m8bnh_825","fa-bolt":"_fa-bolt_m8bnh_826","fa-sitemap":"_fa-sitemap_m8bnh_829","fa-umbrella":"_fa-umbrella_m8bnh_832","fa-paste":"_fa-paste_m8bnh_835","fa-clipboard":"_fa-clipboard_m8bnh_836","fa-lightbulb-o":"_fa-lightbulb-o_m8bnh_839","fa-exchange":"_fa-exchange_m8bnh_842","fa-cloud-download":"_fa-cloud-download_m8bnh_845","fa-cloud-upload":"_fa-cloud-upload_m8bnh_848","fa-user-md":"_fa-user-md_m8bnh_851","fa-stethoscope":"_fa-stethoscope_m8bnh_854","fa-suitcase":"_fa-suitcase_m8bnh_857","fa-bell-o":"_fa-bell-o_m8bnh_860","fa-coffee":"_fa-coffee_m8bnh_863","fa-cutlery":"_fa-cutlery_m8bnh_866","fa-file-text-o":"_fa-file-text-o_m8bnh_869","fa-building-o":"_fa-building-o_m8bnh_872","fa-hospital-o":"_fa-hospital-o_m8bnh_875","fa-ambulance":"_fa-ambulance_m8bnh_878","fa-medkit":"_fa-medkit_m8bnh_881","fa-fighter-jet":"_fa-fighter-jet_m8bnh_884","fa-beer":"_fa-beer_m8bnh_887","fa-h-square":"_fa-h-square_m8bnh_890","fa-plus-square":"_fa-plus-square_m8bnh_893","fa-angle-double-left":"_fa-angle-double-left_m8bnh_896","fa-angle-double-right":"_fa-angle-double-right_m8bnh_899","fa-angle-double-up":"_fa-angle-double-up_m8bnh_902","fa-angle-double-down":"_fa-angle-double-down_m8bnh_905","fa-angle-left":"_fa-angle-left_m8bnh_908","fa-angle-right":"_fa-angle-right_m8bnh_911","fa-angle-up":"_fa-angle-up_m8bnh_914","fa-angle-down":"_fa-angle-down_m8bnh_917","fa-desktop":"_fa-desktop_m8bnh_920","fa-laptop":"_fa-laptop_m8bnh_923","fa-tablet":"_fa-tablet_m8bnh_926","fa-mobile-phone":"_fa-mobile-phone_m8bnh_929","fa-mobile":"_fa-mobile_m8bnh_929","fa-circle-o":"_fa-circle-o_m8bnh_933","fa-quote-left":"_fa-quote-left_m8bnh_936","fa-quote-right":"_fa-quote-right_m8bnh_939","fa-spinner":"_fa-spinner_m8bnh_942","fa-circle":"_fa-circle_m8bnh_933","fa-mail-reply":"_fa-mail-reply_m8bnh_948","fa-reply":"_fa-reply_m8bnh_949","fa-github-alt":"_fa-github-alt_m8bnh_952","fa-folder-o":"_fa-folder-o_m8bnh_544","fa-folder-open-o":"_fa-folder-open-o_m8bnh_958","fa-smile-o":"_fa-smile-o_m8bnh_961","fa-frown-o":"_fa-frown-o_m8bnh_964","fa-meh-o":"_fa-meh-o_m8bnh_967","fa-gamepad":"_fa-gamepad_m8bnh_970","fa-keyboard-o":"_fa-keyboard-o_m8bnh_973","fa-flag-o":"_fa-flag-o_m8bnh_976","fa-flag-checkered":"_fa-flag-checkered_m8bnh_979","fa-terminal":"_fa-terminal_m8bnh_982","fa-code":"_fa-code_m8bnh_985","fa-mail-reply-all":"_fa-mail-reply-all_m8bnh_988","fa-reply-all":"_fa-reply-all_m8bnh_989","fa-star-half-empty":"_fa-star-half-empty_m8bnh_992","fa-star-half-full":"_fa-star-half-full_m8bnh_993","fa-star-half-o":"_fa-star-half-o_m8bnh_994","fa-location-arrow":"_fa-location-arrow_m8bnh_997","fa-crop":"_fa-crop_m8bnh_1000","fa-code-fork":"_fa-code-fork_m8bnh_1003","fa-unlink":"_fa-unlink_m8bnh_1006","fa-chain-broken":"_fa-chain-broken_m8bnh_1007","fa-question":"_fa-question_m8bnh_443","fa-info":"_fa-info_m8bnh_446","fa-exclamation":"_fa-exclamation_m8bnh_492","fa-superscript":"_fa-superscript_m8bnh_1019","fa-subscript":"_fa-subscript_m8bnh_1022","fa-eraser":"_fa-eraser_m8bnh_1025","fa-puzzle-piece":"_fa-puzzle-piece_m8bnh_1028","fa-microphone":"_fa-microphone_m8bnh_1031","fa-microphone-slash":"_fa-microphone-slash_m8bnh_1034","fa-shield":"_fa-shield_m8bnh_1037","fa-calendar-o":"_fa-calendar-o_m8bnh_1040","fa-fire-extinguisher":"_fa-fire-extinguisher_m8bnh_1043","fa-rocket":"_fa-rocket_m8bnh_1046","fa-maxcdn":"_fa-maxcdn_m8bnh_1049","fa-chevron-circle-left":"_fa-chevron-circle-left_m8bnh_1052","fa-chevron-circle-right":"_fa-chevron-circle-right_m8bnh_1055","fa-chevron-circle-up":"_fa-chevron-circle-up_m8bnh_1058","fa-chevron-circle-down":"_fa-chevron-circle-down_m8bnh_1061","fa-html5":"_fa-html5_m8bnh_1064","fa-css3":"_fa-css3_m8bnh_1067","fa-anchor":"_fa-anchor_m8bnh_1070","fa-unlock-alt":"_fa-unlock-alt_m8bnh_1073","fa-bullseye":"_fa-bullseye_m8bnh_1076","fa-ellipsis-h":"_fa-ellipsis-h_m8bnh_1079","fa-ellipsis-v":"_fa-ellipsis-v_m8bnh_1082","fa-rss-square":"_fa-rss-square_m8bnh_1085","fa-play-circle":"_fa-play-circle_m8bnh_270","fa-ticket":"_fa-ticket_m8bnh_1091","fa-minus-square":"_fa-minus-square_m8bnh_1094","fa-minus-square-o":"_fa-minus-square-o_m8bnh_1097","fa-level-up":"_fa-level-up_m8bnh_1100","fa-level-down":"_fa-level-down_m8bnh_1103","fa-check-square":"_fa-check-square_m8bnh_389","fa-pencil-square":"_fa-pencil-square_m8bnh_383","fa-external-link-square":"_fa-external-link-square_m8bnh_1112","fa-share-square":"_fa-share-square_m8bnh_386","fa-compass":"_fa-compass_m8bnh_1118","fa-toggle-down":"_fa-toggle-down_m8bnh_1121","fa-caret-square-o-down":"_fa-caret-square-o-down_m8bnh_1122","fa-toggle-up":"_fa-toggle-up_m8bnh_1125","fa-caret-square-o-up":"_fa-caret-square-o-up_m8bnh_1126","fa-toggle-right":"_fa-toggle-right_m8bnh_1129","fa-caret-square-o-right":"_fa-caret-square-o-right_m8bnh_1130","fa-euro":"_fa-euro_m8bnh_1133","fa-eur":"_fa-eur_m8bnh_1133","fa-gbp":"_fa-gbp_m8bnh_1137","fa-dollar":"_fa-dollar_m8bnh_1140","fa-usd":"_fa-usd_m8bnh_1141","fa-rupee":"_fa-rupee_m8bnh_1144","fa-inr":"_fa-inr_m8bnh_1145","fa-cny":"_fa-cny_m8bnh_1148","fa-rmb":"_fa-rmb_m8bnh_1149","fa-yen":"_fa-yen_m8bnh_1150","fa-jpy":"_fa-jpy_m8bnh_1151","fa-ruble":"_fa-ruble_m8bnh_1154","fa-rouble":"_fa-rouble_m8bnh_1155","fa-rub":"_fa-rub_m8bnh_1154","fa-won":"_fa-won_m8bnh_1159","fa-krw":"_fa-krw_m8bnh_1160","fa-bitcoin":"_fa-bitcoin_m8bnh_1163","fa-btc":"_fa-btc_m8bnh_1164","fa-file":"_fa-file_m8bnh_249","fa-file-text":"_fa-file-text_m8bnh_869","fa-sort-alpha-asc":"_fa-sort-alpha-asc_m8bnh_1173","fa-sort-alpha-desc":"_fa-sort-alpha-desc_m8bnh_1176","fa-sort-amount-asc":"_fa-sort-amount-asc_m8bnh_1179","fa-sort-amount-desc":"_fa-sort-amount-desc_m8bnh_1182","fa-sort-numeric-asc":"_fa-sort-numeric-asc_m8bnh_1185","fa-sort-numeric-desc":"_fa-sort-numeric-desc_m8bnh_1188","fa-thumbs-up":"_fa-thumbs-up_m8bnh_1191","fa-thumbs-down":"_fa-thumbs-down_m8bnh_1194","fa-youtube-square":"_fa-youtube-square_m8bnh_1197","fa-youtube":"_fa-youtube_m8bnh_1197","fa-xing":"_fa-xing_m8bnh_1203","fa-xing-square":"_fa-xing-square_m8bnh_1206","fa-youtube-play":"_fa-youtube-play_m8bnh_1209","fa-dropbox":"_fa-dropbox_m8bnh_1212","fa-stack-overflow":"_fa-stack-overflow_m8bnh_1215","fa-instagram":"_fa-instagram_m8bnh_1218","fa-flickr":"_fa-flickr_m8bnh_1221","fa-adn":"_fa-adn_m8bnh_1224","fa-bitbucket":"_fa-bitbucket_m8bnh_1227","fa-bitbucket-square":"_fa-bitbucket-square_m8bnh_1230","fa-tumblr":"_fa-tumblr_m8bnh_1233","fa-tumblr-square":"_fa-tumblr-square_m8bnh_1236","fa-long-arrow-down":"_fa-long-arrow-down_m8bnh_1239","fa-long-arrow-up":"_fa-long-arrow-up_m8bnh_1242","fa-long-arrow-left":"_fa-long-arrow-left_m8bnh_1245","fa-long-arrow-right":"_fa-long-arrow-right_m8bnh_1248","fa-apple":"_fa-apple_m8bnh_1251","fa-windows":"_fa-windows_m8bnh_1254","fa-android":"_fa-android_m8bnh_1257","fa-linux":"_fa-linux_m8bnh_1260","fa-dribbble":"_fa-dribbble_m8bnh_1263","fa-skype":"_fa-skype_m8bnh_1266","fa-foursquare":"_fa-foursquare_m8bnh_1269","fa-trello":"_fa-trello_m8bnh_1272","fa-female":"_fa-female_m8bnh_1275","fa-male":"_fa-male_m8bnh_1278","fa-gittip":"_fa-gittip_m8bnh_1281","fa-gratipay":"_fa-gratipay_m8bnh_1282","fa-sun-o":"_fa-sun-o_m8bnh_1285","fa-moon-o":"_fa-moon-o_m8bnh_1288","fa-archive":"_fa-archive_m8bnh_1291","fa-bug":"_fa-bug_m8bnh_1294","fa-vk":"_fa-vk_m8bnh_1297","fa-weibo":"_fa-weibo_m8bnh_1300","fa-renren":"_fa-renren_m8bnh_1303","fa-pagelines":"_fa-pagelines_m8bnh_1306","fa-stack-exchange":"_fa-stack-exchange_m8bnh_1309","fa-arrow-circle-o-right":"_fa-arrow-circle-o-right_m8bnh_1312","fa-arrow-circle-o-left":"_fa-arrow-circle-o-left_m8bnh_1315","fa-toggle-left":"_fa-toggle-left_m8bnh_1318","fa-caret-square-o-left":"_fa-caret-square-o-left_m8bnh_1319","fa-dot-circle-o":"_fa-dot-circle-o_m8bnh_1322","fa-wheelchair":"_fa-wheelchair_m8bnh_1325","fa-vimeo-square":"_fa-vimeo-square_m8bnh_1328","fa-turkish-lira":"_fa-turkish-lira_m8bnh_1331","fa-try":"_fa-try_m8bnh_1332","fa-plus-square-o":"_fa-plus-square-o_m8bnh_1335","fa-space-shuttle":"_fa-space-shuttle_m8bnh_1338","fa-slack":"_fa-slack_m8bnh_1341","fa-envelope-square":"_fa-envelope-square_m8bnh_1344","fa-wordpress":"_fa-wordpress_m8bnh_1347","fa-openid":"_fa-openid_m8bnh_1350","fa-institution":"_fa-institution_m8bnh_1353","fa-bank":"_fa-bank_m8bnh_1354","fa-university":"_fa-university_m8bnh_1355","fa-mortar-board":"_fa-mortar-board_m8bnh_1358","fa-graduation-cap":"_fa-graduation-cap_m8bnh_1359","fa-yahoo":"_fa-yahoo_m8bnh_1362","fa-google":"_fa-google_m8bnh_765","fa-reddit":"_fa-reddit_m8bnh_1368","fa-reddit-square":"_fa-reddit-square_m8bnh_1371","fa-stumbleupon-circle":"_fa-stumbleupon-circle_m8bnh_1374","fa-stumbleupon":"_fa-stumbleupon_m8bnh_1374","fa-delicious":"_fa-delicious_m8bnh_1380","fa-digg":"_fa-digg_m8bnh_1383","fa-pied-piper-pp":"_fa-pied-piper-pp_m8bnh_1386","fa-pied-piper-alt":"_fa-pied-piper-alt_m8bnh_1389","fa-drupal":"_fa-drupal_m8bnh_1392","fa-joomla":"_fa-joomla_m8bnh_1395","fa-language":"_fa-language_m8bnh_1398","fa-fax":"_fa-fax_m8bnh_1401","fa-building":"_fa-building_m8bnh_872","fa-child":"_fa-child_m8bnh_1407","fa-paw":"_fa-paw_m8bnh_1410","fa-spoon":"_fa-spoon_m8bnh_1413","fa-cube":"_fa-cube_m8bnh_1416","fa-cubes":"_fa-cubes_m8bnh_1419","fa-behance":"_fa-behance_m8bnh_1422","fa-behance-square":"_fa-behance-square_m8bnh_1425","fa-steam":"_fa-steam_m8bnh_1428","fa-steam-square":"_fa-steam-square_m8bnh_1431","fa-recycle":"_fa-recycle_m8bnh_1434","fa-automobile":"_fa-automobile_m8bnh_1437","fa-car":"_fa-car_m8bnh_774","fa-cab":"_fa-cab_m8bnh_1441","fa-taxi":"_fa-taxi_m8bnh_1442","fa-tree":"_fa-tree_m8bnh_1445","fa-spotify":"_fa-spotify_m8bnh_1448","fa-deviantart":"_fa-deviantart_m8bnh_1451","fa-soundcloud":"_fa-soundcloud_m8bnh_1454","fa-database":"_fa-database_m8bnh_1457","fa-file-pdf-o":"_fa-file-pdf-o_m8bnh_1460","fa-file-word-o":"_fa-file-word-o_m8bnh_1463","fa-file-excel-o":"_fa-file-excel-o_m8bnh_1466","fa-file-powerpoint-o":"_fa-file-powerpoint-o_m8bnh_1469","fa-file-photo-o":"_fa-file-photo-o_m8bnh_1472","fa-file-picture-o":"_fa-file-picture-o_m8bnh_1473","fa-file-image-o":"_fa-file-image-o_m8bnh_1474","fa-file-zip-o":"_fa-file-zip-o_m8bnh_1477","fa-file-archive-o":"_fa-file-archive-o_m8bnh_1478","fa-file-sound-o":"_fa-file-sound-o_m8bnh_1481","fa-file-audio-o":"_fa-file-audio-o_m8bnh_1482","fa-file-movie-o":"_fa-file-movie-o_m8bnh_1485","fa-file-video-o":"_fa-file-video-o_m8bnh_1486","fa-file-code-o":"_fa-file-code-o_m8bnh_1489","fa-vine":"_fa-vine_m8bnh_1492","fa-codepen":"_fa-codepen_m8bnh_1495","fa-jsfiddle":"_fa-jsfiddle_m8bnh_1498","fa-life-bouy":"_fa-life-bouy_m8bnh_1501","fa-life-buoy":"_fa-life-buoy_m8bnh_1502","fa-life-saver":"_fa-life-saver_m8bnh_1503","fa-support":"_fa-support_m8bnh_1504","fa-life-ring":"_fa-life-ring_m8bnh_1505","fa-circle-o-notch":"_fa-circle-o-notch_m8bnh_1508","fa-ra":"_fa-ra_m8bnh_520","fa-resistance":"_fa-resistance_m8bnh_1512","fa-rebel":"_fa-rebel_m8bnh_1513","fa-ge":"_fa-ge_m8bnh_239","fa-empire":"_fa-empire_m8bnh_1517","fa-git-square":"_fa-git-square_m8bnh_1520","fa-git":"_fa-git_m8bnh_606","fa-y-combinator-square":"_fa-y-combinator-square_m8bnh_1526","fa-yc-square":"_fa-yc-square_m8bnh_1527","fa-hacker-news":"_fa-hacker-news_m8bnh_1528","fa-tencent-weibo":"_fa-tencent-weibo_m8bnh_1531","fa-qq":"_fa-qq_m8bnh_1534","fa-wechat":"_fa-wechat_m8bnh_1537","fa-weixin":"_fa-weixin_m8bnh_1538","fa-send":"_fa-send_m8bnh_1541","fa-paper-plane":"_fa-paper-plane_m8bnh_1542","fa-send-o":"_fa-send-o_m8bnh_1545","fa-paper-plane-o":"_fa-paper-plane-o_m8bnh_1546","fa-history":"_fa-history_m8bnh_1549","fa-circle-thin":"_fa-circle-thin_m8bnh_1552","fa-header":"_fa-header_m8bnh_1555","fa-paragraph":"_fa-paragraph_m8bnh_1558","fa-sliders":"_fa-sliders_m8bnh_1561","fa-share-alt":"_fa-share-alt_m8bnh_1564","fa-share-alt-square":"_fa-share-alt-square_m8bnh_1567","fa-bomb":"_fa-bomb_m8bnh_1570","fa-soccer-ball-o":"_fa-soccer-ball-o_m8bnh_1573","fa-futbol-o":"_fa-futbol-o_m8bnh_1574","fa-tty":"_fa-tty_m8bnh_1577","fa-binoculars":"_fa-binoculars_m8bnh_1580","fa-plug":"_fa-plug_m8bnh_1583","fa-slideshare":"_fa-slideshare_m8bnh_1586","fa-twitch":"_fa-twitch_m8bnh_1589","fa-yelp":"_fa-yelp_m8bnh_1592","fa-newspaper-o":"_fa-newspaper-o_m8bnh_1595","fa-wifi":"_fa-wifi_m8bnh_1598","fa-calculator":"_fa-calculator_m8bnh_1601","fa-paypal":"_fa-paypal_m8bnh_1604","fa-google-wallet":"_fa-google-wallet_m8bnh_1607","fa-cc-visa":"_fa-cc-visa_m8bnh_1610","fa-cc-mastercard":"_fa-cc-mastercard_m8bnh_1613","fa-cc-discover":"_fa-cc-discover_m8bnh_1616","fa-cc-amex":"_fa-cc-amex_m8bnh_1619","fa-cc-paypal":"_fa-cc-paypal_m8bnh_1622","fa-cc-stripe":"_fa-cc-stripe_m8bnh_1625","fa-bell-slash":"_fa-bell-slash_m8bnh_1628","fa-bell-slash-o":"_fa-bell-slash-o_m8bnh_1631","fa-trash":"_fa-trash_m8bnh_243","fa-copyright":"_fa-copyright_m8bnh_1637","fa-at":"_fa-at_m8bnh_1640","fa-eyedropper":"_fa-eyedropper_m8bnh_1643","fa-paint-brush":"_fa-paint-brush_m8bnh_1646","fa-birthday-cake":"_fa-birthday-cake_m8bnh_1649","fa-area-chart":"_fa-area-chart_m8bnh_1652","fa-pie-chart":"_fa-pie-chart_m8bnh_1655","fa-line-chart":"_fa-line-chart_m8bnh_1658","fa-lastfm":"_fa-lastfm_m8bnh_1661","fa-lastfm-square":"_fa-lastfm-square_m8bnh_1664","fa-toggle-off":"_fa-toggle-off_m8bnh_1667","fa-toggle-on":"_fa-toggle-on_m8bnh_1670","fa-bicycle":"_fa-bicycle_m8bnh_1673","fa-bus":"_fa-bus_m8bnh_1676","fa-ioxhost":"_fa-ioxhost_m8bnh_1679","fa-angellist":"_fa-angellist_m8bnh_1682","fa-cc":"_fa-cc_m8bnh_1610","fa-shekel":"_fa-shekel_m8bnh_1688","fa-sheqel":"_fa-sheqel_m8bnh_1689","fa-ils":"_fa-ils_m8bnh_1690","fa-meanpath":"_fa-meanpath_m8bnh_1693","fa-buysellads":"_fa-buysellads_m8bnh_1696","fa-connectdevelop":"_fa-connectdevelop_m8bnh_1699","fa-dashcube":"_fa-dashcube_m8bnh_1702","fa-forumbee":"_fa-forumbee_m8bnh_1705","fa-leanpub":"_fa-leanpub_m8bnh_1708","fa-sellsy":"_fa-sellsy_m8bnh_1711","fa-shirtsinbulk":"_fa-shirtsinbulk_m8bnh_1714","fa-simplybuilt":"_fa-simplybuilt_m8bnh_1717","fa-skyatlas":"_fa-skyatlas_m8bnh_1720","fa-cart-plus":"_fa-cart-plus_m8bnh_1723","fa-cart-arrow-down":"_fa-cart-arrow-down_m8bnh_1726","fa-diamond":"_fa-diamond_m8bnh_1729","fa-ship":"_fa-ship_m8bnh_1732","fa-user-secret":"_fa-user-secret_m8bnh_1735","fa-motorcycle":"_fa-motorcycle_m8bnh_1738","fa-street-view":"_fa-street-view_m8bnh_1741","fa-heartbeat":"_fa-heartbeat_m8bnh_1744","fa-venus":"_fa-venus_m8bnh_1747","fa-mars":"_fa-mars_m8bnh_1750","fa-mercury":"_fa-mercury_m8bnh_1753","fa-intersex":"_fa-intersex_m8bnh_1756","fa-transgender":"_fa-transgender_m8bnh_1757","fa-transgender-alt":"_fa-transgender-alt_m8bnh_1760","fa-venus-double":"_fa-venus-double_m8bnh_1763","fa-mars-double":"_fa-mars-double_m8bnh_1766","fa-venus-mars":"_fa-venus-mars_m8bnh_1769","fa-mars-stroke":"_fa-mars-stroke_m8bnh_1772","fa-mars-stroke-v":"_fa-mars-stroke-v_m8bnh_1775","fa-mars-stroke-h":"_fa-mars-stroke-h_m8bnh_1778","fa-neuter":"_fa-neuter_m8bnh_1781","fa-genderless":"_fa-genderless_m8bnh_1784","fa-facebook-official":"_fa-facebook-official_m8bnh_1787","fa-pinterest-p":"_fa-pinterest-p_m8bnh_1790","fa-whatsapp":"_fa-whatsapp_m8bnh_1793","fa-server":"_fa-server_m8bnh_1796","fa-user-plus":"_fa-user-plus_m8bnh_1799","fa-user-times":"_fa-user-times_m8bnh_1802","fa-hotel":"_fa-hotel_m8bnh_1805","fa-bed":"_fa-bed_m8bnh_1806","fa-viacoin":"_fa-viacoin_m8bnh_1809","fa-train":"_fa-train_m8bnh_1812","fa-subway":"_fa-subway_m8bnh_1815","fa-medium":"_fa-medium_m8bnh_1818","fa-yc":"_fa-yc_m8bnh_1527","fa-y-combinator":"_fa-y-combinator_m8bnh_1526","fa-optin-monster":"_fa-optin-monster_m8bnh_1825","fa-opencart":"_fa-opencart_m8bnh_1828","fa-expeditedssl":"_fa-expeditedssl_m8bnh_1831","fa-battery-4":"_fa-battery-4_m8bnh_1834","fa-battery":"_fa-battery_m8bnh_1834","fa-battery-full":"_fa-battery-full_m8bnh_1836","fa-battery-3":"_fa-battery-3_m8bnh_1839","fa-battery-three-quarters":"_fa-battery-three-quarters_m8bnh_1840","fa-battery-2":"_fa-battery-2_m8bnh_1843","fa-battery-half":"_fa-battery-half_m8bnh_1844","fa-battery-1":"_fa-battery-1_m8bnh_1847","fa-battery-quarter":"_fa-battery-quarter_m8bnh_1848","fa-battery-0":"_fa-battery-0_m8bnh_1851","fa-battery-empty":"_fa-battery-empty_m8bnh_1852","fa-mouse-pointer":"_fa-mouse-pointer_m8bnh_1855","fa-i-cursor":"_fa-i-cursor_m8bnh_1858","fa-object-group":"_fa-object-group_m8bnh_1861","fa-object-ungroup":"_fa-object-ungroup_m8bnh_1864","fa-sticky-note":"_fa-sticky-note_m8bnh_1867","fa-sticky-note-o":"_fa-sticky-note-o_m8bnh_1870","fa-cc-jcb":"_fa-cc-jcb_m8bnh_1873","fa-cc-diners-club":"_fa-cc-diners-club_m8bnh_1876","fa-clone":"_fa-clone_m8bnh_1879","fa-balance-scale":"_fa-balance-scale_m8bnh_1882","fa-hourglass-o":"_fa-hourglass-o_m8bnh_1885","fa-hourglass-1":"_fa-hourglass-1_m8bnh_1888","fa-hourglass-start":"_fa-hourglass-start_m8bnh_1889","fa-hourglass-2":"_fa-hourglass-2_m8bnh_1892","fa-hourglass-half":"_fa-hourglass-half_m8bnh_1893","fa-hourglass-3":"_fa-hourglass-3_m8bnh_1896","fa-hourglass-end":"_fa-hourglass-end_m8bnh_1897","fa-hourglass":"_fa-hourglass_m8bnh_1885","fa-hand-grab-o":"_fa-hand-grab-o_m8bnh_1903","fa-hand-rock-o":"_fa-hand-rock-o_m8bnh_1904","fa-hand-stop-o":"_fa-hand-stop-o_m8bnh_1907","fa-hand-paper-o":"_fa-hand-paper-o_m8bnh_1908","fa-hand-scissors-o":"_fa-hand-scissors-o_m8bnh_1911","fa-hand-lizard-o":"_fa-hand-lizard-o_m8bnh_1914","fa-hand-spock-o":"_fa-hand-spock-o_m8bnh_1917","fa-hand-pointer-o":"_fa-hand-pointer-o_m8bnh_1920","fa-hand-peace-o":"_fa-hand-peace-o_m8bnh_1923","fa-trademark":"_fa-trademark_m8bnh_1926","fa-registered":"_fa-registered_m8bnh_1929","fa-creative-commons":"_fa-creative-commons_m8bnh_1932","fa-gg":"_fa-gg_m8bnh_1935","fa-gg-circle":"_fa-gg-circle_m8bnh_1938","fa-tripadvisor":"_fa-tripadvisor_m8bnh_1941","fa-odnoklassniki":"_fa-odnoklassniki_m8bnh_1944","fa-odnoklassniki-square":"_fa-odnoklassniki-square_m8bnh_1947","fa-get-pocket":"_fa-get-pocket_m8bnh_1950","fa-wikipedia-w":"_fa-wikipedia-w_m8bnh_1953","fa-safari":"_fa-safari_m8bnh_1956","fa-chrome":"_fa-chrome_m8bnh_1959","fa-firefox":"_fa-firefox_m8bnh_1962","fa-opera":"_fa-opera_m8bnh_1965","fa-internet-explorer":"_fa-internet-explorer_m8bnh_1968","fa-tv":"_fa-tv_m8bnh_1971","fa-television":"_fa-television_m8bnh_1972","fa-contao":"_fa-contao_m8bnh_1975","fa-500px":"_fa-500px_m8bnh_1978","fa-amazon":"_fa-amazon_m8bnh_1981","fa-calendar-plus-o":"_fa-calendar-plus-o_m8bnh_1984","fa-calendar-minus-o":"_fa-calendar-minus-o_m8bnh_1987","fa-calendar-times-o":"_fa-calendar-times-o_m8bnh_1990","fa-calendar-check-o":"_fa-calendar-check-o_m8bnh_1993","fa-industry":"_fa-industry_m8bnh_1996","fa-map-pin":"_fa-map-pin_m8bnh_1999","fa-map-signs":"_fa-map-signs_m8bnh_2002","fa-map-o":"_fa-map-o_m8bnh_2005","fa-map":"_fa-map_m8bnh_373","fa-commenting":"_fa-commenting_m8bnh_2011","fa-commenting-o":"_fa-commenting-o_m8bnh_2014","fa-houzz":"_fa-houzz_m8bnh_2017","fa-vimeo":"_fa-vimeo_m8bnh_1328","fa-black-tie":"_fa-black-tie_m8bnh_2023","fa-fonticons":"_fa-fonticons_m8bnh_2026","fa-reddit-alien":"_fa-reddit-alien_m8bnh_2029","fa-edge":"_fa-edge_m8bnh_2032","fa-credit-card-alt":"_fa-credit-card-alt_m8bnh_2035","fa-codiepie":"_fa-codiepie_m8bnh_2038","fa-modx":"_fa-modx_m8bnh_2041","fa-fort-awesome":"_fa-fort-awesome_m8bnh_2044","fa-usb":"_fa-usb_m8bnh_2047","fa-product-hunt":"_fa-product-hunt_m8bnh_2050","fa-mixcloud":"_fa-mixcloud_m8bnh_2053","fa-scribd":"_fa-scribd_m8bnh_2056","fa-pause-circle":"_fa-pause-circle_m8bnh_2059","fa-pause-circle-o":"_fa-pause-circle-o_m8bnh_2062","fa-stop-circle":"_fa-stop-circle_m8bnh_2065","fa-stop-circle-o":"_fa-stop-circle-o_m8bnh_2068","fa-shopping-bag":"_fa-shopping-bag_m8bnh_2071","fa-shopping-basket":"_fa-shopping-basket_m8bnh_2074","fa-hashtag":"_fa-hashtag_m8bnh_2077","fa-bluetooth":"_fa-bluetooth_m8bnh_2080","fa-bluetooth-b":"_fa-bluetooth-b_m8bnh_2083","fa-percent":"_fa-percent_m8bnh_2086","fa-gitlab":"_fa-gitlab_m8bnh_2089","fa-wpbeginner":"_fa-wpbeginner_m8bnh_2092","fa-wpforms":"_fa-wpforms_m8bnh_2095","fa-envira":"_fa-envira_m8bnh_2098","fa-universal-access":"_fa-universal-access_m8bnh_2101","fa-wheelchair-alt":"_fa-wheelchair-alt_m8bnh_2104","fa-question-circle-o":"_fa-question-circle-o_m8bnh_2107","fa-blind":"_fa-blind_m8bnh_2110","fa-audio-description":"_fa-audio-description_m8bnh_2113","fa-volume-control-phone":"_fa-volume-control-phone_m8bnh_2116","fa-braille":"_fa-braille_m8bnh_2119","fa-assistive-listening-systems":"_fa-assistive-listening-systems_m8bnh_2122","fa-asl-interpreting":"_fa-asl-interpreting_m8bnh_2125","fa-american-sign-language-interpreting":"_fa-american-sign-language-interpreting_m8bnh_2126","fa-deafness":"_fa-deafness_m8bnh_2129","fa-hard-of-hearing":"_fa-hard-of-hearing_m8bnh_2130","fa-deaf":"_fa-deaf_m8bnh_2129","fa-glide":"_fa-glide_m8bnh_2134","fa-glide-g":"_fa-glide-g_m8bnh_2137","fa-signing":"_fa-signing_m8bnh_2140","fa-sign-language":"_fa-sign-language_m8bnh_2141","fa-low-vision":"_fa-low-vision_m8bnh_2144","fa-viadeo":"_fa-viadeo_m8bnh_2147","fa-viadeo-square":"_fa-viadeo-square_m8bnh_2150","fa-snapchat":"_fa-snapchat_m8bnh_2153","fa-snapchat-ghost":"_fa-snapchat-ghost_m8bnh_2156","fa-snapchat-square":"_fa-snapchat-square_m8bnh_2159","fa-pied-piper":"_fa-pied-piper_m8bnh_1386","fa-first-order":"_fa-first-order_m8bnh_2165","fa-yoast":"_fa-yoast_m8bnh_2168","fa-themeisle":"_fa-themeisle_m8bnh_2171","fa-google-plus-circle":"_fa-google-plus-circle_m8bnh_2174","fa-google-plus-official":"_fa-google-plus-official_m8bnh_2175","fa-fa":"_fa-fa_m8bnh_398","fa-font-awesome":"_fa-font-awesome_m8bnh_2179","fa-handshake-o":"_fa-handshake-o_m8bnh_2182","fa-envelope-open":"_fa-envelope-open_m8bnh_2185","fa-envelope-open-o":"_fa-envelope-open-o_m8bnh_2188","fa-linode":"_fa-linode_m8bnh_2191","fa-address-book":"_fa-address-book_m8bnh_2194","fa-address-book-o":"_fa-address-book-o_m8bnh_2197","fa-vcard":"_fa-vcard_m8bnh_2200","fa-address-card":"_fa-address-card_m8bnh_2201","fa-vcard-o":"_fa-vcard-o_m8bnh_2204","fa-address-card-o":"_fa-address-card-o_m8bnh_2205","fa-user-circle":"_fa-user-circle_m8bnh_2208","fa-user-circle-o":"_fa-user-circle-o_m8bnh_2211","fa-user-o":"_fa-user-o_m8bnh_2214","fa-id-badge":"_fa-id-badge_m8bnh_2217","fa-drivers-license":"_fa-drivers-license_m8bnh_2220","fa-id-card":"_fa-id-card_m8bnh_2221","fa-drivers-license-o":"_fa-drivers-license-o_m8bnh_2224","fa-id-card-o":"_fa-id-card-o_m8bnh_2225","fa-quora":"_fa-quora_m8bnh_2228","fa-free-code-camp":"_fa-free-code-camp_m8bnh_2231","fa-telegram":"_fa-telegram_m8bnh_2234","fa-thermometer-4":"_fa-thermometer-4_m8bnh_2237","fa-thermometer":"_fa-thermometer_m8bnh_2237","fa-thermometer-full":"_fa-thermometer-full_m8bnh_2239","fa-thermometer-3":"_fa-thermometer-3_m8bnh_2242","fa-thermometer-three-quarters":"_fa-thermometer-three-quarters_m8bnh_2243","fa-thermometer-2":"_fa-thermometer-2_m8bnh_2246","fa-thermometer-half":"_fa-thermometer-half_m8bnh_2247","fa-thermometer-1":"_fa-thermometer-1_m8bnh_2250","fa-thermometer-quarter":"_fa-thermometer-quarter_m8bnh_2251","fa-thermometer-0":"_fa-thermometer-0_m8bnh_2254","fa-thermometer-empty":"_fa-thermometer-empty_m8bnh_2255","fa-shower":"_fa-shower_m8bnh_2258","fa-bathtub":"_fa-bathtub_m8bnh_2261","fa-s15":"_fa-s15_m8bnh_2262","fa-bath":"_fa-bath_m8bnh_2261","fa-podcast":"_fa-podcast_m8bnh_2266","fa-window-maximize":"_fa-window-maximize_m8bnh_2269","fa-window-minimize":"_fa-window-minimize_m8bnh_2272","fa-window-restore":"_fa-window-restore_m8bnh_2275","fa-times-rectangle":"_fa-times-rectangle_m8bnh_2278","fa-window-close":"_fa-window-close_m8bnh_2279","fa-times-rectangle-o":"_fa-times-rectangle-o_m8bnh_2282","fa-window-close-o":"_fa-window-close-o_m8bnh_2283","fa-bandcamp":"_fa-bandcamp_m8bnh_2286","fa-grav":"_fa-grav_m8bnh_2289","fa-etsy":"_fa-etsy_m8bnh_2292","fa-imdb":"_fa-imdb_m8bnh_2295","fa-ravelry":"_fa-ravelry_m8bnh_2298","fa-eercast":"_fa-eercast_m8bnh_2301","fa-microchip":"_fa-microchip_m8bnh_2304","fa-snowflake-o":"_fa-snowflake-o_m8bnh_2307","fa-superpowers":"_fa-superpowers_m8bnh_2310","fa-wpexplorer":"_fa-wpexplorer_m8bnh_2313","fa-meetup":"_fa-meetup_m8bnh_2316","sr-only":"_sr-only_m8bnh_2319","sr-only-focusable":"_sr-only-focusable_m8bnh_2329"};
+require("fuse-box-css")("css/font-awesome.css", "/*!\n *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome\n *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\n */\n/* FONT PATH\n * -------------------------- */\n@font-face {\n  font-family: 'FontAwesome';\n  src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');\n  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n._fa_m8bnh_14 {\n  display: inline-block;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n/* makes the font 33% larger relative to the icon container */\n._fa-lg_m8bnh_23 {\n  font-size: 1.33333333em;\n  line-height: 0.75em;\n  vertical-align: -15%;\n}\n._fa-2x_m8bnh_28 {\n  font-size: 2em;\n}\n._fa-3x_m8bnh_31 {\n  font-size: 3em;\n}\n._fa-4x_m8bnh_34 {\n  font-size: 4em;\n}\n._fa-5x_m8bnh_37 {\n  font-size: 5em;\n}\n._fa-fw_m8bnh_40 {\n  width: 1.28571429em;\n  text-align: center;\n}\n._fa-ul_m8bnh_44 {\n  padding-left: 0;\n  margin-left: 2.14285714em;\n  list-style-type: none;\n}\n._fa-ul_m8bnh_44 > li {\n  position: relative;\n}\n._fa-li_m8bnh_52 {\n  position: absolute;\n  left: -2.14285714em;\n  width: 2.14285714em;\n  top: 0.14285714em;\n  text-align: center;\n}\n._fa-li_m8bnh_52._fa-lg_m8bnh_23 {\n  left: -1.85714286em;\n}\n._fa-border_m8bnh_62 {\n  padding: .2em .25em .15em;\n  border: solid 0.08em #eeeeee;\n  border-radius: .1em;\n}\n._fa-pull-left_m8bnh_67 {\n  float: left;\n}\n._fa-pull-right_m8bnh_70 {\n  float: right;\n}\n._fa_m8bnh_14._fa-pull-left_m8bnh_67 {\n  margin-right: .3em;\n}\n._fa_m8bnh_14._fa-pull-right_m8bnh_70 {\n  margin-left: .3em;\n}\n/* Deprecated as of 4.4.0 */\n._pull-right_m8bnh_80 {\n  float: right;\n}\n._pull-left_m8bnh_83 {\n  float: left;\n}\n._fa_m8bnh_14._pull-left_m8bnh_83 {\n  margin-right: .3em;\n}\n._fa_m8bnh_14._pull-right_m8bnh_80 {\n  margin-left: .3em;\n}\n._fa-spin_m8bnh_92 {\n  -webkit-animation: _fa-spin_m8bnh_92 2s infinite linear;\n  animation: _fa-spin_m8bnh_92 2s infinite linear;\n}\n._fa-pulse_m8bnh_96 {\n  -webkit-animation: _fa-spin_m8bnh_92 1s infinite steps(8);\n  animation: _fa-spin_m8bnh_92 1s infinite steps(8);\n}\n@-webkit-keyframes _fa-spin_m8bnh_92 {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n  }\n}\n@keyframes _fa-spin_m8bnh_92 {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n  }\n}\n._fa-rotate-90_m8bnh_120 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=1)\";\n  -webkit-transform: rotate(90deg);\n  -ms-transform: rotate(90deg);\n  transform: rotate(90deg);\n}\n._fa-rotate-180_m8bnh_126 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)\";\n  -webkit-transform: rotate(180deg);\n  -ms-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\n._fa-rotate-270_m8bnh_132 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=3)\";\n  -webkit-transform: rotate(270deg);\n  -ms-transform: rotate(270deg);\n  transform: rotate(270deg);\n}\n._fa-flip-horizontal_m8bnh_138 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)\";\n  -webkit-transform: scale(-1, 1);\n  -ms-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n._fa-flip-vertical_m8bnh_144 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)\";\n  -webkit-transform: scale(1, -1);\n  -ms-transform: scale(1, -1);\n  transform: scale(1, -1);\n}\n:root ._fa-rotate-90_m8bnh_120,\n:root ._fa-rotate-180_m8bnh_126,\n:root ._fa-rotate-270_m8bnh_132,\n:root ._fa-flip-horizontal_m8bnh_138,\n:root ._fa-flip-vertical_m8bnh_144 {\n  filter: none;\n}\n._fa-stack_m8bnh_157 {\n  position: relative;\n  display: inline-block;\n  width: 2em;\n  height: 2em;\n  line-height: 2em;\n  vertical-align: middle;\n}\n._fa-stack-1x_m8bnh_165,\n._fa-stack-2x_m8bnh_166 {\n  position: absolute;\n  left: 0;\n  width: 100%;\n  text-align: center;\n}\n._fa-stack-1x_m8bnh_165 {\n  line-height: inherit;\n}\n._fa-stack-2x_m8bnh_166 {\n  font-size: 2em;\n}\n._fa-inverse_m8bnh_178 {\n  color: #ffffff;\n}\n/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen\n   readers do not read off random characters that represent icons */\n._fa-glass_m8bnh_183:before {\n  content: \"\\F000\";\n}\n._fa-music_m8bnh_186:before {\n  content: \"\\F001\";\n}\n._fa-search_m8bnh_189:before {\n  content: \"\\F002\";\n}\n._fa-envelope-o_m8bnh_192:before {\n  content: \"\\F003\";\n}\n._fa-heart_m8bnh_195:before {\n  content: \"\\F004\";\n}\n._fa-star_m8bnh_198:before {\n  content: \"\\F005\";\n}\n._fa-star-o_m8bnh_201:before {\n  content: \"\\F006\";\n}\n._fa-user_m8bnh_204:before {\n  content: \"\\F007\";\n}\n._fa-film_m8bnh_207:before {\n  content: \"\\F008\";\n}\n._fa-th-large_m8bnh_210:before {\n  content: \"\\F009\";\n}\n._fa-th_m8bnh_210:before {\n  content: \"\\F00A\";\n}\n._fa-th-list_m8bnh_216:before {\n  content: \"\\F00B\";\n}\n._fa-check_m8bnh_219:before {\n  content: \"\\F00C\";\n}\n._fa-remove_m8bnh_222:before,\n._fa-close_m8bnh_223:before,\n._fa-times_m8bnh_224:before {\n  content: \"\\F00D\";\n}\n._fa-search-plus_m8bnh_227:before {\n  content: \"\\F00E\";\n}\n._fa-search-minus_m8bnh_230:before {\n  content: \"\\F010\";\n}\n._fa-power-off_m8bnh_233:before {\n  content: \"\\F011\";\n}\n._fa-signal_m8bnh_236:before {\n  content: \"\\F012\";\n}\n._fa-gear_m8bnh_239:before,\n._fa-cog_m8bnh_240:before {\n  content: \"\\F013\";\n}\n._fa-trash-o_m8bnh_243:before {\n  content: \"\\F014\";\n}\n._fa-home_m8bnh_246:before {\n  content: \"\\F015\";\n}\n._fa-file-o_m8bnh_249:before {\n  content: \"\\F016\";\n}\n._fa-clock-o_m8bnh_252:before {\n  content: \"\\F017\";\n}\n._fa-road_m8bnh_255:before {\n  content: \"\\F018\";\n}\n._fa-download_m8bnh_258:before {\n  content: \"\\F019\";\n}\n._fa-arrow-circle-o-down_m8bnh_261:before {\n  content: \"\\F01A\";\n}\n._fa-arrow-circle-o-up_m8bnh_264:before {\n  content: \"\\F01B\";\n}\n._fa-inbox_m8bnh_267:before {\n  content: \"\\F01C\";\n}\n._fa-play-circle-o_m8bnh_270:before {\n  content: \"\\F01D\";\n}\n._fa-rotate-right_m8bnh_273:before,\n._fa-repeat_m8bnh_274:before {\n  content: \"\\F01E\";\n}\n._fa-refresh_m8bnh_277:before {\n  content: \"\\F021\";\n}\n._fa-list-alt_m8bnh_280:before {\n  content: \"\\F022\";\n}\n._fa-lock_m8bnh_283:before {\n  content: \"\\F023\";\n}\n._fa-flag_m8bnh_286:before {\n  content: \"\\F024\";\n}\n._fa-headphones_m8bnh_289:before {\n  content: \"\\F025\";\n}\n._fa-volume-off_m8bnh_292:before {\n  content: \"\\F026\";\n}\n._fa-volume-down_m8bnh_295:before {\n  content: \"\\F027\";\n}\n._fa-volume-up_m8bnh_298:before {\n  content: \"\\F028\";\n}\n._fa-qrcode_m8bnh_301:before {\n  content: \"\\F029\";\n}\n._fa-barcode_m8bnh_304:before {\n  content: \"\\F02A\";\n}\n._fa-tag_m8bnh_307:before {\n  content: \"\\F02B\";\n}\n._fa-tags_m8bnh_310:before {\n  content: \"\\F02C\";\n}\n._fa-book_m8bnh_313:before {\n  content: \"\\F02D\";\n}\n._fa-bookmark_m8bnh_316:before {\n  content: \"\\F02E\";\n}\n._fa-print_m8bnh_319:before {\n  content: \"\\F02F\";\n}\n._fa-camera_m8bnh_322:before {\n  content: \"\\F030\";\n}\n._fa-font_m8bnh_325:before {\n  content: \"\\F031\";\n}\n._fa-bold_m8bnh_328:before {\n  content: \"\\F032\";\n}\n._fa-italic_m8bnh_331:before {\n  content: \"\\F033\";\n}\n._fa-text-height_m8bnh_334:before {\n  content: \"\\F034\";\n}\n._fa-text-width_m8bnh_337:before {\n  content: \"\\F035\";\n}\n._fa-align-left_m8bnh_340:before {\n  content: \"\\F036\";\n}\n._fa-align-center_m8bnh_343:before {\n  content: \"\\F037\";\n}\n._fa-align-right_m8bnh_346:before {\n  content: \"\\F038\";\n}\n._fa-align-justify_m8bnh_349:before {\n  content: \"\\F039\";\n}\n._fa-list_m8bnh_280:before {\n  content: \"\\F03A\";\n}\n._fa-dedent_m8bnh_355:before,\n._fa-outdent_m8bnh_356:before {\n  content: \"\\F03B\";\n}\n._fa-indent_m8bnh_359:before {\n  content: \"\\F03C\";\n}\n._fa-video-camera_m8bnh_362:before {\n  content: \"\\F03D\";\n}\n._fa-photo_m8bnh_365:before,\n._fa-image_m8bnh_366:before,\n._fa-picture-o_m8bnh_367:before {\n  content: \"\\F03E\";\n}\n._fa-pencil_m8bnh_370:before {\n  content: \"\\F040\";\n}\n._fa-map-marker_m8bnh_373:before {\n  content: \"\\F041\";\n}\n._fa-adjust_m8bnh_376:before {\n  content: \"\\F042\";\n}\n._fa-tint_m8bnh_379:before {\n  content: \"\\F043\";\n}\n._fa-edit_m8bnh_382:before,\n._fa-pencil-square-o_m8bnh_383:before {\n  content: \"\\F044\";\n}\n._fa-share-square-o_m8bnh_386:before {\n  content: \"\\F045\";\n}\n._fa-check-square-o_m8bnh_389:before {\n  content: \"\\F046\";\n}\n._fa-arrows_m8bnh_392:before {\n  content: \"\\F047\";\n}\n._fa-step-backward_m8bnh_395:before {\n  content: \"\\F048\";\n}\n._fa-fast-backward_m8bnh_398:before {\n  content: \"\\F049\";\n}\n._fa-backward_m8bnh_401:before {\n  content: \"\\F04A\";\n}\n._fa-play_m8bnh_270:before {\n  content: \"\\F04B\";\n}\n._fa-pause_m8bnh_407:before {\n  content: \"\\F04C\";\n}\n._fa-stop_m8bnh_410:before {\n  content: \"\\F04D\";\n}\n._fa-forward_m8bnh_413:before {\n  content: \"\\F04E\";\n}\n._fa-fast-forward_m8bnh_416:before {\n  content: \"\\F050\";\n}\n._fa-step-forward_m8bnh_419:before {\n  content: \"\\F051\";\n}\n._fa-eject_m8bnh_422:before {\n  content: \"\\F052\";\n}\n._fa-chevron-left_m8bnh_425:before {\n  content: \"\\F053\";\n}\n._fa-chevron-right_m8bnh_428:before {\n  content: \"\\F054\";\n}\n._fa-plus-circle_m8bnh_431:before {\n  content: \"\\F055\";\n}\n._fa-minus-circle_m8bnh_434:before {\n  content: \"\\F056\";\n}\n._fa-times-circle_m8bnh_437:before {\n  content: \"\\F057\";\n}\n._fa-check-circle_m8bnh_440:before {\n  content: \"\\F058\";\n}\n._fa-question-circle_m8bnh_443:before {\n  content: \"\\F059\";\n}\n._fa-info-circle_m8bnh_446:before {\n  content: \"\\F05A\";\n}\n._fa-crosshairs_m8bnh_449:before {\n  content: \"\\F05B\";\n}\n._fa-times-circle-o_m8bnh_452:before {\n  content: \"\\F05C\";\n}\n._fa-check-circle-o_m8bnh_455:before {\n  content: \"\\F05D\";\n}\n._fa-ban_m8bnh_458:before {\n  content: \"\\F05E\";\n}\n._fa-arrow-left_m8bnh_461:before {\n  content: \"\\F060\";\n}\n._fa-arrow-right_m8bnh_464:before {\n  content: \"\\F061\";\n}\n._fa-arrow-up_m8bnh_467:before {\n  content: \"\\F062\";\n}\n._fa-arrow-down_m8bnh_470:before {\n  content: \"\\F063\";\n}\n._fa-mail-forward_m8bnh_473:before,\n._fa-share_m8bnh_386:before {\n  content: \"\\F064\";\n}\n._fa-expand_m8bnh_477:before {\n  content: \"\\F065\";\n}\n._fa-compress_m8bnh_480:before {\n  content: \"\\F066\";\n}\n._fa-plus_m8bnh_431:before {\n  content: \"\\F067\";\n}\n._fa-minus_m8bnh_434:before {\n  content: \"\\F068\";\n}\n._fa-asterisk_m8bnh_489:before {\n  content: \"\\F069\";\n}\n._fa-exclamation-circle_m8bnh_492:before {\n  content: \"\\F06A\";\n}\n._fa-gift_m8bnh_495:before {\n  content: \"\\F06B\";\n}\n._fa-leaf_m8bnh_498:before {\n  content: \"\\F06C\";\n}\n._fa-fire_m8bnh_501:before {\n  content: \"\\F06D\";\n}\n._fa-eye_m8bnh_504:before {\n  content: \"\\F06E\";\n}\n._fa-eye-slash_m8bnh_507:before {\n  content: \"\\F070\";\n}\n._fa-warning_m8bnh_510:before,\n._fa-exclamation-triangle_m8bnh_511:before {\n  content: \"\\F071\";\n}\n._fa-plane_m8bnh_514:before {\n  content: \"\\F072\";\n}\n._fa-calendar_m8bnh_517:before {\n  content: \"\\F073\";\n}\n._fa-random_m8bnh_520:before {\n  content: \"\\F074\";\n}\n._fa-comment_m8bnh_523:before {\n  content: \"\\F075\";\n}\n._fa-magnet_m8bnh_526:before {\n  content: \"\\F076\";\n}\n._fa-chevron-up_m8bnh_529:before {\n  content: \"\\F077\";\n}\n._fa-chevron-down_m8bnh_532:before {\n  content: \"\\F078\";\n}\n._fa-retweet_m8bnh_535:before {\n  content: \"\\F079\";\n}\n._fa-shopping-cart_m8bnh_538:before {\n  content: \"\\F07A\";\n}\n._fa-folder_m8bnh_541:before {\n  content: \"\\F07B\";\n}\n._fa-folder-open_m8bnh_544:before {\n  content: \"\\F07C\";\n}\n._fa-arrows-v_m8bnh_547:before {\n  content: \"\\F07D\";\n}\n._fa-arrows-h_m8bnh_550:before {\n  content: \"\\F07E\";\n}\n._fa-bar-chart-o_m8bnh_553:before,\n._fa-bar-chart_m8bnh_553:before {\n  content: \"\\F080\";\n}\n._fa-twitter-square_m8bnh_557:before {\n  content: \"\\F081\";\n}\n._fa-facebook-square_m8bnh_560:before {\n  content: \"\\F082\";\n}\n._fa-camera-retro_m8bnh_563:before {\n  content: \"\\F083\";\n}\n._fa-key_m8bnh_566:before {\n  content: \"\\F084\";\n}\n._fa-gears_m8bnh_569:before,\n._fa-cogs_m8bnh_570:before {\n  content: \"\\F085\";\n}\n._fa-comments_m8bnh_573:before {\n  content: \"\\F086\";\n}\n._fa-thumbs-o-up_m8bnh_576:before {\n  content: \"\\F087\";\n}\n._fa-thumbs-o-down_m8bnh_579:before {\n  content: \"\\F088\";\n}\n._fa-star-half_m8bnh_582:before {\n  content: \"\\F089\";\n}\n._fa-heart-o_m8bnh_585:before {\n  content: \"\\F08A\";\n}\n._fa-sign-out_m8bnh_588:before {\n  content: \"\\F08B\";\n}\n._fa-linkedin-square_m8bnh_591:before {\n  content: \"\\F08C\";\n}\n._fa-thumb-tack_m8bnh_594:before {\n  content: \"\\F08D\";\n}\n._fa-external-link_m8bnh_597:before {\n  content: \"\\F08E\";\n}\n._fa-sign-in_m8bnh_600:before {\n  content: \"\\F090\";\n}\n._fa-trophy_m8bnh_603:before {\n  content: \"\\F091\";\n}\n._fa-github-square_m8bnh_606:before {\n  content: \"\\F092\";\n}\n._fa-upload_m8bnh_609:before {\n  content: \"\\F093\";\n}\n._fa-lemon-o_m8bnh_612:before {\n  content: \"\\F094\";\n}\n._fa-phone_m8bnh_615:before {\n  content: \"\\F095\";\n}\n._fa-square-o_m8bnh_618:before {\n  content: \"\\F096\";\n}\n._fa-bookmark-o_m8bnh_621:before {\n  content: \"\\F097\";\n}\n._fa-phone-square_m8bnh_624:before {\n  content: \"\\F098\";\n}\n._fa-twitter_m8bnh_557:before {\n  content: \"\\F099\";\n}\n._fa-facebook-f_m8bnh_630:before,\n._fa-facebook_m8bnh_560:before {\n  content: \"\\F09A\";\n}\n._fa-github_m8bnh_606:before {\n  content: \"\\F09B\";\n}\n._fa-unlock_m8bnh_637:before {\n  content: \"\\F09C\";\n}\n._fa-credit-card_m8bnh_640:before {\n  content: \"\\F09D\";\n}\n._fa-feed_m8bnh_643:before,\n._fa-rss_m8bnh_644:before {\n  content: \"\\F09E\";\n}\n._fa-hdd-o_m8bnh_647:before {\n  content: \"\\F0A0\";\n}\n._fa-bullhorn_m8bnh_650:before {\n  content: \"\\F0A1\";\n}\n._fa-bell_m8bnh_653:before {\n  content: \"\\F0F3\";\n}\n._fa-certificate_m8bnh_656:before {\n  content: \"\\F0A3\";\n}\n._fa-hand-o-right_m8bnh_659:before {\n  content: \"\\F0A4\";\n}\n._fa-hand-o-left_m8bnh_662:before {\n  content: \"\\F0A5\";\n}\n._fa-hand-o-up_m8bnh_665:before {\n  content: \"\\F0A6\";\n}\n._fa-hand-o-down_m8bnh_668:before {\n  content: \"\\F0A7\";\n}\n._fa-arrow-circle-left_m8bnh_671:before {\n  content: \"\\F0A8\";\n}\n._fa-arrow-circle-right_m8bnh_674:before {\n  content: \"\\F0A9\";\n}\n._fa-arrow-circle-up_m8bnh_677:before {\n  content: \"\\F0AA\";\n}\n._fa-arrow-circle-down_m8bnh_680:before {\n  content: \"\\F0AB\";\n}\n._fa-globe_m8bnh_683:before {\n  content: \"\\F0AC\";\n}\n._fa-wrench_m8bnh_686:before {\n  content: \"\\F0AD\";\n}\n._fa-tasks_m8bnh_689:before {\n  content: \"\\F0AE\";\n}\n._fa-filter_m8bnh_692:before {\n  content: \"\\F0B0\";\n}\n._fa-briefcase_m8bnh_695:before {\n  content: \"\\F0B1\";\n}\n._fa-arrows-alt_m8bnh_698:before {\n  content: \"\\F0B2\";\n}\n._fa-group_m8bnh_701:before,\n._fa-users_m8bnh_702:before {\n  content: \"\\F0C0\";\n}\n._fa-chain_m8bnh_705:before,\n._fa-link_m8bnh_591:before {\n  content: \"\\F0C1\";\n}\n._fa-cloud_m8bnh_709:before {\n  content: \"\\F0C2\";\n}\n._fa-flask_m8bnh_712:before {\n  content: \"\\F0C3\";\n}\n._fa-cut_m8bnh_715:before,\n._fa-scissors_m8bnh_716:before {\n  content: \"\\F0C4\";\n}\n._fa-copy_m8bnh_719:before,\n._fa-files-o_m8bnh_720:before {\n  content: \"\\F0C5\";\n}\n._fa-paperclip_m8bnh_723:before {\n  content: \"\\F0C6\";\n}\n._fa-save_m8bnh_726:before,\n._fa-floppy-o_m8bnh_727:before {\n  content: \"\\F0C7\";\n}\n._fa-square_m8bnh_618:before {\n  content: \"\\F0C8\";\n}\n._fa-navicon_m8bnh_733:before,\n._fa-reorder_m8bnh_734:before,\n._fa-bars_m8bnh_735:before {\n  content: \"\\F0C9\";\n}\n._fa-list-ul_m8bnh_738:before {\n  content: \"\\F0CA\";\n}\n._fa-list-ol_m8bnh_741:before {\n  content: \"\\F0CB\";\n}\n._fa-strikethrough_m8bnh_744:before {\n  content: \"\\F0CC\";\n}\n._fa-underline_m8bnh_747:before {\n  content: \"\\F0CD\";\n}\n._fa-table_m8bnh_750:before {\n  content: \"\\F0CE\";\n}\n._fa-magic_m8bnh_753:before {\n  content: \"\\F0D0\";\n}\n._fa-truck_m8bnh_756:before {\n  content: \"\\F0D1\";\n}\n._fa-pinterest_m8bnh_759:before {\n  content: \"\\F0D2\";\n}\n._fa-pinterest-square_m8bnh_762:before {\n  content: \"\\F0D3\";\n}\n._fa-google-plus-square_m8bnh_765:before {\n  content: \"\\F0D4\";\n}\n._fa-google-plus_m8bnh_765:before {\n  content: \"\\F0D5\";\n}\n._fa-money_m8bnh_771:before {\n  content: \"\\F0D6\";\n}\n._fa-caret-down_m8bnh_774:before {\n  content: \"\\F0D7\";\n}\n._fa-caret-up_m8bnh_777:before {\n  content: \"\\F0D8\";\n}\n._fa-caret-left_m8bnh_780:before {\n  content: \"\\F0D9\";\n}\n._fa-caret-right_m8bnh_783:before {\n  content: \"\\F0DA\";\n}\n._fa-columns_m8bnh_786:before {\n  content: \"\\F0DB\";\n}\n._fa-unsorted_m8bnh_789:before,\n._fa-sort_m8bnh_790:before {\n  content: \"\\F0DC\";\n}\n._fa-sort-down_m8bnh_793:before,\n._fa-sort-desc_m8bnh_794:before {\n  content: \"\\F0DD\";\n}\n._fa-sort-up_m8bnh_797:before,\n._fa-sort-asc_m8bnh_798:before {\n  content: \"\\F0DE\";\n}\n._fa-envelope_m8bnh_192:before {\n  content: \"\\F0E0\";\n}\n._fa-linkedin_m8bnh_591:before {\n  content: \"\\F0E1\";\n}\n._fa-rotate-left_m8bnh_807:before,\n._fa-undo_m8bnh_808:before {\n  content: \"\\F0E2\";\n}\n._fa-legal_m8bnh_811:before,\n._fa-gavel_m8bnh_812:before {\n  content: \"\\F0E3\";\n}\n._fa-dashboard_m8bnh_815:before,\n._fa-tachometer_m8bnh_816:before {\n  content: \"\\F0E4\";\n}\n._fa-comment-o_m8bnh_819:before {\n  content: \"\\F0E5\";\n}\n._fa-comments-o_m8bnh_822:before {\n  content: \"\\F0E6\";\n}\n._fa-flash_m8bnh_825:before,\n._fa-bolt_m8bnh_826:before {\n  content: \"\\F0E7\";\n}\n._fa-sitemap_m8bnh_829:before {\n  content: \"\\F0E8\";\n}\n._fa-umbrella_m8bnh_832:before {\n  content: \"\\F0E9\";\n}\n._fa-paste_m8bnh_835:before,\n._fa-clipboard_m8bnh_836:before {\n  content: \"\\F0EA\";\n}\n._fa-lightbulb-o_m8bnh_839:before {\n  content: \"\\F0EB\";\n}\n._fa-exchange_m8bnh_842:before {\n  content: \"\\F0EC\";\n}\n._fa-cloud-download_m8bnh_845:before {\n  content: \"\\F0ED\";\n}\n._fa-cloud-upload_m8bnh_848:before {\n  content: \"\\F0EE\";\n}\n._fa-user-md_m8bnh_851:before {\n  content: \"\\F0F0\";\n}\n._fa-stethoscope_m8bnh_854:before {\n  content: \"\\F0F1\";\n}\n._fa-suitcase_m8bnh_857:before {\n  content: \"\\F0F2\";\n}\n._fa-bell-o_m8bnh_860:before {\n  content: \"\\F0A2\";\n}\n._fa-coffee_m8bnh_863:before {\n  content: \"\\F0F4\";\n}\n._fa-cutlery_m8bnh_866:before {\n  content: \"\\F0F5\";\n}\n._fa-file-text-o_m8bnh_869:before {\n  content: \"\\F0F6\";\n}\n._fa-building-o_m8bnh_872:before {\n  content: \"\\F0F7\";\n}\n._fa-hospital-o_m8bnh_875:before {\n  content: \"\\F0F8\";\n}\n._fa-ambulance_m8bnh_878:before {\n  content: \"\\F0F9\";\n}\n._fa-medkit_m8bnh_881:before {\n  content: \"\\F0FA\";\n}\n._fa-fighter-jet_m8bnh_884:before {\n  content: \"\\F0FB\";\n}\n._fa-beer_m8bnh_887:before {\n  content: \"\\F0FC\";\n}\n._fa-h-square_m8bnh_890:before {\n  content: \"\\F0FD\";\n}\n._fa-plus-square_m8bnh_893:before {\n  content: \"\\F0FE\";\n}\n._fa-angle-double-left_m8bnh_896:before {\n  content: \"\\F100\";\n}\n._fa-angle-double-right_m8bnh_899:before {\n  content: \"\\F101\";\n}\n._fa-angle-double-up_m8bnh_902:before {\n  content: \"\\F102\";\n}\n._fa-angle-double-down_m8bnh_905:before {\n  content: \"\\F103\";\n}\n._fa-angle-left_m8bnh_908:before {\n  content: \"\\F104\";\n}\n._fa-angle-right_m8bnh_911:before {\n  content: \"\\F105\";\n}\n._fa-angle-up_m8bnh_914:before {\n  content: \"\\F106\";\n}\n._fa-angle-down_m8bnh_917:before {\n  content: \"\\F107\";\n}\n._fa-desktop_m8bnh_920:before {\n  content: \"\\F108\";\n}\n._fa-laptop_m8bnh_923:before {\n  content: \"\\F109\";\n}\n._fa-tablet_m8bnh_926:before {\n  content: \"\\F10A\";\n}\n._fa-mobile-phone_m8bnh_929:before,\n._fa-mobile_m8bnh_929:before {\n  content: \"\\F10B\";\n}\n._fa-circle-o_m8bnh_933:before {\n  content: \"\\F10C\";\n}\n._fa-quote-left_m8bnh_936:before {\n  content: \"\\F10D\";\n}\n._fa-quote-right_m8bnh_939:before {\n  content: \"\\F10E\";\n}\n._fa-spinner_m8bnh_942:before {\n  content: \"\\F110\";\n}\n._fa-circle_m8bnh_933:before {\n  content: \"\\F111\";\n}\n._fa-mail-reply_m8bnh_948:before,\n._fa-reply_m8bnh_949:before {\n  content: \"\\F112\";\n}\n._fa-github-alt_m8bnh_952:before {\n  content: \"\\F113\";\n}\n._fa-folder-o_m8bnh_544:before {\n  content: \"\\F114\";\n}\n._fa-folder-open-o_m8bnh_958:before {\n  content: \"\\F115\";\n}\n._fa-smile-o_m8bnh_961:before {\n  content: \"\\F118\";\n}\n._fa-frown-o_m8bnh_964:before {\n  content: \"\\F119\";\n}\n._fa-meh-o_m8bnh_967:before {\n  content: \"\\F11A\";\n}\n._fa-gamepad_m8bnh_970:before {\n  content: \"\\F11B\";\n}\n._fa-keyboard-o_m8bnh_973:before {\n  content: \"\\F11C\";\n}\n._fa-flag-o_m8bnh_976:before {\n  content: \"\\F11D\";\n}\n._fa-flag-checkered_m8bnh_979:before {\n  content: \"\\F11E\";\n}\n._fa-terminal_m8bnh_982:before {\n  content: \"\\F120\";\n}\n._fa-code_m8bnh_985:before {\n  content: \"\\F121\";\n}\n._fa-mail-reply-all_m8bnh_988:before,\n._fa-reply-all_m8bnh_989:before {\n  content: \"\\F122\";\n}\n._fa-star-half-empty_m8bnh_992:before,\n._fa-star-half-full_m8bnh_993:before,\n._fa-star-half-o_m8bnh_994:before {\n  content: \"\\F123\";\n}\n._fa-location-arrow_m8bnh_997:before {\n  content: \"\\F124\";\n}\n._fa-crop_m8bnh_1000:before {\n  content: \"\\F125\";\n}\n._fa-code-fork_m8bnh_1003:before {\n  content: \"\\F126\";\n}\n._fa-unlink_m8bnh_1006:before,\n._fa-chain-broken_m8bnh_1007:before {\n  content: \"\\F127\";\n}\n._fa-question_m8bnh_443:before {\n  content: \"\\F128\";\n}\n._fa-info_m8bnh_446:before {\n  content: \"\\F129\";\n}\n._fa-exclamation_m8bnh_492:before {\n  content: \"\\F12A\";\n}\n._fa-superscript_m8bnh_1019:before {\n  content: \"\\F12B\";\n}\n._fa-subscript_m8bnh_1022:before {\n  content: \"\\F12C\";\n}\n._fa-eraser_m8bnh_1025:before {\n  content: \"\\F12D\";\n}\n._fa-puzzle-piece_m8bnh_1028:before {\n  content: \"\\F12E\";\n}\n._fa-microphone_m8bnh_1031:before {\n  content: \"\\F130\";\n}\n._fa-microphone-slash_m8bnh_1034:before {\n  content: \"\\F131\";\n}\n._fa-shield_m8bnh_1037:before {\n  content: \"\\F132\";\n}\n._fa-calendar-o_m8bnh_1040:before {\n  content: \"\\F133\";\n}\n._fa-fire-extinguisher_m8bnh_1043:before {\n  content: \"\\F134\";\n}\n._fa-rocket_m8bnh_1046:before {\n  content: \"\\F135\";\n}\n._fa-maxcdn_m8bnh_1049:before {\n  content: \"\\F136\";\n}\n._fa-chevron-circle-left_m8bnh_1052:before {\n  content: \"\\F137\";\n}\n._fa-chevron-circle-right_m8bnh_1055:before {\n  content: \"\\F138\";\n}\n._fa-chevron-circle-up_m8bnh_1058:before {\n  content: \"\\F139\";\n}\n._fa-chevron-circle-down_m8bnh_1061:before {\n  content: \"\\F13A\";\n}\n._fa-html5_m8bnh_1064:before {\n  content: \"\\F13B\";\n}\n._fa-css3_m8bnh_1067:before {\n  content: \"\\F13C\";\n}\n._fa-anchor_m8bnh_1070:before {\n  content: \"\\F13D\";\n}\n._fa-unlock-alt_m8bnh_1073:before {\n  content: \"\\F13E\";\n}\n._fa-bullseye_m8bnh_1076:before {\n  content: \"\\F140\";\n}\n._fa-ellipsis-h_m8bnh_1079:before {\n  content: \"\\F141\";\n}\n._fa-ellipsis-v_m8bnh_1082:before {\n  content: \"\\F142\";\n}\n._fa-rss-square_m8bnh_1085:before {\n  content: \"\\F143\";\n}\n._fa-play-circle_m8bnh_270:before {\n  content: \"\\F144\";\n}\n._fa-ticket_m8bnh_1091:before {\n  content: \"\\F145\";\n}\n._fa-minus-square_m8bnh_1094:before {\n  content: \"\\F146\";\n}\n._fa-minus-square-o_m8bnh_1097:before {\n  content: \"\\F147\";\n}\n._fa-level-up_m8bnh_1100:before {\n  content: \"\\F148\";\n}\n._fa-level-down_m8bnh_1103:before {\n  content: \"\\F149\";\n}\n._fa-check-square_m8bnh_389:before {\n  content: \"\\F14A\";\n}\n._fa-pencil-square_m8bnh_383:before {\n  content: \"\\F14B\";\n}\n._fa-external-link-square_m8bnh_1112:before {\n  content: \"\\F14C\";\n}\n._fa-share-square_m8bnh_386:before {\n  content: \"\\F14D\";\n}\n._fa-compass_m8bnh_1118:before {\n  content: \"\\F14E\";\n}\n._fa-toggle-down_m8bnh_1121:before,\n._fa-caret-square-o-down_m8bnh_1122:before {\n  content: \"\\F150\";\n}\n._fa-toggle-up_m8bnh_1125:before,\n._fa-caret-square-o-up_m8bnh_1126:before {\n  content: \"\\F151\";\n}\n._fa-toggle-right_m8bnh_1129:before,\n._fa-caret-square-o-right_m8bnh_1130:before {\n  content: \"\\F152\";\n}\n._fa-euro_m8bnh_1133:before,\n._fa-eur_m8bnh_1133:before {\n  content: \"\\F153\";\n}\n._fa-gbp_m8bnh_1137:before {\n  content: \"\\F154\";\n}\n._fa-dollar_m8bnh_1140:before,\n._fa-usd_m8bnh_1141:before {\n  content: \"\\F155\";\n}\n._fa-rupee_m8bnh_1144:before,\n._fa-inr_m8bnh_1145:before {\n  content: \"\\F156\";\n}\n._fa-cny_m8bnh_1148:before,\n._fa-rmb_m8bnh_1149:before,\n._fa-yen_m8bnh_1150:before,\n._fa-jpy_m8bnh_1151:before {\n  content: \"\\F157\";\n}\n._fa-ruble_m8bnh_1154:before,\n._fa-rouble_m8bnh_1155:before,\n._fa-rub_m8bnh_1154:before {\n  content: \"\\F158\";\n}\n._fa-won_m8bnh_1159:before,\n._fa-krw_m8bnh_1160:before {\n  content: \"\\F159\";\n}\n._fa-bitcoin_m8bnh_1163:before,\n._fa-btc_m8bnh_1164:before {\n  content: \"\\F15A\";\n}\n._fa-file_m8bnh_249:before {\n  content: \"\\F15B\";\n}\n._fa-file-text_m8bnh_869:before {\n  content: \"\\F15C\";\n}\n._fa-sort-alpha-asc_m8bnh_1173:before {\n  content: \"\\F15D\";\n}\n._fa-sort-alpha-desc_m8bnh_1176:before {\n  content: \"\\F15E\";\n}\n._fa-sort-amount-asc_m8bnh_1179:before {\n  content: \"\\F160\";\n}\n._fa-sort-amount-desc_m8bnh_1182:before {\n  content: \"\\F161\";\n}\n._fa-sort-numeric-asc_m8bnh_1185:before {\n  content: \"\\F162\";\n}\n._fa-sort-numeric-desc_m8bnh_1188:before {\n  content: \"\\F163\";\n}\n._fa-thumbs-up_m8bnh_1191:before {\n  content: \"\\F164\";\n}\n._fa-thumbs-down_m8bnh_1194:before {\n  content: \"\\F165\";\n}\n._fa-youtube-square_m8bnh_1197:before {\n  content: \"\\F166\";\n}\n._fa-youtube_m8bnh_1197:before {\n  content: \"\\F167\";\n}\n._fa-xing_m8bnh_1203:before {\n  content: \"\\F168\";\n}\n._fa-xing-square_m8bnh_1206:before {\n  content: \"\\F169\";\n}\n._fa-youtube-play_m8bnh_1209:before {\n  content: \"\\F16A\";\n}\n._fa-dropbox_m8bnh_1212:before {\n  content: \"\\F16B\";\n}\n._fa-stack-overflow_m8bnh_1215:before {\n  content: \"\\F16C\";\n}\n._fa-instagram_m8bnh_1218:before {\n  content: \"\\F16D\";\n}\n._fa-flickr_m8bnh_1221:before {\n  content: \"\\F16E\";\n}\n._fa-adn_m8bnh_1224:before {\n  content: \"\\F170\";\n}\n._fa-bitbucket_m8bnh_1227:before {\n  content: \"\\F171\";\n}\n._fa-bitbucket-square_m8bnh_1230:before {\n  content: \"\\F172\";\n}\n._fa-tumblr_m8bnh_1233:before {\n  content: \"\\F173\";\n}\n._fa-tumblr-square_m8bnh_1236:before {\n  content: \"\\F174\";\n}\n._fa-long-arrow-down_m8bnh_1239:before {\n  content: \"\\F175\";\n}\n._fa-long-arrow-up_m8bnh_1242:before {\n  content: \"\\F176\";\n}\n._fa-long-arrow-left_m8bnh_1245:before {\n  content: \"\\F177\";\n}\n._fa-long-arrow-right_m8bnh_1248:before {\n  content: \"\\F178\";\n}\n._fa-apple_m8bnh_1251:before {\n  content: \"\\F179\";\n}\n._fa-windows_m8bnh_1254:before {\n  content: \"\\F17A\";\n}\n._fa-android_m8bnh_1257:before {\n  content: \"\\F17B\";\n}\n._fa-linux_m8bnh_1260:before {\n  content: \"\\F17C\";\n}\n._fa-dribbble_m8bnh_1263:before {\n  content: \"\\F17D\";\n}\n._fa-skype_m8bnh_1266:before {\n  content: \"\\F17E\";\n}\n._fa-foursquare_m8bnh_1269:before {\n  content: \"\\F180\";\n}\n._fa-trello_m8bnh_1272:before {\n  content: \"\\F181\";\n}\n._fa-female_m8bnh_1275:before {\n  content: \"\\F182\";\n}\n._fa-male_m8bnh_1278:before {\n  content: \"\\F183\";\n}\n._fa-gittip_m8bnh_1281:before,\n._fa-gratipay_m8bnh_1282:before {\n  content: \"\\F184\";\n}\n._fa-sun-o_m8bnh_1285:before {\n  content: \"\\F185\";\n}\n._fa-moon-o_m8bnh_1288:before {\n  content: \"\\F186\";\n}\n._fa-archive_m8bnh_1291:before {\n  content: \"\\F187\";\n}\n._fa-bug_m8bnh_1294:before {\n  content: \"\\F188\";\n}\n._fa-vk_m8bnh_1297:before {\n  content: \"\\F189\";\n}\n._fa-weibo_m8bnh_1300:before {\n  content: \"\\F18A\";\n}\n._fa-renren_m8bnh_1303:before {\n  content: \"\\F18B\";\n}\n._fa-pagelines_m8bnh_1306:before {\n  content: \"\\F18C\";\n}\n._fa-stack-exchange_m8bnh_1309:before {\n  content: \"\\F18D\";\n}\n._fa-arrow-circle-o-right_m8bnh_1312:before {\n  content: \"\\F18E\";\n}\n._fa-arrow-circle-o-left_m8bnh_1315:before {\n  content: \"\\F190\";\n}\n._fa-toggle-left_m8bnh_1318:before,\n._fa-caret-square-o-left_m8bnh_1319:before {\n  content: \"\\F191\";\n}\n._fa-dot-circle-o_m8bnh_1322:before {\n  content: \"\\F192\";\n}\n._fa-wheelchair_m8bnh_1325:before {\n  content: \"\\F193\";\n}\n._fa-vimeo-square_m8bnh_1328:before {\n  content: \"\\F194\";\n}\n._fa-turkish-lira_m8bnh_1331:before,\n._fa-try_m8bnh_1332:before {\n  content: \"\\F195\";\n}\n._fa-plus-square-o_m8bnh_1335:before {\n  content: \"\\F196\";\n}\n._fa-space-shuttle_m8bnh_1338:before {\n  content: \"\\F197\";\n}\n._fa-slack_m8bnh_1341:before {\n  content: \"\\F198\";\n}\n._fa-envelope-square_m8bnh_1344:before {\n  content: \"\\F199\";\n}\n._fa-wordpress_m8bnh_1347:before {\n  content: \"\\F19A\";\n}\n._fa-openid_m8bnh_1350:before {\n  content: \"\\F19B\";\n}\n._fa-institution_m8bnh_1353:before,\n._fa-bank_m8bnh_1354:before,\n._fa-university_m8bnh_1355:before {\n  content: \"\\F19C\";\n}\n._fa-mortar-board_m8bnh_1358:before,\n._fa-graduation-cap_m8bnh_1359:before {\n  content: \"\\F19D\";\n}\n._fa-yahoo_m8bnh_1362:before {\n  content: \"\\F19E\";\n}\n._fa-google_m8bnh_765:before {\n  content: \"\\F1A0\";\n}\n._fa-reddit_m8bnh_1368:before {\n  content: \"\\F1A1\";\n}\n._fa-reddit-square_m8bnh_1371:before {\n  content: \"\\F1A2\";\n}\n._fa-stumbleupon-circle_m8bnh_1374:before {\n  content: \"\\F1A3\";\n}\n._fa-stumbleupon_m8bnh_1374:before {\n  content: \"\\F1A4\";\n}\n._fa-delicious_m8bnh_1380:before {\n  content: \"\\F1A5\";\n}\n._fa-digg_m8bnh_1383:before {\n  content: \"\\F1A6\";\n}\n._fa-pied-piper-pp_m8bnh_1386:before {\n  content: \"\\F1A7\";\n}\n._fa-pied-piper-alt_m8bnh_1389:before {\n  content: \"\\F1A8\";\n}\n._fa-drupal_m8bnh_1392:before {\n  content: \"\\F1A9\";\n}\n._fa-joomla_m8bnh_1395:before {\n  content: \"\\F1AA\";\n}\n._fa-language_m8bnh_1398:before {\n  content: \"\\F1AB\";\n}\n._fa-fax_m8bnh_1401:before {\n  content: \"\\F1AC\";\n}\n._fa-building_m8bnh_872:before {\n  content: \"\\F1AD\";\n}\n._fa-child_m8bnh_1407:before {\n  content: \"\\F1AE\";\n}\n._fa-paw_m8bnh_1410:before {\n  content: \"\\F1B0\";\n}\n._fa-spoon_m8bnh_1413:before {\n  content: \"\\F1B1\";\n}\n._fa-cube_m8bnh_1416:before {\n  content: \"\\F1B2\";\n}\n._fa-cubes_m8bnh_1419:before {\n  content: \"\\F1B3\";\n}\n._fa-behance_m8bnh_1422:before {\n  content: \"\\F1B4\";\n}\n._fa-behance-square_m8bnh_1425:before {\n  content: \"\\F1B5\";\n}\n._fa-steam_m8bnh_1428:before {\n  content: \"\\F1B6\";\n}\n._fa-steam-square_m8bnh_1431:before {\n  content: \"\\F1B7\";\n}\n._fa-recycle_m8bnh_1434:before {\n  content: \"\\F1B8\";\n}\n._fa-automobile_m8bnh_1437:before,\n._fa-car_m8bnh_774:before {\n  content: \"\\F1B9\";\n}\n._fa-cab_m8bnh_1441:before,\n._fa-taxi_m8bnh_1442:before {\n  content: \"\\F1BA\";\n}\n._fa-tree_m8bnh_1445:before {\n  content: \"\\F1BB\";\n}\n._fa-spotify_m8bnh_1448:before {\n  content: \"\\F1BC\";\n}\n._fa-deviantart_m8bnh_1451:before {\n  content: \"\\F1BD\";\n}\n._fa-soundcloud_m8bnh_1454:before {\n  content: \"\\F1BE\";\n}\n._fa-database_m8bnh_1457:before {\n  content: \"\\F1C0\";\n}\n._fa-file-pdf-o_m8bnh_1460:before {\n  content: \"\\F1C1\";\n}\n._fa-file-word-o_m8bnh_1463:before {\n  content: \"\\F1C2\";\n}\n._fa-file-excel-o_m8bnh_1466:before {\n  content: \"\\F1C3\";\n}\n._fa-file-powerpoint-o_m8bnh_1469:before {\n  content: \"\\F1C4\";\n}\n._fa-file-photo-o_m8bnh_1472:before,\n._fa-file-picture-o_m8bnh_1473:before,\n._fa-file-image-o_m8bnh_1474:before {\n  content: \"\\F1C5\";\n}\n._fa-file-zip-o_m8bnh_1477:before,\n._fa-file-archive-o_m8bnh_1478:before {\n  content: \"\\F1C6\";\n}\n._fa-file-sound-o_m8bnh_1481:before,\n._fa-file-audio-o_m8bnh_1482:before {\n  content: \"\\F1C7\";\n}\n._fa-file-movie-o_m8bnh_1485:before,\n._fa-file-video-o_m8bnh_1486:before {\n  content: \"\\F1C8\";\n}\n._fa-file-code-o_m8bnh_1489:before {\n  content: \"\\F1C9\";\n}\n._fa-vine_m8bnh_1492:before {\n  content: \"\\F1CA\";\n}\n._fa-codepen_m8bnh_1495:before {\n  content: \"\\F1CB\";\n}\n._fa-jsfiddle_m8bnh_1498:before {\n  content: \"\\F1CC\";\n}\n._fa-life-bouy_m8bnh_1501:before,\n._fa-life-buoy_m8bnh_1502:before,\n._fa-life-saver_m8bnh_1503:before,\n._fa-support_m8bnh_1504:before,\n._fa-life-ring_m8bnh_1505:before {\n  content: \"\\F1CD\";\n}\n._fa-circle-o-notch_m8bnh_1508:before {\n  content: \"\\F1CE\";\n}\n._fa-ra_m8bnh_520:before,\n._fa-resistance_m8bnh_1512:before,\n._fa-rebel_m8bnh_1513:before {\n  content: \"\\F1D0\";\n}\n._fa-ge_m8bnh_239:before,\n._fa-empire_m8bnh_1517:before {\n  content: \"\\F1D1\";\n}\n._fa-git-square_m8bnh_1520:before {\n  content: \"\\F1D2\";\n}\n._fa-git_m8bnh_606:before {\n  content: \"\\F1D3\";\n}\n._fa-y-combinator-square_m8bnh_1526:before,\n._fa-yc-square_m8bnh_1527:before,\n._fa-hacker-news_m8bnh_1528:before {\n  content: \"\\F1D4\";\n}\n._fa-tencent-weibo_m8bnh_1531:before {\n  content: \"\\F1D5\";\n}\n._fa-qq_m8bnh_1534:before {\n  content: \"\\F1D6\";\n}\n._fa-wechat_m8bnh_1537:before,\n._fa-weixin_m8bnh_1538:before {\n  content: \"\\F1D7\";\n}\n._fa-send_m8bnh_1541:before,\n._fa-paper-plane_m8bnh_1542:before {\n  content: \"\\F1D8\";\n}\n._fa-send-o_m8bnh_1545:before,\n._fa-paper-plane-o_m8bnh_1546:before {\n  content: \"\\F1D9\";\n}\n._fa-history_m8bnh_1549:before {\n  content: \"\\F1DA\";\n}\n._fa-circle-thin_m8bnh_1552:before {\n  content: \"\\F1DB\";\n}\n._fa-header_m8bnh_1555:before {\n  content: \"\\F1DC\";\n}\n._fa-paragraph_m8bnh_1558:before {\n  content: \"\\F1DD\";\n}\n._fa-sliders_m8bnh_1561:before {\n  content: \"\\F1DE\";\n}\n._fa-share-alt_m8bnh_1564:before {\n  content: \"\\F1E0\";\n}\n._fa-share-alt-square_m8bnh_1567:before {\n  content: \"\\F1E1\";\n}\n._fa-bomb_m8bnh_1570:before {\n  content: \"\\F1E2\";\n}\n._fa-soccer-ball-o_m8bnh_1573:before,\n._fa-futbol-o_m8bnh_1574:before {\n  content: \"\\F1E3\";\n}\n._fa-tty_m8bnh_1577:before {\n  content: \"\\F1E4\";\n}\n._fa-binoculars_m8bnh_1580:before {\n  content: \"\\F1E5\";\n}\n._fa-plug_m8bnh_1583:before {\n  content: \"\\F1E6\";\n}\n._fa-slideshare_m8bnh_1586:before {\n  content: \"\\F1E7\";\n}\n._fa-twitch_m8bnh_1589:before {\n  content: \"\\F1E8\";\n}\n._fa-yelp_m8bnh_1592:before {\n  content: \"\\F1E9\";\n}\n._fa-newspaper-o_m8bnh_1595:before {\n  content: \"\\F1EA\";\n}\n._fa-wifi_m8bnh_1598:before {\n  content: \"\\F1EB\";\n}\n._fa-calculator_m8bnh_1601:before {\n  content: \"\\F1EC\";\n}\n._fa-paypal_m8bnh_1604:before {\n  content: \"\\F1ED\";\n}\n._fa-google-wallet_m8bnh_1607:before {\n  content: \"\\F1EE\";\n}\n._fa-cc-visa_m8bnh_1610:before {\n  content: \"\\F1F0\";\n}\n._fa-cc-mastercard_m8bnh_1613:before {\n  content: \"\\F1F1\";\n}\n._fa-cc-discover_m8bnh_1616:before {\n  content: \"\\F1F2\";\n}\n._fa-cc-amex_m8bnh_1619:before {\n  content: \"\\F1F3\";\n}\n._fa-cc-paypal_m8bnh_1622:before {\n  content: \"\\F1F4\";\n}\n._fa-cc-stripe_m8bnh_1625:before {\n  content: \"\\F1F5\";\n}\n._fa-bell-slash_m8bnh_1628:before {\n  content: \"\\F1F6\";\n}\n._fa-bell-slash-o_m8bnh_1631:before {\n  content: \"\\F1F7\";\n}\n._fa-trash_m8bnh_243:before {\n  content: \"\\F1F8\";\n}\n._fa-copyright_m8bnh_1637:before {\n  content: \"\\F1F9\";\n}\n._fa-at_m8bnh_1640:before {\n  content: \"\\F1FA\";\n}\n._fa-eyedropper_m8bnh_1643:before {\n  content: \"\\F1FB\";\n}\n._fa-paint-brush_m8bnh_1646:before {\n  content: \"\\F1FC\";\n}\n._fa-birthday-cake_m8bnh_1649:before {\n  content: \"\\F1FD\";\n}\n._fa-area-chart_m8bnh_1652:before {\n  content: \"\\F1FE\";\n}\n._fa-pie-chart_m8bnh_1655:before {\n  content: \"\\F200\";\n}\n._fa-line-chart_m8bnh_1658:before {\n  content: \"\\F201\";\n}\n._fa-lastfm_m8bnh_1661:before {\n  content: \"\\F202\";\n}\n._fa-lastfm-square_m8bnh_1664:before {\n  content: \"\\F203\";\n}\n._fa-toggle-off_m8bnh_1667:before {\n  content: \"\\F204\";\n}\n._fa-toggle-on_m8bnh_1670:before {\n  content: \"\\F205\";\n}\n._fa-bicycle_m8bnh_1673:before {\n  content: \"\\F206\";\n}\n._fa-bus_m8bnh_1676:before {\n  content: \"\\F207\";\n}\n._fa-ioxhost_m8bnh_1679:before {\n  content: \"\\F208\";\n}\n._fa-angellist_m8bnh_1682:before {\n  content: \"\\F209\";\n}\n._fa-cc_m8bnh_1610:before {\n  content: \"\\F20A\";\n}\n._fa-shekel_m8bnh_1688:before,\n._fa-sheqel_m8bnh_1689:before,\n._fa-ils_m8bnh_1690:before {\n  content: \"\\F20B\";\n}\n._fa-meanpath_m8bnh_1693:before {\n  content: \"\\F20C\";\n}\n._fa-buysellads_m8bnh_1696:before {\n  content: \"\\F20D\";\n}\n._fa-connectdevelop_m8bnh_1699:before {\n  content: \"\\F20E\";\n}\n._fa-dashcube_m8bnh_1702:before {\n  content: \"\\F210\";\n}\n._fa-forumbee_m8bnh_1705:before {\n  content: \"\\F211\";\n}\n._fa-leanpub_m8bnh_1708:before {\n  content: \"\\F212\";\n}\n._fa-sellsy_m8bnh_1711:before {\n  content: \"\\F213\";\n}\n._fa-shirtsinbulk_m8bnh_1714:before {\n  content: \"\\F214\";\n}\n._fa-simplybuilt_m8bnh_1717:before {\n  content: \"\\F215\";\n}\n._fa-skyatlas_m8bnh_1720:before {\n  content: \"\\F216\";\n}\n._fa-cart-plus_m8bnh_1723:before {\n  content: \"\\F217\";\n}\n._fa-cart-arrow-down_m8bnh_1726:before {\n  content: \"\\F218\";\n}\n._fa-diamond_m8bnh_1729:before {\n  content: \"\\F219\";\n}\n._fa-ship_m8bnh_1732:before {\n  content: \"\\F21A\";\n}\n._fa-user-secret_m8bnh_1735:before {\n  content: \"\\F21B\";\n}\n._fa-motorcycle_m8bnh_1738:before {\n  content: \"\\F21C\";\n}\n._fa-street-view_m8bnh_1741:before {\n  content: \"\\F21D\";\n}\n._fa-heartbeat_m8bnh_1744:before {\n  content: \"\\F21E\";\n}\n._fa-venus_m8bnh_1747:before {\n  content: \"\\F221\";\n}\n._fa-mars_m8bnh_1750:before {\n  content: \"\\F222\";\n}\n._fa-mercury_m8bnh_1753:before {\n  content: \"\\F223\";\n}\n._fa-intersex_m8bnh_1756:before,\n._fa-transgender_m8bnh_1757:before {\n  content: \"\\F224\";\n}\n._fa-transgender-alt_m8bnh_1760:before {\n  content: \"\\F225\";\n}\n._fa-venus-double_m8bnh_1763:before {\n  content: \"\\F226\";\n}\n._fa-mars-double_m8bnh_1766:before {\n  content: \"\\F227\";\n}\n._fa-venus-mars_m8bnh_1769:before {\n  content: \"\\F228\";\n}\n._fa-mars-stroke_m8bnh_1772:before {\n  content: \"\\F229\";\n}\n._fa-mars-stroke-v_m8bnh_1775:before {\n  content: \"\\F22A\";\n}\n._fa-mars-stroke-h_m8bnh_1778:before {\n  content: \"\\F22B\";\n}\n._fa-neuter_m8bnh_1781:before {\n  content: \"\\F22C\";\n}\n._fa-genderless_m8bnh_1784:before {\n  content: \"\\F22D\";\n}\n._fa-facebook-official_m8bnh_1787:before {\n  content: \"\\F230\";\n}\n._fa-pinterest-p_m8bnh_1790:before {\n  content: \"\\F231\";\n}\n._fa-whatsapp_m8bnh_1793:before {\n  content: \"\\F232\";\n}\n._fa-server_m8bnh_1796:before {\n  content: \"\\F233\";\n}\n._fa-user-plus_m8bnh_1799:before {\n  content: \"\\F234\";\n}\n._fa-user-times_m8bnh_1802:before {\n  content: \"\\F235\";\n}\n._fa-hotel_m8bnh_1805:before,\n._fa-bed_m8bnh_1806:before {\n  content: \"\\F236\";\n}\n._fa-viacoin_m8bnh_1809:before {\n  content: \"\\F237\";\n}\n._fa-train_m8bnh_1812:before {\n  content: \"\\F238\";\n}\n._fa-subway_m8bnh_1815:before {\n  content: \"\\F239\";\n}\n._fa-medium_m8bnh_1818:before {\n  content: \"\\F23A\";\n}\n._fa-yc_m8bnh_1527:before,\n._fa-y-combinator_m8bnh_1526:before {\n  content: \"\\F23B\";\n}\n._fa-optin-monster_m8bnh_1825:before {\n  content: \"\\F23C\";\n}\n._fa-opencart_m8bnh_1828:before {\n  content: \"\\F23D\";\n}\n._fa-expeditedssl_m8bnh_1831:before {\n  content: \"\\F23E\";\n}\n._fa-battery-4_m8bnh_1834:before,\n._fa-battery_m8bnh_1834:before,\n._fa-battery-full_m8bnh_1836:before {\n  content: \"\\F240\";\n}\n._fa-battery-3_m8bnh_1839:before,\n._fa-battery-three-quarters_m8bnh_1840:before {\n  content: \"\\F241\";\n}\n._fa-battery-2_m8bnh_1843:before,\n._fa-battery-half_m8bnh_1844:before {\n  content: \"\\F242\";\n}\n._fa-battery-1_m8bnh_1847:before,\n._fa-battery-quarter_m8bnh_1848:before {\n  content: \"\\F243\";\n}\n._fa-battery-0_m8bnh_1851:before,\n._fa-battery-empty_m8bnh_1852:before {\n  content: \"\\F244\";\n}\n._fa-mouse-pointer_m8bnh_1855:before {\n  content: \"\\F245\";\n}\n._fa-i-cursor_m8bnh_1858:before {\n  content: \"\\F246\";\n}\n._fa-object-group_m8bnh_1861:before {\n  content: \"\\F247\";\n}\n._fa-object-ungroup_m8bnh_1864:before {\n  content: \"\\F248\";\n}\n._fa-sticky-note_m8bnh_1867:before {\n  content: \"\\F249\";\n}\n._fa-sticky-note-o_m8bnh_1870:before {\n  content: \"\\F24A\";\n}\n._fa-cc-jcb_m8bnh_1873:before {\n  content: \"\\F24B\";\n}\n._fa-cc-diners-club_m8bnh_1876:before {\n  content: \"\\F24C\";\n}\n._fa-clone_m8bnh_1879:before {\n  content: \"\\F24D\";\n}\n._fa-balance-scale_m8bnh_1882:before {\n  content: \"\\F24E\";\n}\n._fa-hourglass-o_m8bnh_1885:before {\n  content: \"\\F250\";\n}\n._fa-hourglass-1_m8bnh_1888:before,\n._fa-hourglass-start_m8bnh_1889:before {\n  content: \"\\F251\";\n}\n._fa-hourglass-2_m8bnh_1892:before,\n._fa-hourglass-half_m8bnh_1893:before {\n  content: \"\\F252\";\n}\n._fa-hourglass-3_m8bnh_1896:before,\n._fa-hourglass-end_m8bnh_1897:before {\n  content: \"\\F253\";\n}\n._fa-hourglass_m8bnh_1885:before {\n  content: \"\\F254\";\n}\n._fa-hand-grab-o_m8bnh_1903:before,\n._fa-hand-rock-o_m8bnh_1904:before {\n  content: \"\\F255\";\n}\n._fa-hand-stop-o_m8bnh_1907:before,\n._fa-hand-paper-o_m8bnh_1908:before {\n  content: \"\\F256\";\n}\n._fa-hand-scissors-o_m8bnh_1911:before {\n  content: \"\\F257\";\n}\n._fa-hand-lizard-o_m8bnh_1914:before {\n  content: \"\\F258\";\n}\n._fa-hand-spock-o_m8bnh_1917:before {\n  content: \"\\F259\";\n}\n._fa-hand-pointer-o_m8bnh_1920:before {\n  content: \"\\F25A\";\n}\n._fa-hand-peace-o_m8bnh_1923:before {\n  content: \"\\F25B\";\n}\n._fa-trademark_m8bnh_1926:before {\n  content: \"\\F25C\";\n}\n._fa-registered_m8bnh_1929:before {\n  content: \"\\F25D\";\n}\n._fa-creative-commons_m8bnh_1932:before {\n  content: \"\\F25E\";\n}\n._fa-gg_m8bnh_1935:before {\n  content: \"\\F260\";\n}\n._fa-gg-circle_m8bnh_1938:before {\n  content: \"\\F261\";\n}\n._fa-tripadvisor_m8bnh_1941:before {\n  content: \"\\F262\";\n}\n._fa-odnoklassniki_m8bnh_1944:before {\n  content: \"\\F263\";\n}\n._fa-odnoklassniki-square_m8bnh_1947:before {\n  content: \"\\F264\";\n}\n._fa-get-pocket_m8bnh_1950:before {\n  content: \"\\F265\";\n}\n._fa-wikipedia-w_m8bnh_1953:before {\n  content: \"\\F266\";\n}\n._fa-safari_m8bnh_1956:before {\n  content: \"\\F267\";\n}\n._fa-chrome_m8bnh_1959:before {\n  content: \"\\F268\";\n}\n._fa-firefox_m8bnh_1962:before {\n  content: \"\\F269\";\n}\n._fa-opera_m8bnh_1965:before {\n  content: \"\\F26A\";\n}\n._fa-internet-explorer_m8bnh_1968:before {\n  content: \"\\F26B\";\n}\n._fa-tv_m8bnh_1971:before,\n._fa-television_m8bnh_1972:before {\n  content: \"\\F26C\";\n}\n._fa-contao_m8bnh_1975:before {\n  content: \"\\F26D\";\n}\n._fa-500px_m8bnh_1978:before {\n  content: \"\\F26E\";\n}\n._fa-amazon_m8bnh_1981:before {\n  content: \"\\F270\";\n}\n._fa-calendar-plus-o_m8bnh_1984:before {\n  content: \"\\F271\";\n}\n._fa-calendar-minus-o_m8bnh_1987:before {\n  content: \"\\F272\";\n}\n._fa-calendar-times-o_m8bnh_1990:before {\n  content: \"\\F273\";\n}\n._fa-calendar-check-o_m8bnh_1993:before {\n  content: \"\\F274\";\n}\n._fa-industry_m8bnh_1996:before {\n  content: \"\\F275\";\n}\n._fa-map-pin_m8bnh_1999:before {\n  content: \"\\F276\";\n}\n._fa-map-signs_m8bnh_2002:before {\n  content: \"\\F277\";\n}\n._fa-map-o_m8bnh_2005:before {\n  content: \"\\F278\";\n}\n._fa-map_m8bnh_373:before {\n  content: \"\\F279\";\n}\n._fa-commenting_m8bnh_2011:before {\n  content: \"\\F27A\";\n}\n._fa-commenting-o_m8bnh_2014:before {\n  content: \"\\F27B\";\n}\n._fa-houzz_m8bnh_2017:before {\n  content: \"\\F27C\";\n}\n._fa-vimeo_m8bnh_1328:before {\n  content: \"\\F27D\";\n}\n._fa-black-tie_m8bnh_2023:before {\n  content: \"\\F27E\";\n}\n._fa-fonticons_m8bnh_2026:before {\n  content: \"\\F280\";\n}\n._fa-reddit-alien_m8bnh_2029:before {\n  content: \"\\F281\";\n}\n._fa-edge_m8bnh_2032:before {\n  content: \"\\F282\";\n}\n._fa-credit-card-alt_m8bnh_2035:before {\n  content: \"\\F283\";\n}\n._fa-codiepie_m8bnh_2038:before {\n  content: \"\\F284\";\n}\n._fa-modx_m8bnh_2041:before {\n  content: \"\\F285\";\n}\n._fa-fort-awesome_m8bnh_2044:before {\n  content: \"\\F286\";\n}\n._fa-usb_m8bnh_2047:before {\n  content: \"\\F287\";\n}\n._fa-product-hunt_m8bnh_2050:before {\n  content: \"\\F288\";\n}\n._fa-mixcloud_m8bnh_2053:before {\n  content: \"\\F289\";\n}\n._fa-scribd_m8bnh_2056:before {\n  content: \"\\F28A\";\n}\n._fa-pause-circle_m8bnh_2059:before {\n  content: \"\\F28B\";\n}\n._fa-pause-circle-o_m8bnh_2062:before {\n  content: \"\\F28C\";\n}\n._fa-stop-circle_m8bnh_2065:before {\n  content: \"\\F28D\";\n}\n._fa-stop-circle-o_m8bnh_2068:before {\n  content: \"\\F28E\";\n}\n._fa-shopping-bag_m8bnh_2071:before {\n  content: \"\\F290\";\n}\n._fa-shopping-basket_m8bnh_2074:before {\n  content: \"\\F291\";\n}\n._fa-hashtag_m8bnh_2077:before {\n  content: \"\\F292\";\n}\n._fa-bluetooth_m8bnh_2080:before {\n  content: \"\\F293\";\n}\n._fa-bluetooth-b_m8bnh_2083:before {\n  content: \"\\F294\";\n}\n._fa-percent_m8bnh_2086:before {\n  content: \"\\F295\";\n}\n._fa-gitlab_m8bnh_2089:before {\n  content: \"\\F296\";\n}\n._fa-wpbeginner_m8bnh_2092:before {\n  content: \"\\F297\";\n}\n._fa-wpforms_m8bnh_2095:before {\n  content: \"\\F298\";\n}\n._fa-envira_m8bnh_2098:before {\n  content: \"\\F299\";\n}\n._fa-universal-access_m8bnh_2101:before {\n  content: \"\\F29A\";\n}\n._fa-wheelchair-alt_m8bnh_2104:before {\n  content: \"\\F29B\";\n}\n._fa-question-circle-o_m8bnh_2107:before {\n  content: \"\\F29C\";\n}\n._fa-blind_m8bnh_2110:before {\n  content: \"\\F29D\";\n}\n._fa-audio-description_m8bnh_2113:before {\n  content: \"\\F29E\";\n}\n._fa-volume-control-phone_m8bnh_2116:before {\n  content: \"\\F2A0\";\n}\n._fa-braille_m8bnh_2119:before {\n  content: \"\\F2A1\";\n}\n._fa-assistive-listening-systems_m8bnh_2122:before {\n  content: \"\\F2A2\";\n}\n._fa-asl-interpreting_m8bnh_2125:before,\n._fa-american-sign-language-interpreting_m8bnh_2126:before {\n  content: \"\\F2A3\";\n}\n._fa-deafness_m8bnh_2129:before,\n._fa-hard-of-hearing_m8bnh_2130:before,\n._fa-deaf_m8bnh_2129:before {\n  content: \"\\F2A4\";\n}\n._fa-glide_m8bnh_2134:before {\n  content: \"\\F2A5\";\n}\n._fa-glide-g_m8bnh_2137:before {\n  content: \"\\F2A6\";\n}\n._fa-signing_m8bnh_2140:before,\n._fa-sign-language_m8bnh_2141:before {\n  content: \"\\F2A7\";\n}\n._fa-low-vision_m8bnh_2144:before {\n  content: \"\\F2A8\";\n}\n._fa-viadeo_m8bnh_2147:before {\n  content: \"\\F2A9\";\n}\n._fa-viadeo-square_m8bnh_2150:before {\n  content: \"\\F2AA\";\n}\n._fa-snapchat_m8bnh_2153:before {\n  content: \"\\F2AB\";\n}\n._fa-snapchat-ghost_m8bnh_2156:before {\n  content: \"\\F2AC\";\n}\n._fa-snapchat-square_m8bnh_2159:before {\n  content: \"\\F2AD\";\n}\n._fa-pied-piper_m8bnh_1386:before {\n  content: \"\\F2AE\";\n}\n._fa-first-order_m8bnh_2165:before {\n  content: \"\\F2B0\";\n}\n._fa-yoast_m8bnh_2168:before {\n  content: \"\\F2B1\";\n}\n._fa-themeisle_m8bnh_2171:before {\n  content: \"\\F2B2\";\n}\n._fa-google-plus-circle_m8bnh_2174:before,\n._fa-google-plus-official_m8bnh_2175:before {\n  content: \"\\F2B3\";\n}\n._fa-fa_m8bnh_398:before,\n._fa-font-awesome_m8bnh_2179:before {\n  content: \"\\F2B4\";\n}\n._fa-handshake-o_m8bnh_2182:before {\n  content: \"\\F2B5\";\n}\n._fa-envelope-open_m8bnh_2185:before {\n  content: \"\\F2B6\";\n}\n._fa-envelope-open-o_m8bnh_2188:before {\n  content: \"\\F2B7\";\n}\n._fa-linode_m8bnh_2191:before {\n  content: \"\\F2B8\";\n}\n._fa-address-book_m8bnh_2194:before {\n  content: \"\\F2B9\";\n}\n._fa-address-book-o_m8bnh_2197:before {\n  content: \"\\F2BA\";\n}\n._fa-vcard_m8bnh_2200:before,\n._fa-address-card_m8bnh_2201:before {\n  content: \"\\F2BB\";\n}\n._fa-vcard-o_m8bnh_2204:before,\n._fa-address-card-o_m8bnh_2205:before {\n  content: \"\\F2BC\";\n}\n._fa-user-circle_m8bnh_2208:before {\n  content: \"\\F2BD\";\n}\n._fa-user-circle-o_m8bnh_2211:before {\n  content: \"\\F2BE\";\n}\n._fa-user-o_m8bnh_2214:before {\n  content: \"\\F2C0\";\n}\n._fa-id-badge_m8bnh_2217:before {\n  content: \"\\F2C1\";\n}\n._fa-drivers-license_m8bnh_2220:before,\n._fa-id-card_m8bnh_2221:before {\n  content: \"\\F2C2\";\n}\n._fa-drivers-license-o_m8bnh_2224:before,\n._fa-id-card-o_m8bnh_2225:before {\n  content: \"\\F2C3\";\n}\n._fa-quora_m8bnh_2228:before {\n  content: \"\\F2C4\";\n}\n._fa-free-code-camp_m8bnh_2231:before {\n  content: \"\\F2C5\";\n}\n._fa-telegram_m8bnh_2234:before {\n  content: \"\\F2C6\";\n}\n._fa-thermometer-4_m8bnh_2237:before,\n._fa-thermometer_m8bnh_2237:before,\n._fa-thermometer-full_m8bnh_2239:before {\n  content: \"\\F2C7\";\n}\n._fa-thermometer-3_m8bnh_2242:before,\n._fa-thermometer-three-quarters_m8bnh_2243:before {\n  content: \"\\F2C8\";\n}\n._fa-thermometer-2_m8bnh_2246:before,\n._fa-thermometer-half_m8bnh_2247:before {\n  content: \"\\F2C9\";\n}\n._fa-thermometer-1_m8bnh_2250:before,\n._fa-thermometer-quarter_m8bnh_2251:before {\n  content: \"\\F2CA\";\n}\n._fa-thermometer-0_m8bnh_2254:before,\n._fa-thermometer-empty_m8bnh_2255:before {\n  content: \"\\F2CB\";\n}\n._fa-shower_m8bnh_2258:before {\n  content: \"\\F2CC\";\n}\n._fa-bathtub_m8bnh_2261:before,\n._fa-s15_m8bnh_2262:before,\n._fa-bath_m8bnh_2261:before {\n  content: \"\\F2CD\";\n}\n._fa-podcast_m8bnh_2266:before {\n  content: \"\\F2CE\";\n}\n._fa-window-maximize_m8bnh_2269:before {\n  content: \"\\F2D0\";\n}\n._fa-window-minimize_m8bnh_2272:before {\n  content: \"\\F2D1\";\n}\n._fa-window-restore_m8bnh_2275:before {\n  content: \"\\F2D2\";\n}\n._fa-times-rectangle_m8bnh_2278:before,\n._fa-window-close_m8bnh_2279:before {\n  content: \"\\F2D3\";\n}\n._fa-times-rectangle-o_m8bnh_2282:before,\n._fa-window-close-o_m8bnh_2283:before {\n  content: \"\\F2D4\";\n}\n._fa-bandcamp_m8bnh_2286:before {\n  content: \"\\F2D5\";\n}\n._fa-grav_m8bnh_2289:before {\n  content: \"\\F2D6\";\n}\n._fa-etsy_m8bnh_2292:before {\n  content: \"\\F2D7\";\n}\n._fa-imdb_m8bnh_2295:before {\n  content: \"\\F2D8\";\n}\n._fa-ravelry_m8bnh_2298:before {\n  content: \"\\F2D9\";\n}\n._fa-eercast_m8bnh_2301:before {\n  content: \"\\F2DA\";\n}\n._fa-microchip_m8bnh_2304:before {\n  content: \"\\F2DB\";\n}\n._fa-snowflake-o_m8bnh_2307:before {\n  content: \"\\F2DC\";\n}\n._fa-superpowers_m8bnh_2310:before {\n  content: \"\\F2DD\";\n}\n._fa-wpexplorer_m8bnh_2313:before {\n  content: \"\\F2DE\";\n}\n._fa-meetup_m8bnh_2316:before {\n  content: \"\\F2E0\";\n}\n._sr-only_m8bnh_2319 {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  margin: -1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n}\n._sr-only-focusable_m8bnh_2329:active,\n._sr-only-focusable_m8bnh_2329:focus {\n  position: static;\n  width: auto;\n  height: auto;\n  margin: 0;\n  overflow: visible;\n  clip: auto;\n}\n")
 });
 return ___scope___.entry = "index.js";
 });

@@ -3,9 +3,9 @@ import {Component} from 'react'
 import * as PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap'
-import './styles.css'
+import styles from './styles.css'
 
-export default class TopBar extends React.Component {
+export default class TopBar extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -26,12 +26,12 @@ export default class TopBar extends React.Component {
           <NavbarToggler right onClick={() => this.toggle()}/>
           <NavbarBrand
             href="/"
-            styleName="navbar-brand"
+            className={styles['navbar-brand']}
           >
             <img src="images/Dao1901Logo.png" alt="logo" />
           </NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav styleName="navbar-nav" navbar>
+            <Nav className={styles['navbar-nav']} navbar>
               <NavItem>
                 <NavLink tag={Link} to="/">Home</NavLink>
               </NavItem>
@@ -54,4 +54,4 @@ export default class TopBar extends React.Component {
 
 TopBar.contextTypes = {
   router: PropTypes.object
-};
+}
