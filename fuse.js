@@ -19,8 +19,7 @@ const POSTCSS_PLUGINS = [
 const fuse = FuseBox.init({
   experimentalFeatures: true,
   target: 'browser',
-  homeDir: 'ui',
-  modulesFolder: 'protocol',
+  homeDir: '.',
   output: 'build/$name.js',
   log: true,
   debug: true,
@@ -37,7 +36,7 @@ const fuse = FuseBox.init({
   ]
 })
 const app = fuse.bundle("app")
-  .instructions(`>index.tsx`)
+  .instructions(`> ui/index.tsx`)
 
 //if (!production) { app.hmr().watch() }
 
