@@ -3,7 +3,7 @@
 // Current user management, login, ...
 // ========================================================
 import { delay } from 'redux-saga'
-import {call, put, select, takeEvery} from 'redux-saga/effects'
+import {call, put, select, takeEvery} from 'redux-saga/lib/effects.js'
 // ========================================================
 // Set user default account
 // ========================================================

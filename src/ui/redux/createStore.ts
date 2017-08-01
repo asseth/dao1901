@@ -1,11 +1,7 @@
-import Dao1901Contracts from 'dao1901-contracts'
-
-//console.log('Dao1901Contracts', Dao1901Contracts);
+import Dao1901Contracts from 'protocol/index.js';
 import {applyMiddleware, compose, createStore} from 'redux'
 //import DevTools from '../components/common/DevTools'
-//import * as truffleConfig from '../../protocol/truffle.js'
-const truffleConfig = require('../../protocol/truffle.js')
-console.log("truffleConfig", truffleConfig);
+import * as truffleConfig from 'protocol/truffle.js'
 // ======================================================
 // History
 // ======================================================

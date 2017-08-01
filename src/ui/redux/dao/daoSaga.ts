@@ -1,5 +1,5 @@
 import {contracts} from '../createStore'
-import {call, put, select, takeEvery} from 'redux-saga/effects'
+import {call, put, select, takeEvery} from 'redux-saga/lib/effects.js'
 import {toastr} from 'react-redux-toastr'
 import waitForMined from '../../helpers/waitForMined'
 // ------------------------------------

@@ -2,7 +2,7 @@ import * as React from 'react'
 import {Component} from 'react'
 import {connect} from 'react-redux'
 import NestedLists from '../../components/common/NestedLists'
-import VoteForm from './../../components/VotesManagement/VotingForm'
+import VoteForm from '../../components/VotesManagement/VotingForm'
 import toastrManager from '../../helpers/toastrManager'
 // ========================================================
 // Voting

@@ -7,7 +7,7 @@
 // select: get state from redux store
 // take: intercepts action dispatched to the store
 // takeEvery: listen for dispatched actions and run them through the worker sagas
-import {call, fork, put, race, take} from 'redux-saga/effects'
+import {call, fork, put, race, take} from 'redux-saga/lib/effects.js'
 import dao from './dao/daoSaga'
 import {watchGetBlockNumber} from './ethereum/ethereumSaga'
 import {fetchIpfsInfo} from './ipfs/ipfsSaga'

@@ -1,4 +1,4 @@
-import {call, put} from 'redux-saga/effects'
+import {call, put} from 'redux-saga/lib/effects.js'
 //import ipfsAPI from 'ipfs-api'
 
 export function* fetchIpfsInfo() {

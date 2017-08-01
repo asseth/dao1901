@@ -1,7 +1,7 @@
 // ========================================================
 // Votes Sagas
 // ========================================================
-import {call, put, takeEvery} from 'redux-saga/effects'
+import {call, put, takeEvery} from 'redux-saga/lib/effects.js'
 import waitForMined from '../../helpers/waitForMined'
 import {contracts} from '../createStore'
 // ========================================================

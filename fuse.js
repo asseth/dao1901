@@ -1,6 +1,6 @@
 const {CSSModules, CSSPlugin, EnvPlugin, FuseBox, JSONPlugin, PostCSSPlugin, RawPlugin, WebIndexPlugin} = require("fuse-box")
-
-const resolveId = require('postcss-import/lib/resolve-id');
+const express = require('express')
+const resolveId = require('postcss-import/lib/resolve-id')
 
 const path = require('path')
 
@@ -8,7 +8,7 @@ const production = false
 
 const POSTCSS_PLUGINS = [
   require("postcss-import")({
-    root: path.join(__dirname, "ui"),
+    root: path.join(__dirname, "src", "ui"),
     resolve: (id, base, options) => resolveId(id, options.root, options),
   }),
   require("postcss-cssnext")({
@@ -17,33 +17,35 @@ const POSTCSS_PLUGINS = [
 ]
 
 const fuse = FuseBox.init({
+  cache: false,
   experimentalFeatures: true,
   target: 'browser',
-  homeDir: 'ui',
-  modulesFolder: 'protocol',
+  homeDir: 'src',
+  modulesFolder: 'customModules',
   output: 'build/$name.js',
-  log: true,
+  log: false,
   debug: true,
   plugins: [
     EnvPlugin({NODE_ENV: production ? "production" : "development"}),
     //RawPlugin(),
-    [CSSModules(), CSSPlugin()],
-    //[PostCSSPlugin(POSTCSS_PLUGINS), CSSModules(), CSSPlugin()],
+    //[CSSModules(), CSSPlugin()],
+    [PostCSSPlugin(POSTCSS_PLUGINS), CSSModules(), CSSPlugin()],
     JSONPlugin(),
     WebIndexPlugin({
-      template: "ui/index.html",
-      path: "/ui/assets/"
+      template: "src/ui/index.html",
+      path: "src/ui/assets/"
     })
   ]
 })
 const app = fuse.bundle("app")
-  .instructions(`>index.tsx`)
+  .instructions(`> ui/index.tsx`)
 
-//if (!production) { app.hmr().watch() }
+if (!production) { app.watch('**').sourceMaps(true) }
 
-fuse.dev({
-  open: false,
-  port: 8085,
-  root: 'build',
+fuse.dev({ open: false, port: 8085, root: 'build' }, server => {
+  const dist = path.resolve("./src")
+  const app = server.httpServer.app
+  app.use("/static/", express.static(path.join(dist,'ui/assets/images')));
 })
+
 fuse.run()

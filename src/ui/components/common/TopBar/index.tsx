@@ -28,7 +28,7 @@ export default class TopBar extends Component {
             href="/"
             className={styles['navbar-brand']}
           >
-            <img src="images/Dao1901Logo.png" alt="logo" />
+            <img src="static/Dao1901Logo.png" alt="logo" />
           </NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className={styles['navbar-nav']} navbar>
