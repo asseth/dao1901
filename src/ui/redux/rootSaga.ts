@@ -7,7 +7,7 @@
 // select: get state from redux store
 // take: intercepts action dispatched to the store
 // takeEvery: listen for dispatched actions and run them through the worker sagas
-import {call, fork, put, race, take} from 'redux-saga/lib/effects.js'
+import {all, call, fork, put, race, take} from 'redux-saga/lib/effects.js'
 import dao from './dao/daoSaga'
 import {watchGetBlockNumber} from './ethereum/ethereumSaga'
 import {fetchIpfsInfo} from './ipfs/ipfsSaga'
@@ -46,7 +46,7 @@ function* bootstrapAdminPage() {
 /******************************* ROOT SAGA ************************************/
 /******************************************************************************/
 export default function* rootSaga() {
-  yield [
+  yield all([
     fork(watchGetBlockNumber),
     fork(dao),
     fork(vote),
@@ -54,5 +54,5 @@ export default function* rootSaga() {
     fork(bootstrap),
     call(watchDefaultAccountChange),
     call(fetchIpfsInfo)
-  ]
+  ])
 }

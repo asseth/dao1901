@@ -1,6 +1,6 @@
 import * as React from "react"
 import {Component} from 'react'
-import classNames from 'classnames'
+import * as classNames from 'classnames'
 import {FormGroup, FormFeedback, Input, Label} from 'reactstrap'
 
 export default class RenderInput extends Component {
@@ -38,6 +38,6 @@ export default class RenderInput extends Component {
         <Input {...input} type={type} placeholder={placeholder} rows={5} state={classes} />
         {touched && error && <FormFeedback>{error}</FormFeedback>}
       </FormGroup>
-    );
+    )
   }
 }

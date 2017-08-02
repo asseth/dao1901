@@ -12,7 +12,7 @@ function ProposalsListItem(props) {
         <p>Expiration date: {convertTimestampToDate(props.item.proposalDeadline)}</p>
       </div>
     </li>
-  );
+  )
 }
 
 ProposalsListItem.propTypes = {
@@ -20,4 +20,4 @@ ProposalsListItem.propTypes = {
     item: PropTypes.any
 }
 
-export default ProposalsListItem;
+export default ProposalsListItem

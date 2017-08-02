@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 function VotesListItem(props) {
@@ -9,12 +9,12 @@ function VotesListItem(props) {
         <p>The Voter's vote: {props.item.voteValue}</p>
       </div>
     </li>
-  );
+  )
 }
 
 VotesListItem.propTypes = {
   className: PropTypes.string,
   item: PropTypes.any,
-};
+}
 
-export default VotesListItem;
+export default VotesListItem

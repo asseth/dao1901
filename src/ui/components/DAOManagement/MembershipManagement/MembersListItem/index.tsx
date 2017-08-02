@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import convertTimestampToDate from '../../../../helpers/convertTimestampToDate'
 
@@ -22,4 +22,4 @@ export default function MembersListItem (props) {
 MembersListItem.propTypes = {
   className: PropTypes.string,
   item: PropTypes.any,
-};
+}

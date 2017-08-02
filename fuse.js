@@ -44,6 +44,9 @@ fuse.dev({ open: false, port: 8085, root: 'build' }, server => {
   const app = server.httpServer.app
   app.use("/images/", express.static(path.join(dist,'ui/assets/images')))
   app.use("/fonts/", express.static(path.join(dist,'ui/assets/fonts')))
+  app.get("*", function(req, res) {
+    res.sendFile(path.join(dist, "ui/index.html"))
+  })
 })
 
 fuse.run()

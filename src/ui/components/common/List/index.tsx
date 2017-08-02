@@ -16,9 +16,7 @@ export default function List(props) {
 
   // If we have items, render them
   if (props.items && props.items.length !== 0) {
-    content = props.items.map((item, index) => (
-      <ListItem key={`item-${index}`} item={item} index={index} />
-    ));
+    content = props.items.map((item, index) => <ListItem key={`item-${index}`} item={item} index={index} />)
   } else {
     // Otherwise render a single component
     content = <p>{'No Content'}</p>
@@ -30,10 +28,10 @@ export default function List(props) {
         {content}
       </ul>
     </div>
-  );
+  )
 }
 
 List.propTypes = {
   component: PropTypes.func.isRequired,
   items: PropTypes.array
-};
+}
