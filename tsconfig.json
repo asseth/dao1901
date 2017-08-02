@@ -21,6 +21,5 @@
     "target": "es6"
   },
   "buildOnSave": false,
-  "compileOnSave": false,
-  "exclude": []
+  "compileOnSave": false
 }
