@@ -1,4 +1,4 @@
-const {CSSModules, CSSPlugin, EnvPlugin, FuseBox, JSONPlugin, PostCSSPlugin, WebIndexPlugin} = require("fuse-box")
+const {CSSModules, CSSPlugin, EnvPlugin, FuseBox, JSONPlugin, PostCSSPlugin, WebIndexPlugin, Sparky} = require("fuse-box")
 const express = require('express')
 const resolveId = require('postcss-import/lib/resolve-id')
 const path = require('path')
@@ -30,23 +30,30 @@ const fuse = FuseBox.init({
     JSONPlugin(),
     WebIndexPlugin({
       template: "src/ui/index.html",
-      path: "src/ui/assets/"
+      path: "/"
     })
   ]
 })
-const app = fuse.bundle("app")
+const app = fuse.bundle("assets/app")
   .instructions(`> ui/index.tsx`)
 
 if (!production) { app.watch('**').sourceMaps(true) }
 
-fuse.dev({ open: false, port: 8085, root: 'build' }, server => {
-  const dist = path.resolve("./src")
-  const app = server.httpServer.app
-  app.use("/images/", express.static(path.join(dist,'ui/assets/images')))
-  app.use("/fonts/", express.static(path.join(dist,'ui/assets/fonts')))
-  app.get("*", function(req, res) {
-    res.sendFile(path.join(dist, "ui/index.html"))
-  })
-})
+Sparky.task('clean', () => Sparky.src(path.resolve("build")).clean(path.resolve("build")));
+Sparky.task('copy-assets', () => Sparky.src("assets/**/*.*", { base: "./src/ui"}).dest("build"));
+Sparky.task('run', ['clean', 'copy-assets'], () => {
+  fuse.dev({ open: false, port: 8085, root: 'build' }, server => {
+    const dist = path.resolve("src")
+    const build = path.resolve("build")
 
-fuse.run()
+    const app = server.httpServer.app
+    app.use("/assets/", express.static(path.join(build,'assets')));
+    app.get("*", function(req, res) {
+      res.sendFile(path.resolve("build", "index.html"));
+    })
+  })
+
+  fuse.run()
+});
+
+Sparky.task('default', ['run'], () => {});
