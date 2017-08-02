@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {Component} from 'react'
 import * as PropTypes from 'prop-types'
-import './styles.css'
+import styles from './styles.css'
 
 /**
  * List
@@ -25,8 +25,8 @@ export default function List(props) {
   }
 
   return (
-    <div styleName="listWrapper">
-      <ul styleName="list">
+    <div className={styles.listWrapper}>
+      <ul className={styles.list}>
         {content}
       </ul>
     </div>

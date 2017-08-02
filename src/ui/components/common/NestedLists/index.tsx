@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {Component} from 'react'
 import * as PropTypes from 'prop-types'
-import './styles.css'
+import styles from './styles.css'
 import VoteListItem from '../../VotesManagement/VotesListItem'
 
 export default function NestedLists (props) {
@@ -11,7 +11,7 @@ export default function NestedLists (props) {
 
   let renderList = (proposalID) => {
     return (
-      <div key={`list-${proposalID}`} styleName="list">
+      <div key={`list-${proposalID}`} className={styles.list}>
         <h3>{`Proposal n° ${proposalID}`}</h3>
         <ul>
           {list}
@@ -39,7 +39,7 @@ export default function NestedLists (props) {
   }
 
   return (
-    <div styleName="listWrapper">
+    <div className={styles.listWrapper}>
       {lists}
     </div>
   )

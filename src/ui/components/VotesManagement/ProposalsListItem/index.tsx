@@ -1,11 +1,11 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
-import './styles.css'
+import styles from './styles.css'
 import convertTimestampToDate from '../../../helpers/convertTimestampToDate'
 
 function ProposalsListItem(props) {
   return (
-    <li styleName="item">
+    <li className={styles.item}>
       <div>
         <p>Proposal #{props.index + 1}</p>
         <p>Description: {props.item.proposalDesc}</p>
@@ -16,8 +16,8 @@ function ProposalsListItem(props) {
 }
 
 ProposalsListItem.propTypes = {
-  styleName: PropTypes.string,
-  item: PropTypes.any,
-};
+    index: PropTypes.number,
+    item: PropTypes.any
+}
 
 export default ProposalsListItem;

@@ -1,9 +1,7 @@
-const {CSSModules, CSSPlugin, EnvPlugin, FuseBox, JSONPlugin, PostCSSPlugin, RawPlugin, WebIndexPlugin} = require("fuse-box")
+const {CSSModules, CSSPlugin, EnvPlugin, FuseBox, JSONPlugin, PostCSSPlugin, WebIndexPlugin} = require("fuse-box")
 const express = require('express')
 const resolveId = require('postcss-import/lib/resolve-id')
-
 const path = require('path')
-
 const production = false
 
 const POSTCSS_PLUGINS = [
@@ -13,23 +11,22 @@ const POSTCSS_PLUGINS = [
   }),
   require("postcss-cssnext")({
     browsers: ["ie >= 11", "last 2 versions"],
-  }),
+  })
 ]
 
 const fuse = FuseBox.init({
-  cache: false,
+  cache: true,
   experimentalFeatures: true,
   target: 'browser',
   homeDir: 'src',
   modulesFolder: 'customModules',
   output: 'build/$name.js',
-  log: false,
+  log: true,
   debug: true,
   plugins: [
     EnvPlugin({NODE_ENV: production ? "production" : "development"}),
-    //RawPlugin(),
-    //[CSSModules(), CSSPlugin()],
-    [PostCSSPlugin(POSTCSS_PLUGINS), CSSModules(), CSSPlugin()],
+    [/components.*\.css$/, PostCSSPlugin(POSTCSS_PLUGINS), CSSModules(), CSSPlugin()],
+    [PostCSSPlugin(POSTCSS_PLUGINS), CSSPlugin()],
     JSONPlugin(),
     WebIndexPlugin({
       template: "src/ui/index.html",
@@ -45,7 +42,8 @@ if (!production) { app.watch('**').sourceMaps(true) }
 fuse.dev({ open: false, port: 8085, root: 'build' }, server => {
   const dist = path.resolve("./src")
   const app = server.httpServer.app
-  app.use("/static/", express.static(path.join(dist,'ui/assets/images')));
+  app.use("/images/", express.static(path.join(dist,'ui/assets/images')))
+  app.use("/fonts/", express.static(path.join(dist,'ui/assets/fonts')))
 })
 
 fuse.run()
