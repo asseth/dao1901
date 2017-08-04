@@ -4,7 +4,7 @@ yarn-error.log
 .env
 stats.json
 .fusebox
-build
+build/
 dist
 public
 

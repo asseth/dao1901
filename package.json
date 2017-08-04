@@ -7,14 +7,13 @@
     "url": "https://github.com/asseth/dao1901"
   },
   "scripts": {
-    "build": "webpack",
-    "compilebuild": "npm run compile && webpack --progress --display-error-details",
-    "compile": "cd tests && python3.5 compile.py ../contracts/Owned.sol && python3.5 compile.py ../contracts/Dao1901Members.sol && python3.5 compile.py ../contracts/Dao1901Votes.sol",
-    "dev": "webpack-dev-server --progress",
-    "linkprotocol": "npm un dao1901-contracts; cd protocol; npm link; cd ..; npm link dao1901-contracts",
-    "migrate": "cd protocol && truffle migrate",
-    "testUI": "jest",
-    "testProtocol": "cd protocol && truffle test"
+    "compilebuild": "npm run compile && node fuse",
+    "compile": "cd customModules/protocol/customDeploy && python3.5 compile.py ../contracts/Owned.sol && python3.5 compile.py ../contracts/Dao1901Members.sol && python3.5 compile.py ../contracts/Dao1901Votes.sol",
+    "dev": "node fuse",
+    "migrate": "cd customModules/protocol && truffle migrate",
+    "prod": "NODE_ENV=production node fuse",
+    "testUI": "cd src/ui && jest",
+    "testProtocol": "cd customModules/protocol && truffle test"
   },
   "author": "Mathieu Sornay, Stéphane Roche <rstephane@protonmail.com>, Alexandre Kurth",
   "license": "MIT",
@@ -49,6 +48,7 @@
     "truffle-artifactor": "^2.1.5",
     "tslib": "^1.7.1",
     "typescript": "^2.4.2",
+    "uglify-js": "^3.0.27",
     "web3": "^0.19.1"
   }
 }

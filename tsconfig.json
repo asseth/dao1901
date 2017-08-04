@@ -18,7 +18,7 @@
     "removeComments": true,
     "sourceMap": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "es6"
+    "target": "es5"
   },
   "buildOnSave": false,
   "compileOnSave": false
