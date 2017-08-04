@@ -20,6 +20,9 @@ Sparky.task('clean-cache', () => Sparky.src(".fusebox/*").clean(".fusebox/"))
 Sparky.task('copy-assets', () => Sparky.src("assets/**/**.*", {base: "./src/ui"}).dest("build"))
 Sparky.task('build', () => {
   const fuse = FuseBox.init({
+    alias: {
+      "reactstrap-tether": '~/node_modules/reactstrap-tether/src/js/tether.js'
+    },
     cache: !isProduction,
     experimentalFeatures: true, // remove next major release of fb
     target: 'browser',
@@ -29,11 +32,11 @@ Sparky.task('build', () => {
     log: true,
     debug: true,
     sourceMaps: !isProduction,
-    useJsNext: true,
+    useJsNext: false,
     plugins: [
       EnvPlugin({NODE_ENV: isProduction ? "production" : "development"}),
       [/components.*\.css$/, PostCSSPlugin(POSTCSS_PLUGINS), CSSModules(), CSSPlugin()],
-      [PostCSSPlugin(POSTCSS_PLUGINS), CSSResourcePlugin({inline: true}), CSSPlugin()], // includes font-awesome in the bundle
+      [PostCSSPlugin(POSTCSS_PLUGINS), CSSResourcePlugin({inline: true}), CSSPlugin()], // todo remove font-awesome from the bundle
       JSONPlugin(),
       WebIndexPlugin({
         template: "src/ui/index.html",
@@ -45,9 +48,9 @@ Sparky.task('build', () => {
         },
         bakeApiIntoBundle: 'assets/app',
         ensureES5 : true,
-        removeExportsInterop: true,
-        treeshake: false,
-        uglify: false
+        removeExportsInterop: false,
+        treeshake: true,
+        uglify: true
       })
     ]
   })

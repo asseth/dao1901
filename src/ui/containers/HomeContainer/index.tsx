@@ -20,6 +20,7 @@ let HomePage = (props) => {
           user
         } = props
 
+  // check host and name for metamask
   const {currentProvider: {host = null, constructor: {name = null} = {}} = {}} = window.web3 || {};
 
   return (
@@ -34,7 +35,7 @@ let HomePage = (props) => {
         defaultAccount={user && user.defaultAccount}
         balance={user && user.balance}
         blockNumber={ethereum && ethereum.blockNumber}
-        currentProvider={host || name} // do this check in case of Metamask
+        currentProvider={host || name}
         contractAddressMembers={contractAddressMembers}
         contractAddressOwned={contractAddressOwned}
         contractAddressVotes={contractAddressVotes}

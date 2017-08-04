@@ -2,20 +2,18 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import ReduxToastr from 'react-redux-toastr'
 import {Route} from 'react-router-dom'
-// import * as PropTypes from 'prop-types';
 import TopBar from '../../components/common/TopBar'
 //import DevTools from '../../components/common/DevTools'
-// Redux
 import {Provider} from 'react-redux'
 import {ConnectedRouter} from 'react-router-redux'
 import {history} from '../../redux/createStore'
 // Pages
-// import TestPage from '../TestContainer';
+// import TestPage from '../TestContainer'
 import AdminPage from '../AdminContainer'
 import HomePage from '../HomeContainer'
 import ProposalSubmissionPage from '../ProposalSubmissionContainer'
 import VotePage from '../VotesManagementContainer'
-//import NotFoundPage from '../NotFoundContainer';
+
 /**
  * RootContainer
  * Root component, core layout, route handling, web3 setup
