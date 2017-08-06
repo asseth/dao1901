@@ -49,7 +49,7 @@ function* fetchVotesForAProposal(proposalId) {
   const votesForAProp = yield call(generateVoteListByProposal, proposalId, addr)
   return votesForAProp
 }
-function* fetchAllVotesForAllProposalsWorker() {
+export function* fetchAllVotesForAllProposalsWorker() {
   try {
     let votes = {}
     let proposalId = 1

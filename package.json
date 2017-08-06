@@ -12,12 +12,13 @@
     "dev": "node fuse",
     "migrate": "cd customModules/protocol && truffle migrate",
     "prod": "NODE_ENV=production node fuse",
-    "testUI": "cd src/ui && jest",
-    "testProtocol": "cd customModules/protocol && truffle test"
+    "testUI": "jest",
+    "testProtocol": "cd customModules/protocol/test && tsc && cd ../build/tests/test && truffle test *.js"
   },
   "author": "Mathieu Sornay, Stéphane Roche <rstephane@protonmail.com>, Alexandre Kurth",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^20.0.6",
     "@types/node": "^8.0.18",
     "classnames": "^2.2.5",
     "fuse-box": "^2.2.2-beta.7",
@@ -44,6 +45,7 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.15.6",
     "truffle-artifactor": "^2.1.5",
+    "ts-jest": "^20.0.9",
     "tslib": "^1.7.1",
     "typescript": "^2.4.2",
     "uglify-js": "^3.0.27",

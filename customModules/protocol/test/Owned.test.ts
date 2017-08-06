@@ -1,4 +1,5 @@
-import {expectThrow} from '../helpers/index.js'
+import {expectThrow} from '../helpers/index'
+import * as assert from 'assert'
 const Owned = artifacts.require('Owned')
 let alice, bob, carol
 // let itClean = (title, itCb) => contract(title, () => it(title, itCb))

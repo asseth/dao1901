@@ -15,7 +15,7 @@ This application is divided in two sections, protocol and ui.
 Protocol folder manage all things related to Ethereum, whereas ui will import protocol as a npm module.
 This architecture offers a clean separation between front and back.
 
-The UI is built with React, Redux, Redux-Saga, Bootstrap 4, Webpack, etc.
+The UI is built with React, Redux, Redux-Saga, Bootstrap 4, Fusebox, etc.
     
 
 Run the app with Testrpc and Truffle (recommended way)
@@ -27,13 +27,13 @@ At the root level, install all dependencies
 
 In a separate tab, run testrpc
 
-    testrpc [-s toto]
+    testrpc [-m yourMnemonic]
     or node_modules/.bin/testrpc
     
 In a separate tab, compile and migrate the contracts
 
-    cd protocol
-    npm install
+    cd customModules/protocol
+    [npm install]
     [truffle compile --compile-all]
     truffle migrate
 

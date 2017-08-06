@@ -1,4 +1,5 @@
-import {expectThrow} from '../helpers/index.js'
+import {expectThrow} from '../helpers/index'
+import * as assert from 'assert'
 const Dao1901MembersAbstraction = artifacts.require('Dao1901Members')
 const Dao1901VotesAbstraction = artifacts.require('Dao1901Votes')
 let Dao1901Members, Dao1901Votes
@@ -59,7 +60,7 @@ contract('Dao1901Votes', (accounts) => {
     })
     it('should have proposal properties set', async () => {
       assert.equal((await Dao1901Votes.proposals(1))[0].valueOf(), 'Merguez or Chipo ?', 'invalid description in proposal')
-      assert.isAtLeast((await Dao1901Votes.proposals(1))[1].valueOf(), 1499200708, 'invalid deadline in proposal')
+      assert((await Dao1901Votes.proposals(1))[1].valueOf() >= 1499200708, 'invalid deadline in proposal')
       assert.equal((await Dao1901Votes.proposals(1))[2].valueOf(), 0x0000000000000000000000000000000000000000, 'invalid head in proposal')
     })
   })

@@ -1,4 +1,5 @@
-import {expectThrow} from '../helpers/index.js'
+import {expectThrow} from '../helpers/index'
+import * as assert from 'assert'
 const Dao1901MembersAbstraction = artifacts.require('Dao1901Members')
 const Dao1901VotesAbstraction = artifacts.require('Dao1901Votes')
 let Dao1901Members, Dao1901Votes

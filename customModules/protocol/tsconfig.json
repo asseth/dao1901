@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "lib": [
+      "ES2015",
+      "DOM"
+    ],
+    "outDir": "build/tests"
+  },
+  "include": [
+    "helpers",
+    "test"
+  ]
+}

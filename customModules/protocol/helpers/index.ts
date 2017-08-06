@@ -1,3 +1,7 @@
+/// <reference path="../../../index.d.ts" />
+
+import * as assert from 'assert'
+
 export const expectThrow = async promise => {
   try {
     await promise
@@ -22,30 +26,30 @@ export const expectThrow = async promise => {
 
 export const mineBlocks = async function (num=1) {
   for (let i=0; i<num; ++i) {
-    await new Promise(function(resolve, reject) { web3.currentProvider.sendAsync({ jsonrpc: "2.0", method: "evm_mine", id: i }, function(err, result) { resolve(); }); })
+    await new Promise(function(resolve, reject) { window.web3.currentProvider.sendAsync({ jsonrpc: "2.0", method: "evm_mine", id: i }, function(err, result) { resolve(); }); })
   }
 }
 
 export const blockNumber = () => {
   return new Promise(function(resolve, reject) {
-    web3.currentProvider.sendAsync({ jsonrpc: "2.0", method: "eth_blockNumber", id: 0x05 }, function(err, result) { resolve(parseInt(result.result)) })
+    window.web3.currentProvider.sendAsync({ jsonrpc: "2.0", method: "eth_blockNumber", id: 0x05 }, function(err, result) { resolve(parseInt(result.result)) })
   })
 }
 
 export const snapshot = () => {
   return new Promise(function(resolve, reject) {
-    web3.currentProvider.sendAsync({ jsonrpc: "2.0", method: "evm_snapshot", id: 0xabcd }, function(err, result) { resolve(); })
+    window.web3.currentProvider.sendAsync({ jsonrpc: "2.0", method: "evm_snapshot", id: 0xabcd }, function(err, result) { resolve(); })
   })
 }
 
 export const revert = () => {
   return new Promise(function(resolve, reject) {
-    web3.currentProvider.sendAsync({ jsonrpc: "2.0", method: "evm_revert", id: 0xabcd }, function(err, result) { resolve(); })
+    window.web3.currentProvider.sendAsync({ jsonrpc: "2.0", method: "evm_revert", id: 0xabcd }, function(err, result) { resolve(); })
   })
 }
 
 export const reset = () => {
   return new Promise(function(resolve, reject) {
-    web3.currentProvider.sendAsync({ jsonrpc: "2.0", method: "evm_reset", id: 0xabce }, function(err, result) { resolve(); })
+    window.web3.currentProvider.sendAsync({ jsonrpc: "2.0", method: "evm_reset", id: 0xabce }, function(err, result) { resolve(); })
   })
 }
