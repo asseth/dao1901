@@ -7,11 +7,12 @@
     "url": "https://github.com/asseth/dao1901"
   },
   "scripts": {
+    "cleanCache": "node fuse clean-cache",
     "compilebuild": "npm run compile && node fuse",
     "compile": "cd customModules/protocol/customDeploy && python3.5 compile.py ../contracts/Owned.sol && python3.5 compile.py ../contracts/Dao1901Members.sol && python3.5 compile.py ../contracts/Dao1901Votes.sol",
-    "dev": "node fuse",
+    "dev": "npm run cleanCache && node fuse",
     "migrate": "cd customModules/protocol && truffle migrate",
-    "prod": "NODE_ENV=production node fuse",
+    "prod": "npm run cleanCache && NODE_ENV=production node fuse",
     "testUI": "jest",
     "testProtocol": "cd customModules/protocol/test && tsc && cd ../build/tests/test && truffle test *.js"
   },

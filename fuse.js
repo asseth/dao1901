@@ -21,7 +21,9 @@ Sparky.task('copy-assets', () => Sparky.src("assets/**/**.*", {base: "./src/ui"}
 Sparky.task('build', () => {
   const fuse = FuseBox.init({
     alias: {
-      "reactstrap-tether": '~/node_modules/reactstrap-tether/src/js/tether.js'
+      "reactstrap-tether": '~/node_modules/reactstrap-tether/src/js/tether.js',
+      "../../../customModules/protocol/index.js": "protocol/index.js",
+      "../../../customModules/protocol/truffle.js": "protocol/truffle.js"
     },
     cache: !isProduction,
     experimentalFeatures: true, // remove next major release of fb

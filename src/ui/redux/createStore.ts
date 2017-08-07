@@ -1,4 +1,4 @@
-import Dao1901Contracts from '../../../customModules/protocol/index.js';
+import Dao1901Contracts from '../../../customModules/protocol/index.js'
 import {applyMiddleware, compose, createStore} from 'redux'
 //import DevTools from '../components/common/DevTools'
 import * as truffleConfig from '../../../customModules/protocol/truffle.js'
