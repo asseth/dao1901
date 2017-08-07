@@ -19,9 +19,11 @@
   "author": "Mathieu Sornay, Stéphane Roche <rstephane@protonmail.com>, Alexandre Kurth",
   "license": "MIT",
   "devDependencies": {
+    "@digix/truffle-lightwallet-provider": "^0.1.2",
     "@types/jest": "^20.0.6",
     "@types/node": "^8.0.18",
     "classnames": "^2.2.5",
+    "dotenv": "^4.0.0",
     "fuse-box": "^2.2.2-beta.7",
     "jest": "^20.0.4",
     "postcss-cssnext": "^3.0.2",
