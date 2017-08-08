@@ -35,7 +35,6 @@ const middlewares = [reduxRouterMiddleware, sagaMiddleware, logger]
 // Store Enhancers
 // ======================================================
 // Get compose function from redux-devtools-extension if available
-// Todo Not used because of weird bug - it triggers eth_protocolVersion ethereum json-rpc on open
 const composeEnhancers =
     typeof window === 'object' &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
