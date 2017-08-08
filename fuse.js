@@ -36,7 +36,10 @@ Sparky.task('build', () => {
     sourceMaps: !isProduction,
     useJsNext: false,
     plugins: [
-      EnvPlugin({NODE_ENV: isProduction ? "production" : "development"}),
+      EnvPlugin({
+        NETWORK: process.env.NETWORK || "testrpc",
+        NODE_ENV: isProduction ? "production" : "development"
+      }),
       [/components.*\.css$/, PostCSSPlugin(POSTCSS_PLUGINS), CSSModules(), CSSPlugin()],
       [PostCSSPlugin(POSTCSS_PLUGINS), CSSResourcePlugin({inline: true}), CSSPlugin()], // todo remove font-awesome from the bundle
       JSONPlugin(),

@@ -10,18 +10,24 @@
     "cleanCache": "node fuse clean-cache",
     "compilebuild": "npm run compile && node fuse",
     "compile": "cd customModules/protocol/customDeploy && python3.5 compile.py ../contracts/Owned.sol && python3.5 compile.py ../contracts/Dao1901Members.sol && python3.5 compile.py ../contracts/Dao1901Votes.sol",
-    "dev": "npm run cleanCache && node fuse",
-    "migrate": "cd customModules/protocol && truffle migrate",
+    "dev": "npm run cleanCache && NETWORK=testrpc node fuse",
+    "devTestrpc": "NETWORK=testrpc npm run dev",
+    "devTestnet": "NETWORK=testnet npm run dev",
+    "migrate": "cd customModules/protocol && NETWORK=testrpc truffle migrate",
+    "migrateTestnet": "cd customModules/protocol && NETWORK=testnet truffle migrate --network kovan",
     "prod": "npm run cleanCache && NODE_ENV=production node fuse",
-    "testUI": "jest",
-    "testProtocol": "cd customModules/protocol/test && tsc && cd ../build/tests/test && truffle test *.js"
+    "testUI": "NETWORK=testrpc jest",
+    "testProtocol": "cd customModules/protocol/test && tsc && cd ../build/tests/test && NETWORK=testrpc truffle test *.js"
   },
   "author": "Mathieu Sornay, Stéphane Roche <rstephane@protonmail.com>, Alexandre Kurth",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^20.0.6",
     "@types/node": "^8.0.18",
+    "bip39": "^2.3.1",
     "classnames": "^2.2.5",
+    "dotenv": "^4.0.0",
+    "ethereumjs-wallet": "^0.6.0",
     "fuse-box": "^2.2.2-beta.7",
     "jest": "^20.0.4",
     "postcss-cssnext": "^3.0.2",
@@ -50,6 +56,7 @@
     "tslib": "^1.7.1",
     "typescript": "^2.4.2",
     "uglify-js": "^3.0.27",
-    "web3": "^0.19.1"
+    "web3": "^0.19.1",
+    "web3-provider-engine": "^13.2.9"
   }
 }
