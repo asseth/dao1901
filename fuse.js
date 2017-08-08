@@ -21,27 +21,28 @@ Sparky.task('copy-assets', () => Sparky.src("assets/**/**.*", {base: "./src/ui"}
 Sparky.task('build', () => {
   const fuse = FuseBox.init({
     alias: {
-      "reactstrap-tether": '~/node_modules/reactstrap-tether/src/js/tether.js',
-      "../../../customModules/protocol/index.js": "protocol/index.js",
+      "reactstrap-tether": '', // hack to fix `require is not defined` error
+      "../../../customModules/protocol/index.js": "protocol/index.js", // hack to have working path for app and tests
       "../../../customModules/protocol/truffle.js": "protocol/truffle.js"
     },
     cache: !isProduction,
+    debug: true,
     experimentalFeatures: true, // remove next major release of fb
-    target: 'browser',
     homeDir: 'src',
+    //ignoreModules : [],
+    log: true,
     modulesFolder: 'customModules',
     output: 'build/$name.js',
-    log: true,
-    debug: true,
-    sourceMaps: !isProduction,
-    useJsNext: false,
     plugins: [
       EnvPlugin({
         NETWORK: process.env.NETWORK || "testrpc",
         NODE_ENV: isProduction ? "production" : "development"
       }),
       [/components.*\.css$/, PostCSSPlugin(POSTCSS_PLUGINS), CSSModules(), CSSPlugin()],
-      [PostCSSPlugin(POSTCSS_PLUGINS), CSSResourcePlugin({inline: true}), CSSPlugin()], // todo remove font-awesome from the bundle
+      [PostCSSPlugin(POSTCSS_PLUGINS), CSSResourcePlugin({
+        dist: 'build/assets',
+        resolve: f => `/assets/${f}`
+      }), CSSPlugin()],
       JSONPlugin(),
       WebIndexPlugin({
         template: "src/ui/index.html",
@@ -57,7 +58,10 @@ Sparky.task('build', () => {
         treeshake: true,
         uglify: true
       })
-    ]
+    ],
+    sourceMaps: !isProduction,
+    target: 'browser',
+    useJsNext: false
   })
 
   !isProduction && fuse.dev({ open: false, port: 8085, root: 'build' }, server => {
