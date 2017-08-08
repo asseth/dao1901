@@ -44,12 +44,6 @@ export default function Info (props) {
             ? props.contractAddressVotes
             : <span><Icon name="warning"/> {'Contract not deployed or unreachable'}</span>}
           </p>
-          <h4>IPFS Info</h4>
-          <p>Id: {props.ipfsId ? props.ipfsId : "none"}</p>
-          <p>Public Key: {props.ipfsPublicKey ? props.ipfsPublicKey : "none"}</p>
-          {/*<p>addresses {props.ipfsAdresses}</p>*/}
-          <p>Agent version: {props.ipfsAgentVersion ? props.ipfsAgentVersion : "none"}</p>
-          <p>Protocol version: {props.ipfsProtocolVersion ? props.ipfsProtocolVersion : "none"}</p>
         </Card>
       </div>
     </div>

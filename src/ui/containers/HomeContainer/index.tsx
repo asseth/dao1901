@@ -16,7 +16,6 @@ let HomePage = (props) => {
           contractAddressOwned,
           dao,
           ethereum,
-          ipfs,
           user
         } = props
 
@@ -39,10 +38,6 @@ let HomePage = (props) => {
         contractAddressMembers={contractAddressMembers}
         contractAddressOwned={contractAddressOwned}
         contractAddressVotes={contractAddressVotes}
-        ipfsId={ipfs.id}
-        ipfsPublicKey={ipfs.publicKey}
-        ipfsAgentVersion={ipfs.agentVersion}
-        ipfsProtocolVersion={ipfs.protocolVersion}
         isWeb3Connected={!!window.web3}
         ownerAddress={dao && dao.ownerAddress}
       />
@@ -112,7 +107,6 @@ const mapStateToProps = (state) => {
     contractAddressOwned: state.dao.contracts.Owned && state.dao.contracts.Owned.address,
     dao: state.dao,
     ethereum: state.ethereum,
-    ipfs: state.ipfs,
     user: state.user,
   }
 }

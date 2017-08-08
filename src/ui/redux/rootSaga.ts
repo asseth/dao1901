@@ -10,7 +10,6 @@
 import {all, call, fork, put, race, take} from 'redux-saga/lib/effects.js'
 import dao from './dao/daoSaga'
 import {watchGetBlockNumber} from './ethereum/ethereumSaga'
-import {fetchIpfsInfo} from './ipfs/ipfsSaga'
 import vote from './votes/votesSaga'
 import user, {watchDefaultAccountChange} from './user/userSaga'
 
@@ -53,6 +52,5 @@ export default function* rootSaga() {
     fork(user),
     fork(bootstrap),
     call(watchDefaultAccountChange),
-    call(fetchIpfsInfo)
   ])
 }

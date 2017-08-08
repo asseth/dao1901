@@ -5,7 +5,6 @@ import {reducer as toastrReducer} from 'react-redux-toastr'
 
 import daoReducer from './dao/daoReducer'
 import ethereumReducer from './ethereum/ethereumReducer'
-import ipfsReducer from './ipfs/ipfsReducer'
 import votesReducer from './votes/votesReducer'
 import userReducer from './user/userReducer'
 
@@ -44,7 +43,6 @@ export const makeRootReducer = (asyncReducers = null) => {
     dao: daoReducer,
     ethereum: ethereumReducer,
     form: formReducer,
-    ipfs: ipfsReducer,
     routing: routerReducer,
     toastr: toastrReducer,
     user: userReducer,
