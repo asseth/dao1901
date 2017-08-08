@@ -39,6 +39,7 @@ let HomePage = (props) => {
         contractAddressOwned={contractAddressOwned}
         contractAddressVotes={contractAddressVotes}
         isWeb3Connected={!!window.web3}
+        network={ethereum && ethereum.network}
         ownerAddress={dao && dao.ownerAddress}
       />
 
