@@ -24,6 +24,8 @@
   "devDependencies": {
     "@types/jest": "^20.0.6",
     "@types/node": "^8.0.18",
+    "@types/react-redux": "^5.0.0",
+    "@types/redux": "^3.6.0",
     "bip39": "^2.3.1",
     "classnames": "^2.2.5",
     "dotenv": "^4.0.0",
