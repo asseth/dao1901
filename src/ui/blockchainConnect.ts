@@ -1,5 +1,5 @@
-import * as Artifacts from 'protocol'
-import * as truffleConfig from 'protocol/truffle.js'
+import * as Artifacts from '../../customModules/protocol/index.js'
+import * as truffleConfig from '../../customModules/protocol/truffle.js'
 import * as contract from 'truffle-contract'
 import * as Web3 from 'web3'
 

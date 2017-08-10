@@ -21,9 +21,9 @@ Sparky.task('copy-assets', () => Sparky.src("assets/**/**.*", {base: "./src/ui"}
 Sparky.task('build', () => {
   const fuse = FuseBox.init({
     alias: {
-      //"reactstrap-tether": '', // hack to fix `require is not defined` error
-      "../../../customModules/protocol/index.js": "protocol/index.js", // hack to have working path for app and tests
-      "../../../customModules/protocol/truffle.js": "protocol/truffle.js"
+      "reactstrap-tether": '', // hack to fix `require is not defined` error
+      "../../customModules/protocol/index.js": "protocol/index.js", // hack to have working path for app and tests
+      "../../customModules/protocol/truffle.js": "protocol/truffle.js"
     },
     cache: !isProduction,
     debug: true,
@@ -64,12 +64,14 @@ Sparky.task('build', () => {
     useJsNext: false
   })
 
+  /*
   //todo Remove this hack to fix `require is not defined` error
   fuse.register("typescript-collections", {
     main: "dist/lib/index.js",
     homeDir: "node_modules/typescript-collections",
     instructions: " "
   })
+  */
 
   !isProduction && fuse.dev({ open: false, port: 8085, root: 'build' }, server => {
     const build = path.resolve("build")
