@@ -1,4 +1,4 @@
-import {contracts} from '../createStore'
+import {contracts} from '../../blockchainConnect'
 import {call, put, select, takeEvery} from 'redux-saga/lib/effects.js'
 import {toastr} from 'react-redux-toastr'
 import waitForMined from '../../helpers/waitForMined'

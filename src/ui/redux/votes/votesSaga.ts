@@ -3,12 +3,13 @@
 // ========================================================
 import {call, put, takeEvery} from 'redux-saga/lib/effects.js'
 import waitForMined from '../../helpers/waitForMined'
-import {contracts} from '../createStore'
+import {contracts} from '../../blockchainConnect'
+
 // ========================================================
 // Vote submission
 // ========================================================
 let onVoteSubmit = (proposalId, voteValue) => {
-  const {Dao1901Votes} = contracts
+  const {Dao1901Votes}: any = contracts
   return Dao1901Votes.vote.sendTransaction(proposalId, voteValue, {from: window.web3.eth.defaultAccount, gas: 100000})
 }
 function* onVoteSubmitWorker(action) {
