@@ -27,7 +27,7 @@ function* onVoteSubmitWorker(action) {
 // Fetch votes
 // ========================================================
 function getVote(proposalId, addr) {
-  const {Dao1901Votes} = contracts
+  const {Dao1901Votes}: any = contracts
   return Dao1901Votes.getVote(proposalId, addr)
 }
 function* generateVoteListByProposal(proposalId, _addr) {
