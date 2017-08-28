@@ -52,8 +52,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = dispatch => {
   return ({
-    createProposal: (values) => dispatch({type: 'CREATE_PROPOSAL_REQUESTED', values}),
-    //getAllProposals: () => dispatch({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})  Triggered in saga bootstrap for now
+    createProposal: (values) => dispatch({type: 'TX_CREATE_PROPOSAL_REQUESTED', values}),
   })
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProposalSubmissionPage)

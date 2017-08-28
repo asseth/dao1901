@@ -22,25 +22,26 @@ let getNetwork = () => {
     })
   })
 }
+// Generic ETHEREUM_INFO action triggers various actions
 function* fetchEthereumInfoWorker() {
   try {
     yield put({type: 'BLOCK_NUMBER_REQUESTED'})
     const blockNumber = yield call(getBlockNumber)
-    yield put({type: 'BLOCK_NUMBER_SUCCEED', blockNumber})
+    yield put({type: 'BLOCK_NUMBER_SUCCEED', values: {blockNumber}})
   } catch (e) {
     yield put({type: 'BLOCK_NUMBER_FAILED', e: e.message})
   }
   try {
-    yield put({type: 'FETCH_NETWORK_ID_REQUESTED'})
+    yield put({type: 'NETWORK_ID_REQUESTED'})
     const network = yield call(getNetwork)
-    yield put({type: 'FETCH_NETWORK_ID_SUCCEED', network})
+    yield put({type: 'NETWORK_ID_SUCCEED', values: {network}})
   } catch (e) {
-    yield put({type: 'FETCH_NETWORK_ID_FAILED', e: e.message})
+    yield put({type: 'NETWORK_ID_FAILED', e: e.message})
   }
 }
 // ========================================================
 // Watch Ethereum saga
 // ========================================================
 export function* watchGetBlockNumber() {
-  yield takeEvery('FETCH_ETHEREUM_INFO_REQUESTED', fetchEthereumInfoWorker)
+  yield takeEvery('ETHEREUM_INFO_REQUESTED', fetchEthereumInfoWorker)
 }

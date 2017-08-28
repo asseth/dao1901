@@ -107,10 +107,10 @@ const mapStateToProps = s => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addMember: (values) => dispatch({type: 'ADD_MEMBER_REQUESTED', values}),
-    transferOwnership: (values) => dispatch({type: 'TRANSFER_OWNERSHIP_REQUESTED', values}),
     checkMembership: (values) => dispatch({type: 'CHECK_MEMBERSHIP_REQUESTED', values}),
-    revokeMember: (values) => dispatch({type: 'REVOKE_MEMBER_REQUESTED', values}),
+    addMember: (values) => dispatch({type: 'TX_ADD_MEMBER_REQUESTED', values}),
+    revokeMember: (values) => dispatch({type: 'TX_REVOKE_MEMBER_REQUESTED', values}),
+    transferOwnership: (values) => dispatch({type: 'TX_TRANSFER_OWNERSHIP_REQUESTED', values}),
   }
 }
 

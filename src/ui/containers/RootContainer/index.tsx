@@ -11,6 +11,7 @@ import {history} from '../../redux/createStore'
 // import TestPage from '../TestContainer'
 import AdminPage from '../AdminContainer'
 import HomePage from '../HomeContainer'
+import NotFoundPage from '../NotFoundContainer'
 import ProposalSubmissionPage from '../ProposalSubmissionContainer'
 import VotePage from '../VotesManagementContainer'
 
@@ -33,11 +34,12 @@ class RootContainer extends React.Component {
               <div className="row">
                 <div className="col-12">
                   <div>
-                    {/*<Route exact path="/" component={TestPage}/>*/}
                     <Route exact path="/" component={HomePage}/>
                     <Route path="/admin" component={AdminPage}/>
                     <Route path="/vote" component={VotePage}/>
                     <Route path="/proposal_submission" component={ProposalSubmissionPage}/>
+                    {/*<Route path="/" component={TestPage}/>*/}
+                    {/*<Route component={NotFoundPage}/>*/}
                     {/*<DevTools />*/}
                     <ReduxToastr
                       timeOut={8500}

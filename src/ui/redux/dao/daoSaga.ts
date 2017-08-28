@@ -17,10 +17,10 @@ let fetchContractsInfo = () => {
 }
 function* fetchContractsInfoWorker() {
   try {
-    let contractsInfo = yield call(fetchContractsInfo)
-    yield put({type: 'FETCH_CONTRACTS_INFO_SUCCEED', contractsInfo})
+    let contracts = yield call(fetchContractsInfo)
+    yield put({type: 'CONTRACTS_INFO_SUCCEED', values: {contracts}})
   } catch (e) {
-    yield put({type: 'FETCH_CONTRACTS_INFO_FAILED', error: e})
+    yield put({type: 'CONTRACTS_INFO_FAILED', error: e})
   }
 }
 // ------------------------------------
@@ -35,12 +35,14 @@ function* addMemberWorker(action) {
   try {
     const {memberAddress, yearsDuration} = action.values
     const tx = yield call(addMember, memberAddress, yearsDuration)
-    yield call(waitForMined, tx, 'addMember') // setInterval until mined
+    yield call(waitForMined, tx, 'addMember')
     let endSubscriptionDate = new Date().setFullYear(new Date().getFullYear() + Number(yearsDuration))
     endSubscriptionDate = String(endSubscriptionDate).substring(0,10)
-    yield put({type: 'ADD_MEMBER_SUCCEED', tx, memberAddress, endSubscriptionDate})
+    let _members = yield select(s => s.dao.members)
+    const members = [..._members, {memberAddress, endSubscriptionDate}]
+    yield put({type: 'TX_ADD_MEMBER_SUCCEED', tx, values: {members}})
   } catch (e) {
-    yield put({type: 'ADD_MEMBER_FAILED', e: e.message})
+    yield put({type: 'TX_ADD_MEMBER_FAILED', e: e.message})
   }
 }
 // ------------------------------------
@@ -54,11 +56,11 @@ function revokeMember(values) {
 function* revokeMemberWorker(action) {
   try {
     const tx = yield call(revokeMember, action.values)
-    yield call(waitForMined, tx, 'revokeMember') // setInterval until mined
-    yield put({type: 'REVOKE_MEMBER_SUCCEED', tx})
-    yield put({type: 'FETCH_ALL_MEMBERS_REQUESTED'})
+    yield call(waitForMined, tx, 'revokeMember')
+    yield put({type: 'TX_REVOKE_MEMBER_SUCCEED', tx})
+    yield put({type: 'ALL_MEMBERS_REQUESTED'})
   } catch (e) {
-    yield put({type: 'REVOKE_MEMBER_FAILED', e: e.message})
+    yield put({type: 'TX_REVOKE_MEMBER_FAILED', e: e.message})
   }
 }
 // ------------------------------------
@@ -90,9 +92,9 @@ function* fetchAllMembersWorker() {
     // Get the head of the linked list - Either 0x0 or the last added
     const head = yield call(Dao1901Members.head)
     const members = yield call(fetchAllMembers, head)
-    yield put({type: 'FETCH_ALL_MEMBERS_SUCCEED', members})
+    yield put({type: 'ALL_MEMBERS_SUCCEED', values: {members}})
   } catch (e) {
-    yield put({type: 'FETCH_ALL_MEMBERS_FAILED', error: e})
+    yield put({type: 'ALL_MEMBERS_FAILED', error: e})
   }
 }
 // ------------------------------------
@@ -108,7 +110,7 @@ function* checkMembershipWorker(action) {
     } else {
       toastr.error('Membership management', `${memberAddressToCheck} is not a member`)
     }
-    yield put({type: 'CHECK_MEMBERSHIP_SUCCEED', isMember})
+    yield put({type: 'CHECK_MEMBERSHIP_SUCCEED', values: {isMember}})
   } catch (e) {
     yield put({type: 'CHECK_MEMBERSHIP_FAILED', error: e.message})
   }
@@ -121,16 +123,8 @@ function transferOwnership(ownerAddress, newOwnerAddress) {
     const {Owned} = contracts
     const toastrConfirmOptions = {
       onOk: () => {
-        Owned.changeOwner
-          .sendTransaction(newOwnerAddress, {from: ownerAddress, gas: 200000}) // todo check gas
-          .then((tx) => {
-            toastr.success('Organization management', `The ownership has been transferred to ${newOwnerAddress}`)
-            resolve(tx)
-          })
-          .catch((e) => {
-            toastr.error('Organization management', "You don't have the rights to transfer ownership")
-            reject(e)
-          })
+        resolve(Owned.changeOwner
+          .sendTransaction(newOwnerAddress, {from: ownerAddress, gas: 200000})) // todo check gas
       },
       onCancel: () => console.log('Ownership transfer cancelled')
     }
@@ -141,30 +135,30 @@ function* transferOwnershipWorker(action) {
   try {
     let ownerAddress = yield select(s => s.dao.ownerAddress)
     const tx = yield call(transferOwnership, ownerAddress, action.values.newOwnerAddress)
-    yield call(waitForMined, tx, 'transferOwnership') // setInterval until mined
-    yield put({type: 'TRANSFER_OWNERSHIP_SUCCEED', ownerAddress: action.values.newOwnerAddress})
+    yield call(waitForMined, tx, 'transferOwnership')
+    yield put({type: 'TX_TRANSFER_OWNERSHIP_SUCCEED', tx, values: {ownerAddress: action.values.newOwnerAddress}})
   } catch (e) {
-    yield put({type: 'TRANSFER_OWNERSHIP_FAILED', error: e})
+    yield put({type: 'TX_TRANSFER_OWNERSHIP_FAILED', error: e})
   }
 }
 function* fetchOwnerAddressWorker() {
   try {
     const {Owned} = contracts
     let ownerAddress = yield call(Owned.owner)
-    yield put({type: 'FETCH_OWNER_ADDRESS_SUCCEED', ownerAddress})
+    yield put({type: 'OWNER_ADDRESS_SUCCEED', values: {ownerAddress}})
   } catch (e) {
-    yield put({type: 'FETCH_OWNER_ADDRESS_FAILED', error: e})
+    yield put({type: 'OWNER_ADDRESS_FAILED', error: e})
   }
 }
 // ------------------------------------
 // The DAO Watcher Saga
 // ------------------------------------
 export default function* dao() {
-  yield takeEvery('FETCH_CONTRACTS_INFO_REQUESTED', fetchContractsInfoWorker)
-  yield takeEvery('FETCH_OWNER_ADDRESS_REQUESTED', fetchOwnerAddressWorker)
-  yield takeEvery('ADD_MEMBER_REQUESTED', addMemberWorker)
-  yield takeEvery('REVOKE_MEMBER_REQUESTED', revokeMemberWorker)
+  yield takeEvery('ALL_MEMBERS_REQUESTED', fetchAllMembersWorker)
   yield takeEvery('CHECK_MEMBERSHIP_REQUESTED', checkMembershipWorker)
-  yield takeEvery('FETCH_ALL_MEMBERS_REQUESTED', fetchAllMembersWorker)
-  yield takeEvery('TRANSFER_OWNERSHIP_REQUESTED', transferOwnershipWorker)
+  yield takeEvery('CONTRACTS_INFO_REQUESTED', fetchContractsInfoWorker)
+  yield takeEvery('OWNER_ADDRESS_REQUESTED', fetchOwnerAddressWorker)
+  yield takeEvery('TX_ADD_MEMBER_REQUESTED', addMemberWorker)
+  yield takeEvery('TX_REVOKE_MEMBER_REQUESTED', revokeMemberWorker)
+  yield takeEvery('TX_TRANSFER_OWNERSHIP_REQUESTED', transferOwnershipWorker)
 }

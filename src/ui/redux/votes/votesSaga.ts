@@ -4,7 +4,6 @@
 import {call, put, takeEvery} from 'redux-saga/lib/effects.js'
 import waitForMined from '../../helpers/waitForMined'
 import {contracts} from '../../blockchainConnect'
-
 // ========================================================
 // Vote submission
 // ========================================================
@@ -17,10 +16,10 @@ function* onVoteSubmitWorker(action) {
     const {proposalId, voteValue} = action.values
     const tx = yield call(onVoteSubmit, proposalId, voteValue)
     yield call(waitForMined, tx, 'onVoteSubmit') // setInterval until mined
-    yield put({type: 'VOTE_SUBMISSION_SUCCEED', tx})
-    yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED'})
+    yield put({type: 'TX_VOTE_SUBMISSION_SUCCEED', tx})
+    yield put({type: 'ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
-    yield put({type: 'VOTE_SUBMISSION_FAILED', e: e.message})
+    yield put({type: 'TX_VOTE_SUBMISSION_FAILED', e: e.message})
   }
 }
 // ========================================================
@@ -60,9 +59,9 @@ export function* fetchAllVotesForAllProposalsWorker() {
       votes[proposalId] = votesProp
       proposalId++
     }
-    yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED', votes: votes})
+    yield put({type: 'ALL_VOTES_FOR_ALL_PROPOSALS_SUCCEED', values: {votes}})
   } catch (e) {
-    yield put({type: 'FETCH_ALL_VOTES_FOR_ALL_PROPOSAL_FAILED', e: e.message})
+    yield put({type: 'ALL_VOTES_FOR_ALL_PROPOSAL_FAILED', e: e.message})
   }
 }
 // ========================================================
@@ -79,11 +78,11 @@ function* createProposalWorker({values}) {
   try {
     const {proposalDescription, proposalDeadline} = values
     const tx = yield call(createProposal, proposalDescription, proposalDeadline)
-    yield call(waitForMined, tx, 'create proposal') // setInterval until mined
-    yield put({type: 'CREATE_PROPOSAL_SUCCEED', tx})
-    yield put({type: 'FETCH_ALL_PROPOSALS_REQUESTED'})
+    yield call(waitForMined, tx, 'create proposal')
+    yield put({type: 'TX_CREATE_PROPOSAL_SUCCEED', tx})
+    yield put({type: 'ALL_PROPOSALS_REQUESTED'})
   } catch (e) {
-    yield put({type: 'CREATE_PROPOSAL_FAILED', e: e.message})
+    yield put({type: 'TX_CREATE_PROPOSAL_FAILED', e: e.message})
   }
 }
 // ========================================================
@@ -111,17 +110,17 @@ function* fetchAllProposalsWorker() {
   try {
     const totalProposals = yield call(getTotalProposals)
     let proposals = yield call(generateProposalList, totalProposals.valueOf())
-    yield put({type: 'FETCH_ALL_PROPOSALS_SUCCEED', proposals})
+    yield put({type: 'ALL_PROPOSALS_SUCCEED', values: {proposals}})
   } catch (e) {
-    yield put({type: 'FETCH_ALL_PROPOSALS_FAILED', e: e.message})
+    yield put({type: 'ALL_PROPOSALS_FAILED', e: e.message})
   }
 }
 // ========================================================
 // Watch vote saga
 // ========================================================
 export default function* vote() {
-  yield takeEvery('CREATE_PROPOSAL_REQUESTED', createProposalWorker)
-  yield takeEvery('VOTE_SUBMISSION_REQUESTED', onVoteSubmitWorker)
-  yield takeEvery('FETCH_ALL_PROPOSALS_REQUESTED', fetchAllProposalsWorker)
-  yield takeEvery('FETCH_ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED', fetchAllVotesForAllProposalsWorker)
+  yield takeEvery('ALL_PROPOSALS_REQUESTED', fetchAllProposalsWorker)
+  yield takeEvery('ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED', fetchAllVotesForAllProposalsWorker)
+  yield takeEvery('TX_CREATE_PROPOSAL_REQUESTED', createProposalWorker)
+  yield takeEvery('TX_VOTE_SUBMISSION_REQUESTED', onVoteSubmitWorker)
 }

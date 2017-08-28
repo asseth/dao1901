@@ -1,3 +1,7 @@
+import {createCallActionHandlers, createTxActionHandlers} from '../actionHandlerCreator'
+// ------------------------------------
+// Initial State
+// ------------------------------------
 const initialState = {
   errors: [],
   proposals: [],
@@ -8,6 +12,11 @@ const initialState = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
+  ...createCallActionHandlers('ALL_PROPOSALS'),
+  ...createCallActionHandlers('ALL_VOTES_FOR_ALL_PROPOSALS'),
+  ...createTxActionHandlers('TX_CREATE_PROPOSAL'),
+  ...createTxActionHandlers('TX_VOTE_SUBMISSION'),
+  /*
   ['CREATE_PROPOSAL_SUCCEED']: (state, action) => {
     const txLog = {event: 'CREATE_PROPOSAL_SUCCEED', tx: action.tx}
     const txs = [...state.txs, txLog]
@@ -43,6 +52,7 @@ const ACTION_HANDLERS = {
     const errors = [...state.errors, errorLog]
     return {...state, errors}
   },
+  */
 }
 // ------------------------------------
 // Reducer

@@ -8,7 +8,10 @@ export const history = createHistory()
 // ======================================================
 // Middlewares
 // ======================================================
-import logger from 'redux-logger'
+import {createLogger} from 'redux-logger'
+const logger = createLogger({
+  predicate: (getState, action) => !String(action.type).startsWith('@@redux-form')
+})
 import createSagaMiddleware from 'redux-saga'
 const sagaMiddleware = createSagaMiddleware()
 import {routerMiddleware} from 'react-router-redux'

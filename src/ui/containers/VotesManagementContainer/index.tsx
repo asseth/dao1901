@@ -12,6 +12,10 @@ class VotingPage extends Component {
     super(props)
   }
 
+  componentWillMount() {
+    this.props.fetchAllVotesForAllProposals()
+  }
+
   componentWillReceiveProps(nextProps) {
     toastrManager(nextProps, this.props)
   }
@@ -52,7 +56,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    onVoteSubmit: (values) => dispatch({type: 'VOTE_SUBMISSION_REQUESTED', values})
+    fetchAllVotesForAllProposals: (values) => dispatch({type: 'ALL_VOTES_FOR_ALL_PROPOSALS_REQUESTED', values}),
+    onVoteSubmit: (values) => dispatch({type: 'TX_VOTE_SUBMISSION_REQUESTED', values})
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(VotingPage)

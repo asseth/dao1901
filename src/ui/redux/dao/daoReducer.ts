@@ -1,3 +1,7 @@
+import {createCallActionHandlers, createTxActionHandlers} from '../actionHandlerCreator'
+// ------------------------------------
+// Initial State
+// ------------------------------------
 const initialState = {
   contracts: {},
   errors: [],
@@ -8,6 +12,14 @@ const initialState = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
+  ...createCallActionHandlers('OWNER_ADDRESS'),
+  ...createCallActionHandlers('CONTRACTS_INFO'),
+  ...createCallActionHandlers('ALL_MEMBERS'),
+  ...createTxActionHandlers('TX_ADD_MEMBER'),
+  ...createTxActionHandlers('TX_REVOKE_MEMBER'),
+  ...createTxActionHandlers('TX_TRANSFER_OWNERSHIP'),
+
+/*
   ['FETCH_OWNER_ADDRESS_SUCCEED']: (state, action) => {
     return {...state, ownerAddress: action.ownerAddress}
   },
@@ -55,6 +67,7 @@ const ACTION_HANDLERS = {
   ['TRANSFER_OWNERSHIP_SUCCEED']: (state, action) => {
     return {...state, ownerAddress: action.ownerAddress}
   },
+  */
 }
 // ------------------------------------
 // Reducer

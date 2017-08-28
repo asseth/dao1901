@@ -1,19 +1,10 @@
+import {createCallActionHandlers} from '../actionHandlerCreator'
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  ['BLOCK_NUMBER_SUCCEED']: (state, action) => {
-    return  {...state, blockNumber: action.blockNumber}
-  },
-  ['BLOCK_NUMBER_FAILED']: (state, action) => {
-    return  {...state, errorMessage: action.errorMessage}
-  },
-  ['FETCH_NETWORK_ID_SUCCEED']: (state, action) => {
-    return  {...state, network: action.network}
-  },
-  ['FETCH_NETWORK_ID_FAILED']: (state, action) => {
-    return  {...state, errorMessage: action.errorMessage}
-  }
+  ...createCallActionHandlers('BLOCK_NUMBER'),
+  ...createCallActionHandlers('NETWORK_ID'),
 }
 
 // ------------------------------------

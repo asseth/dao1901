@@ -14,7 +14,7 @@ function* setUserDefaultAccountWorker() {
   } else {
     let defaultAccount = accounts[0]
     window.web3.eth.defaultAccount = defaultAccount
-    yield put({type: 'USER_DEFAULT_ACCOUNT_SUCCEED', defaultAccount})
+    yield put({type: 'USER_DEFAULT_ACCOUNT_SUCCEED', values: {defaultAccount}})
   }
 }
 // ========================================================
@@ -33,7 +33,7 @@ function* setUserBalanceWorker() {
   try {
     let user = yield select(s => s.user)
     const balance = yield call(setUserBalance, user)
-    yield put({type: 'USER_BALANCE_SUCCEED', balance})
+    yield put({type: 'USER_BALANCE_SUCCEED', values: {balance}})
   } catch (e) {
     yield put({type: 'USER_BALANCE_FAILED', e: e.message})
   }
@@ -52,7 +52,7 @@ let fetchAccounts = () => {
 function* fetchUserAccountsWorker() {
   try {
     const accounts = yield call(fetchAccounts)
-    yield put({type: 'USER_ACCOUNTS_SUCCEED', accounts})
+    yield put({type: 'USER_ACCOUNTS_SUCCEED', values: {accounts}})
     // Misc actions
     yield put({type: 'USER_DEFAULT_ACCOUNT_REQUESTED'})
     yield put({type: 'USER_BALANCE_REQUESTED'})
